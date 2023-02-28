@@ -24,9 +24,8 @@ const MUIMiniCard = ({
   title,
   isBtn,
   btnText,
-  link,
-  minTitle,
-  subTitle,
+
+
 }) => {
   const btn = isBtn || false;
   return (
@@ -36,27 +35,22 @@ const MUIMiniCard = ({
         className="p-4 w-full hover:bg-dark-purple hover:text-white text-dark-purple text-bold place-content-center text-center shadow-lg"
       >
         <CardContent className="text-bold ">
-          <Typography sx={{ fontSize: 14 }}  gutterBottom>
-            {minTitle}
-          </Typography>
+       
           <Typography variant="h5" component="div" className="">
             <h1>{title}</h1>
-          </Typography>
-          <Typography sx={{ mb: 1.5 }} >
-            {subTitle}
-          </Typography>
+          </Typography>   
           <Typography variant="body2">{disc}</Typography>
         </CardContent>
         {btn && (
           <div>
-            <Divider variant="middle" className="my-2 bg-gray-200" />
+  
             <CardActions className=" place-content-center ">
-            <Link href={link}><Button
-                size="medium"
-                className="text-center w-64 border-2 border-white bg-dark-purple text-white hover:bg-white hover:text-dark-purple"
+            <Button
+                size="small"
+                className="text-center  border-2 rounded-full border-white bg-dark-purple text-white hover:bg-white hover:text-dark-purple"
               >
                 {btnText}
-              </Button></Link>
+              </Button>
             </CardActions>
           </div>
         )}

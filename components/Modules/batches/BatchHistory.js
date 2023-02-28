@@ -9,19 +9,18 @@ import TableContainer from "@mui/material/TableContainer";
 import TableFooter from "@mui/material/TableFooter";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton";
 import FirstPageIcon from "@mui/icons-material/FirstPage";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
-import Pagination from "@mui/material/Pagination";
-import Stack from "@mui/material/Stack";
-import { Button, Chip, TableHead } from "@mui/material";
+import { Chip, TableHead } from "@mui/material";
+
+// commenting to resolve merge
 
 function TablePaginationActions(props) {
   const theme = useTheme();
-  const { count, page, rowsPerPage, onPageChange, chapter, date, lastCol } =
+  const { count, page, rowsPerPage, onPageChange,} =
     props;
 
   const handleFirstPageButtonClick = (event) => {
@@ -164,8 +163,8 @@ export default function CustomPaginationActionsTable() {
           <TableFooter>
             <TableRow>
               <TablePagination
-              rowsPerPageOptions={[5, 6, 10, 25, { label: 'All', value: -1 }]}
-              colSpan={3}
+              rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+              colSpan={4}
               count={rows.length}
               rowsPerPage={rowsPerPage}
               page={page}

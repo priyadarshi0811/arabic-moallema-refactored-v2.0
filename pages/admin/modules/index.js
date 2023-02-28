@@ -10,6 +10,7 @@ import Divider from "@mui/material/Divider";
 import BackButton from "@/components/Layout/elements/BackButton";
 import Button from "@mui/material/Button";
 import CardList from "@/components/user/admin/CardList";
+import Link from "next/link";
 
 const style = {
   position: "absolute",
@@ -57,14 +58,15 @@ const index = () => {
               <div className="col-span-2 ml-auto">
                 <div className="px-2 w-full">
                   
+                  <Link href='/admin/modules/create-module' >
                   <Button
                     variant="contained"
                     className="bg-dark-purple"
-                    onClick={handleOpen}
                     startIcon={<AddCircleOutlineIcon />}
                   >
                     Create Modules
                   </Button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -74,24 +76,11 @@ const index = () => {
             <CardList
               user='Module'
               disc="6 Sub-Sections"
-              link="/admin/modules/" />
+              link="/admin/modules/module-details" />
           </div>
         </div>
       </div>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box
-          sx={style}
-          style={{ width: "760px" }}
-          className="pb-5 px-10 border-2 border-gray-400 rounded-lg "
-        >
-          <CreateBatch />
-        </Box>
-      </Modal>
+      
     </div>
   );
 };
