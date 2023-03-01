@@ -1,13 +1,19 @@
 import Link from "next/link";
-import { useState } from "react";
-// import { useContext } from "react";
+import { useContext, useState } from "react";
 import logo from "@/components/src/img/AMLogo.png";
 import sidebarBgImg from "@/components/src/img/Frame73.png";
 import { useRouter } from "next/router";
 import avatar from "@/components/src/img/ArabicMollemaMascot-01.png";
-import { Avatar, Chip, List, ListItem, ListItemButton, ListItemText } from "@mui/material";
+import {
+  Avatar,
+  Chip,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+} from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
-import Divider from '@mui/material/Divider';
+import Divider from "@mui/material/Divider";
 
 // MUI Icons
 import DashboardIcon from "@mui/icons-material/Dashboard";
@@ -16,19 +22,20 @@ import CastForEducationIcon from "@mui/icons-material/CastForEducation";
 import ClassIcon from "@mui/icons-material/Class";
 import SchoolIcon from "@mui/icons-material/School";
 import LiveTvIcon from "@mui/icons-material/LiveTv";
-import GroupsIcon from '@mui/icons-material/Groups';
-import LogoutIcon from '@mui/icons-material/Logout';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import GroupsIcon from "@mui/icons-material/Groups";
+import LogoutIcon from "@mui/icons-material/Logout";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import AuthContext from "@/components/Context/store/auth-context";
 
 const Sidebar = (props) => {
   let nav_data = nav_reference()[props.nav_index];
 
-  //   const authCtx = useContext(AuthContext);
+  const authCtx = useContext(AuthContext);
   const router = useRouter();
 
   const logoutHandler = (e) => {
-    // console.log("LoggOut");
-    // authCtx.logout();
+    console.log("LoggOut");
+    authCtx.logout();
     router.replace("/");
   };
   const [open, setOpen] = useState(true);
@@ -69,11 +76,13 @@ const Sidebar = (props) => {
             }`}
           ></h1>
         </div>
-        
+
         <ul className="pt-6">
-        {open && (<Divider className="text-white border-white">
-        <Chip label="Dashboard" className="bg-white text-dark-purple" />
-      </Divider>)}
+          {open && (
+            <Divider className="text-white border-white">
+              <Chip label="Dashboard" className="bg-white text-dark-purple" />
+            </Divider>
+          )}
           {nav_data.map((nav_obj) => (
             <Link href={nav_obj.link}>
               <li
@@ -82,12 +91,12 @@ const Sidebar = (props) => {
               >
                 {/* <img src={nav_obj.img} className="w-8 border rounded-md" />  */}
                 <Tooltip title={nav_obj.linkname}>
-                <span
-                  className="bg-white rounded-sm "
-                  style={{ padding: "7px" }}
-                >
-                  {nav_obj.img}
-                </span>
+                  <span
+                    className="bg-white rounded-sm "
+                    style={{ padding: "7px" }}
+                  >
+                    {nav_obj.img}
+                  </span>
                 </Tooltip>
                 <span
                   className={`${
@@ -96,59 +105,59 @@ const Sidebar = (props) => {
                 >
                   {nav_obj.linkname}
                 </span>
-                
               </li>
             </Link>
           ))}
         </ul>
 
         <ul className="mt-20">
-        {open && (<Divider className="text-white border-white">
-        <Chip label="User" className="bg-white text-dark-purple" />
-      </Divider>)}
+          {open && (
+            <Divider className="text-white border-white">
+              <Chip label="User" className="bg-white text-dark-purple" />
+            </Divider>
+          )}
           <Link href="/">
-              <li
-                // key={index}
-                className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4`}
-              >
-                {/* <img src={nav_obj.img} className="w-8 border rounded-md" />  */}
-                <Tooltip title="My Profile">
+            <li
+              // key={index}
+              className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4`}
+            >
+              {/* <img src={nav_obj.img} className="w-8 border rounded-md" />  */}
+              <Tooltip title="My Profile">
                 <Avatar alt="User" src={avatar} />
-                </Tooltip>
-                <span
-                  className={`${
-                    !open && "hidden"
-                  } origin-left duration-200 text-base`}
-                >
-                  My Profile
-                </span>
-                
-              </li>
-            </Link>
-          <Link href="/">
-              <li
-                // key={index}
-                className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4`}
+              </Tooltip>
+              <span
+                className={`${
+                  !open && "hidden"
+                } origin-left duration-200 text-base`}
               >
-                {/* <img src={nav_obj.img} className="w-8 border rounded-md" />  */}
-                <Tooltip title="Log Out">
+                My Profile
+              </span>
+            </li>
+          </Link>
+          <Link href="/">
+            <li
+              // key={index}
+              className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4`}
+            >
+              {/* <img src={nav_obj.img} className="w-8 border rounded-md" />  */}
+              <Tooltip title="Log Out">
                 <span
                   className="bg-white rounded-sm "
                   style={{ padding: "7px" }}
                 >
-                  <LogoutIcon className="text-dark-purple"/>
+                  <LogoutIcon className="text-dark-purple" />
                 </span>
-                </Tooltip>
-                <span
-                  className={`${
-                    !open && "hidden"
-                  } origin-left duration-200 text-base`}
-                >
-                  Log Out
-                </span>
-                
-              </li>
-            </Link>
+              </Tooltip>
+              <span
+                onClick={logoutHandler}
+                className={`${
+                  !open && "hidden"
+                } origin-left duration-200 text-base`}
+              >
+                Log Out
+              </span>
+            </li>
+          </Link>
         </ul>
       </div>
     </div>
