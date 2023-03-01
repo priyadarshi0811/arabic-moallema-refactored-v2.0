@@ -1,7 +1,7 @@
 import { TextField } from "@mui/material";
 import React from "react";
 
-const InputWithLable = ({ lable, id, type }) => {
+const InputWithLable = ({value, setValue, lable, id, type }) => {
   return (
     <div className="grid grid-cols-5 ">
       <div className="col-span-1 mt-3">
@@ -12,6 +12,8 @@ const InputWithLable = ({ lable, id, type }) => {
           id={id || ""}
           variant="outlined"
           type={type}
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
           className="pt-2 m-0 w-full"
         />
       </div>

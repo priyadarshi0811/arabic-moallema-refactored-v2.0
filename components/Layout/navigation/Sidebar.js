@@ -1,6 +1,5 @@
 import Link from "next/link";
-import { useState } from "react";
-// import { useContext } from "react";
+import { useContext, useState } from "react";
 import logo from "@/components/src/img/AMLogo.png";
 import sidebarBgImg from "@/components/src/img/Frame73.png";
 import { useRouter } from "next/router";
@@ -27,16 +26,28 @@ import LiveTvIcon from "@mui/icons-material/LiveTv";
 import GroupsIcon from "@mui/icons-material/Groups";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+
+import AuthContext from "@/components/Context/store/auth-context";
+
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import AssignmentIcon from '@mui/icons-material/Assignment';
+
 
 const Sidebar = (props) => {
   let nav_data = nav_reference()[props.nav_index];
 
-  //   const authCtx = useContext(AuthContext);
+  const authCtx = useContext(AuthContext);
   const router = useRouter();
 
-  const [open, setOpen] = useState(false);
+
+  const logoutHandler = (e) => {
+    console.log("LoggOut");
+    authCtx.logout();
+    router.replace("/");
+  };
+  const [open, setOpen] = useState(true);
+
+
 
   return (
     <div className="flex ">
@@ -105,7 +116,9 @@ const Sidebar = (props) => {
           ))}
         </ul>
 
+
         <ul className="mt-10">
+
           {open && (
             <Divider className="text-white border-white">
               <Chip label="User" className="bg-white text-dark-purple" />
@@ -134,6 +147,7 @@ const Sidebar = (props) => {
               // key={index}
               className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4`}
             >
+
               <Tooltip title="Log Out">
                 <span
                   className="bg-white rounded-sm "
@@ -143,6 +157,9 @@ const Sidebar = (props) => {
                 </span>
               </Tooltip>
               <span
+
+                onClick={logoutHandler}
+
                 className={`${
                   !open && "hidden"
                 } origin-left duration-200 text-base`}

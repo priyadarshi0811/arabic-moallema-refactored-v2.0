@@ -6,15 +6,24 @@ import CardLayout from "@/components/Layout/card/CardLayout";
 import AddStudent from "@/components/user/admin/AddStudent";
 import AddTeacher from "@/components/user/admin/AddTeacher";
 
-const LiveBatchDetails = ({ user, isStudent }) => {
+const LiveBatchDetails = ({
+  user,
+  isStudent,
+  userType,
+  profileData,
+  batchesData,
+}) => {
   console.log(` and isStudent = ${isStudent} `);
   return (
     <div>
-      <div >
+      <div>
         {isStudent && (
           <div className="grid grid-cols-2 gap-10">
             <div className="col-span-1">
               <AddStudent
+                batchesData={batchesData}
+                profileData={profileData}
+                userType={userType}
                 link="/admin/students"
                 user={user}
                 isStusent={isStudent}
@@ -37,7 +46,7 @@ const LiveBatchDetails = ({ user, isStudent }) => {
               <AddTeacher
                 link="/admin/students"
                 user={user}
-                action='edit'
+                action="edit"
                 isStusent={isStudent}
               />
             </div>

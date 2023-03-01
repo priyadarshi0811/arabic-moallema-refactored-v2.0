@@ -1,13 +1,7 @@
 import React from "react";
 import grayBgImg from "@/components/src/img/grayBgImg.png";
 import TeacherSidebar from "@/components/user/teacher/TeacherSidebar";
-import MUIMiniCard from "@/components/Layout/card/MUIMiniCard";
 import ClassList from "@/components/user/teacher/BatchList";
-// import InProgress from "@/components/Layout/screen/InProgress";
-// import MiniCard from "@/components/Layout/card/MiniCard";
-
-
-
 
 const index = () => {
   return (
