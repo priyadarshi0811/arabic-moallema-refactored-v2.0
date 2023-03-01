@@ -5,6 +5,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import EditIcon from "@mui/icons-material/Edit";
 import BatchEdit from "@/components/Modules/batches/BatchEdit";
 import RemoveUser from "@/components/Modules/batches/RemoveUser";
+import BatchHistory from '@/components/Modules/batches/BatchHistory'
 
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -44,7 +45,7 @@ const BatchDetails = () => {
     >
       <div className="flex min-h-screen h-full">
         <Sidebar nav_index={0} />
-        <div className="flex-1 h-screen p-5  ">
+        <div className="flex-1  p-5  ">
           <div className="m-0 p-5 w-full h-fit">
             <div className="flex justify-between w-full mx-auto my-10 gap-10 ">
 
@@ -62,6 +63,9 @@ const BatchDetails = () => {
           </div>
           <div className="m-0 p-10 w-full bg-white h-fit border-4 border-white rounded-xl">
             <BatchEdit actionBtn="Edit Batch" link="" />
+          </div>
+          <div className="bg-white p-0 my-5 h-fit">
+              <BatchHistory />
           </div>
           <Modal
             open={open}
