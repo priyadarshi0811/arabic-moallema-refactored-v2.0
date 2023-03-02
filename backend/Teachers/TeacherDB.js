@@ -8,3 +8,10 @@ export const fetchTeachersData = async () => {
   }
   return data;
 };
+
+export const updateTeacherDetail = async (email, name, contact) => {
+  const { data4, error4 } = await supabase
+    .from("teachers")
+    .update({ email: email, name: name, contact: contact })
+    .match({ email: email });
+};
