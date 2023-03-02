@@ -16,7 +16,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Divider from "@mui/material/Divider";
 
 // MUI Icons
-import MenuOpenIcon from '@mui/icons-material/MenuOpen';
+import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import AssessmentIcon from "@mui/icons-material/Assessment";
 import CastForEducationIcon from "@mui/icons-material/CastForEducation";
@@ -26,12 +26,10 @@ import LiveTvIcon from "@mui/icons-material/LiveTv";
 import GroupsIcon from "@mui/icons-material/Groups";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-
+import CampaignIcon from '@mui/icons-material/Campaign';
 import AuthContext from "@/components/Context/store/auth-context";
-
-import ListAltIcon from '@mui/icons-material/ListAlt';
-import AssignmentIcon from '@mui/icons-material/Assignment';
-
+import ListAltIcon from "@mui/icons-material/ListAlt";
+import AssignmentIcon from "@mui/icons-material/Assignment";
 
 const Sidebar = (props) => {
   let nav_data = nav_reference()[props.nav_index];
@@ -39,15 +37,12 @@ const Sidebar = (props) => {
   const authCtx = useContext(AuthContext);
   const router = useRouter();
 
-
   const logoutHandler = (e) => {
     console.log("LoggOut");
     authCtx.logout();
     router.replace("/");
   };
   const [open, setOpen] = useState(true);
-
-
 
   return (
     <div className="flex ">
@@ -66,7 +61,7 @@ const Sidebar = (props) => {
           // overflow: 'hidden'
         }}
       >
-        <MenuOpenIcon 
+        <MenuOpenIcon
           className={`absolute cursor-pointer -right-3 top-9 w-8 text-3xl text-dark-purple border-dark-purple  bg-white
            border-2 rounded-full ${!open && "rotate-180"}`}
           onClick={() => setOpen(!open)}
@@ -116,9 +111,7 @@ const Sidebar = (props) => {
           ))}
         </ul>
 
-
         <ul className="mt-10">
-
           {open && (
             <Divider className="text-white border-white">
               <Chip label="User" className="bg-white text-dark-purple" />
@@ -147,7 +140,6 @@ const Sidebar = (props) => {
               // key={index}
               className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4`}
             >
-
               <Tooltip title="Log Out">
                 <span
                   className="bg-white rounded-sm "
@@ -157,9 +149,7 @@ const Sidebar = (props) => {
                 </span>
               </Tooltip>
               <span
-
                 onClick={logoutHandler}
-
                 className={`${
                   !open && "hidden"
                 } origin-left duration-200 text-base`}
@@ -223,13 +213,24 @@ function nav_reference() {
     1: [
       {
         linkname: "Batches",
-        link: "/teacher",
+         link: "/teacher",
         img: <DashboardIcon className="text-dark-purple" />,
       },
+     
       {
-        linkname: "Classes",
+        linkname: "Student Report",
+        link: "/teacher/student",
+        img: <GroupsIcon className="text-dark-purple" />,
+      },
+      {
+        linkname: "Start Class",
+        link: "/teacher/class",
+        img: <LiveTvIcon className="text-dark-purple" />,
+      },
+      {
+        linkname: "Announcements",
         link: "/work-in-progress",
-        img: <ClassIcon className="text-dark-purple" />,
+        img: <CampaignIcon className="text-dark-purple" />,
       },
     ],
     2: [
@@ -247,4 +248,3 @@ function nav_reference() {
   };
   return nav_reference_ovj;
 }
-

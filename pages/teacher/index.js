@@ -1,7 +1,13 @@
 import React from "react";
 import grayBgImg from "@/components/src/img/grayBgImg.png";
-import TeacherSidebar from "@/components/user/teacher/TeacherSidebar";
+
 import ClassList from "@/components/user/teacher/BatchList";
+import Sidebar from "@/components/Layout/navigation/Sidebar";
+// import InProgress from "@/components/Layout/screen/InProgress";
+// import MiniCard from "@/components/Layout/card/MiniCard";
+
+
+
 
 const index = () => {
   return (
@@ -12,13 +18,12 @@ const index = () => {
         backgroundAttachment: "fixed",
         backgroundSize: "100%",
         backgroundPosition: "center top",
-        minHeight: "100vh",        
-        height: "100%",
-        width: "100%",
+        widows: "100vw",
+        minHeight : "100vh",
       }}
     >
       <div className="flex min-h-screen h-full">
-        <TeacherSidebar />
+      <Sidebar nav_index={1} />
         <div className="flex-1 h-screen p-7  ">
           <div className="m-0 p-10 w-full h-fit">
             <ClassList />

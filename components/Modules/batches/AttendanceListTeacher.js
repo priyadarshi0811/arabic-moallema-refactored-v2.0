@@ -108,7 +108,7 @@ const rows = [
   createData("Huruf", "29/02/2023", "Batch 3"),
 ].sort((a, b) => (a.calories < b.calories ? -1 : 1));
 
-export default function CustomPaginationActionsTable() {
+export default function CustomPaginationActionsTable({comp}) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(6);
 
@@ -130,6 +130,10 @@ export default function CustomPaginationActionsTable() {
       <div className=" border-b-2 p-3 ">
         <h1 className="text-2xl pt-2">Teacher Attendance History</h1>
       </div>
+      <div className=" border-b-2 ">
+      {comp}
+      </div>
+      
       <TableContainer >
         <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
           <TableBody>

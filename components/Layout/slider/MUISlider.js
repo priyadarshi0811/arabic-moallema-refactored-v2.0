@@ -5,10 +5,10 @@ import Box from "@mui/material/Box";
 import Link from "next/link";
 import MUIMiniCard from "../card/MUIMiniCard";
 
-const MUISlider = () => {
+const MUISlider = ({card}) => {
   const [value, setValue] = React.useState(0);
 
-  const handleChange = (event, newValue) => {
+  const handleChange = (event, newValue, card) => {
     setValue(newValue);
   };
 
@@ -28,27 +28,32 @@ const MUISlider = () => {
           >          
 
             {/* Custome Cards  */}
-            <div className="m-4">
-            <MUIMiniCard title="abc" disc="MUI Card" />
+            <div className="m-4 w-1/4 ">
+            {card}
             </div>
+            <div className="m-4 w-1/4">
+            {card}
+            </div>
+            <div className="m-4 w-1/4">
+            {card}
+            </div>
+            <div className="m-4 w-1/4">
+            {card}
+            </div>
+            <div className="m-4 w-1/4">
+            {card}
+            </div>
+            <div className="m-4 w-1/4">
+            {card}
+            </div>
+            <div className="m-4 w-1/4">
+            {card}
+            </div>
+          
+           
+           
 
-            <div className="m-4">
-            <MUIMiniCard title="Xyz" disc="MUI Card" />
-            </div>
-            <div className="m-4">
-            <MUIMiniCard title="abc" disc="MUI Card" />
-            </div>
-
-            <div className="m-4">
-            <MUIMiniCard title="Xyz" disc="MUI Card" />
-            </div>
-            <div className="m-4">
-            <MUIMiniCard title="abc" disc="MUI Card" />
-            </div>
-
-            <div className="m-4">
-            <MUIMiniCard title="Xyz" disc="MUI Card" />
-            </div>
+  
 
             {/* with link */}
             {/* <Link href="/" className="w-full m-5">
