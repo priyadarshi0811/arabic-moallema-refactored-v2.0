@@ -50,9 +50,9 @@ const StudentProfile = ({ email }) => {
       setBatchData(data);
     };
     fetchStudentBatchDetail();
-  }, []);
+  }, [email]);
 
-  console.log(profileData);
+  console.log(batchesData);
 
   return (
     <div
@@ -100,13 +100,16 @@ const StudentProfile = ({ email }) => {
             <Divider variant="middle" />
           </div>
           <div className="m-0 p-10 w-full h-fit">
-            <UserDetails
-              batchesData={batchesData}
-              profileData={profileData}
-              userType="EditStudent"
-              user="student"
-              isStudent={true}
-            />
+            {batchesData && (
+              <UserDetails
+                studentEmail={email}
+                batchesData={batchesData}
+                profileData={profileData}
+                userType="EditStudent"
+                user="student"
+                isStudent={true}
+              />
+            )}
           </div>
           <Modal
             open={open}

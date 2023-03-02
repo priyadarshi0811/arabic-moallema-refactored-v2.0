@@ -86,11 +86,11 @@ const TeacherHome = () => {
           </div>
           <div className="m-0 p-10 w-full h-fit">
             <div className="grid grid-cols-3 w-full mx-auto my-10 gap-10">
-              {teachersList.map((student) => (
+              {teachersList.map((teacher) => (
                 <CardList
-                  title={student.name}
-                  subTitle={student.email}
-                  link="/admin/teachers/teacher-details"
+                  title={teacher.name}
+                  subTitle={teacher.email}
+                  link={`/admin/teachers/teacherprofile/${teacher.email}`}
                 />
               ))}
             </div>
@@ -105,6 +105,7 @@ const TeacherHome = () => {
       >
         <Box sx={style}>
           <AddTeacher
+            userType="addTeacher"
             link="/admin/teachers"
             title="Add New Teacher"
             user="Teacher"

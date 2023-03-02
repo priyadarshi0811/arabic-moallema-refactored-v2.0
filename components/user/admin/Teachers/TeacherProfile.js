@@ -9,9 +9,10 @@ import Divider from "@mui/material/Divider";
 
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-import Link from "next/link";
 import BackButton from "@/components/Layout/elements/BackButton";
 import { Button } from "@mui/material";
+import { fetchTeachersBasedonEmail } from "@/backend/UserProfile/StudentTeacherProfileDB";
+import { fetchBatchesForTeacher } from "@/backend/Batches/BatchesDB";
 
 const style = {
   position: "absolute",
@@ -25,12 +26,34 @@ const style = {
   p: 4,
 };
 
-// let history = useHistory();
-
-const TeacherDetails = () => {
+const TeacherProfile = ({ email }) => {
   const [open, setOpen] = React.useState(false);
+
+  const [profileData, setProfileData] = React.useState();
+  const [batchesData, setBatchData] = React.useState();
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  React.useEffect(() => {
+    const studentprofile = async () => {
+      const data = await fetchTeachersBasedonEmail(email);
+      setProfileData(data);
+    };
+    studentprofile();
+  }, [email]);
+
+  //getting the batch data for the teachers
+  React.useEffect(() => {
+    const fetchTeachersBatchDetail = async () => {
+      const data = await fetchBatchesForTeacher(email);
+      setBatchData(data);
+    };
+    fetchTeachersBatchDetail();
+  }, [email]);
+
+  console.log(profileData);
+  console.log(batchesData);
 
   return (
     <div
@@ -65,18 +88,27 @@ const TeacherDetails = () => {
                     Remove Teacher
                   </Button>
                   {/* <button
-                    
-                    className="px-5 py-2 bg-sky-500 text-white text-center rounded-lg hover:bg-sky-900 "
-                  >
-                    <ArrowBackIcon className="mb-1"  /> Back
-                  </button> */}
+                      
+                      className="px-5 py-2 bg-sky-500 text-white text-center rounded-lg hover:bg-sky-900 "
+                    >
+                      <ArrowBackIcon className="mb-1"  /> Back
+                    </button> */}
                 </div>
               </div>
             </div>
             <Divider variant="middle" />
           </div>
           <div className="m-0 p-10 w-full h-fit">
-            <UserDetails user="teacher" isStudent={false} />
+            {profileData && batchesData && (
+              <UserDetails
+                teacherEmail={email}
+                batchesData={batchesData}
+                profileData={profileData}
+                userType="showTeacher"
+                user="teacher"
+                isStudent={false}
+              />
+            )}
           </div>
           <Modal
             open={open}
@@ -99,4 +131,4 @@ const TeacherDetails = () => {
   );
 };
 
-export default TeacherDetails;
+export default TeacherProfile;

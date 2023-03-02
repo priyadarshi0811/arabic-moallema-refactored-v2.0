@@ -1,11 +1,46 @@
 import React from "react";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
-import { Button } from "@mui/material";
+import { Button, MenuItem, Select } from "@mui/material";
+import { updateTeacher } from "@/backend/Batches/UpdateBatchTeacher";
+import { fetchTeachersData } from "@/backend/Teachers/TeacherDB";
+import { Box } from "@mui/system";
 
-const EditTeacher = ({ user, isReplace, action, type, option }) => {
+const EditTeacher = ({
+  user,
+  isReplace,
+  action,
+  type,
+  option,
+  batchName,
+  setOpen,
+}) => {
+  const [teachersList, setTeachersList] = React.useState();
+  const [selectedTeacher, setSelectedTeacher] = React.useState("");
+
   const handleChange = () => {
     // remove user
+  };
+
+  React.useEffect(() => {
+    const fetchTeachersDetail = async () => {
+      const data = await fetchTeachersData();
+      setTeachersList(data);
+    };
+    fetchTeachersDetail();
+  }, []);
+
+  console.log("selected Teacher: ", selectedTeacher);
+
+  const submitHandlerBatchDetail = (e) => {
+    e.preventDefault();
+    console.log("submitted");
+    updateTeacher(batchName, selectedTeacher);
+    setOpen(false);
+  };
+  const closeHandlerBatchDetail = (e) => {
+    e.preventDefault();
+    closeBatchDetailPopUP(false);
   };
 
   const replace = isReplace || false;
@@ -33,6 +68,24 @@ const EditTeacher = ({ user, isReplace, action, type, option }) => {
           </Stack>
 
           <div className="grid grid-cols-6 gap-6 ">
+            {teachersList && (
+              <Box className=" inline-block mt-10">
+                <div className=" -mb-20 w-44">
+                  <label className=" text-gray-700">Select Teacher</label>
+                </div>
+                <Select
+                  className=" w-80 m-6 ml-52"
+                  value={selectedTeacher}
+                  onChange={(e) => setSelectedTeacher(e.target.value)}
+                >
+                  {teachersList.map((teacher) => (
+                    <MenuItem key={teacher.id} value={teacher.email}>
+                      {teacher.email}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </Box>
+            )}
             <div className="col-span-6">
               <div className="grid grid-cols-8 gap-3">
                 <div className="col-span-8 sm:col-span-3 mb-3">
@@ -48,7 +101,7 @@ const EditTeacher = ({ user, isReplace, action, type, option }) => {
                     htmlFor="user-type"
                     className="block text-sm  font-medium text-gray-700 border-2 py-1 px-3 rounded-md"
                   >
-                    {user}
+                    {batchName}
                   </label>
                 </div>
               </div>
@@ -85,8 +138,11 @@ const EditTeacher = ({ user, isReplace, action, type, option }) => {
         </div>
 
         <div className="items-center  py-3 text-right mt-5">
-          
-          <Button variant="contained" className=" w-full bg-dark-purple  ">
+          <Button
+            onClick={submitHandlerBatchDetail}
+            variant="contained"
+            className=" w-full bg-dark-purple  "
+          >
             {action} {type}
           </Button>
         </div>
