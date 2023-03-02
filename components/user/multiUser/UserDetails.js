@@ -3,6 +3,7 @@ import AttendanceListStudent from "@/components/Modules/batches/AttendanceListSt
 import AttendanceListTeacher from "@/components/Modules/batches/AttendanceListTeacher";
 import AddStudent from "@/components/user/admin/AddStudent";
 import AddTeacher from "@/components/user/admin/AddTeacher";
+import SelectDropdown from "@/components/Layout/elements/SelectDropdown";
 
 const LiveBatchDetails = ({
   user,
@@ -14,7 +15,11 @@ const LiveBatchDetails = ({
   teacherEmail,
 }) => {
   console.log(` and isStudent = ${isStudent} `);
-  console.log(batchesData);
+
+  function tableData(name, date, user, status) {
+    return { name, date, user, status };
+  }
+
   return (
     <div>
       <div>
@@ -62,12 +67,14 @@ const LiveBatchDetails = ({
               )}
             </div>
             <div className="col-span-1">
+
               <AttendanceListTeacher
                 teacherEmail={teacherEmail}
                 batchesData={batchesData}
                 chapter="Huruf"
                 date="21/02/2023"
                 lastCol="Attended"
+
               />
             </div>
           </div>
