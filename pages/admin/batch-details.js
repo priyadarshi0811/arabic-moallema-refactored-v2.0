@@ -31,6 +31,10 @@ const BatchDetails = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  function tableData( name, date, user, status) {
+    return { name, date, user, status };
+  } 
+
   return (
     <div
       className=""
@@ -64,8 +68,15 @@ const BatchDetails = () => {
           <div className="m-0 p-10 w-full bg-white h-fit border-4 border-white rounded-xl">
             <BatchEdit actionBtn="Edit Batch" link="" />
           </div>
-          <div className="bg-white p-0 my-5 h-fit">
-              <BatchHistory />
+          <div className="bg-white p-0 my-5 h-fit rounded-lg">
+              <BatchHistory title='Batch History' action='chip' data={[
+  // createData({chapter}, {date}, {totalStudents}, {Status}),
+  tableData("Huruf", "02/03/2023 at 9:30 Am", "24 Students", "In progress"),
+  tableData("Huruf", "01/03/2023 at 9:30 Am", "24 Students", "In progress"),
+  tableData("Hamza", "28/02/2023 at 9:30 Am", "24 Students", "Completed"),
+  tableData("Hamza", "27/02/2023 at 9:30 Am", "24 Students", "In progress"),
+
+]} />
           </div>
           <Modal
             open={open}

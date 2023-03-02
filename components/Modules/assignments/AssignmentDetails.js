@@ -14,18 +14,20 @@ import FormLabel from "@mui/material/FormLabel";
 import MUIMiniCard from "@/components/Layout/card/MUIMiniCard";
 import MicIcon from "@mui/icons-material/Mic";
 
-const AssignmentDetails = () => {
+const AssignmentDetails = ({markRemark}) => {
   return (
-    <div>
+    <div> 
       <h1 className="">Task 1: Tracing </h1>
       <div className="bg-gray-50 mt-5 p-5 rounded-md shadow-md">
         <h1 className="px-5">
           Enter the words that can be traced by the students
         </h1>
-        <div className="border-2 rounded-md min-h-40 p-5 my-5">
+        <div className="border-2 rounded-md min-h-40 p-5 m-5">
           <h1 className="p-5 text-6xl text-gray-400"> يـ ـيـ ـي</h1>
         </div>
+      {markRemark}
       </div>
+
 
       <h1 className="mt-10">Task 2: Select the correct option </h1>
       <div className="bg-gray-50 mt-5 p-5 rounded-md shadow-md">
@@ -48,7 +50,9 @@ const AssignmentDetails = () => {
             <MUIMiniCard title="س" />
           </div>
         </div>
+      {markRemark}
       </div>
+
 
       <h1 className="mt-10">Task 3: Identify by audio </h1>
       <div className="bg-gray-50 mt-5 p-5 rounded-md shadow-md">
@@ -82,7 +86,9 @@ const AssignmentDetails = () => {
             <MUIMiniCard title="Adnan" />
           </div>
         </div>
+      {markRemark}
       </div>
+
 
       <h1 className="mt-10">Task 4: Pronounce the Khat </h1>
       <div className="bg-gray-50 mt-5 p-5 rounded-md shadow-md">
@@ -115,7 +121,9 @@ const AssignmentDetails = () => {
             />
           </div>
         </div>
+      {markRemark}
       </div>
+
 
       <h1 className="mt-10">Task 5: Drag and Drop </h1>
       <div className="bg-gray-50 mt-5 p-5 rounded-md shadow-md">
@@ -147,7 +155,9 @@ const AssignmentDetails = () => {
           
           </div>
         </div>
+      {markRemark}
       </div>
+
 
 
       {/* <Button className="w-full bg-dark-purple mt-5" variant="contained">
