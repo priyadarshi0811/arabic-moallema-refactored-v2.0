@@ -98,3 +98,16 @@ export const fetchBatchesForTeacher = async (email) => {
   }
   return data;
 };
+
+export const fetchBatchesForTeacherBasedOnBatchName = async (batch) => {
+  const { data, error } = await supabase
+    .from("batches")
+    .select("*")
+    .match({ batch_name: batch });
+
+  if (error) {
+    console.log("Error fetching batch_student_relation data: ", error);
+    return null;
+  }
+  return data;
+};

@@ -7,9 +7,8 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import Divider from '@mui/material/Divider';
+import Divider from "@mui/material/Divider";
 import { Chip } from "@mui/material";
-
 
 const bull = (
   <Box
@@ -34,34 +33,33 @@ const MUIMiniCard = ({
   const btn = isBtn || false;
   const chip = isChip || false;
   return (
-    <div>
+    <div className="flex-row">
       <Card
         sx={{ minWidth: 180 }}
-        className="p-4 w-full hover:bg-dark-purple hover:text-white text-dark-purple text-bold place-content-center text-center shadow-lg"
+        className="p-4 w-full hover:bg-dark-purple hover:text-white text-dark-purple text-bold place-content-center text-center shadow-lg flex-row"
       >
-        <CardContent className="text-bold "  >
-          <Typography sx={{ fontSize: 14 }}  gutterBottom>
+        <CardContent className="text-bold ">
+          <Typography sx={{ fontSize: 14 }} gutterBottom>
             {minTitle}
           </Typography>
           <Typography variant="h5" component="div" className="">
             <h1>{title}</h1>
           </Typography>
-          <Typography sx={{ mb: 1.5 }} >
-            {subTitle}
-          </Typography>
+          <Typography sx={{ mb: 1.5 }}>{subTitle}</Typography>
           <Typography variant="body2">{disc}</Typography>
-          
         </CardContent>
         {btn && (
-          <div>
+          <div className="flex-row">
             <Divider variant="middle" className="my-2 bg-gray-200" />
             <CardActions className=" place-content-center ">
-            <Link href={link}><Button
-                size="medium"
-                className="text-center w-48 border-2 border-white bg-dark-purple text-white hover:bg-white hover:text-dark-purple"
-              >
-                {btnText}
-              </Button></Link>
+              <Link href={link}>
+                <Button
+                  size="medium"
+                  className="text-center w-48 border-2 border-white bg-dark-purple text-white hover:bg-white hover:text-dark-purple"
+                >
+                  {btnText}
+                </Button>
+              </Link>
             </CardActions>
           </div>
         )}
@@ -69,13 +67,9 @@ const MUIMiniCard = ({
           <div>
             <Divider variant="middle" className="my-2 bg-gray-200" />
             <CardActions className=" place-content-center">
-            <Button
-                size="medium"
-                className="text-center w-48 border-2"
-              >
-                 <Chip  label={chipLable} color="warning" variant="outlined" />
+              <Button size="medium" className="text-center w-48 border-2">
+                <Chip label={chipLable} color="warning" variant="outlined" />
               </Button>
-           
             </CardActions>
           </div>
         )}

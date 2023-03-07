@@ -2,13 +2,14 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import AuthContext from "@/components/Context/store/auth-context";
 import { fetchTeachersData } from "@/backend/Teachers/TeacherDB";
 import { postCreateBatch } from "@/backend/Batches/BatchesDB";
+import BatchContext from "@/components/Context/store/batch-context";
 
 const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 const BatchEdit = ({ actionBtn, link, setOpen }) => {
   const [error, setError] = useState(false);
   const [selectedDays, setSelectedDays] = useState([]);
-  const [submitted, setSubmitted] = useState(false);
+  const batchCtx = useContext(BatchContext);
 
   //convert time formate
   function convertTimeTo12HourFormat(time) {
@@ -95,7 +96,6 @@ const BatchEdit = ({ actionBtn, link, setOpen }) => {
     if (data1) {
       console.log("in");
       setError(false);
-      setSubmitted(true);
       nameRef.current.value = "";
       bookNameRef.current.value = "";
       timeRef.current.value = "";
@@ -103,6 +103,7 @@ const BatchEdit = ({ actionBtn, link, setOpen }) => {
       dateRef.current.value = "";
       setSelectedDays([]);
       setOpen(false);
+      batchCtx.setSubmittedHandler(true);
     } else {
       console.log("else");
       setError(true);

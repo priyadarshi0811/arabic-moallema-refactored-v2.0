@@ -12,9 +12,9 @@ const ClassDetais = () => {
     <div className="">
       <div className="">
         <div className="px-20 ">
-          <div className="mb-10">
+          {/* <div className="mb-10">
             <SelectDropdown lable="Select batch student" type="Student" />
-          </div>
+          </div> */}
           <CardLayout
             firstComp=<div>
               <h1 className="text-3xl text-dark-purple">Fakhruddin Ezzey</h1>
@@ -26,7 +26,9 @@ const ClassDetais = () => {
           />
         </div>
 
-        <h1 className="text-lg text-green-500 ml-14 mt-10">Completed Assignments</h1>
+        <h1 className="text-lg text-green-500 ml-14 mt-10">
+          Completed Assignments
+        </h1>
         <MUISlider
           card=<MUIMiniCard
             title="Assignment 1"
@@ -37,7 +39,9 @@ const ClassDetais = () => {
           />
         />
 
-        <h1 className="text-lg text-red-500 ml-14 mt-10">Unchecked Assignments</h1>
+        <h1 className="text-lg text-red-500 ml-14 mt-10">
+          Unchecked Assignments
+        </h1>
         <MUISlider
           card=<MUIMiniCard
             title="Assignment 1"
@@ -45,7 +49,7 @@ const ClassDetais = () => {
             isBtn="true"
             btnText="Check"
             link=""
-          />  
+          />
         />
       </div>
     </div>

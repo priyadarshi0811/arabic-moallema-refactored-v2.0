@@ -12,6 +12,8 @@ import Button from "@mui/material/Button";
 import CardList from "@/components/user/admin/CardList";
 import { fetchBatchesData } from "@/backend/Announcement/AnnouncementDB";
 import AuthContext from "@/components/Context/store/auth-context";
+import BatchContext from "@/components/Context/store/batch-context";
+import SuccessPrompt from "@/components/Layout/elements/SuccessPrompt";
 
 const style = {
   position: "absolute",
@@ -27,11 +29,14 @@ const style = {
 
 const AdminHomePage = () => {
   const [open, setOpen] = React.useState(false);
+  const [filteredBatch, setFilteredBatch] = React.useState([]);
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   console.log("sdf");
   const auth = useContext(AuthContext);
+  const batchCtx = useContext(BatchContext);
 
   useEffect(() => {
     const fetchBatches = async () => {
@@ -39,7 +44,17 @@ const AdminHomePage = () => {
       auth.setBatchesData(data);
     };
     fetchBatches();
-  }, []);
+  }, [batchCtx.submitted]);
+
+  const handleSelectedItem = (batchData) => {
+    let selectedBatch = auth.batchesList.filter(
+      (batch) => batch.batch_name === batchData
+    );
+    setFilteredBatch(selectedBatch);
+  };
+
+  const dataToDisplay =
+    filteredBatch.length === 0 ? auth.batchesList : filteredBatch;
 
   return (
     <div
@@ -65,7 +80,12 @@ const AdminHomePage = () => {
               </div>
               <div className="col-span-3">  
                 <div className="px-2 w-full ">
-                  <SelectDropdown value="class" lable="Select Batch" />
+                  <SelectDropdown
+                    handleSelectedItem={handleSelectedItem}
+                    allItems={auth.batchesList}
+                    value="class"
+                    lable="Select Batch"
+                  />
                 </div>
               </div>
               <div className="col-span-1">
@@ -85,13 +105,19 @@ const AdminHomePage = () => {
             <Divider variant="middle" />
           </div>
           <div className="m-0 p-10 w-full h-fit">
+            {batchCtx.submitted && (
+              <SuccessPrompt
+                title="Batch Created Successfully"
+                setSubmitted={batchCtx.setSubmittedHandler}
+              />
+            )}
             <div className="grid grid-cols-3 w-full mx-auto my-10 gap-10">
-              {auth.batchesList.map((batch) => (
+              {dataToDisplay.map((batch) => (
                 <CardList
                   subTitle={batch.book_name}
                   title={batch.batch_name}
                   id={batch.id}
-                  link="/admin/batch-details"
+                  link={`/admin/batches/batches-detail/${batch.batch_name}`}
                 />
               ))}
             </div>

@@ -14,6 +14,11 @@ import BackButton from "@/components/Layout/elements/BackButton";
 import { Button } from "@mui/material";
 import { fetchStudentBasedonEmail } from "@/backend/UserProfile/StudentTeacherProfileDB";
 import { fetchstudentBatches } from "@/backend/Batches/BatchesForTeachersStudentsDB";
+import BatchContext from "@/components/Context/store/batch-context";
+import SuccessPrompt from "@/components/Layout/elements/SuccessPrompt";
+import { deleteStudent } from "@/backend/DeleteUser/DeleteStudentDB";
+import { deleteFromAuth } from "@/backend/DeleteUser/DeleteUserFromAuth";
+import { useRouter } from "next/router";
 
 const style = {
   position: "absolute",
@@ -32,8 +37,12 @@ const StudentProfile = ({ email }) => {
   const [profileData, setProfileData] = React.useState();
   const [batchesData, setBatchData] = React.useState();
 
+  let router = useRouter();
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const batchCtx = React.useContext(BatchContext);
 
   React.useEffect(() => {
     const studentprofile = async () => {
@@ -41,7 +50,7 @@ const StudentProfile = ({ email }) => {
       setProfileData(data);
     };
     studentprofile();
-  }, []);
+  }, [batchCtx.submitted]);
 
   //getting the batch data for the student
   React.useEffect(() => {
@@ -50,8 +59,13 @@ const StudentProfile = ({ email }) => {
       setBatchData(data);
     };
     fetchStudentBatchDetail();
-  }, [email]);
+  }, [email, batchCtx.submitted]);
 
+  const deleteStudentRecords = () => {
+    deleteStudent(email);
+    deleteFromAuth(email);
+    router.push("/admin/students");
+  };
   console.log(batchesData);
 
   return (
@@ -96,9 +110,14 @@ const StudentProfile = ({ email }) => {
                 </div>
               </div>
             </div>
-
             <Divider variant="middle" />
           </div>
+          {batchCtx.submitted && (
+            <SuccessPrompt
+              title="Student Details Edited Successfully"
+              setSubmitted={batchCtx.setSubmittedHandler}
+            />
+          )}
           <div className="m-0 p-10 w-full h-fit">
             {batchesData && (
               <UserDetails
@@ -118,7 +137,15 @@ const StudentProfile = ({ email }) => {
             aria-describedby="modal-modal-description"
           >
             <Box sx={style}>
-              <RemoveUser user="Student 1" type="Student" action="Remove" />
+              {profileData && (
+                <RemoveUser
+                  deleteStudentRecords={deleteStudentRecords}
+                  userName={profileData[0].name}
+                  user="Student 1"
+                  type="Student"
+                  action="Remove"
+                />
+              )}
             </Box>
           </Modal>
         </div>

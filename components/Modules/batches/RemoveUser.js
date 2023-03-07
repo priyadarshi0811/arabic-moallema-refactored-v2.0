@@ -5,6 +5,7 @@ import { Button, MenuItem, Select } from "@mui/material";
 import { updateTeacher } from "@/backend/Batches/UpdateBatchTeacher";
 import { fetchTeachersData } from "@/backend/Teachers/TeacherDB";
 import { Box } from "@mui/system";
+import BatchContext from "@/components/Context/store/batch-context";
 
 const EditTeacher = ({
   user,
@@ -14,9 +15,14 @@ const EditTeacher = ({
   option,
   batchName,
   setOpen,
+  userName,
+  deleteStudentRecords,
+  deleteTeacherRecords,
+  operation,
 }) => {
   const [teachersList, setTeachersList] = React.useState();
   const [selectedTeacher, setSelectedTeacher] = React.useState("");
+  const batchCtx = React.useContext(BatchContext);
 
   const handleChange = () => {
     // remove user
@@ -32,11 +38,27 @@ const EditTeacher = ({
 
   console.log("selected Teacher: ", selectedTeacher);
 
-  const submitHandlerBatchDetail = (e) => {
-    e.preventDefault();
+  const submitHandlerBatchDetail = () => {
     console.log("submitted");
     updateTeacher(batchName, selectedTeacher);
     setOpen(false);
+    batchCtx.setSubmittedHandler(true);
+  };
+
+  const handleDeletion = () => {
+    if (type === "Batch") {
+      submitHandlerBatchDetail();
+    }
+    if (type === "Student") {
+      console.log("deleting Student");
+      deleteStudentRecords();
+    }
+    if (type === "Teacher" && operation !== "changeTeacher") {
+      deleteTeacherRecords(selectedTeacher);
+    }
+    // if (operation === "changeTeacher") {
+    //   submitHandlerBatchDetail();
+    // }
   };
   const closeHandlerBatchDetail = (e) => {
     e.preventDefault();
@@ -60,15 +82,15 @@ const EditTeacher = ({
               </Alert>
             )}
             <Alert severity="error">
-              Do you realy want to {action} {user} from the database?
+              Do you realy want to {action} {batchName} from the database?
             </Alert>
-            <Alert severity="success">
+            {/* <Alert severity="success">
               The {user} has been {action}d Successfully
-            </Alert>
+            </Alert> */}
           </Stack>
 
           <div className="grid grid-cols-6 gap-6 ">
-            {teachersList && (
+            {teachersList && type !== "Student" && (
               <Box className=" inline-block mt-10">
                 <div className=" -mb-20 w-44">
                   <label className=" text-gray-700">Select Teacher</label>
@@ -101,45 +123,17 @@ const EditTeacher = ({
                     htmlFor="user-type"
                     className="block text-sm  font-medium text-gray-700 border-2 py-1 px-3 rounded-md"
                   >
-                    {batchName}
+                    {batchName ? batchName : userName}
                   </label>
                 </div>
               </div>
-
-              {replace && (
-                <div className="grid grid-cols-8 gap-3 mt-3">
-                  <div className="col-span-8 sm:col-span-3">
-                    <label
-                      htmlFor="user-type"
-                      className="block text-sm font-medium  text-gray-700"
-                    >
-                      Reassign these batches and assignments to:
-                    </label>
-                  </div>
-                  <div className="col-span-8 sm:col-span-5">
-                    <select
-                      id="user-type"
-                      name="user-type"
-                      value=""
-                      onChande={handleChange}
-                      autoComplete="user-type"
-                      required
-                      className="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                    >
-                      <option>Teacher 1</option>
-                      <option>Teacher 2</option>
-                      <option>Teacher 3</option>
-                    </select>
-                  </div>
-                </div>
-              )}
             </div>
           </div>
         </div>
 
         <div className="items-center  py-3 text-right mt-5">
           <Button
-            onClick={submitHandlerBatchDetail}
+            onClick={handleDeletion}
             variant="contained"
             className=" w-full bg-dark-purple  "
           >
