@@ -7,10 +7,19 @@ import StudentList from "@/components/user/teacher/StudentList";
 import BatchList from "@/components/user/teacher/BatchList";
 import BackButton from "@/components/Layout/elements/BackButton";
 import { Divider } from "@mui/material";
+import BatchDetaisList from "@/components/user/teacher/BatchDetaisList";
+import { useRouter } from "next/router";
 // import InProgress from "@/components/Layout/screen/InProgress";
 // import MiniCard from "@/components/Layout/card/MiniCard";
 
 const index = () => {
+  const router = useRouter();
+
+  let batchName;
+  if (router.query.class_detail) {
+    batchName = router.query?.class_detail;
+  }
+
   return (
     <div
       className=""
@@ -24,20 +33,20 @@ const index = () => {
       }}
     >
       <div className="flex min-h-screen w-full h-full">
-        <Sidebar nav_index={1} />
+        {batchName && <Sidebar nav_index={1} batchName={batchName} />}
         <div className="flex-1  px-5">
           <div className="m-0 p-5  w-full h-fit">
             {/* <MUIBreadcrumbs /> */}
             <div className="grid grid-cols-1 w-full mx-auto my-10 gap-10">
               <div className="col-span-1">
                 <h1 className=" my-auto text-2xl mt-3 ">
-                  <BackButton /> Assignmets
+                  <BackButton /> Class
                 </h1>
               </div>
 
               <Divider variant="middle" />
               <div className="col-span-1">
-                <StudentList />
+                <BatchDetaisList batchName={batchName} />
               </div>
             </div>
           </div>

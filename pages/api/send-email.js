@@ -28,8 +28,11 @@ export default async function sendEmail(req, res) {
     //inserting data to student/teacher table
 
     addStudentTeacherToDB(finalUser, email, name, contact, typeUser);
+
     if (userPath === "student") {
-      addStudentToBatch(email, batch);
+      setTimeout(() => {
+        addStudentToBatch(email, batch);
+      }, 2000);
     }
 
     const mailOptions = {

@@ -49,7 +49,6 @@ export default function MultipleSelectChip({ batchesData }) {
     setSelectedBatch(batchName);
   };
 
-  console.log(personName);
   const handleClose = () => setOpen(false);
 
   const handleChange = (event) => {
@@ -88,9 +87,12 @@ export default function MultipleSelectChip({ batchesData }) {
   }
   console.log(filteredBatches);
 
-  const handleDelete = () => {
+  const handleDelete = (value) => {
+    console.log(value);
     console.info("You clicked the delete icon.");
+    setPersonName((prevSelected) => prevSelected.filter((val) => val !== value));
   };
+  console.log(personName);
 
   const style = {
     position: "absolute",
@@ -159,7 +161,7 @@ export default function MultipleSelectChip({ batchesData }) {
                   key={value}
                   label={value}
                   onClick={handleOpen}
-                  onDelete={handleDelete}
+                  onDelete={() => handleDelete(value)}
                   className="bg-dark-purple text-white p-3"
                 />
               ))}

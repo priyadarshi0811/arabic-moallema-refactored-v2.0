@@ -24,6 +24,7 @@ import AuthContext from "@/components/Context/store/auth-context";
 import { addStudentToBatch } from "@/backend/Batches/AddStudentToBatchDB";
 import { fetchStudentBasedonEmail } from "@/backend/UserProfile/StudentTeacherProfileDB";
 import { updateStudentDetail } from "@/backend/Students/StudentDB";
+import BatchContext from "@/components/Context/store/batch-context";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -48,11 +49,11 @@ export default function AddUser({
   const [email, setEmail] = React.useState("");
 
   const [batch, setBatch] = React.useState(batchName);
-
   const [edit, setEdit] = React.useState(false);
 
   //get batches
   const auth = React.useContext(AuthContext);
+  const batchCtx = React.useContext(BatchContext);
 
   React.useEffect(() => {
     const fetchBatches = async () => {
@@ -107,6 +108,7 @@ export default function AddUser({
 
       console.log(`User ${data.email} created successfully`);
       setOpen(false);
+      batchCtx.setSubmittedHandler(true);
     } else {
       console.log("Please fill in all fields");
     }
@@ -116,6 +118,7 @@ export default function AddUser({
     e.preventDefault();
     console.log("updateStudentSetail");
     updateStudentDetail(email, name, contact, batch);
+    batchCtx.setSubmittedHandler(true);
   };
 
   return (

@@ -13,6 +13,10 @@ import { Button } from "@mui/material";
 import CardList from "@/components/user/admin/CardList";
 import AuthContext from "@/components/Context/store/auth-context";
 import { getStudentTeacherList } from "@/backend/ManageUser/ManageStudentTeacher";
+import { fetchBatchesData } from "@/backend/Announcement/AnnouncementDB";
+import { fetchBatchesForTeacherBasedOnBatchName } from "@/backend/Batches/BatchesDB";
+import BatchContext from "@/components/Context/store/batch-context";
+import SuccessPrompt from "@/components/Layout/elements/SuccessPrompt";
 
 const style = {
   position: "absolute",
@@ -28,9 +32,20 @@ const style = {
 
 const TeacherHome = () => {
   const [open, setOpen] = React.useState(false);
+  const [filteredTeacher, setfilteredTeacher] = React.useState([]);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
   const authCtx = useContext(AuthContext);
+  const batchCtx = useContext(BatchContext);
+
+  useEffect(() => {
+    const fetchBatches = async () => {
+      const data = await fetchBatchesData();
+      authCtx.setBatchesData(data);
+    };
+    fetchBatches();
+  }, []);
 
   useEffect(() => {
     const getUser = async () => {
@@ -38,9 +53,24 @@ const TeacherHome = () => {
       authCtx.setTeachersData(data);
     };
     getUser();
-  }, []);
+  }, [batchCtx.submitted]);
 
-  let teachersList = authCtx.teachersList;
+  //get the filtered value
+  const handleSelectedItem = (batchData) => {
+    console.log("batchData", batchData);
+    const fetchStudentBatch = async () => {
+      const data = await fetchBatchesForTeacherBasedOnBatchName(batchData);
+
+      let selectedTeacher = authCtx.teachersList.filter((obj1) =>
+        data.some((obj2) => obj1.email === obj2.teacher_email)
+      );
+      setfilteredTeacher(selectedTeacher);
+    };
+    fetchStudentBatch();
+  };
+
+  const dataToDisplay =
+    filteredTeacher.length > 0 ? filteredTeacher : authCtx.teachersList;
 
   return (
     <div
@@ -66,7 +96,12 @@ const TeacherHome = () => {
               </div>
               <div className="col-span-3">
                 <div className="px-5 w-full">
-                  <SelectDropdown value="Batch" lable="Select Batch" />
+                  <SelectDropdown
+                    handleSelectedItem={handleSelectedItem}
+                    allItems={authCtx.batchesList}
+                    value="Batch"
+                    lable="Select Batch"
+                  />
                 </div>
               </div>
               <div className="col-span-1">
@@ -84,9 +119,15 @@ const TeacherHome = () => {
             </div>
             <Divider variant="middle" />
           </div>
+          {batchCtx.submitted && (
+            <SuccessPrompt
+              title="Teacher Added Successfully"
+              setSubmitted={batchCtx.setSubmittedHandler}
+            />
+          )}
           <div className="m-0 p-10 w-full h-fit">
             <div className="grid grid-cols-3 w-full mx-auto my-10 gap-10">
-              {teachersList.map((teacher) => (
+              {dataToDisplay.map((teacher) => (
                 <CardList
                   title={teacher.name}
                   subTitle={teacher.email}
@@ -105,6 +146,7 @@ const TeacherHome = () => {
       >
         <Box sx={style}>
           <AddTeacher
+            setOpen={setOpen}
             userType="addTeacher"
             link="/admin/teachers"
             title="Add New Teacher"

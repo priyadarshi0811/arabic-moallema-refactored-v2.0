@@ -13,7 +13,10 @@ import { Button } from "@mui/material";
 import CardList from "@/components/user/admin/CardList";
 import AuthContext from "@/components/Context/store/auth-context";
 import { getStudentTeacherList } from "@/backend/ManageUser/ManageStudentTeacher";
-
+import { fetchEnrolledStudentsInBatch } from "@/backend/Batches/BatchesDB";
+import { fetchBatchesData } from "@/backend/Announcement/AnnouncementDB";
+import BatchContext from "@/components/Context/store/batch-context";
+import SuccessPrompt from "@/components/Layout/elements/SuccessPrompt";
 const style = {
   position: "absolute",
   top: "50%",
@@ -28,10 +31,23 @@ const style = {
 
 const StudentHome = () => {
   const [open, setOpen] = React.useState(false);
+  const [error, setError] = React.useState();
+
+  const [filteredStudent, setFilteredStudent] = React.useState([]);
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const authCtx = useContext(AuthContext);
+  const batchCtx = useContext(BatchContext);
+
+  useEffect(() => {
+    const fetchBatches = async () => {
+      const data = await fetchBatchesData();
+      authCtx.setBatchesData(data);
+    };
+    fetchBatches();
+  }, []);
 
   useEffect(() => {
     const getUser = async () => {
@@ -39,9 +55,28 @@ const StudentHome = () => {
       authCtx.setStudentsData(data);
     };
     getUser();
-  }, []);
+  }, [batchCtx.submitted]);
 
-  let studentsList = authCtx.studentsList;
+  useEffect(() => {});
+
+  //get the filtered value
+  const handleSelectedItem = (batchData) => {
+    console.log("batchData", batchData);
+    const fetchStudentBatch = async () => {
+      const data = await fetchEnrolledStudentsInBatch(batchData);
+      let selectedStudent = authCtx.studentsList.filter((obj1) =>
+        data.some((obj2) => obj1.email === obj2.student_id)
+      );
+      if (batchData) {
+        selectedStudent.length === 0 ? setError(true) : setError(false);
+      }
+      setFilteredStudent(selectedStudent);
+    };
+    fetchStudentBatch();
+  };
+
+  const dataToDisplay =
+    filteredStudent.length > 0 ? filteredStudent : authCtx.studentsList;
 
   console.log("sdf");
 
@@ -69,7 +104,12 @@ const StudentHome = () => {
               </div>
               <div className="col-span-3">
                 <div className="px-5 w-full">
-                  <SelectDropdown value="Batch" lable="Select Batch" />
+                  <SelectDropdown
+                    handleSelectedItem={handleSelectedItem}
+                    allItems={authCtx.batchesList}
+                    value="Batch"
+                    lable="Select Batch"
+                  />
                 </div>
               </div>
               <div className="col-span-1">
@@ -87,15 +127,27 @@ const StudentHome = () => {
             </div>
             <Divider variant="middle" />
           </div>
+          {batchCtx.submitted && (
+            <SuccessPrompt
+              title="Student Added Successfully"
+              setSubmitted={batchCtx.setSubmittedHandler}
+            />
+          )}
+          {error && (
+            <p className="text-red-500 justify-center items-center flex text-xl font-bold">
+              No Student In the selected Batch
+            </p>
+          )}
           <div className="m-0 p-10 w-full h-fit">
             <div className="grid grid-cols-3 w-full mx-auto my-10 gap-10">
-              {studentsList.map((student) => (
-                <CardList
-                  title={student.name}
-                  subTitle={student.email}
-                  link={`/admin/students/studentprofile/${student.email}`}
-                />
-              ))}
+              {!error &&
+                dataToDisplay.map((student) => (
+                  <CardList
+                    title={student.name}
+                    subTitle={student.email}
+                    link={`/admin/students/studentprofile/${student.email}`}
+                  />
+                ))}
             </div>
           </div>
         </div>

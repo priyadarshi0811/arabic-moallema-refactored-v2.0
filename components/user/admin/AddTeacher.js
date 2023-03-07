@@ -12,6 +12,7 @@ import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import { updateStudentDetail } from "@/backend/Students/StudentDB";
 import { updateTeacherDetail } from "@/backend/Teachers/TeacherDB";
+import BatchContext from "@/components/Context/store/batch-context";
 
 // const names = ["Batch 1", "Batch 2", "Batch 3", "Batch 4", "Batch 5"];
 
@@ -31,6 +32,7 @@ export default function AddUser({
   link,
   user,
   title,
+  setOpen,
   action,
   userType,
   profileData,
@@ -43,9 +45,7 @@ export default function AddUser({
   const [contact, setContact] = React.useState("");
   const [email, setEmail] = React.useState("");
 
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const batchCtx = React.useContext(BatchContext);
 
   let isEdit;
 
@@ -93,6 +93,7 @@ export default function AddUser({
 
       console.log(`User ${data.email} created successfully`);
       setOpen(false);
+      batchCtx.setSubmittedHandler(true);
     } else {
       console.log("Please fill in all fields");
     }
@@ -102,6 +103,8 @@ export default function AddUser({
     e.preventDefault();
     console.log("update Teacher Detail");
     updateTeacherDetail(email, name, contact);
+    batchCtx.setSubmittedHandler(true);
+
   };
 
   return (
@@ -176,8 +179,8 @@ export default function AddUser({
       )}
 
       <Modal
-        open={open}
-        onClose={handleClose}
+        // open={open}
+        // onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
