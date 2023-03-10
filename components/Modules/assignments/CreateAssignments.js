@@ -6,14 +6,13 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import TextFieldCard from "@/components/Layout/card/TextFieldCard";
 import DriveFolderUploadIcon from "@mui/icons-material/DriveFolderUpload";
 import AudioBtn from "@/components/Layout/elements/AudioBtn";
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControl";
+import FormLabel from "@mui/material/FormLabel";
 
 const CreateAssignments = () => {
-
   return (
     <div>
       {/* <SelectDropdown lable="Assignment fo Class" type="Assignment" /> */}
@@ -120,6 +119,7 @@ const CreateAssignments = () => {
             >
               <AudioBtn url="https://assets.mixkit.co/active_storage/sfx/212/212-preview.mp3" />
             </Button>
+
             </div>
           </div>
         </div>
@@ -222,22 +222,23 @@ const CreateAssignments = () => {
         </div>
 
         <FormControl className="mt-5 p-5 ">
-      <FormLabel id="demo-row-radio-buttons-group-label">Provide Audio support</FormLabel>
-      <RadioGroup
-        row
-        aria-labelledby="demo-row-radio-buttons-group-label"
-        name="row-radio-buttons-group"
-      >
-        <FormControlLabel value="yes" control={<Radio />} label="yes" />
-        <FormControlLabel value="no" control={<Radio />} label="no" />
-        
-      </RadioGroup>
-    </FormControl>
-
+          <FormLabel id="demo-row-radio-buttons-group-label">
+            Provide Audio support
+          </FormLabel>
+          <RadioGroup
+            row
+            aria-labelledby="demo-row-radio-buttons-group-label"
+            name="row-radio-buttons-group"
+          >
+            <FormControlLabel value="yes" control={<Radio />} label="yes" />
+            <FormControlLabel value="no" control={<Radio />} label="no" />
+          </RadioGroup>
+        </FormControl>
       </div>
 
-        
-    <Button className="w-full bg-dark-purple mt-5" variant="contained">Finalize Assignment</Button>
+      <Button className="w-full bg-dark-purple mt-5" variant="contained">
+        Finalize Assignment
+      </Button>
     </div>
   );
 };

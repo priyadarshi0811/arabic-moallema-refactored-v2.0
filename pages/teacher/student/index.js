@@ -7,7 +7,6 @@ import StudentList from "@/components/user/teacher/StudentList";
 import BatchList from "@/components/user/teacher/BatchList";
 import BackButton from "@/components/Layout/elements/BackButton";
 import { Divider } from "@mui/material";
-import BatchDetails from "@/pages/admin/batch-details";
 // import InProgress from "@/components/Layout/screen/InProgress";
 // import MiniCard from "@/components/Layout/card/MiniCard";
 

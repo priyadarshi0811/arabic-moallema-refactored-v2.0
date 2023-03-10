@@ -45,7 +45,9 @@ const style = {
   p: 4,
 };
 
+
 const ClassDetais = ({ batchName, user }) => {
+
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -54,7 +56,9 @@ const ClassDetais = ({ batchName, user }) => {
   const [enrollStudents, setEnrollStudents] = React.useState([]);
   const [scheduleDetail, setScheduleDetail] = React.useState();
   const [chapters, setChapters] = React.useState([]);
+
   const [isDisabled, setIsDisabled] = React.useState(false);
+
 
   const batchCtx = React.useContext(BatchContext);
   const attendanceList = batchCtx.attendanceList;
@@ -141,6 +145,7 @@ const ClassDetais = ({ batchName, user }) => {
     fetchChaptersData();
   }, [detail[0], chapters[0]]);
 
+
   //*************************handle time************************************ */
 
   React.useEffect(() => {
@@ -162,6 +167,7 @@ const ClassDetais = ({ batchName, user }) => {
       }
     }
   }, [sheduleData]);
+
 
   /////////////////////Session handling/////////////////////////////////
 
@@ -297,12 +303,14 @@ const ClassDetais = ({ batchName, user }) => {
                     />
                   </div>
                   <div className="  my-5 col-span-2">
+
                     <div className="flex items-center justify-end ">
                       <Link
                         href={detail[0].g_meet}
                         target="_blank"
                         className="w-full"
                       >
+
                         {isDisabled && (
                           <Button
                             variant="contained"
@@ -334,6 +342,7 @@ const ClassDetais = ({ batchName, user }) => {
                           </span>
                         )}
                       </div>
+
                     </div>
                   </div>
                 </div>
@@ -394,6 +403,7 @@ const ClassDetais = ({ batchName, user }) => {
                   </Button>
                 </div>
               </div>
+
             </Box>
           </Modal>
         </div>

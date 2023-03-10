@@ -14,6 +14,7 @@ import MarkRemarkSec from "@/components/Layout/elements/MarkRemarkSec";
 import CardLayout from "@/components/Layout/card/CardLayout";
 
 const AssignmentDetails = () => {
+  
   return (
     <div
       style={{

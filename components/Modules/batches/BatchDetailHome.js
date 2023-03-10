@@ -98,6 +98,7 @@ const BatchDetailHome = ({ batchName }) => {
           </div>
           <div className="m-0 p-10 w-full bg-white h-fit border-4 border-white rounded-xl">
             <BatchEdit batchName={batchName} actionBtn="Edit Batch" link="" />
+
           </div>
           <div className="bg-white p-0 my-5 h-fit">
             <BatchHistory batchHistory={batchHistory} />

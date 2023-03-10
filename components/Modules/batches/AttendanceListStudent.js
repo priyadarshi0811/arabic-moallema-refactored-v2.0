@@ -219,6 +219,7 @@ export default function CustomPaginationActionsTable({
                   ]}
                   colSpan={3}
                   count={attendaceList.length}
+
                   rowsPerPage={rowsPerPage}
                   page={page}
                   SelectProps={{

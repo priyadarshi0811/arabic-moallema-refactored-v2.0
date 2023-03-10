@@ -11,6 +11,7 @@ const BatchEdit = ({ actionBtn, link, setOpen }) => {
   const [selectedDays, setSelectedDays] = useState([]);
   const [submitted, setSubmitted] = useState(false);
   const batchCtx = useContext(BatchContext);
+
   //convert time formate
   function convertTimeTo12HourFormat(time) {
     let [hours, minutes] = time.split(":");
@@ -96,7 +97,6 @@ const BatchEdit = ({ actionBtn, link, setOpen }) => {
     if (data1) {
       console.log("in");
       setError(false);
-      setSubmitted(true);
       nameRef.current.value = "";
       bookNameRef.current.value = "";
       timeRef.current.value = "";
