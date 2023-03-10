@@ -9,7 +9,7 @@ import Paper from "@mui/material/Paper";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 
-export default function AccessibleTable() {
+export default function AccessibleTable({ detail, sheduleData }) {
   return (
     <div className="bg-white rounded-lg shadow-md">
       <div className="w-full border-b-2 p-3 border-dark-black">
@@ -31,13 +31,10 @@ export default function AccessibleTable() {
               <TableCell style={{ padding: "22px 10px" }}>
                 <Stack spacing={1} alignItems="left">
                   <Stack direction="row" spacing={1}>
-                    <Chip label="Mon" color="success" />
-                    <Chip label="Tue" color="success" />
-                    <Chip label="Wed" color="success" />
-                    <Chip label="Thus" color="success" />
-                    <Chip label="Fri" color="success" />
-                    <Chip label="Sat" color="success" />
-                    <Chip label="Sun" color="info" />
+                    {sheduleData &&
+                      sheduleData[0].schedule.days.map((day) => (
+                        <Chip label={day} color="success" />
+                      ))}
                   </Stack>
                 </Stack>
               </TableCell>
@@ -51,7 +48,12 @@ export default function AccessibleTable() {
               >
                 Time
               </TableCell>
-              <TableCell style={{ padding: "20px 10px" }}>07:30 am</TableCell>
+              {sheduleData && (
+                <TableCell style={{ padding: "20px 10px" }}>
+                  {" "}
+                  {sheduleData[0].schedule.time}
+                </TableCell>
+              )}
             </TableRow>
             <TableRow>
               <TableCell
@@ -62,9 +64,11 @@ export default function AccessibleTable() {
               >
                 Teacher
               </TableCell>
-              <TableCell style={{ padding: "20px 10px" }}>
-                Intesar Mamon
-              </TableCell>
+              {detail[0] && (
+                <TableCell style={{ padding: "20px 10px" }}>
+                  {detail[0].teacher_email}
+                </TableCell>
+              )}
             </TableRow>
           </TableBody>
         </Table>

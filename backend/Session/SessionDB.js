@@ -48,17 +48,11 @@ export const fetchSessionAttendance = async (
   return data;
 };
 
-export const fetchSessionData = async (
-  batch_id,
-  chapter_name
-) => {
-  const { data, error } = await supabase
-    .from("session")
-    .select("*")
-    .match({
-      batch_id: batch_id,
-      chapter_name: chapter_name,
-    });
+export const fetchSessionData = async (batch_id, chapter_name) => {
+  const { data, error } = await supabase.from("session").select("*").match({
+    batch_id: batch_id,
+    chapter_name: chapter_name,
+  });
   if (error) {
     console.log("Error fetching batches data: ", error);
     return null;
@@ -66,3 +60,13 @@ export const fetchSessionData = async (
   return data;
 };
 
+export const fetchSessionDataForBatch = async (batch_id) => {
+  const { data, error } = await supabase.from("session").select("*").match({
+    batch_id: batch_id,
+  });
+  if (error) {
+    console.log("Error fetching batches data: ", error);
+    return null;
+  }
+  return data;
+};

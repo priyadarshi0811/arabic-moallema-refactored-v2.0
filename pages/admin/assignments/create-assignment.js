@@ -11,6 +11,7 @@ import Button from "@mui/material/Button";
 import CardList from "@/components/user/admin/CardList";
 import Link from "next/link";
 import CreateAssignments from "@/components/Modules/assignments/CreateAssignments";
+import AssignmentCreator from "@/components/Modules/assignments/AssignmentCreator";
 
 const CreateAssignment = () => {
   return (
@@ -48,7 +49,8 @@ const CreateAssignment = () => {
           <Divider variant="middle" />
         </div>
         <div className="m-0 p-10 w-full h-fit">
-          <CreateAssignments />
+          {/* <CreateAssignments /> */}
+          <AssignmentCreator />
         </div>
       </div>
     </div>

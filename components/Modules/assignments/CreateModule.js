@@ -16,15 +16,15 @@ const CreateModule = () => {
 
   return (
     <div>
-      <SelectDropdown lable="Assignment fo Class" type="Assignment" />
+      {/* <SelectDropdown lable="Assignment fo Class" type="Assignment" /> */}
 
       <div className="grid grid-cols-8 bg-gray-50 mt-5 p-5 rounded-md shadow-md">
-        <div className="col-span-6">
+        {/* <div className="col-span-6">
           <SelectDropdown
             lable="Select task from the option"
             type="Assignment"
           />
-        </div>
+        </div> */}
         <div className="col-span-2">
           <div className="px-2 pt-2 text-end w-full">
             <Button
@@ -118,7 +118,7 @@ const CreateModule = () => {
               className="bg-dark-purple w-full mt-10 text-5xl"
               component="label"
             >
-              <AudioBtn url="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" />
+              <AudioBtn url="https://assets.mixkit.co/active_storage/sfx/212/212-preview.mp3" />
             </Button>
             </div>
           </div>

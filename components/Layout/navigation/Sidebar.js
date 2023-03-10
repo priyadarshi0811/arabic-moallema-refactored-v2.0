@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import logo from "@/components/src/img/AMLogo.png";
 import sidebarBgImg from "@/components/src/img/Frame73.png";
 import { useRouter } from "next/router";
@@ -26,14 +26,24 @@ import LiveTvIcon from "@mui/icons-material/LiveTv";
 import GroupsIcon from "@mui/icons-material/Groups";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import CampaignIcon from '@mui/icons-material/Campaign';
+import CampaignIcon from "@mui/icons-material/Campaign";
 import AuthContext from "@/components/Context/store/auth-context";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import AssignmentIcon from "@mui/icons-material/Assignment";
+import BatchContext from "@/components/Context/store/batch-context";
 
 const Sidebar = (props) => {
-  let nav_data = nav_reference()[props.nav_index];
+  const batchCtx = useContext(BatchContext);
 
+  useEffect(() => {
+    batchCtx.setBatchNameHandler(props.batchName);
+  }, [props.batchName]);
+
+  let batchName = batchCtx.batchName;
+  console.log(batchName);
+  let nav_data = nav_reference(batchName)[props.nav_index];
+
+  console.log(props.batchName);
   const authCtx = useContext(AuthContext);
   const router = useRouter();
 
@@ -175,7 +185,7 @@ const ListItemObj = (props) => {
   );
 };
 
-function nav_reference() {
+function nav_reference(batchName) {
   let nav_reference_ovj;
   nav_reference_ovj = {
     0: [
@@ -213,10 +223,10 @@ function nav_reference() {
     1: [
       {
         linkname: "Batches",
-         link: "/teacher",
+        link: "/teacher",
         img: <DashboardIcon className="text-dark-purple" />,
       },
-     
+
       {
         linkname: "Student Report",
         link: "/teacher/student",
@@ -224,7 +234,7 @@ function nav_reference() {
       },
       {
         linkname: "Start Class",
-        link: "/teacher/class",
+        link: `/teacher/class/${batchName}`,
         img: <LiveTvIcon className="text-dark-purple" />,
       },
       {
@@ -236,13 +246,23 @@ function nav_reference() {
     2: [
       {
         linkname: "Classes",
-        link: "/work-in-progress",
+        link: "/student",
         img: <DashboardIcon className="text-dark-purple" />,
       },
       {
-        linkname: "Classes",
-        link: "/work-in-progress",
+        linkname: "Assignments",
+        link: "/student/activity",
         img: <ClassIcon className="text-dark-purple" />,
+      },
+      {
+        linkname: "Join Class",
+        link: "/student/class",
+        img: <LiveTvIcon className="text-dark-purple" />,
+      },
+      {
+        linkname: "Assessment",
+        link: "/student/assessment",
+        img: <LiveTvIcon className="text-dark-purple" />,
       },
     ],
   };

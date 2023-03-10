@@ -36,4 +36,6 @@ export const addStudentTeacherToDB = async (
     .select();
 
   console.log(errorTable);
+
+ 
 };

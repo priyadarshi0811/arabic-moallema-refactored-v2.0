@@ -10,7 +10,6 @@ import Typography from "@mui/material/Typography";
 import Divider from '@mui/material/Divider';
 import { Chip } from "@mui/material";
 
-
 const bull = (
   <Box
     component="span"
@@ -34,7 +33,7 @@ const MUIMiniCard = ({
   const btn = isBtn || false;
   const chip = isChip || false;
   return (
-    <div>
+    <div className="flex-row">
       <Card
         sx={{ minWidth: 180 }}
         className="p-4 w-full hover:bg-dark-purple hover:text-white text-dark-purple text-bold place-content-center text-center shadow-lg"
@@ -53,29 +52,27 @@ const MUIMiniCard = ({
           
         </CardContent>
         {btn && (
-          <div>
-            <Divider variant="middle" className="my-2 bg-gray-200" />
-            <CardActions className=" place-content-center ">
-            <Link href={link}><Button
+          <div className="flex-row">
+          <Divider variant="middle" className="my-2 bg-gray-200" />
+          <CardActions className=" place-content-center ">
+            <Link href={link}>
+              <Button
                 size="medium"
                 className="text-center w-48 border-2 border-white bg-dark-purple text-white hover:bg-white hover:text-dark-purple"
               >
                 {btnText}
-              </Button></Link>
-            </CardActions>
-          </div>
+              </Button>
+            </Link>
+          </CardActions>
+        </div>
         )}
         {chip && (
           <div>
             <Divider variant="middle" className="my-2 bg-gray-200" />
             <CardActions className=" place-content-center">
-            <Button
-                size="medium"
-                className="text-center w-48 border-2"
-              >
+            <Button size="medium" className="text-center w-48 border-2">
                  <Chip  label={chipLable} color="warning" variant="outlined" />
               </Button>
-           
             </CardActions>
           </div>
         )}
