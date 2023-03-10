@@ -112,13 +112,14 @@ const CreateAssignments = () => {
           <div className="col-span-1 mx-5 text-center">
             <h1 className="py-3">Audio Preview</h1>
             <div className="w-full text-5xl">
-              <Button
-                variant="contained"
-                className="bg-dark-purple w-full mt-10 text-5xl"
-                component="label"
-              >
-                <AudioBtn url="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" />
-              </Button>
+            <Button
+              variant="contained"
+              className="bg-dark-purple w-full mt-10 text-5xl"
+              component="label"
+            >
+              <AudioBtn url="https://assets.mixkit.co/active_storage/sfx/212/212-preview.mp3" />
+            </Button>
+
             </div>
           </div>
         </div>

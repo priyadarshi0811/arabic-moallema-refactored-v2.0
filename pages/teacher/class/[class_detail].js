@@ -46,7 +46,7 @@ const index = () => {
 
               <Divider variant="middle" />
               <div className="col-span-1">
-                <BatchDetaisList batchName={batchName} />
+                <BatchDetaisList user="teacher" batchName={batchName} />
               </div>
             </div>
           </div>

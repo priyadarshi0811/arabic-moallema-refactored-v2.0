@@ -9,6 +9,7 @@ const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const BatchEdit = ({ actionBtn, link, setOpen }) => {
   const [error, setError] = useState(false);
   const [selectedDays, setSelectedDays] = useState([]);
+  const [submitted, setSubmitted] = useState(false);
   const batchCtx = useContext(BatchContext);
 
   //convert time formate

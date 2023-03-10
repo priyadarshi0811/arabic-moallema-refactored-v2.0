@@ -1,0 +1,33 @@
+.colorLayout {
+  border: 1px solid rgb(208, 202, 202);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  background-color: white;
+  
+}
+
+.mainBtn {
+  padding: 1rem;
+  margin: 0.5rem;
+  border-radius: 5px;
+  border: 1.5px solid grey;
+  transition: all 0.1s ease-out;
+}
+.mainBtn:hover {
+  transform: translateY(-10%);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+.text {
+  color: grey;
+  border-bottom: 1px solid grey;
+}
+
+.selectedColor {
+  position: absolute;
+  margin-top: -2.5rem;
+  margin-left: 7rem;
+}
+
+@media (min-1200) {
+  
+}

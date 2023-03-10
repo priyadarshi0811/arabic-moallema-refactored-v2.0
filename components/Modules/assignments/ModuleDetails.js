@@ -21,13 +21,13 @@ const ModuleDetails = () => {
         </h1>
         <div className="grid grid-cols-6 gap-8 p-5">
           <div className="col-span-2 ">
-            <PlayCard title="ض" isBtn="true" btnText=<AudioBtn /> />
+            <PlayCard title="ض" isBtn="true" btnText=<AudioBtn url="https://assets.mixkit.co/active_storage/sfx/212/212-preview.mp3" /> />
           </div>
           <div className="col-span-2 ">
-            <PlayCard title="ص" isBtn="true" btnText=<AudioBtn /> />
+            <PlayCard title="ص" isBtn="true" btnText=<AudioBtn url="https://assets.mixkit.co/active_storage/sfx/212/212-preview.mp3" /> />
           </div>
           <div className="col-span-2 ">
-            <PlayCard title="س" isBtn="true" btnText=<AudioBtn /> />
+            <PlayCard title="س" isBtn="true" btnText=<AudioBtn url="https://assets.mixkit.co/active_storage/sfx/212/212-preview.mp3" /> />
           </div>
         </div>
 
@@ -54,13 +54,13 @@ const ModuleDetails = () => {
             <h1 className="px-5 pb-5 border-b-2">Examples of Halq</h1>
             <div className="grid grid-cols-6 gap-8 p-5">
               <div className="col-span-2 ">
-                <PlayCard title="ض" isBtn="true" btnText=<AudioBtn /> />
+                <PlayCard title="ض" isBtn="true" btnText=<AudioBtn url="https://assets.mixkit.co/active_storage/sfx/212/212-preview.mp3" /> />
               </div>
               <div className="col-span-2 ">
-                <PlayCard title="ص" isBtn="true" btnText=<AudioBtn /> />
+                <PlayCard title="ص" isBtn="true" btnText=<AudioBtn url="https://assets.mixkit.co/active_storage/sfx/212/212-preview.mp3" /> />
               </div>
               <div className="col-span-2 ">
-                <PlayCard title="س" isBtn="true" btnText=<AudioBtn /> />
+                <PlayCard title="س" isBtn="true" btnText=<AudioBtn url="https://assets.mixkit.co/active_storage/sfx/212/212-preview.mp3" /> />
               </div>
             </div>
           </div>

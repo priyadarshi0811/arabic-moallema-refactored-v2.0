@@ -246,13 +246,23 @@ function nav_reference(batchName) {
     2: [
       {
         linkname: "Classes",
-        link: "/work-in-progress",
+        link: "/student",
         img: <DashboardIcon className="text-dark-purple" />,
       },
       {
-        linkname: "Classes",
-        link: "/work-in-progress",
+        linkname: "Assignments",
+        link: "/student/activity",
         img: <ClassIcon className="text-dark-purple" />,
+      },
+      {
+        linkname: "Join Class",
+        link: "/student/class",
+        img: <LiveTvIcon className="text-dark-purple" />,
+      },
+      {
+        linkname: "Assessment",
+        link: "/student/assessment",
+        img: <LiveTvIcon className="text-dark-purple" />,
       },
     ],
   };

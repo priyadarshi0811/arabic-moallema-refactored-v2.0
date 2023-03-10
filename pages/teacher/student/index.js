@@ -37,7 +37,7 @@ const index = () => {
 
               <Divider variant="middle" />
               <div className="col-span-1">
-                <StudentList />
+                <StudentList user='teacher' />
               </div>
             </div>
           </div>

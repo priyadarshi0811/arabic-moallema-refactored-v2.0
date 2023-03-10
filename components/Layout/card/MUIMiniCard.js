@@ -50,25 +50,30 @@ const MUIMiniCard = ({
         </CardContent>
         {btn && (
           <div className="flex-row">
-            <Divider variant="middle" className="my-2 bg-gray-200" />
-            <CardActions className=" place-content-center ">
-              <Link href={link}>
-                <Button
-                  size="medium"
-                  className="text-center w-48 border-2 border-white bg-dark-purple text-white hover:bg-white hover:text-dark-purple"
-                >
-                  {btnText}
-                </Button>
-              </Link>
-            </CardActions>
-          </div>
+
+          <Divider variant="middle" className="my-2 bg-gray-200" />
+          <CardActions className=" place-content-center ">
+            <Link href={link}>
+              <Button
+                size="medium"
+                className="text-center w-48 border-2 border-white bg-dark-purple text-white hover:bg-white hover:text-dark-purple"
+              >
+                {btnText}
+              </Button>
+            </Link>
+          </CardActions>
+        </div>
+
+
         )}
         {chip && (
           <div>
             <Divider variant="middle" className="my-2 bg-gray-200" />
             <CardActions className=" place-content-center">
-              <Button size="medium" className="text-center w-48 border-2">
-                <Chip label={chipLable} color="warning" variant="outlined" />
+
+            <Button size="medium" className="text-center w-48 border-2">
+                 <Chip  label={chipLable} color="warning" variant="outlined" />
+
               </Button>
             </CardActions>
           </div>
