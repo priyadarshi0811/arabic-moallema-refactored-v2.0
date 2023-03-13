@@ -84,7 +84,7 @@ const TeacherProfile = ({ email }) => {
     >
       <div className="flex min-h-screen h-full">
         <Sidebar nav_index={0} />
-        <div className="flex-1 h-screen p-5  ">
+        <div className="flex-1 p-5  ">
           <div className="m-0 p-5 w-full h-fit">
             <div className="flex justify-between w-full mx-auto my-10 gap-10 ">
               <div className="">

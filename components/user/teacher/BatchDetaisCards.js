@@ -58,11 +58,11 @@ const ClassDetais = ({ batchName }) => {
 
   return (
     <div className="">
-      <div className="">
-        <div className="px-12 w-full">
+      <div className="px-3 lg:px-8 w-full">
+        <div className=" w-full">
           <CardLayout
             firstComp=<div>
-              <h1 className="text-3xl text-dark-purple">{batchName}</h1>
+              <h1 className="text-2xl lg:text-3xl text-dark-purple">{batchName}</h1>
             </div>
             secondComp=<div>
               Chapter completed: 3 of 15
@@ -76,13 +76,13 @@ const ClassDetais = ({ batchName }) => {
             </div>
           />
         </div>
-        <h1 className="text-lg ml-14 mt-10">Completed Chapters</h1>
+        <h1 className="text-lg  mt-10">Completed Chapters</h1>
         {!loading && completedChapters.length === 0 && (
           <p className=" text-red-400 text-xl mt-10 ml-10">
             No chapter completed
           </p>
         )}
-        <div className="mt-4 ml-4 relative">
+        <div className="mt-4  relative">
           {loading && <LoadingSpinner />}
         </div>
         <MUISlider
@@ -90,7 +90,7 @@ const ClassDetais = ({ batchName }) => {
             !loading &&
             completedChapters &&
             completedChapters.map((chapter) => (
-              <div className="pl-4">
+              <div className="px-2">
                 <MUIMiniCard
                   title={chapter}
                   disc="15/02/23"
@@ -103,8 +103,8 @@ const ClassDetais = ({ batchName }) => {
           }
         />
 
-        <h1 className="text-lg ml-14 mt-10">Upcoming Chapters</h1>
-        <div className="mt-4 ml-4 relative">
+        <h1 className="text-lg  mt-10">Upcoming Chapters</h1>
+        <div className="mt-4  relative">
           {loading && <LoadingSpinner />}
         </div>
         <MUISlider
@@ -112,7 +112,7 @@ const ClassDetais = ({ batchName }) => {
             !loading &&
             upcomingChapters &&
             upcomingChapters.map((chapter) => (
-              <div className="pl-4">
+              <div className="px-2">
                 <MUIMiniCard
                   title={chapter.chapter_name}
                   disc="15/02/23"

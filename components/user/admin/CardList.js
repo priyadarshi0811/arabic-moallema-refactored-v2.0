@@ -3,8 +3,8 @@ import React from "react";
 
 const CardList = ({ title, subTitle, link, disc }) => {
   return (
-    <div>
-      <div className="col-span-auto">
+    <div className=" w-full">
+      <div className="w-full h-full">
         <MUIMiniCard
           title={title}
           disc={subTitle}

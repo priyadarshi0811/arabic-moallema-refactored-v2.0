@@ -156,7 +156,8 @@ export default function CustomPaginationActionsTable({
             <label className=" mt-3 ml-4 p-4 text-gray-700">Select Batch</label>
           </div>
           <Select
-            className=" w-96 m-6"
+          style={{width: '90%'}}
+            className=" m-6"
             value={selectedOption}
             onChange={(e) => setSelectedOption(e.target.value)}
           >

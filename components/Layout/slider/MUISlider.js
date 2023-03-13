@@ -14,16 +14,16 @@ const MUISlider = ({ card }) => {
 
   return (
     <div className="">
-      <Box sx={{ minWidth: "560" }} className="w-full my-5 ">
+      <Box sx={{ minWidth: "560" }} className="w-full my-3 ">
         <Tabs
-          value={value}
+          // value={value}
           onChange={handleChange}
           variant="scrollable"
           scrollButtons="auto"
           aria-label="scrollable auto tabs example"
         >
           {/* Custome Cards  */}
-          <div className="m-4 w-1/4 flex">{card}</div>
+          <div className=" w-1/4 flex">{card}</div>
 
           {/* with link */}
           {/* <Link href="/" className="w-full m-5">

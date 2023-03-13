@@ -79,9 +79,9 @@ const LiveBatchDetail = ({ batchName }) => {
     >
       <div className="flex min-h-screen h-full">
         <Sidebar nav_index={0} />
-        <div className="flex-1 h-screen p-7  ">
+        <div className="flex-1  p-7  ">
           <div className="m-0 p-10 w-full h-fit">
-            <div className="grid grid-cols-5 w-full mx-auto my-5 gap-10">
+            <div className="grid grid-cols-1 w-full mx-auto my-5 gap-10">
               <div className="col-span-1">
                 <h1 className=" my-auto text-2xl mt-3 ">
                   <BackButton /> Live Details

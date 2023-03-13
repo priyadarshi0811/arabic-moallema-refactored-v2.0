@@ -33,17 +33,17 @@ const MUIMiniCard = ({
   const btn = isBtn || false;
   const chip = isChip || false;
   return (
-    <div className="flex-row">
+    <div className="flex-row ">
       <Card
         sx={{ minWidth: 180 }}
-        className="p-4 w-full hover:bg-dark-purple hover:text-white text-dark-purple text-bold place-content-center text-center shadow-lg flex-row"
+        className="p-4 w-full  hover:bg-dark-purple hover:text-white text-dark-purple text-bold place-content-center text-center shadow-lg flex-row"
       >
-        <CardContent className="text-bold ">
-          <Typography sx={{ fontSize: 14 }} gutterBottom>
+        <CardContent className="text-bold whitespace-normal">
+          <Typography sx={{ fontSize: 14 }}  gutterBottom>
             {minTitle}
           </Typography>
-          <Typography variant="h5" component="div" className="">
-            <h1>{title}</h1>
+          <Typography variant="h5" component="div" className="w-full">
+            <h1 className="text-xl xl:text-2xl">{title}</h1>
           </Typography>
           <Typography sx={{ mb: 1.5 }}>{subTitle}</Typography>
           <Typography variant="body2">{disc}</Typography>

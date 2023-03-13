@@ -10,6 +10,7 @@ const CardLayout = ({
   disc,
   isBtn,
   btn,
+  path,
   onClick,
 }) => {
   const btnIs = isBtn || false;
@@ -32,6 +33,7 @@ const CardLayout = ({
           {secondComp}
           <div className="flex items-center justify-end ">
             {btnIs && (
+              <Link href={path} className='w-full' >
               <Button
                 variant="contained"
                 className=" w-full bg-dark-purple "
@@ -41,6 +43,7 @@ const CardLayout = ({
               >
                 {btn}
               </Button>
+              </Link>
             )}
           </div>
         </div>

@@ -68,7 +68,7 @@ const LetterActivity = () => {
         return (
           <center>
             <br />
-            <Card style={{ width: "100%", margin: "10px" }}>
+            <Card style={{ width: "100%",  }}>
               <CardContent>
                 <div className="bg-dark-purple text-center text-white p-5 w-full rounded-md">
                   <h1>
@@ -166,7 +166,7 @@ class DragDropActivity extends React.Component {
     return (
       <DragDropContext onDragEnd={this.handleDragEnd}>
         <Container style={{ display: "flex" }}>
-          <Grid container rowSpacing={6} sx={{ marginTop: "5%" }}>
+          <Grid container rowSpacing={6} sx={{ marginTop: "2%" }}>
             {this.state.columnOrder.map((columnid) => {
               const column = this.state.columns[columnid];
               console.log(column.taskIds);
@@ -178,6 +178,7 @@ class DragDropActivity extends React.Component {
 
               return (
                 <div className="grid grid-cols-auto">
+                  
                   <Droppable droppableId={columnid}>
                     {(provided) => (
                       <List
@@ -185,6 +186,7 @@ class DragDropActivity extends React.Component {
                         innerRef={provided.innerRef}
                         name={column.name}
                       >
+                        
                         {tasks.map((task, key) => {
                           return (
                             <Draggable

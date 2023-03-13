@@ -30,17 +30,13 @@ const AssignmentDetails = () => {
         <Sidebar nav_index={1} />
         <div className="flex-1  p-7  ">
           <div className="m-0 p-10 w-full h-fit">
-            <div className="grid grid-cols-4 w-full mx-auto my-5 gap-10">
+            <div className="grid grid-cols-2 w-full mx-auto my-5 gap-10">
               <div className="col-span-2">
                 <h1 className=" my-auto text-2xl mt-3 ">
                   <BackButton /> Assignmets Details for assingnment 1
                 </h1>
               </div>
-              <div className="col-span-2">
-                <div className="px-2 w-full ">
-                  {/* <SelectDropdown value="class" lable="Select Batch" /> */}
-                </div>
-              </div>
+              
             </div>
             <Divider variant="middle" />
           </div>

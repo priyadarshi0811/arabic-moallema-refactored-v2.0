@@ -10,14 +10,14 @@ import { Box } from "@mui/system";
 const ClassDetais = () => {
   return (
     <div className="">
-      <div className="">
-        <div className="px-20 ">
+      <div className="px-3 lg:px-8 ">
+        <div className="">
           {/* <div className="mb-10">
             <SelectDropdown lable="Select batch student" type="Student" />
           </div> */}
           <CardLayout
             firstComp=<div>
-              <h1 className="text-3xl text-dark-purple">Fakhruddin Ezzey</h1>
+              <h1 className="text-2xl lg:text-3xl text-dark-purple">Fakhruddin Ezzey</h1>
             </div>
             secondComp=<div>
               <h1 className="mb-3">Batches attended 3/5</h1>
@@ -26,7 +26,7 @@ const ClassDetais = () => {
           />
         </div>
 
-        <h1 className="text-lg text-green-500 ml-14 mt-10">
+        <h1 className="text-lg  mt-10">
           Completed Assignments
         </h1>
         <MUISlider
@@ -39,16 +39,16 @@ const ClassDetais = () => {
           />
         />
 
-        <h1 className="text-lg text-red-500 ml-14 mt-10">
+        <h1 className="text-lg  mt-10">
           Unchecked Assignments
         </h1>
         <MUISlider
           card=<MUIMiniCard
             title="Assignment 1"
             disc="Un-Checked"
-            isBtn="true"
-            btnText="Check"
-            link=""
+            // isBtn=""
+            // btnText="Check"
+            // link=""
           />
         />
       </div>

@@ -117,7 +117,7 @@ const ChapterDetailHome = ({ chapterName, batchName }) => {
                 <div className="bg-white rounded-md p-5 ">
                   <h1 className="py-2 border-b-2 ">Attendance</h1>
                   <div className=" flex  justify-around mt-10">
-                    <div>
+                    <div className="w-full px-2">
                       <h1 className="py-2 border-b-2 ">Present Students</h1>
                       {presentStudentsArray && (
                         <AttandanceList
@@ -127,7 +127,7 @@ const ChapterDetailHome = ({ chapterName, batchName }) => {
                         />
                       )}
                     </div>
-                    <div>
+                    <div className="w-full px-2">
                       <h1 className="py-2 border-b-2 ">Absent Students</h1>
                       {absentStudents && (
                         <AttandanceList

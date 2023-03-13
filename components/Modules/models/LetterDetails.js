@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import DrawingCanvas from "@/components/Modules/Canvas/DrawingCanvas";
 import AudioButton from "@/components/Layout/elements/AudioBtn";
 import teacherOverlay from "@/components/src/img/ArabicMollemaMascotR-02.png";
+import BackButton from "@/components/Layout/elements/BackButton";
+
 
 const LetterDetails = (props) => {
   // const [getColor, setColor] = useState("red");
@@ -20,7 +22,14 @@ const LetterDetails = (props) => {
 
   return (
     <div className="p-5">
-      <h1 className=" p-5 text-3xl text-center text-white">Module1</h1>
+      <div className="">
+        <h1 className=" my-auto p-5 text-3xl  text-white mx-3 ">
+          <span className="bg-white rounded-full p-0 h-fit">
+            <BackButton />
+          </span>{" "}
+          Assignmets
+        </h1>
+      </div>
       <div className="w-full  ">
         <div className=" p-3 text-center  rounded-lg place-content-center bg-white mx-10 ">
           <h2 className="text-2xl">How to Write "{props.name}"</h2>
@@ -29,6 +38,7 @@ const LetterDetails = (props) => {
               Start Drawing
             </h2>
 
+           
             <div className=" mx-0 mt-5 ">
               <div className=" p-5 mt-15 "></div>
               <div className="w-full flex flex-col justify-center my-5   ">

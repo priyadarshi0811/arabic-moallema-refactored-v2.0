@@ -75,22 +75,18 @@ const index = () => {
         <Sidebar nav_index={2} />
         <div className="flex-1  p-7  ">
           <div className="m-0 p-10 w-full h-fit">
-            <div className="grid grid-cols-5 w-full mx-auto my-5 gap-10">
+            <div className="grid grid-cols-1 w-full mx-auto my-5 gap-10">
               <div className="col-span-1">
                 <h1 className=" my-auto text-2xl mt-3 ">
                   <BackButton /> Assignmets
                 </h1>
               </div>
-              <div className="col-span-2">
-                <div className="px-2 w-full ">
-                  {/* <SelectDropdown value="class" lable="Select Batch" /> */}
-                </div>
-              </div>
+              
            
             </div>
             <Divider variant="middle" />
           </div>
-          <div className="grid grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
             {Alphabates.map((alphabate) => (
               <div className="mx-auto  w-fit h-fit">
                 <MUIMiniCard

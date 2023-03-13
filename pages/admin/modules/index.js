@@ -44,17 +44,13 @@ const index = () => {
         <Sidebar nav_index={0} />
         <div className="flex-1 h-screen p-7  ">
           <div className="m-0 p-10 w-full h-fit">
-            <div className="grid grid-cols-5 w-full mx-auto my-5 gap-10">
+            <div className="grid grid-cols-4 w-full mx-auto my-5 gap-10">
               <div className="col-span-2">
                 <h1 className=" my-auto text-2xl mt-3 ">
                   <BackButton /> Modules (Chapters)
                 </h1>
               </div>
-              <div className="col-span-1">  
-                <div className="px-2 w-full ">
-                  {/* <SelectDropdown value="class" lable="Select Batch" /> */}
-                </div>
-              </div>
+              
               <div className="col-span-2 ml-auto">
                 <div className="px-2 w-full">
                   
@@ -72,8 +68,9 @@ const index = () => {
             </div>
             <Divider variant="middle" />
           </div>
-          <div className="m-0 p-10 w-full h-fit">
+          <div className="m-0 p-10 w-full h-fit grid grid-cols-2 lg:grid-cols-3">
             <CardList
+            title='Module'
               user='Module'
               disc="6 Sub-Sections"
               link="/admin/modules/module-details" />

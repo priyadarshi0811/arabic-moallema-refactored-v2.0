@@ -64,12 +64,13 @@ const index = () => {
           <h1 className="ml-10 pt-5 text-white">Activity 1: Letter Tracing</h1>
         </div>
       <div className="grid grid-cols-4 gap-5 ">
-        <div className="col-span-1 pl-16 w-full h-fit">
+        <div className="col-span-1 pl-16 w-full h-fit max-xl:hidden">
           <img src={teacherImg.src} className="w-72" alt="" />
         </div>
-        <div className="col-span-3 pt-10">
-          <div className="p-5  grid grid-cols-7 m-4 justify-center ">
-            
+        <div className="col-span-4 xl:col-span-3 pt-10">
+          <div className="p-3 lg:p-5  grid grid-cols-7 m-4 justify-center  ">
+
+            {/* <div className="flex  flex-col-reverse "> */}            
             {Alphabates.map((alphabate) => (
               <HomeActivityCard
                 name={alphabate.letter}
@@ -78,6 +79,8 @@ const index = () => {
                 link='tracing'
               />
             ))}
+            {/* </div> */}
+            
           </div>
         </div>
       </div>

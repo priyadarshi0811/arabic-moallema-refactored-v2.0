@@ -82,7 +82,7 @@ const StudentProfile = ({ email }) => {
     >
       <div className="flex min-h-screen h-full">
         <Sidebar nav_index={0} />
-        <div className="flex-1 h-screen p-5  ">
+        <div className="flex-1 p-5  ">
           <div className="m-0 p-5 w-full h-fit">
             <div className="flex justify-between w-full mx-auto my-10 gap-10 ">
               <div className="">
@@ -92,7 +92,7 @@ const StudentProfile = ({ email }) => {
               </div>
 
               <div className="">
-                <div className=" w-full  ">
+                <div className=" w-full mt-3 ">
                   {/* <button
                       className="px-5 py-2 bg-red-500 text-white text-center rounded-lg hover:bg-red-800 mx-3 "
                       onClick={handleOpen}
@@ -101,7 +101,7 @@ const StudentProfile = ({ email }) => {
                     </button> */}
                   <Button
                     variant="contained"
-                    className="bg-red-600 hover:bg-red-700"
+                    className="bg-red-600 hover:bg-red-700 "
                     onClick={handleOpen}
                     startIcon={<DeleteIcon />}
                   >
