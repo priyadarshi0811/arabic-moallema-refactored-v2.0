@@ -26,7 +26,8 @@ class Person extends React.Component {
           <Paper variant='outlined' style={{ padding: '1px', width: '100%', marginTop: '10px' , backgroundColor: snapshot.isDragging ? 'lightgreen' : 'white' }}>
             {/* {this.props.task_content} */}
             <div className=" ">
-              <MUIMiniCard title={this.props.task_content} />
+              {/* <MUIMiniCard title={this.props.task_content} /> */}
+              <h1 className="py-5 text-dark-purple">{this.props.task_content}</h1>
             </div>
           </Paper>
         </div>

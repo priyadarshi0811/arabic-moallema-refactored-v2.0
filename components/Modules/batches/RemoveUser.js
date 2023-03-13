@@ -121,7 +121,7 @@ const EditTeacher = ({
                 <div className="col-span-8 sm:col-span-5">
                   <label
                     htmlFor="user-type"
-                    className="block text-sm  font-medium text-gray-700 border-2 py-1 px-3 rounded-md"
+                    className="block text-sm  font-medium text-gray-700 border-b-2 py-1 px-3 "
                   >
                     {batchName ? batchName : userName}
                   </label>

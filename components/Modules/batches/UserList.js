@@ -22,7 +22,7 @@ export default function PinnedSubheaderList({ enrollStudents, batchName }) {
       <List
         sx={{
           width: "100%",
-          minWidth: 360,
+          minWidth: 320,
           bgcolor: "background.paper",
           position: "relative",
           overflow: "auto",

@@ -54,12 +54,22 @@ const Sidebar = (props) => {
   };
   const [open, setOpen] = useState(true);
 
+  // var width = (window.innerWidth)
+
+  // if(1060>=1050){
+  //   setOpen(false)
+  // }
+
+  // window.innerWidth <= 1050 ? setOpen(true)
+
+
+
   return (
     <div className="flex ">
       <div
         className={` ${
           open ? "w-72" : "w-24 "
-        } bg-dark-purple min-h-screen h-full  p-5  pt-8 relative duration-300`}
+        } bg-dark-purple min-h-screen h-full p-5  pt-8 relative duration-300`}
         style={{
           backgroundImage: `url(${sidebarBgImg.src})`,
           backgroundRepeat: "no-repeat",

@@ -24,7 +24,7 @@ const LiveBatchDetails = ({
     <div>
       <div>
         {isStudent && (
-          <div className="grid grid-cols-2 gap-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
             <div className="col-span-1">
               {batchesData && (
                 <AddStudent
@@ -52,7 +52,7 @@ const LiveBatchDetails = ({
           </div>
         )}
         {!isStudent && (
-          <div className="grid grid-cols-2 gap-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
             <div className="col-span-1">
               {batchesData && profileData && (
                 <AddTeacher

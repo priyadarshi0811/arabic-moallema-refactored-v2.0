@@ -19,8 +19,8 @@ const AssignmentDetails = ({markRemark}) => {
   return (
     <div> 
       <h1 className="">Task: Tracing </h1>
-      <div className="bg-gray-50 mt-5 p-5 rounded-md shadow-md">
-        <h1 className="px-5">
+      <div className="bg-gray-50 mt-5 lg:p-5 p-2 rounded-md shadow-md">
+        <h1 className="lg:px-5 p-2">
            Queston:  Enter the words that can be traced by the students
         </h1>
         <div className="border-2 rounded-md min-h-40 p-5 m-5">
@@ -128,10 +128,10 @@ const AssignmentDetails = ({markRemark}) => {
 
 
       <h1 className="mt-10">Task: Drag and Drop </h1>
-      <div className="bg-gray-50 mt-5 p-5 rounded-md shadow-md">
-        <h1 className="px-5">Queston: Drag the words and drop it in Heavy or Light Ra bucket:</h1>
-        <div className="grid grid-cols-3 gap-10 m-5">
-          <div className="col-span-1 border-2 rounded-md p-3 cursor-pointer">
+      <div className="bg-gray-50 mt-5 lg:p-5 p-2 rounded-md shadow-md">
+        <h1 className="p-2 lg:px-5">Queston: Drag the words and drop it in Heavy or Light Ra bucket:</h1>
+        <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2  gap-10 m-5">
+          <div className="col-span-1 border-2 rounded-md lg:p-3 p-2 cursor-pointer">
             <p className="pb-3">Initial</p>
             <div className="my-3">
           <MUIMiniCard
@@ -139,7 +139,7 @@ const AssignmentDetails = ({markRemark}) => {
             />
           </div>
           </div>
-          <div className="col-span-1 border-2 rounded-md p-3 cursor-pointer">
+          <div className="col-span-1 border-2 rounded-md lg:p-3 p-2 cursor-pointer">
             <p className="pb-3">Middle</p>
             <div className="my-3">
           <MUIMiniCard
@@ -147,7 +147,7 @@ const AssignmentDetails = ({markRemark}) => {
             />
           </div>
           </div>
-          <div className="col-span-1 border-2 rounded-md p-3 cursor-pointer"> 
+          <div className="col-span-1 border-2 rounded-md lg:p-3 p-2 cursor-pointer"> 
           <p className="pb-3 gap-5">Final</p>
           <div className="my-3">
           <MUIMiniCard

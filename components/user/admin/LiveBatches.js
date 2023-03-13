@@ -3,7 +3,7 @@ import React from 'react'
 
 const LiveClasses = () => {
   return (
-    <div><div className="grid grid-cols-3 w-full mx-auto my-10 gap-10">
+    <div><div className="grid grid-cols-2 lg:grid-cols-3 w-full mx-auto my-10 gap-10">
     <div className="col-span-auto">
       <MUIMiniCard
         title="Chapter 1"

@@ -245,7 +245,7 @@ const ClassDetais = ({ batchName, user }) => {
       {detail[0] && sheduleData && (
         <div className="">
           <div className="">
-            <div className="px-20 w-full grid grid-cols-3 gap-5 ">
+            <div className="px-20 w-full grid grid-cols-2 xl:grid-cols-3 gap-5 ">
               <div className="col-span-2 bg-white rounded-md">
                 <h1 className="p-5 border-b-2">Batch Details</h1>
                 <div className="px-5 w-full grid grid-cols-2 gap-5">
@@ -281,7 +281,7 @@ const ClassDetais = ({ batchName, user }) => {
                   </div>
                 </div>
               </div>
-              <div className="col-span-1 bg-white rounded-md">
+              <div className="col-span-2 xl:col-span-1  bg-white rounded-md">
                 <h1 className="p-5 border-b-2">Students List</h1>
                 <List sx={{ width: "200%", maxWidth: 360 }}>
                   {enrollStudents &&
