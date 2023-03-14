@@ -94,15 +94,15 @@ const StudentHome = () => {
     >
       <div className="flex min-h-screen h-full">
         <Sidebar nav_index={0} />
-        <div className="flex-1 h-screen p-7  ">
+        <div className="flex-1 p-7  ">
           <div className="m-0 p-10 w-full h-fit">
-            <div className="grid grid-cols-5 w-full mx-auto my-5 gap-10">
-              <div className="col-span-1">
+            <div className="grid grid-cols-5 lg:grid-cols-3 w-full  my-5 gap-2">
+              <div className="col-span-5 lg:col-span-1">
                 <h1 className=" my-auto text-2xl mt-3 ">
                   <BackButton /> Student
                 </h1>
               </div>
-              <div className="col-span-3">
+              <div className="col-span-3 lg:col-span-1">
                 <div className="px-5 w-full">
                   <SelectDropdown
                     handleSelectedItem={handleSelectedItem}
@@ -112,8 +112,8 @@ const StudentHome = () => {
                   />
                 </div>
               </div>
-              <div className="col-span-1">
-                <div className="px-0 mt-2 w-full">
+              <div className="col-span-2 lg:col-span-1">
+                <div className="px-0 mt-2 w-full text-end">
                   <Button
                     variant="contained"
                     className="bg-dark-purple"
@@ -139,7 +139,7 @@ const StudentHome = () => {
             </p>
           )}
           <div className="m-0 p-10 w-full h-fit">
-            <div className="grid grid-cols-3 w-full mx-auto my-10 gap-10">
+            <div className="grid grid-cols-2 lg:grid-cols-3 w-full mx-auto my-10 gap-10">
               {!error &&
                 dataToDisplay.map((student) => (
                   <CardList

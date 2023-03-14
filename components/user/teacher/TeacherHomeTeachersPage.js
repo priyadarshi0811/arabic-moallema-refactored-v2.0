@@ -39,7 +39,7 @@ const TeacherHomeTeachersPage = ({ email }) => {
       <div className="flex min-h-screen h-full">
         <div className="flex-1 h-screen p-7  ">
           <div className="m-0 p-10 w-full h-fit">
-            <div className="grid grid-cols-3 w-full mx-auto my-10 gap-10">
+            <div className="grid grid-cols-2 lg:grid-cols-3 w-full mx-auto my-10 gap-10">
               {authCtx.batchesList.map((batch) => (
                 <CardList
                   subTitle={batch.book_name}

@@ -20,7 +20,7 @@ const BasicSelect = ({ allItems, type, lable, handleSelectedItem }) => {
       </div>
       <div className="col-span-4">
         {allItems && (
-          <Box sx={{ minWidth: 120 }} className="w-full ">
+          <Box sx={{ minWidth: 70 }} className="w-full ">
             <FormControl fullWidth>
               <Select
                 id="demo-simple-select"

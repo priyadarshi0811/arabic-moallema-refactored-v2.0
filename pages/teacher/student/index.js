@@ -26,7 +26,7 @@ const index = () => {
       <div className="flex min-h-screen w-full h-full">
         <Sidebar nav_index={1} />
         <div className="flex-1  px-5">
-          <div className="m-0 p-5  w-full h-fit">
+          <div className="m-0 p-2 lg:p-5   w-full h-fit">
             {/* <MUIBreadcrumbs /> */}
             <div className="grid grid-cols-1 w-full mx-auto my-10 gap-10">
               <div className="col-span-1">
@@ -37,7 +37,7 @@ const index = () => {
 
               <Divider variant="middle" />
               <div className="col-span-1">
-                <StudentList />
+                <StudentList user='teacher' />
               </div>
             </div>
           </div>

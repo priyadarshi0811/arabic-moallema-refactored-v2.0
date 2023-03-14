@@ -19,20 +19,20 @@ const ModuleDetails = () => {
         <h1 className="px-5 pb-5 border-b-2">
           Al-Halq have three parts: Aqsal, Wasal and Adnan
         </h1>
-        <div className="grid grid-cols-6 gap-8 p-5">
+        <div className="grid grid-cols-4 lg:grid-cols-6 gap-8 p-5">
           <div className="col-span-2 ">
-            <PlayCard title="ض" isBtn="true" btnText=<AudioBtn /> />
+            <PlayCard title="ض" isBtn="true" btnText=<AudioBtn url="https://assets.mixkit.co/active_storage/sfx/212/212-preview.mp3" /> />
           </div>
           <div className="col-span-2 ">
-            <PlayCard title="ص" isBtn="true" btnText=<AudioBtn /> />
+            <PlayCard title="ص" isBtn="true" btnText=<AudioBtn url="https://assets.mixkit.co/active_storage/sfx/212/212-preview.mp3" /> />
           </div>
           <div className="col-span-2 ">
-            <PlayCard title="س" isBtn="true" btnText=<AudioBtn /> />
+            <PlayCard title="س" isBtn="true" btnText=<AudioBtn url="https://assets.mixkit.co/active_storage/sfx/212/212-preview.mp3" /> />
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-8 p-5">
-          <div className="col-span-1 ">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-8 p-5">
+          <div className="col-span-1  ">
             <Card sx={{ maxWidth: "100%" }}>
               <CardMedia
                 sx={{ minWidth: "100%", height: 220 }}
@@ -50,17 +50,17 @@ const ModuleDetails = () => {
               
             </Card>
           </div>
-          <div className="col-span-2 ">
+          <div className="col-span-1 lg:col-span-2 ">
             <h1 className="px-5 pb-5 border-b-2">Examples of Halq</h1>
-            <div className="grid grid-cols-6 gap-8 p-5">
+            <div className="grid lg:grid-cols-6 gap-8 p-5">
               <div className="col-span-2 ">
-                <PlayCard title="ض" isBtn="true" btnText=<AudioBtn /> />
+                <PlayCard title="ض" isBtn="true" btnText=<AudioBtn url="https://assets.mixkit.co/active_storage/sfx/212/212-preview.mp3" /> />
               </div>
               <div className="col-span-2 ">
-                <PlayCard title="ص" isBtn="true" btnText=<AudioBtn /> />
+                <PlayCard title="ص" isBtn="true" btnText=<AudioBtn url="https://assets.mixkit.co/active_storage/sfx/212/212-preview.mp3" /> />
               </div>
               <div className="col-span-2 ">
-                <PlayCard title="س" isBtn="true" btnText=<AudioBtn /> />
+                <PlayCard title="س" isBtn="true" btnText=<AudioBtn url="https://assets.mixkit.co/active_storage/sfx/212/212-preview.mp3" /> />
               </div>
             </div>
           </div>

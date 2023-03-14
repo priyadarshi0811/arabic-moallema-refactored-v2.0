@@ -74,7 +74,7 @@ const BatchDetailHome = ({ batchName }) => {
       <div className="flex min-h-screen h-full">
         <Sidebar nav_index={0} />
         <div className="flex-1  p-5  ">
-          <div className="m-0 p-5 w-full h-fit">
+          <div className="m-0 p-5 w-full ">
             <div className="flex justify-between w-full mx-auto my-10 gap-10 ">
               <div className="">
                 <h1 className=" my-auto text-2xl mt-3 ">
@@ -97,7 +97,8 @@ const BatchDetailHome = ({ batchName }) => {
             <Divider variant="middle" />
           </div>
           <div className="m-0 p-10 w-full bg-white h-fit border-4 border-white rounded-xl">
-            <BatchEdit actionBtn="Edit Batch" link="" />
+            <BatchEdit batchName={batchName} actionBtn="Edit Batch" link="" />
+
           </div>
           <div className="bg-white p-0 my-5 h-fit">
             <BatchHistory batchHistory={batchHistory} />

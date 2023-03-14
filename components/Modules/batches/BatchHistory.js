@@ -115,7 +115,7 @@ export default function CustomPaginationActionsTable({
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - batchHistory.length) : 0;
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -209,7 +209,7 @@ export default function CustomPaginationActionsTable({
               <TablePagination
                 rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
                 colSpan={4}
-                count={rows.length}
+                count={batchHistory.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 SelectProps={{

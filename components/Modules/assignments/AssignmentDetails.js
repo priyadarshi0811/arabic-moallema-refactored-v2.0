@@ -13,23 +13,25 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import MUIMiniCard from "@/components/Layout/card/MUIMiniCard";
 import MicIcon from "@mui/icons-material/Mic";
+import canvasImg from '@/components/src/img/canvas(10).png'
 
 const AssignmentDetails = ({markRemark}) => {
   return (
     <div> 
-      <h1 className="">Task 1: Tracing </h1>
-      <div className="bg-gray-50 mt-5 p-5 rounded-md shadow-md">
-        <h1 className="px-5">
-          Enter the words that can be traced by the students
+      <h1 className="">Task: Tracing </h1>
+      <div className="bg-gray-50 mt-5 lg:p-5 p-2 rounded-md shadow-md">
+        <h1 className="lg:px-5 p-2">
+           Queston:  Enter the words that can be traced by the students
         </h1>
         <div className="border-2 rounded-md min-h-40 p-5 m-5">
-          <h1 className="p-5 text-6xl text-gray-400"> يـ ـيـ ـي</h1>
+          {/* <h1 className="p-5 text-6xl text-gray-400"> يـ ـيـ ـي</h1> */}
+          <img src={canvasImg.src} alt="" className="mx-auto" />
         </div>
       {markRemark}
       </div>
 
 
-      <h1 className="mt-10">Task 2: Select the correct option </h1>
+      {/* <h1 className="mt-10">Task 2: Select the correct option </h1>
       <div className="bg-gray-50 mt-5 p-5 rounded-md shadow-md">
         <h1 className="px-5">Write the question for the option</h1>
         <div className="px-5 py-5">
@@ -51,10 +53,10 @@ const AssignmentDetails = ({markRemark}) => {
           </div>
         </div>
       {markRemark}
-      </div>
+      </div> */}
 
 
-      <h1 className="mt-10">Task 3: Identify by audio </h1>
+      {/* <h1 className="mt-10">Task 3: Identify by audio </h1>
       <div className="bg-gray-50 mt-5 p-5 rounded-md shadow-md">
         <h1 className="px-5">Write the question for the option</h1>
         <div className="px-5 py-5"></div>
@@ -69,7 +71,7 @@ const AssignmentDetails = ({markRemark}) => {
               className="bg-dark-purple w-full mt-10 text-5xl"
               component="label"
             >
-              <AudioBtn url="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" />
+              <AudioBtn url="https://assets.mixkit.co/active_storage/sfx/212/212-preview.mp3" />
             </Button>
             </div>
           </div>
@@ -87,10 +89,10 @@ const AssignmentDetails = ({markRemark}) => {
           </div>
         </div>
       {markRemark}
-      </div>
+      </div> */}
 
 
-      <h1 className="mt-10">Task 4: Pronounce the Khat </h1>
+      {/* <h1 className="mt-10">Task 4: Pronounce the Khat </h1>
       <div className="bg-gray-50 mt-5 p-5 rounded-md shadow-md">
         <h1 className="px-5">Write the question for the option</h1>
         <div className="px-5 py-5"></div>
@@ -122,36 +124,38 @@ const AssignmentDetails = ({markRemark}) => {
           </div>
         </div>
       {markRemark}
-      </div>
+      </div> */}
 
 
-      <h1 className="mt-10">Task 5: Drag and Drop </h1>
-      <div className="bg-gray-50 mt-5 p-5 rounded-md shadow-md">
-        <h1 className="px-5">Drag the words and drop it in Heavy or Light Ra bucket:</h1>
-        <div className="grid grid-cols-3 gap-10 m-5">
-          <div className="col-span-1 border-2 rounded-md p-3 cursor-pointer">
-            <p className="pb-3">Heavy</p>
-          </div>
-          <div className="col-span-1 border-2 rounded-md p-3 cursor-pointer">
-            <p className="pb-3">Light</p>
-          </div>
-          <div className="col-span-1 border-2 rounded-md p-3 cursor-pointer"> 
-          <p className="pb-3 gap-5">words</p>
-          <div className="my-3">
+      <h1 className="mt-10">Task: Drag and Drop </h1>
+      <div className="bg-gray-50 mt-5 lg:p-5 p-2 rounded-md shadow-md">
+        <h1 className="p-2 lg:px-5">Queston: Drag the words and drop it in Heavy or Light Ra bucket:</h1>
+        <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2  gap-10 m-5">
+          <div className="col-span-1 border-2 rounded-md lg:p-3 p-2 cursor-pointer">
+            <p className="pb-3">Initial</p>
+            <div className="my-3">
           <MUIMiniCard
-              title="حَقّ"
+               title="الله"
             />
           </div>
-          <div className="my-3">
+          </div>
+          <div className="col-span-1 border-2 rounded-md lg:p-3 p-2 cursor-pointer">
+            <p className="pb-3">Middle</p>
+            <div className="my-3">
           <MUIMiniCard
-               title="ا لفلق"
+              title="مال"
             />
           </div>
+          </div>
+          <div className="col-span-1 border-2 rounded-md lg:p-3 p-2 cursor-pointer"> 
+          <p className="pb-3 gap-5">Final</p>
           <div className="my-3">
           <MUIMiniCard
-              title="خلقنا"
+              title="فِدا"
             />
           </div>
+          
+          
           
           </div>
         </div>

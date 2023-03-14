@@ -9,6 +9,7 @@ const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const BatchEdit = ({ actionBtn, link, setOpen }) => {
   const [error, setError] = useState(false);
   const [selectedDays, setSelectedDays] = useState([]);
+  const [submitted, setSubmitted] = useState(false);
   const batchCtx = useContext(BatchContext);
 
   //convert time formate
@@ -143,28 +144,6 @@ const BatchEdit = ({ actionBtn, link, setOpen }) => {
                   </div>
                   <div className="col-span-8 sm:col-span-4">
                     <label
-                      htmlFor="book-name"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      Book name
-                    </label>
-                    <input
-                      type="text"
-                      name="book-name"
-                      id="book-name"
-                      ref={bookNameRef}
-                      required
-                      autoComplete="given-name"
-                      className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-span-6">
-                <div className="grid grid-cols-9 gap-3">
-                  <div className="col-span-9 sm:col-span-3">
-                    <label
                       htmlFor="Teacher"
                       className="block text-sm font-medium text-gray-700"
                     >
@@ -182,6 +161,12 @@ const BatchEdit = ({ actionBtn, link, setOpen }) => {
                       <option>Kid</option>
                     </select>
                   </div>
+                </div>
+              </div>
+
+              <div className="col-span-6">
+                <div className="grid grid-cols-6 gap-3">
+                  
                   <div className="col-span-9 sm:col-span-3">
                     <label
                       htmlFor="Type"
@@ -221,30 +206,7 @@ const BatchEdit = ({ actionBtn, link, setOpen }) => {
                 </div>
               </div>
 
-              <div className="col-span-6 daily-on">
-                <h4 className="my-2">Weekly on.</h4>
-                <div className="grid grid-cols-8 gap-3 sm:grid-cols-7 lg:gap-5">
-                  {days.map((day) => (
-                    <div className="col-span-2 pb-3 pl-1 border-2 border-gray-300 rounded-md shadow-sm appearance-none cursor-pointer sm:col-span-1">
-                      <input
-                        type="checkbox"
-                        id={day}
-                        value={day}
-                        name={day}
-                        onChange={handleChange}
-                        checked={selectedDays.includes(day)}
-                        className="block mt-1 border-solid rounded-full appearance-none day-card focus:outline-none after:border-none focus:border-none sm:text-sm"
-                      />
-                      <label
-                        htmlFor={day}
-                        className="block text-sm font-medium text-center text-gray-700 cursor-pointer"
-                      >
-                        {day}
-                      </label>
-                    </div>
-                  ))}
-                </div>
-              </div>
+            
 
               <div className="col-span-6">
                 <div className="grid grid-cols-8 gap-3">
@@ -283,6 +245,31 @@ const BatchEdit = ({ actionBtn, link, setOpen }) => {
                       className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     />
                   </div>
+                </div>
+              </div>
+
+              <div className="col-span-6 daily-on">
+                <h4 className="my-2">Weekly on.</h4>
+                <div className="grid grid-cols-8 gap-3 sm:grid-cols-7 lg:gap-5">
+                  {days.map((day) => (
+                    <div className="col-span-2 pb-3 pl-1 border-2 border-gray-300 rounded-md shadow-sm appearance-none cursor-pointer sm:col-span-1">
+                      <input
+                        type="checkbox"
+                        id={day}
+                        value={day}
+                        name={day}
+                        onChange={handleChange}
+                        checked={selectedDays.includes(day)}
+                        className="block mt-1 border-solid rounded-full appearance-none day-card focus:outline-none after:border-none focus:border-none sm:text-sm"
+                      />
+                      <label
+                        htmlFor={day}
+                        className="block text-sm font-medium text-center text-gray-700 cursor-pointer"
+                      >
+                        {day}
+                      </label>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>

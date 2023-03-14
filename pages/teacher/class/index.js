@@ -1,5 +1,7 @@
 import React from "react";
 import grayBgImg from "@/components/src/img/grayBgImg.png";
+import JoinClass from '@/components/user/teacher/JoinClass'
+import StudentListTable from '@/components/user/teacher/StudentListTable'
 
 import ClassList from "@/components/user/teacher/BatchList";
 import Sidebar from "@/components/Layout/navigation/Sidebar";
@@ -38,7 +40,7 @@ const index = () => {
 
               <Divider variant="middle" />
               <div className="col-span-1">
-                <BatchDetaisList />
+                <BatchDetaisList comp3=<JoinClass user='teacher' /> comp2=<StudentListTable />  />
               </div>
             </div>
           </div>

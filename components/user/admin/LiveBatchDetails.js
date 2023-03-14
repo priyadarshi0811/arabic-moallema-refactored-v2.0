@@ -11,7 +11,7 @@ const LiveBatchDetails = ({
 }) => {
   return (
     <div>
-      <div className="grid grid-cols-2 gap-10">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
         <div className="col-span-1">
           <BatchDetailsMin detail={detail} sheduleData={sheduleData} />
         </div>
@@ -26,6 +26,7 @@ const LiveBatchDetails = ({
             title="Class 1"
             path="/"
             description={detail[0].g_meet}
+            isBtn='true'
             svg=""
             btn="Join Class"
             onClick={""}

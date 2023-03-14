@@ -45,7 +45,9 @@ const style = {
   p: 4,
 };
 
-const ClassDetais = ({ batchName }) => {
+
+const ClassDetais = ({ batchName, user }) => {
+
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -54,6 +56,9 @@ const ClassDetais = ({ batchName }) => {
   const [enrollStudents, setEnrollStudents] = React.useState([]);
   const [scheduleDetail, setScheduleDetail] = React.useState();
   const [chapters, setChapters] = React.useState([]);
+
+  const [isDisabled, setIsDisabled] = React.useState(false);
+
 
   const batchCtx = React.useContext(BatchContext);
   const attendanceList = batchCtx.attendanceList;
@@ -140,6 +145,30 @@ const ClassDetais = ({ batchName }) => {
     fetchChaptersData();
   }, [detail[0], chapters[0]]);
 
+
+  //*************************handle time************************************ */
+
+  React.useEffect(() => {
+    const currentDate = new Date();
+    const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const currentDayName = daysOfWeek[currentDate.getDay()]; // Returns the name of the day (e.g. "Monday")
+
+    if (sheduleData) {
+      let isTrue = sheduleData[0].schedule.days.includes(currentDayName);
+      console.log(isTrue);
+
+      const currTime = currentDate.toLocaleString("en-US", {
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+      });
+      if (currTime > sheduleData[0].schedule.time && isTrue) {
+        setIsDisabled(true);
+      }
+    }
+  }, [sheduleData]);
+
+
   /////////////////////Session handling/////////////////////////////////
 
   const chapterCompleted = async () => {
@@ -216,7 +245,7 @@ const ClassDetais = ({ batchName }) => {
       {detail[0] && sheduleData && (
         <div className="">
           <div className="">
-            <div className="px-20 w-full grid grid-cols-3 gap-5 ">
+            <div className="px-20 w-full grid grid-cols-2 xl:grid-cols-3 gap-5 ">
               <div className="col-span-2 bg-white rounded-md">
                 <h1 className="p-5 border-b-2">Batch Details</h1>
                 <div className="px-5 w-full grid grid-cols-2 gap-5">
@@ -252,7 +281,7 @@ const ClassDetais = ({ batchName }) => {
                   </div>
                 </div>
               </div>
-              <div className="col-span-1 bg-white rounded-md">
+              <div className="col-span-2 xl:col-span-1  bg-white rounded-md">
                 <h1 className="p-5 border-b-2">Students List</h1>
                 <List sx={{ width: "200%", maxWidth: 360 }}>
                   {enrollStudents &&
@@ -270,24 +299,50 @@ const ClassDetais = ({ batchName }) => {
                     <InputWithLable
                       lable="G Meet"
                       type="text"
-                      placeholder="https://meet.google.com/"
+                      placeholder={detail[0].g_meet}
                     />
                   </div>
-                  <div className=" mx-10 my-5 col-span-2">
+                  <div className="  my-5 col-span-2">
+
                     <div className="flex items-center justify-end ">
                       <Link
                         href={detail[0].g_meet}
                         target="_blank"
                         className="w-full"
                       >
-                        <Button
-                          variant="contained"
-                          className=" w-full bg-dark-purple "
-                          onClick={startingLiveClass}
-                        >
-                          Join Class
-                        </Button>
+
+                        {isDisabled && (
+                          <Button
+                            variant="contained"
+                            className=" w-full bg-dark-purple "
+                            onClick={startingLiveClass}
+                          >
+                            Join Class
+                          </Button>
+                        )}
                       </Link>
+
+                      <div className=" w-96">
+                        {!isDisabled && <span className="">Days - </span>}
+                        {!isDisabled &&
+                          sheduleData[0].schedule.days.map((day) => (
+                            <span
+                              name="role"
+                              className=" text-red-600 focus:outline-none border-x-1"
+                            >
+                              {day},
+                            </span>
+                          ))}
+                        {!isDisabled && (
+                          <span className="block mt-2 ">
+                            Timing -
+                            <span className=" text-red-600">
+                              {sheduleData[0].schedule.time}
+                            </span>
+                          </span>
+                        )}
+                      </div>
+
                     </div>
                   </div>
                 </div>
@@ -300,9 +355,24 @@ const ClassDetais = ({ batchName }) => {
             aria-describedby="modal-modal-description"
           >
             <Box sx={style} className="bg-white rounded-md">
-              <Typography id="modal-modal-title" variant="h6" component="h2">
-                Attendance for class
-              </Typography>
+              <div className="my-2 grid grid-cols-2">
+                <div className="text-start">
+                  <Typography
+                    id="modal-modal-title"
+                    variant="h6"
+                    component="h2"
+                  >
+                    Attendance for class{" "}
+                  </Typography>
+                </div>
+                <div className="text-end">
+                  <Link href="/teacher/module" target="_blank">
+                    <Button variant="contained" className="bg-dark-purple">
+                      Start Module
+                    </Button>
+                  </Link>
+                </div>
+              </div>
               <div className="my-5">
                 <AttandanceListStudent
                   type="markAttendance"
@@ -333,6 +403,7 @@ const ClassDetais = ({ batchName }) => {
                   </Button>
                 </div>
               </div>
+
             </Box>
           </Modal>
         </div>

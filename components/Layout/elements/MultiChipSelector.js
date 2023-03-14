@@ -161,7 +161,8 @@ export default function MultipleSelectChip({ batchesData }) {
                   key={value}
                   label={value}
                   onClick={handleOpen}
-                  onDelete={() => handleDelete(value)}
+                  onDelete={handleDelete}
+
                   className="bg-dark-purple text-white p-3"
                 />
               ))}

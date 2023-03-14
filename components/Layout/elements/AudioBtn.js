@@ -35,8 +35,8 @@ class AudioButton extends Component {
     this.playAudio();
   };
 
-  renderAudio = () => {
-    const { url } = this.props;
+  renderAudio = (prop) => {
+    const { url } ='' || this.props;
     const { playing } = this.state;
     const notSupportedMsg =
       "Your browser does not support the <code>audio</code> element.";
