@@ -50,7 +50,7 @@ const LetterDetails = (props) => {
                   </Button>
                 </Link>
                 <Link
-                  href={`/teacher/activity/tracing/${props.name}`}
+                  href={`/teacher/activity/tracing/${props.name}/${0}`}
                   className="mx-3"
                 >
                   <Button variant="contained" className="bg-dark-purple">

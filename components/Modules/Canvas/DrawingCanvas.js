@@ -1,108 +1,165 @@
 import AuthContext from "@/components/Context/store/auth-context";
 import supabase from "@/supabaseClient";
 import { useContext, useEffect, useRef, useState } from "react";
-// import { Touch, Canvas } from "react-touch-canvas";
-
-// BgImage For Canvas
-import alifV from "@/components/src/alifVector01.png";
-import Baa from "@/components/src/all-letters-png/lletter(28).png";
-import Ta from "@/components/src/all-letters-png/lletter(1).png";
-import Thaa from "@/components/src/all-letters-png/lletter(2).png";
-import Jeem from "@/components/src/all-letters-png/lletter(4).png";
-import Alif from "@/components/src/all-letters-png/lletter(3).png";
-import Haa from "@/components/src/all-letters-png/lletter(5).png";
-import Khaa from "@/components/src/all-letters-png/lletter(6).png";
-import Daal from "@/components/src/all-letters-png/lletter(7).png";
-import Dhaal from "@/components/src/all-letters-png/lletter(8).png";
-import Raa from "@/components/src/all-letters-png/lletter(9).png";
-import Zai from "@/components/src/all-letters-png/lletter(10).png";
-import Seen from "@/components/src/all-letters-png/lletter(11).png";
-import Sheen from "@/components/src/all-letters-png/lletter(12).png";
-import Saad from "@/components/src/all-letters-png/lletter(13).png";
-import Daad from "@/components/src/all-letters-png/lletter(14).png";
-import Taa from "@/components/src/all-letters-png/lletter(15).png";
-import Dhaa from "@/components/src/all-letters-png/lletter(16).png";
-import Ayn from "@/components/src/all-letters-png/lletter(17).png";
-import Ghayn from "@/components/src/all-letters-png/lletter(18).png";
-import Faa from "@/components/src/all-letters-png/lletter(19).png";
-import Qaaf from "@/components/src/all-letters-png/lletter(20).png";
-import Kaaf from "@/components/src/all-letters-png/lletter(21).png";
-import Laam from "@/components/src/all-letters-png/lletter(22).png";
-import Meem from "@/components/src/all-letters-png/lletter(23).png";
-import Noon from "@/components/src/all-letters-png/lletter(24).png";
-import Ha from "@/components/src/all-letters-png/lletter(25).png";
-import Waaw from "@/components/src/all-letters-png/lletter(26).png";
-import Ya from "@/components/src/all-letters-png/lletter(27).png";
 
 import { Button, ButtonGroup, IconButton } from "@mui/material";
 import { Box } from "@mui/system";
+import { PhotoCamera } from "@mui/icons-material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import CleaningServicesIcon from "@mui/icons-material/CleaningServices";
 import Link from "next/link";
-
-// document.addEventListener('touchstart', e=>{console.log('Tuched');})
+import { useRouter } from "next/router";
+import { fetchAssignmentForLetter } from "@/backend/Assignment/FetchAssignmentDB";
+import index from "@/pages/admin";
+import BatchContext from "@/components/Context/store/batch-context";
+import { fetchTeacherIdForBatchName } from "@/backend/Batches/BatchesDB";
 
 const DrawingCanvas = (props) => {
   const canvasRef = useRef(null);
   const contextRef = useRef(null);
+  const [batch, setBatch] = useState();
+  const [teacher, setTeacher] = useState();
+  const { myArray, setMyArray } = useContext(BatchContext);
+
   // const [statusData, setStatusData] = useState("");
 
   const authCtx = useContext(AuthContext);
-  const id = authCtx.userEmail;
 
+  const id = authCtx.userEmail;
+  const userType = authCtx.userType;
+  useEffect(() => {
+    const batch = localStorage.getItem("batchName");
+    setBatch(batch);
+  }, []);
+
+  useEffect(() => {
+    const fetchTeacher = async () => {
+      if (batch) {
+        const data = await fetchTeacherIdForBatchName(batch);
+        if (data[0]) {
+          setTeacher(data[0].teacher_email);
+        }
+      }
+    };
+    fetchTeacher();
+  }, [batch]);
+
+  console.log("techer: ", teacher);
+  console.log(batch);
   const [isDrawing, setIsDrawing] = useState(false);
   const [image, setImage] = useState(false);
-  console.log(image);
+  const [assignment, setAssignment] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState();
+
+  /***************fetch assignment**************************** */
+  //getting the URl route
+  const router = useRouter();
+  let letterName;
+  let index;
+
+  if (router.query.alphabateDetail) {
+    letterName = router.query.alphabateDetail[0];
+    index = router.query.alphabateDetail[1];
+  }
+
+  let activityType;
+  if (assignment[currentIndex]) {
+    activityType = assignment[currentIndex].activity_type;
+  }
+
+  //get the assignment for the selected activity
+  useEffect(() => {
+    const fetchAssignment = async () => {
+      const data = await fetchAssignmentForLetter(letterName);
+      setAssignment(data[0].assignment_json.letter);
+      setCurrentIndex(index);
+    };
+    fetchAssignment();
+  }, [letterName]);
+
+  //if no avtivities then navigate to modules
+  useEffect(() => {
+    if (currentIndex > assignment.length - 1 && userType === "instructor") {
+      router.replace("/teacher/module/alphabets");
+    }
+    if (currentIndex > assignment.length - 1 && userType === "student") {
+      router.replace("/student/activity/tracing");
+    }
+    if (currentIndex > assignment.length - 1 && userType === "student") {
+      if (id && batch) {
+        supabase
+          .from("assignments")
+          .insert({
+            assignment_name: "letterPractice",
+            student_id: id,
+            batch_id: batch,
+            submission: myArray,
+            module_name: "Alphabate",
+            sub_module: props.id,
+            teacher_id: teacher,
+          })
+          .then((data) => console.log(data))
+          .catch((er) => console.log(er));
+      }
+      setMyArray([]);
+      
+    }
+  }, [currentIndex]);
+
+  console.log("Assignment: ", assignment);
+
+  //navigating to DND Activity
+  const handleNextButtonClick = () => {
+    setCurrentIndex(+currentIndex + 1);
+    if (activityType === "dnd" && userType === "instructor") {
+      console.log("teacher");
+      router.replace(`/teacher/activity/dnd/${props.id}/${currentIndex}`);
+    }
+  };
+
+  console.log("current Index: ", currentIndex);
 
   //****************canvas Logic******************* */
 
-
   let canvas = canvasRef.current;
   // var width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
-  var width = (window.innerWidth * 3) / 4;
+  // var width = (window.innerWidth * 3) / 5;
 
-  let context;  
+  let context;
   if (canvas) {
     context = canvas.getContext("2d");
   }
   useEffect(() => {
     canvas = canvasRef.current;
-    // canvas.style.width = "80%";
-    // canvas.style.height = 280;
-    // canvas.width = canvas.offsetWidth;
-    // canvas.height = canvas.offsetHeight;
-    canvas.width = width;
+    canvas.width = 1120;
     canvas.height = 280;
 
     context = canvas.getContext("2d");
     context.lineCap = "round";
 
-    if (width >= 1650) {
-      context.font = "200px 'Ubuntu Mono', monospace";
-    } else if (width >= 1020) {
-      context.font = "150px 'Ubuntu Mono', monospace";
-    } else if (width >= 780) {
-      context.font = "120px 'Ubuntu Mono', monospace";
-    } else {
-      context.font = "80px 'Ubuntu Mono', monospace";
-    }
-
+    context.font = "150px 'Ubuntu Mono', monospace";
     // context.font = "100px Arial";
 
     context.fillStyle = "lightgray";
 
     // Align the text horizontally and vertically
-    context.textAlign = "start";
+    context.textAlign = "center";
 
-    context.fillText(props.symbol, width / 8.0, 180);
-    context.fillText(props.symbol, width / 3.0, 180);
-    context.fillText(props.symbol, width / 1.8, 180);
-    context.fillText(props.symbol, width / 1.3, 180);
+    if (assignment[currentIndex] && activityType !== "dnd") {
+      const traceData = assignment[currentIndex].trace_data;
+      traceData.map((value, index) =>
+        context.fillText(value, 200 * index + 400, 180)
+      );
+    } else if (activityType === "dnd" && userType === "instructor") {
+      router.replace(`/teacher/activity/dnd/${props.id}/${currentIndex}`);
+    } else if (activityType === "dnd" && userType === "student") {
+      router.replace(`/student/activity/dnd/${props.id}/${currentIndex}`);
+    }
 
     context.lineWidth = 5;
     contextRef.current = context;
-  }, [id, props.symbol]);
+  }, [id, props.symbol, assignment, currentIndex]);
   if (context) {
     context.strokeStyle = "black";
   }
@@ -113,7 +170,7 @@ const DrawingCanvas = (props) => {
     contextRef.current.lineTo(offsetX, offsetY);
     contextRef.current.stroke();
     setIsDrawing(true);
-    // nativeEvent.preventDefault();
+    nativeEvent.preventDefault();
   };
 
   const draw = ({ nativeEvent }) => {
@@ -124,7 +181,7 @@ const DrawingCanvas = (props) => {
     const { offsetX, offsetY } = nativeEvent;
     contextRef.current.lineTo(offsetX, offsetY);
     contextRef.current.stroke();
-    // nativeEvent.preventDefault();
+    nativeEvent.preventDefault();
   };
 
   const stopDrawing = () => {
@@ -149,34 +206,15 @@ const DrawingCanvas = (props) => {
     context.lineWidth = 5;
   };
 
-  const saveImageToLocal = (event) => {
-    let link = event.currentTarget;
-    link.setAttribute("download", "canvas.png");
+  const saveImageToLocal = () => {
+    setCurrentIndex(+currentIndex + 1);
+
     let image = canvasRef.current.toDataURL("image/png");
-    link.setAttribute("href", image);
-    setImage(event.currentTarget.href);
+    setImage(image);
 
-    console.log(id);
-
-    if (id) {
-      supabase
-        .from("assignments")
-        .insert({
-          assignment_name: "letterPractice",
-          student_id: id,
-          batch_id: "Batch 1",
-          submission: image,
-          status: "submitted",
-        })
-        .then((data) => console.log(data))
-        .catch((er) => console.log(er));
-    }
+    const newObj = { submission: image, mark: 0, remark: "" };
+    setMyArray([...myArray, newObj]);
   };
-
-  
-  // window.addEventListener('touchstart', startDrawing)
-  // window.addEventListener('touchmove', draw)
-  // window.addEventListener('touchend', stopDrawing)
 
   const canvasBg = props.bgImg;
   console.log("CanVas", canvasBg);
@@ -184,39 +222,22 @@ const DrawingCanvas = (props) => {
   return (
     <>
       <div className="w-full cursor-cell flex justify-center ">
-        {/* <ReactTouchEvents onTap={startDrawing} onSwipe={draw}> */}
         <canvas
-          className="bg-white border-2 rounded-lg shadow-lg"
+          className="bg-white border-2 rounded-lg shadow-lg border-1"
           style={{
             // backgroundImage: `url(${alifV.src})`,
             backgroundRepeat: "repeat-x",
           }}
           ref={canvasRef}
-          // onMouseDown={startDrawing}
-          onPointerDown={startDrawing}
-          // onMouseMove={draw}
-          onPointerMove={draw} 
-          // onMouseUp={stopDrawing}
-          onPointerUp={stopDrawing}
-          onPointerCancel={stopDrawing}
-          // onMouseLeave={stopDrawing}
-          // onTouchStart={startDrawing}
-          // onTouchMove={draw}
-          // onTouchEnd={stopDrawing}
+          onMouseDown={startDrawing}
+          onMouseMove={draw}
+          onMouseUp={stopDrawing}
+          onMouseLeave={stopDrawing}
         ></canvas>
-        {/* </ReactTouchEvents> */}
-        {/* <Touch>
-          <Canvas
-            width={800}
-            height={600}
-            onAnimationFrame={(ctx, time) => {
-              ctx.font = "30px Arial";
-              ctx.fillText(`time: ${Math.round(time)}`, 25, 50);
-            }}
-          />
-        </Touch> */}
       </div>
-      <div className="mt-8 ">
+      <div className="mt-8 mr-14">
+        <h1>{props.bgImg} </h1>
+
         <ButtonGroup
           variant="contained"
           aria-label="outlined primary button group"
@@ -243,40 +264,25 @@ const DrawingCanvas = (props) => {
             Clear
           </Button>
         </ButtonGroup>
-        {/* <button
-            onClick={setToDraw}
-            className="px-4 py-2 ml-4 text-white rounded-md bg-dark-purple hover:bg-dark-purple hover:shadow-lg"
-          >
-            Draw
-          </button>
-          <button
-            onClick={setToErase}
-            className="px-4 py-2 ml-4 text-white rounded-md bg-dark-purple hover:bg-dark-purple hover:shadow-lg"
-          >
-            Erase
-          </button>
-          <button
-            onClick={setToClear}
-            className="px-4 py-2 ml-4 text-white rounded-md bg-dark-purple hover:bg-dark-purple hover:shadow-lg"
-          >
-            Clear
-          </button> */}
+
         <div className="mt-5">
-          <a
-            className="p-3 mx-2 text-white bg-red-500 rounded-md md:mt-40 hover:bg-red-600 hover:shadow-lg"
-            id="download_image_link"
-            href="download_link"
-            onClick={saveImageToLocal}
-          >
-            Submit Activity
-          </a>
-          <Link
-            href="/teacher/activity/dnd"
-            className="p-3 mx-2 text-white bg-dark-purple rounded-md md:mt-40 hover:bg-blue-600 hover:shadow-lg"
-          >
-            {" "}
-            Next Activity
-          </Link>
+          {userType !== "instructor" && (
+            <button
+              className="p-3 ml-4 text-white bg-red-500 rounded-md hover:bg-red-600 hover:shadow-lg"
+              onClick={saveImageToLocal}
+            >
+              Submit Activity
+            </button>
+          )}
+
+          {userType !== "student" && (
+            <Button
+              onClick={handleNextButtonClick}
+              className="p-3 ml-4 text-white bg-dark-purple rounded-md  hover:bg-blue-600 hover:shadow-lg"
+            >
+              Next Activity
+            </Button>
+          )}
         </div>
       </div>
     </>

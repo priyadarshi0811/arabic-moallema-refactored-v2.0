@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import grayBgImg from "@/components/src/img/grayBgImg.png";
 import Sidebar from "@/components/Layout/navigation/Sidebar";
 import CreateBatch from "@/components/user/admin/CreateBatch";
@@ -11,7 +11,7 @@ import Button from "@mui/material/Button";
 import CardList from "@/components/user/admin/CardList";
 import Link from "next/link";
 import MUIMiniCard from "@/components/Layout/card/MUIMiniCard";
-
+import AuthContext from "@/components/Context/store/auth-context";
 
 const style = {
   position: "absolute",
@@ -29,6 +29,10 @@ const index = () => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const authCtx = useContext(AuthContext);
+
+  const type = authCtx.userType;
+
   return (
     <div
       className=""
@@ -43,34 +47,51 @@ const index = () => {
     >
       <div className="flex min-h-screen h-full">
         <Sidebar nav_index={2} />
-        <div className="flex-1  p-7  ">
+        <div className="flex-1 h-screen p-7  ">
           <div className="m-0 p-10 w-full h-fit">
-            <div className="grid grid-cols-1 w-full mx-auto my-5 gap-10">
-              <div className="">
+            <div className="grid grid-cols-5 w-full mx-auto my-5 gap-10">
+              <div className="col-span-1">
                 <h1 className=" my-auto text-2xl mt-3 ">
                   <BackButton /> Assignmets
                 </h1>
               </div>
-              
-              
+              <div className="col-span-2">
+                <div className="px-2 w-full ">
+                  {/* <SelectDropdown value="class" lable="Select Batch" /> */}
+                </div>
+              </div>
+              {type !== "student" && (
+                <div className="col-span-2 ml-auto">
+                  <div className="px-2 w-full">
+                    <Link href="/admin/assignments/create-assignment">
+                      <Button
+                        variant="contained"
+                        className="bg-dark-purple"
+                        onClick={handleOpen}
+                        startIcon={<AddCircleOutlineIcon />}
+                      >
+                        Create Assignemts
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              )}
             </div>
             <Divider variant="middle" />
           </div>
-         <div className="m-0 p-5 w-full ">
-         <div className="grid grid-cols-2 lg:grid-cols-3 gap-10">
-            <MUIMiniCard
-            minTitle='Assigment for '
-                title='Alphabets'
-                isBtn='true'
-                btnText='View'  
-              link="/student/activity/tracing" />
-           
+          <div className="grid grid-cols-4 gap-10">
+            <div className="m-0 p-10 w-fit h-fit">
+              <MUIMiniCard
+                minTitle="Assigment for "
+                title="Alphabets"
+                isBtn="true"
+                btnText="View"
+                link="/student/activity/tracing"
+              />
+            </div>
           </div>
-          
-         </div>
         </div>
       </div>
-
     </div>
   );
 };

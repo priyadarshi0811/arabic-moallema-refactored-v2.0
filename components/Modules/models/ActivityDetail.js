@@ -276,9 +276,10 @@ const ActivityDetail = ({ id, type, symbol }) => {
       )}
       {type == "LetterTracing" && filteredData[0] && (
         <LetterDetails
+          id={id}
           name={filteredData[0].name}
           symbol={filteredData[0].symbol}
-          newSymbol= {symbol}
+          newSymbol={symbol}
         />
       )}
     </>

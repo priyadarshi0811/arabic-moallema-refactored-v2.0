@@ -26,7 +26,7 @@ const BatchDetailTeacher = ({ batchName }) => {
       <div className="flex min-h-screen h-full">
         <Sidebar nav_index={1} batchName={batchName} />
         <div className="flex-1  px-5">
-          <div className="m-0 p-2 lg:px-5  w-full h-fit">
+          <div className="m-0 p-5  w-full h-fit">
             {/* <MUIBreadcrumbs /> */}
             <div className="grid grid-cols-1 w-full mx-auto my-10 gap-10">
               <div className="col-span-1">

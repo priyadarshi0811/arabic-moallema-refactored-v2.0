@@ -8,13 +8,14 @@ const BatchContext = React.createContext({
   setSubmittedHandler: (bool) => {},
   submitted: true,
   setBatchNameHandler: (batchName) => {},
-  batchName: "", 
+  batchName: "",
 });
 
 export const BatchContextProvider = (props) => {
   const [bacthDetailList, setBacthDetailList] = useState();
   const [batchName, setBatchName] = useState();
   const [attendanceList, setAttendanceList] = useState();
+  const [myArray, setMyArray] = useState([]);
 
   const [submitted, setSubmitted] = useState(false);
 
@@ -31,8 +32,12 @@ export const BatchContextProvider = (props) => {
   };
 
   const setBatchNameHandler = (batchNameData) => {
-    setBatchName(batchNameData)
-  }
+    if (batchNameData) {
+      localStorage.setItem("batchName", batchNameData);
+      const batch = localStorage.getItem("batchName");
+      setBatchName(batch);
+    }
+  };
   const ContextValue = {
     setBatchDetail: setBatchDetailHandler,
     setAttendanceList: setAttendanceHandler,
@@ -41,7 +46,9 @@ export const BatchContextProvider = (props) => {
     bacthDetailList,
     attendanceList,
     setBatchNameHandler,
-    batchName
+    batchName,
+    setMyArray,
+    myArray,
   };
 
   return (

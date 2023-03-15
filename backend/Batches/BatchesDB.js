@@ -37,7 +37,7 @@ export const postCreateBatch = async (
   enteredBatchName,
   enteredTeacherEmail,
   enteredType,
-  enteredBookName,
+
   obj,
   glink
 ) => {
@@ -47,7 +47,6 @@ export const postCreateBatch = async (
       batch_name: enteredBatchName,
       teacher_email: enteredTeacherEmail,
       type: enteredType,
-      book_name: enteredBookName,
       schedule: obj,
       g_meet: glink,
     })
@@ -103,6 +102,19 @@ export const fetchBatchesForTeacherBasedOnBatchName = async (batch) => {
   const { data, error } = await supabase
     .from("batches")
     .select("*")
+    .match({ batch_name: batch });
+
+  if (error) {
+    console.log("Error fetching batches data: ", error);
+    return null;
+  }
+  return data;
+};
+
+export const fetchTeacherIdForBatchName = async (batch) => {
+  const { data, error } = await supabase
+    .from("batches")
+    .select("teacher_email")
     .match({ batch_name: batch });
 
   if (error) {

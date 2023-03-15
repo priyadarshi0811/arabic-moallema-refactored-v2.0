@@ -29,6 +29,7 @@ const MUIMiniCard = ({
   subTitle,
   isChip,
   chipLable,
+  user,
 }) => {
   const btn = isBtn || false;
   const chip = isChip || false;
@@ -39,7 +40,7 @@ const MUIMiniCard = ({
         className="p-4 w-full  hover:bg-dark-purple hover:text-white text-dark-purple text-bold place-content-center text-center shadow-lg flex-row"
       >
         <CardContent className="text-bold whitespace-normal">
-          <Typography sx={{ fontSize: 14 }}  gutterBottom>
+          <Typography sx={{ fontSize: 14 }} gutterBottom>
             {minTitle}
           </Typography>
           <Typography variant="h5" component="div" className="w-full">
@@ -48,32 +49,27 @@ const MUIMiniCard = ({
           <Typography sx={{ mb: 1.5 }}>{subTitle}</Typography>
           <Typography variant="body2">{disc}</Typography>
         </CardContent>
-        {btn && (
+        {btn && user !== "student" && (
           <div className="flex-row">
-
-          <Divider variant="middle" className="my-2 bg-gray-200" />
-          <CardActions className=" place-content-center ">
-            <Link href={link}>
-              <Button
-                size="medium"
-                className="text-center w-48 border-2 border-white bg-dark-purple text-white hover:bg-white hover:text-dark-purple"
-              >
-                {btnText}
-              </Button>
-            </Link>
-          </CardActions>
-        </div>
-
-
+            <Divider variant="middle" className="my-2 bg-gray-200" />
+            <CardActions className=" place-content-center ">
+              <Link href={link}>
+                <Button
+                  size="medium"
+                  className="text-center w-48 border-2 border-white bg-dark-purple text-white hover:bg-white hover:text-dark-purple"
+                >
+                  {btnText}
+                </Button>
+              </Link>
+            </CardActions>
+          </div>
         )}
         {chip && (
           <div>
             <Divider variant="middle" className="my-2 bg-gray-200" />
             <CardActions className=" place-content-center">
-
-            <Button size="medium" className="text-center w-48 border-2">
-                 <Chip  label={chipLable} color="warning" variant="outlined" />
-
+              <Button size="medium" className="text-center w-48 border-2">
+                <Chip label={chipLable} color="warning" variant="outlined" />
               </Button>
             </CardActions>
           </div>

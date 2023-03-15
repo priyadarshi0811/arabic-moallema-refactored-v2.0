@@ -6,7 +6,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
 const BasicSelect = ({ allItems, type, lable, handleSelectedItem }) => {
-  //   const value =  "Value"
+
   const [selectedItem, setSelectedItem] = React.useState("");
 
   React.useEffect(() => {
@@ -18,24 +18,50 @@ const BasicSelect = ({ allItems, type, lable, handleSelectedItem }) => {
       <div className="col-span-2 mt-2">
         <label className=" mt-3 pt-2 pr-2">{lable}</label>
       </div>
-      <div className="col-span-4">
-        {allItems && (
-          <Box sx={{ minWidth: 70 }} className="w-full ">
-            <FormControl fullWidth>
-              <Select
-                id="demo-simple-select"
-                size="small"
-                value={selectedItem}
-                onChange={(e) => setSelectedItem(e.target.value)}
-              >
-                {allItems.map((item) => (
-                  <MenuItem value={item.batch_name}>{item.batch_name}</MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Box>
-        )}
-      </div>
+      {type !== "studentList" && (
+        <div className="col-span-4">
+          {allItems && (
+            <Box sx={{ minWidth: 70 }} className="w-full ">
+              <FormControl fullWidth>
+                <Select
+                  id="demo-simple-select"
+                  size="small"
+                  value={selectedItem}
+                  onChange={(e) => setSelectedItem(e.target.value)}
+                >
+                  {allItems.map((item) => (
+                    <MenuItem value={item.batch_name}>
+                      {item.batch_name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Box>
+          )}
+        </div>
+      )}
+      {type === "studentList" && (
+        <div className="col-span-4">
+          {allItems && (
+            <Box sx={{ minWidth: 70 }} className="w-full ">
+              <FormControl fullWidth>
+                <Select
+                  id="demo-simple-select"
+                  size="small"
+                  value={selectedItem}
+                  onChange={(e) => setSelectedItem(e.target.value)}
+                >
+                  {allItems.map((item) => (
+                    <MenuItem value={item.student_id}>
+                      {item.student_id}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Box>
+          )}
+        </div>
+      )}
     </div>
   );
 };

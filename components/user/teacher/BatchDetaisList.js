@@ -45,9 +45,7 @@ const style = {
   p: 4,
 };
 
-
 const ClassDetais = ({ batchName, user }) => {
-
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -56,9 +54,7 @@ const ClassDetais = ({ batchName, user }) => {
   const [enrollStudents, setEnrollStudents] = React.useState([]);
   const [scheduleDetail, setScheduleDetail] = React.useState();
   const [chapters, setChapters] = React.useState([]);
-
   const [isDisabled, setIsDisabled] = React.useState(false);
-
 
   const batchCtx = React.useContext(BatchContext);
   const attendanceList = batchCtx.attendanceList;
@@ -145,7 +141,6 @@ const ClassDetais = ({ batchName, user }) => {
     fetchChaptersData();
   }, [detail[0], chapters[0]]);
 
-
   //*************************handle time************************************ */
 
   React.useEffect(() => {
@@ -167,7 +162,6 @@ const ClassDetais = ({ batchName, user }) => {
       }
     }
   }, [sheduleData]);
-
 
   /////////////////////Session handling/////////////////////////////////
 
@@ -233,19 +227,20 @@ const ClassDetais = ({ batchName, user }) => {
   };
 
   const startingLiveClass = () => {
-    setOpen(true);
+    if (user !== "student") {
+      setOpen(true);
 
-    let batchId = detail[0].batch_name;
-    let chapterName = chapters;
-    postLiveClassData(batchId, chapterName);
+      let batchId = detail[0].batch_name;
+      let chapterName = chapters;
+      postLiveClassData(batchId, chapterName);
+    }
   };
-  console.log(enrollStudents);
   return (
     <>
       {detail[0] && sheduleData && (
         <div className="">
           <div className="">
-            <div className="px-20 w-full grid grid-cols-2 xl:grid-cols-3 gap-5 ">
+            <div className="px-20 w-full grid grid-cols-3 gap-5 ">
               <div className="col-span-2 bg-white rounded-md">
                 <h1 className="p-5 border-b-2">Batch Details</h1>
                 <div className="px-5 w-full grid grid-cols-2 gap-5">
@@ -281,17 +276,19 @@ const ClassDetais = ({ batchName, user }) => {
                   </div>
                 </div>
               </div>
-              <div className="col-span-2 xl:col-span-1  bg-white rounded-md">
-                <h1 className="p-5 border-b-2">Students List</h1>
-                <List sx={{ width: "200%", maxWidth: 360 }}>
-                  {enrollStudents &&
-                    enrollStudents.map((student) => (
-                      <ListItem key={student.id}>
-                        <ListItemText primary={student.student_id} />
-                      </ListItem>
-                    ))}
-                </List>
-              </div>
+              {user !== "student" && (
+                <div className="col-span-1 bg-white rounded-md">
+                  <h1 className="p-5 border-b-2">Students List</h1>
+                  <List sx={{ width: "200%", maxWidth: 360 }}>
+                    {enrollStudents &&
+                      enrollStudents.map((student) => (
+                        <ListItem key={student.id}>
+                          <ListItemText primary={student.student_id} />
+                        </ListItem>
+                      ))}
+                  </List>
+                </div>
+              )}
               <div className="col-span-3 bg-white rounded-md">
                 <h1 className="p-5 border-b-2">Batch Details</h1>
                 <div className="w-full grid grid-cols-5 gap-20 rounded-lg overflow-hidden shadow-lg  items-center justify-center bg-slate-50 ">
@@ -303,14 +300,12 @@ const ClassDetais = ({ batchName, user }) => {
                     />
                   </div>
                   <div className="  my-5 col-span-2">
-
                     <div className="flex items-center justify-end ">
                       <Link
                         href={detail[0].g_meet}
                         target="_blank"
                         className="w-full"
                       >
-
                         {isDisabled && (
                           <Button
                             variant="contained"
@@ -342,70 +337,70 @@ const ClassDetais = ({ batchName, user }) => {
                           </span>
                         )}
                       </div>
-
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <Modal
-            open={open}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Box sx={style} className="bg-white rounded-md">
-              <div className="my-2 grid grid-cols-2">
-                <div className="text-start">
-                  <Typography
-                    id="modal-modal-title"
-                    variant="h6"
-                    component="h2"
-                  >
-                    Attendance for class{" "}
-                  </Typography>
+          {user !== "student" && (
+            <Modal
+              open={open}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={style} className="bg-white rounded-md">
+                <div className="my-2 grid grid-cols-2">
+                  <div className="text-start">
+                    <Typography
+                      id="modal-modal-title"
+                      variant="h6"
+                      component="h2"
+                    >
+                      Attendance for class{" "}
+                    </Typography>
+                  </div>
+                  <div className="text-end">
+                    <Link href="/teacher/module" target="_blank">
+                      <Button variant="contained" className="bg-dark-purple">
+                        Start Module
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
-                <div className="text-end">
-                  <Link href="/teacher/module" target="_blank">
-                    <Button variant="contained" className="bg-dark-purple">
-                      Start Module
+                <div className="my-5">
+                  <AttandanceListStudent
+                    type="markAttendance"
+                    enrollStudents={enrollStudents}
+                  />
+                </div>
+                <div className="grid grid-cols-2 gap-10">
+                  <div className="col-span-1">
+                    <Button
+                      className="mt-5 w-full bg-yellow-600"
+                      variant="contained"
+                      color="error"
+                      onClick={startSession}
+                      endIcon={<RotateLeftIcon />}
+                    >
+                      Mark in Progress
                     </Button>
-                  </Link>
+                  </div>
+                  <div className="col-span-1">
+                    <Button
+                      className="mt-5 w-full bg-green-700"
+                      variant="contained"
+                      color="success"
+                      onClick={chapterCompleted}
+                      endIcon={<CheckCircleIcon />}
+                    >
+                      Mark as complete
+                    </Button>
+                  </div>
                 </div>
-              </div>
-              <div className="my-5">
-                <AttandanceListStudent
-                  type="markAttendance"
-                  enrollStudents={enrollStudents}
-                />
-              </div>
-              <div className="grid grid-cols-2 gap-10">
-                <div className="col-span-1">
-                  <Button
-                    className="mt-5 w-full bg-yellow-600"
-                    variant="contained"
-                    color="error"
-                    onClick={startSession}
-                    endIcon={<RotateLeftIcon />}
-                  >
-                    Mark in Progress
-                  </Button>
-                </div>
-                <div className="col-span-1">
-                  <Button
-                    className="mt-5 w-full bg-green-700"
-                    variant="contained"
-                    color="success"
-                    onClick={chapterCompleted}
-                    endIcon={<CheckCircleIcon />}
-                  >
-                    Mark as complete
-                  </Button>
-                </div>
-              </div>
-
-            </Box>
-          </Modal>
+              </Box>
+            </Modal>
+          )}
         </div>
       )}
     </>
