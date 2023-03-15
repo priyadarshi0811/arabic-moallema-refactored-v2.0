@@ -62,8 +62,6 @@ const Sidebar = (props) => {
 
   // window.innerWidth <= 1050 ? setOpen(true)
 
-
-
   return (
     <div className="flex ">
       <div
@@ -244,7 +242,7 @@ function nav_reference(batchName) {
       },
       {
         linkname: "Start Class",
-        link: `/teacher/class/${batchName}`,
+        link: `/teacher/class`,
         img: <LiveTvIcon className="text-dark-purple" />,
       },
       {

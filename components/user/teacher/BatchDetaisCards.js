@@ -11,7 +11,7 @@ import { fetchTeacherBatches } from "@/backend/Batches/BatchesForTeachersStudent
 import { fetchIndividualBatch } from "@/backend/Batches/BatchesDB";
 import LoadingSpinner from "@/components/Layout/spinner/LoadingSpinner";
 
-const ClassDetais = ({ batchName }) => {
+const ClassDetais = ({ batchName, user }) => {
   const [completedChapters, setcompletedChapters] = React.useState([]);
   const [upcomingChapters, setupcomingChapters] = React.useState([]);
 
@@ -62,7 +62,9 @@ const ClassDetais = ({ batchName }) => {
         <div className=" w-full">
           <CardLayout
             firstComp=<div>
-              <h1 className="text-2xl lg:text-3xl text-dark-purple">{batchName}</h1>
+              <h1 className="text-2xl lg:text-3xl text-dark-purple">
+                {batchName}
+              </h1>
             </div>
             secondComp=<div>
               Chapter completed: 3 of 15
@@ -82,9 +84,7 @@ const ClassDetais = ({ batchName }) => {
             No chapter completed
           </p>
         )}
-        <div className="mt-4  relative">
-          {loading && <LoadingSpinner />}
-        </div>
+        <div className="mt-4  relative">{loading && <LoadingSpinner />}</div>
         <MUISlider
           card={
             !loading &&
@@ -94,7 +94,7 @@ const ClassDetais = ({ batchName }) => {
                 <MUIMiniCard
                   title={chapter}
                   disc="15/02/23"
-                  isBtn="true"
+                  isBtn={user === "student" ? false : true}
                   btnText="View"
                   link={`/teacher/chapter-detail/${chapter}/${batchName}`}
                 />
@@ -104,9 +104,7 @@ const ClassDetais = ({ batchName }) => {
         />
 
         <h1 className="text-lg  mt-10">Upcoming Chapters</h1>
-        <div className="mt-4  relative">
-          {loading && <LoadingSpinner />}
-        </div>
+        <div className="mt-4  relative">{loading && <LoadingSpinner />}</div>
         <MUISlider
           card={
             !loading &&

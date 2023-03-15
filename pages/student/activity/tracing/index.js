@@ -1,5 +1,5 @@
 import InProgress from "@/components/Layout/screen/InProgress";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import grayBgImg from "@/components/src/img/grayBgImg.png";
 import colorBgImg from "@/components/src/img/colorBgImg.png";
 import teacherImg from "@/components/src/img/ArabicMollemaMascot-03.png";
@@ -8,7 +8,8 @@ import TopTitleWithImg from "@/components/Layout/section/TopTitleWithImg";
 import Link from "next/link";
 import HomeActivityCard from "@/components/Layout/card/HomeActivityCard";
 import logo from "@/components/src/img/AMLogo.png";
-
+import HomeActivityCardStudent from "@/components/Layout/card/HomeActivityCardStudent";
+import BatchContext from "@/components/Context/store/batch-context";
 
 const Alphabates = [
   { letter: "خ", title: "Khaa" },
@@ -43,6 +44,9 @@ const Alphabates = [
 
 const index = () => {
   const [letterName, setLetterName] = useState();
+  const { myArray, setMyArray } = useContext(BatchContext);
+
+  console.log("obj: ", myArray);
   return (
     <div
       className=""
@@ -56,22 +60,21 @@ const index = () => {
       }}
     >
       <div className=" w-full p-2 rounded-md  flex flex-row justify-center content-center pt-5">
-          <img src={logo.src} className="h-14" alt="" />{" "}
-          <h1 className="ml-10 pt-5 text-white">Activity 1: Letter Tracing</h1>
-        </div>
+        <img src={logo.src} className="h-14" alt="" />{" "}
+        <h1 className="ml-10 pt-5 text-white">Activity 1: Letter Tracing</h1>
+      </div>
       <div className="grid grid-cols-4 gap-5 ">
         <div className="col-span-1 pl-16 w-full h-fit">
           <img src={teacherImg.src} className="w-72" alt="" />
         </div>
         <div className="col-span-3 pt-10">
           <div className="p-5  grid grid-cols-7 m-4 justify-center ">
-            
             {Alphabates.map((alphabate) => (
-              <HomeActivityCard
+              <HomeActivityCardStudent
                 name={alphabate.letter}
                 title={alphabate.title}
                 letter={setLetterName}
-                link='tracing'
+                link="tracing"
               />
             ))}
           </div>

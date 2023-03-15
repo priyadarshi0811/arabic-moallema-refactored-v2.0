@@ -1,5 +1,7 @@
-import React from "react";
+import React from 'react'
 import grayBgImg from "@/components/src/img/grayBgImg.png";
+import JoinClass from '@/components/user/teacher/JoinClass'
+import StudentListTable from '@/components/user/teacher/StudentListTable'
 
 import ClassList from "@/components/user/teacher/BatchList";
 import Sidebar from "@/components/Layout/navigation/Sidebar";
@@ -8,20 +10,12 @@ import BatchList from "@/components/user/teacher/BatchList";
 import BackButton from "@/components/Layout/elements/BackButton";
 import { Divider } from "@mui/material";
 import BatchDetaisList from "@/components/user/teacher/BatchDetaisList";
-import { useRouter } from "next/router";
-// import InProgress from "@/components/Layout/screen/InProgress";
-// import MiniCard from "@/components/Layout/card/MiniCard";
+// import InProgress from "@/components/Layout/screen/InProgr
 
-const index = () => {
-  const router = useRouter();
-
-  let batchName;
-  if (router.query.class_detail) {
-    batchName = router.query?.class_detail;
-  }
-
+const ClassForStudent = ({batchName}) => {
   return (
-    <div
+   <>
+      <div
       className=""
       style={{
         backgroundImage: `url(${grayBgImg.src})`,
@@ -33,7 +27,7 @@ const index = () => {
       }}
     >
       <div className="flex min-h-screen w-full h-full">
-        {batchName && <Sidebar nav_index={1} batchName={batchName} />}
+        <Sidebar nav_index={2} />
         <div className="flex-1  px-5">
           <div className="m-0 p-5  w-full h-fit">
             {/* <MUIBreadcrumbs /> */}
@@ -46,14 +40,17 @@ const index = () => {
 
               <Divider variant="middle" />
               <div className="col-span-1">
-                <BatchDetaisList user="teacher" batchName={batchName} />
+                {/* <BatchDetaisList comp2=<JoinClass user='student' /> /> */}
+                <BatchDetaisList user="student" batchName={batchName} />
+
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  );
-};
+   </>
+  )
+}
 
-export default index;
+export default ClassForStudent

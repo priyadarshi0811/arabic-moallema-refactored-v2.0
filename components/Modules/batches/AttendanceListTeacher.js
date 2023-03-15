@@ -110,12 +110,10 @@ const rows = [
   createData("Huruf", "29/02/2023", "Batch 3"),
 ].sort((a, b) => (a.calories < b.calories ? -1 : 1));
 
-
 export default function CustomPaginationActionsTable({
   teacherEmail,
   batchesData,
 }) {
-
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(6);
   const [selectedOption, setSelectedOption] = React.useState("Select Batch");
@@ -141,7 +139,7 @@ export default function CustomPaginationActionsTable({
     };
     fetchAttendance();
   }, [selectedOption]);
-  
+
   console.log(attendaceList);
 
   return (
@@ -156,7 +154,7 @@ export default function CustomPaginationActionsTable({
             <label className=" mt-3 ml-4 p-4 text-gray-700">Select Batch</label>
           </div>
           <Select
-          style={{width: '90%'}}
+            style={{ width: "90%" }}
             className=" m-6"
             value={selectedOption}
             onChange={(e) => setSelectedOption(e.target.value)}
@@ -165,7 +163,6 @@ export default function CustomPaginationActionsTable({
               <MenuItem key={batch.id} value={batch.batch_name}>
                 {batch.batch_name}
               </MenuItem>
-
             ))}
           </Select>
         </Box>
@@ -212,7 +209,6 @@ export default function CustomPaginationActionsTable({
                   ]}
                   colSpan={3}
                   count={attendaceList.length}
-
                   rowsPerPage={rowsPerPage}
                   page={page}
                   SelectProps={{

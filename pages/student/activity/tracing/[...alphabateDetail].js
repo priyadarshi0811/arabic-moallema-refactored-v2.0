@@ -6,11 +6,12 @@ import colorBgImg from "@/components/src/img/colorBgImg.png";
 import AlphabetSlider from "@/components/Modules/models/AlphabetSlider";
 import logo from "@/components/src/img/AMLogo.png";
 
-
-
 const index = () => {
   const router = useRouter();
-  const id = router.query.alphabateDetail;
+  let id;
+  if (router.query.alphabateDetail) {
+    id = router.query.alphabateDetail[0];
+  }
 
   //accessing id
   // console.log(id);
@@ -27,9 +28,8 @@ const index = () => {
           minHeight: "100vh",
         }}
       >
-        
         {/* <AlphabetSlider id={id} type='tracing' /> */}
-        <ActivityDetail id={id} type='LetterTracing' />
+        <ActivityDetail id={id} type="LetterTracing" />
 
         {/* <div className="p-5 grid grid-cols-12 gap-5">
           <div className="col-span-1">
@@ -41,7 +41,6 @@ const index = () => {
         
         </div> */}
       </div>
-     
     </>
   );
 };

@@ -13,7 +13,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import TextFieldCard from "@/components/Layout/card/TextFieldCard";
 
-
 const DragDropBuilder = (props) => {
   const [renderIter, setRenderIter] = useState([1]);
   const [bucketRenderIter, setBucketRenderIter] = useState([1]);
@@ -61,51 +60,52 @@ const DragDropBuilder = (props) => {
       <div className=" p-5 rounded-md ">
         <h1 className="">Enter the words that can be traced by the students</h1>
         <div className="grid grid-cols-6 gap-8 p-5">
-        {bucketRenderIter.map((val, key) => {
+          {bucketRenderIter.map((val, key) => {
             return (
-                <div className="col-span-2 ">
-              <MUICard
-                addNewOption={addNewOption}
-                iteratorIndex={key}
-                iteratorObject={bucketRenderIter}
-                stateSetter={setBucketRenderIter}
-                deleteSelectedOption={deleteSelectedOption}
-                activity_index={props.incrementer}
-                valueSetter={addDndBucketOptions}
-              /></div>
+              <div className="col-span-2 ">
+                <MUICard
+                  addNewOption={addNewOption}
+                  iteratorIndex={key}
+                  iteratorObject={bucketRenderIter}
+                  stateSetter={setBucketRenderIter}
+                  deleteSelectedOption={deleteSelectedOption}
+                  activity_index={props.incrementer}
+                  valueSetter={addDndBucketOptions}
+                />
+              </div>
             );
-          })}         
+          })}
         </div>
       </div>
       <h1 className="mt-10 px-5">Task 1: Tracing </h1>
       <div className=" p-5 rounded-md ">
         <h1 className="">Enter the words that can be traced by the students</h1>
         <div className="grid grid-cols-6 gap-8 p-5">
-        {renderIter.map((val, key) => {
+          {renderIter.map((val, key) => {
             return (
-                <div className="col-span-2 ">
-              <MUICard
-                addNewOption={addNewOption}
-                iteratorIndex={key}
-                iteratorObject={renderIter}
-                stateSetter={setRenderIter}
-                deleteSelectedOption={deleteSelectedOption}
-                activity_index={props.incrementer}
-                valueSetter={addDndDragOptions}
-              /></div>
+              <div className="col-span-2 ">
+                <MUICard
+                  addNewOption={addNewOption}
+                  iteratorIndex={key}
+                  iteratorObject={renderIter}
+                  stateSetter={setRenderIter}
+                  deleteSelectedOption={deleteSelectedOption}
+                  activity_index={props.incrementer}
+                  valueSetter={addDndDragOptions}
+                />
+              </div>
             );
           })}
 
-          <div className="col-span-2">
+          {/* <div className="col-span-2">
             <TextFieldCard />
-          </div>
+          </div> */}
         </div>
       </div>
       <label>
         <b>Task {props.incrementer + 1}</b>
       </label>
       <br />
-      
     </div>
   );
 };

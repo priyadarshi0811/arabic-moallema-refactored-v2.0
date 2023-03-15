@@ -61,6 +61,8 @@ export const AuthContextProvider = (props) => {
     console.log("In auth Logout");
     setToken(null);
     localStorage.removeItem("token");
+    localStorage.removeItem("batchName");
+
     localStorage.removeItem("type");
     localStorage.removeItem("email");
 

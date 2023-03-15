@@ -43,6 +43,7 @@ const LetterDetails = (props) => {
               <div className=" p-5 mt-15 "></div>
               <div className="w-full flex flex-col justify-center my-5   ">
                 <DrawingCanvas
+                  id={props.id}
                   symbol={props.symbol}
                   newSymbol={props.newSymbol}
                   bgImg={props.name}

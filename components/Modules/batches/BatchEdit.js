@@ -45,7 +45,6 @@ const BatchEdit = ({ actionBtn, link, setOpen }) => {
 
   //handle input fields data
   const nameRef = useRef();
-  const bookNameRef = useRef();
   const typeRef = useRef();
   const teacherNameRef = useRef();
   const timeRef = useRef();
@@ -69,7 +68,6 @@ const BatchEdit = ({ actionBtn, link, setOpen }) => {
 
     //getting the values
     const enteredBatchName = nameRef.current.value;
-    const enteredBookName = bookNameRef.current.value;
     const enteredType = typeRef.current.value;
     const enteredTeacherEmail = teacherNameRef.current.value;
     const time = timeRef.current.value;
@@ -89,7 +87,6 @@ const BatchEdit = ({ actionBtn, link, setOpen }) => {
       enteredBatchName,
       enteredTeacherEmail,
       enteredType,
-      enteredBookName,
       obj,
       glink
     );
@@ -98,7 +95,6 @@ const BatchEdit = ({ actionBtn, link, setOpen }) => {
       console.log("in");
       setError(false);
       nameRef.current.value = "";
-      bookNameRef.current.value = "";
       timeRef.current.value = "";
       dateRef.current.value = "";
       dateRef.current.value = "";
@@ -166,7 +162,6 @@ const BatchEdit = ({ actionBtn, link, setOpen }) => {
 
               <div className="col-span-6">
                 <div className="grid grid-cols-6 gap-3">
-                  
                   <div className="col-span-9 sm:col-span-3">
                     <label
                       htmlFor="Type"
@@ -205,8 +200,6 @@ const BatchEdit = ({ actionBtn, link, setOpen }) => {
                   </div>
                 </div>
               </div>
-
-            
 
               <div className="col-span-6">
                 <div className="grid grid-cols-8 gap-3">

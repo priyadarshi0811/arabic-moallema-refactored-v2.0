@@ -1,5 +1,12 @@
-import { CardContent, Card, IconButton, Grid, Paper } from "@mui/material";
-import React, { useEffect, useRef, useState } from "react";
+import {
+  CardContent,
+  Card,
+  IconButton,
+  Grid,
+  Paper,
+  Button,
+} from "@mui/material";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import CreateIcon from "@mui/icons-material/Create";
 import AutoFixNormalIcon from "@mui/icons-material/AutoFixNormal";
 import dnd_data from "./dnd_data";
@@ -7,6 +14,12 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import List from "./column";
 import Person from "./tasks";
 import Container from "@mui/material/Container";
+import { useRouter } from "next/router";
+import { fetchAssignmentForLetter } from "@/backend/Assignment/FetchAssignmentDB";
+import AuthContext from "@/components/Context/store/auth-context";
+import supabase from "@/supabaseClient";
+import { fetchTeacherIdForBatchName } from "@/backend/Batches/BatchesDB";
+import BatchContext from "@/components/Context/store/batch-context";
 
 const activity = {
   Alif: [
@@ -60,27 +73,203 @@ const returnAssignmentComponent = (assignment_type, processing_data) => {
   }
 };
 
+let finalDndData;
+const getData = (data) => {
+  console.log(data);
+  finalDndData = data;
+  return data;
+};
+
+console.log(finalDndData);
 const LetterActivity = () => {
+  const [assignment, setAssignment] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState();
+  const [dndAvtivity, setDndActivity] = useState();
+
+  const [batch, setBatch] = useState();
+  const [teacher, setTeacher] = useState();
+  const { myArray, setMyArray } = useContext(BatchContext);
+
+  // const [statusData, setStatusData] = useState("");
+
+  const authCtx = useContext(AuthContext);
+
+  const id = authCtx.userEmail;
+  const userType = authCtx.userType;
+
+  useEffect(() => {
+    const batch = localStorage.getItem("batchName");
+    setBatch(batch);
+  }, []);
+
+  useEffect(() => {
+    const fetchTeacher = async () => {
+      if (batch) {
+        const data = await fetchTeacherIdForBatchName(batch);
+        if (data[0]) {
+          setTeacher(data[0].teacher_email);
+        }
+      }
+    };
+    fetchTeacher();
+  }, [batch]);
+
+  console.log("techer: ", teacher);
+  console.log(batch);
+
+  //getting the URl route
+  const router = useRouter();
+  let alphabate;
+  let activityIndex;
+
+  if (router.query.dnd_id) {
+    alphabate = router.query.dnd_id[0];
+    activityIndex = router.query.dnd_id[1];
+  }
+
+  let activityType;
+  // based on the index navigating to the activities
+
+  useEffect(() => {
+    console.log(finalDndData);
+  }, [finalDndData]);
+
+  useEffect(() => {
+    //teacher
+    if (assignment[currentIndex] && userType === "instructor") {
+      activityType = assignment[currentIndex].activity_type;
+      if (activityType === "trace" && currentIndex <= +assignment.length - 1) {
+        console.log("first");
+        router.replace(
+          `/teacher/activity/tracing/${alphabate}/${currentIndex}`
+        );
+      } else if (
+        activityType === "dnd" &&
+        currentIndex <= +assignment.length - 1
+      ) {
+        console.log("second");
+        router.replace(`/teacher/activity/dnd/${alphabate}/${currentIndex}`);
+      }
+    }
+
+    //student
+    if (assignment[currentIndex] && userType === "student") {
+      activityType = assignment[currentIndex].activity_type;
+      if (activityType === "trace" && currentIndex <= +assignment.length - 1) {
+        console.log("first");
+        router.replace(
+          `/student/activity/tracing/${alphabate}/${currentIndex}`
+        );
+      } else if (
+        activityType === "dnd" &&
+        currentIndex <= +assignment.length - 1
+      ) {
+        console.log("second");
+        router.replace(`/student/activity/dnd/${alphabate}/${currentIndex}`);
+      }
+    }
+    if (currentIndex > assignment.length - 1 && userType === "student") {
+      console.log("third");
+      router.replace("/student/activity/tracing");
+    }
+
+    if (currentIndex > assignment.length - 1 && userType === "instructor") {
+      console.log("third");
+      router.replace("/teacher/module/alphabets");
+    }
+
+    if (currentIndex > assignment.length - 1 && userType === "student") {
+      if (id && batch) {
+        supabase
+          .from("assignments")
+          .insert({
+            assignment_name: "letterPractice",
+            student_id: id,
+            batch_id: batch,
+            submission: myArray,
+            module_name: "Alphabate",
+            sub_module: alphabate,
+            teacher_id: teacher,
+          })
+          .then((data) => console.log(data))
+          .catch((er) => console.log(er));
+      }
+      setMyArray([]);
+    }
+  }, [activityIndex, currentIndex, assignment]);
+
+  console.log("activity type: ", activityType);
+  console.log("curr index: ", currentIndex);
+
+  //get the assignment for the selected activity
+  useEffect(() => {
+    console.log("inside 2");
+
+    const fetchAssignment = async () => {
+      const data = await fetchAssignmentForLetter(alphabate);
+      setAssignment(data[0].assignment_json.letter);
+      setCurrentIndex(activityIndex);
+    };
+    fetchAssignment();
+  }, [alphabate, activityIndex, currentIndex]);
+
+  // when click on the next activity
+  const handleNextButtonClick = () => {
+    setCurrentIndex(+currentIndex + 1);
+  };
+
+  const submitDND = () => {
+    setCurrentIndex(+currentIndex + 1);
+    const newObj = { submission: finalDndData, mark: 0, remark: "" };
+    setMyArray([...myArray, newObj]);
+  };
+
+  useEffect(() => {
+    console.log("inside 1");
+    if (assignment[activityIndex]) {
+      setDndActivity(assignment[activityIndex]);
+    }
+  }, [assignment, activityIndex]);
+
+  console.log(dndAvtivity);
   return (
     <div>
-      {activity["Alif"].map((act) => {
-        console.log(act);
-        return (
-          <center>
-            <br />
-            <Card style={{ width: "100%",  }}>
-              <CardContent>
-                <div className="bg-dark-purple text-center text-white p-5 w-full rounded-md">
-                  <h1>
-                    Drag the words and drop it in Initial, Middle or Final: Alif
-                  </h1>
-                </div>
-                {returnAssignmentComponent(act["activity_type"], act)}
-              </CardContent>
-            </Card>
-          </center>
-        );
-      })}
+      {dndAvtivity &&
+        activity["Alif"].map((act) => {
+          console.log(act);
+          return (
+            <center>
+              <br />
+              <Card style={{ width: "100%" }}>
+                <CardContent>
+                  <div className="bg-dark-purple text-center text-white p-5 w-full rounded-md">
+                    <h1>
+                      Drag the words and drop it in Initial, Middle or Final:
+                      Alif
+                    </h1>
+                  </div>
+                  {returnAssignmentComponent(act["activity_type"], dndAvtivity)}
+                </CardContent>
+              </Card>
+            </center>
+          );
+        })}
+      {userType === "instructor" && (
+        <button
+          onClick={handleNextButtonClick}
+          className="p-3 ml-4 text-white bg-dark-purple rounded-md justify-center items-center hover:bg-blue-600 hover:shadow-lg"
+        >
+          Next Activity
+        </button>
+      )}
+      {userType === "student" && (
+        <button
+          onClick={submitDND}
+          className="p-3 ml-4 text-white bg-dark-purple rounded-md justify-center items-center hover:bg-blue-600 hover:shadow-lg"
+        >
+          Submit Activity
+        </button>
+      )}
     </div>
   );
 };
@@ -157,65 +346,65 @@ class DragDropActivity extends React.Component {
 
     console.log("Different column");
     console.log(newState);
-
+    getData(newState);
     this.setState(newState);
   };
 
   render() {
     console.log(this.props);
     return (
-      <DragDropContext onDragEnd={this.handleDragEnd}>
-        <Container style={{ display: "flex" }}>
-          <Grid container rowSpacing={6} sx={{ marginTop: "2%" }}>
-            {this.state.columnOrder.map((columnid) => {
-              const column = this.state.columns[columnid];
-              console.log(column.taskIds);
-              const tasks = column.taskIds.map((taskid) => {
-                return this.state.tasks[taskid];
-              });
-              console.log("Column:" + columnid);
-              console.log(tasks);
+      <>
+        <DragDropContext onDragEnd={this.handleDragEnd}>
+          <Container style={{ display: "flex" }}>
+            <Grid container rowSpacing={6} sx={{ marginTop: "2%" }}>
+              {this.state.columnOrder.map((columnid) => {
+                const column = this.state.columns[columnid];
+                console.log(column.taskIds);
+                const tasks = column.taskIds.map((taskid) => {
+                  return this.state.tasks[taskid];
+                });
+                console.log("Column:" + columnid);
+                console.log(tasks);
 
-              return (
-                <div className="grid grid-cols-auto">
-                  
-                  <Droppable droppableId={columnid}>
-                    {(provided) => (
-                      <List
-                        provided={provided}
-                        innerRef={provided.innerRef}
-                        name={column.name}
-                      >
-                        
-                        {tasks.map((task, key) => {
-                          return (
-                            <Draggable
-                              draggableId={task.id}
-                              index={key}
-                              key={task.id}
-                            >
-                              {(provided, snapshot) => (
-                                <Person
-                                  provided={provided}
-                                  snapshot={snapshot}
-                                  innerRef={provided.innerRef}
-                                  task_content={task.content}
-                                />
-                              )}
-                            </Draggable>
-                          );
-                        })}
+                return (
+                  <div className="grid grid-cols-auto">
+                    <Droppable droppableId={columnid}>
+                      {(provided) => (
+                        <List
+                          provided={provided}
+                          innerRef={provided.innerRef}
+                          name={column.name}
+                        >
+                          {tasks.map((task, key) => {
+                            return (
+                              <Draggable
+                                draggableId={task.id}
+                                index={key}
+                                key={task.id}
+                              >
+                                {(provided, snapshot) => (
+                                  <Person
+                                    provided={provided}
+                                    snapshot={snapshot}
+                                    innerRef={provided.innerRef}
+                                    task_content={task.content}
+                                  />
+                                )}
+                              </Draggable>
+                            );
+                          })}
 
-                        {provided.placeholder}
-                      </List>
-                    )}
-                  </Droppable>
-                </div>
-              );
-            })}
-          </Grid>
-        </Container>
-      </DragDropContext>
+                          {provided.placeholder}
+                        </List>
+                      )}
+                    </Droppable>
+                  </div>
+                );
+              })}
+            </Grid>
+          </Container>
+        </DragDropContext>
+      </>
     );
   }
 }

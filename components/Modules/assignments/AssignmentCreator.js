@@ -6,18 +6,69 @@ import {
   InputLabel,
   Button,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useReducer, useRef, useState } from "react";
 import DragDropBuilder from "@/components/Layout/mui-comps/assignment_builder_selector/drag_and_drop";
 import IdentifyByAudioBuilder from "@/components/Layout/mui-comps/assignment_builder_selector/identify_by_audio";
 import TracingBuilder from "@/components/Layout/mui-comps/assignment_builder_selector/tracing_builder";
+import CreateAssignment from "@/pages/admin/assignments/create-assignment";
+import { createAssignment } from "@/backend/Assignment/CreateAssignmentDB";
+
+const ADD_ACTIVITY = "Add Activity";
+const ADD_TRACING = "Add Tracing";
+const ADD_DND_COLUMN = "Add DND Column";
+const ADD_DND_Task = "Add DND Task";
+const ADD_DATA = "Add DATA";
+
+const reducerFunction = (state, action) => {
+  let newState = { ...state };
+  if (action.type === ADD_ACTIVITY) {
+    newState.letter.push(action.payload);
+    return newState;
+  } else if (action.type === ADD_TRACING) {
+    console.log(newState.letter[action.payload.index]);
+    newState.letter[action.payload.index].trace_data = action.payload.data;
+    return newState;
+  } else if (action.type === ADD_DATA) {
+    newState.letter[action.payload.index] = action.payload.data;
+    return newState;
+  }
+  return state;
+};
 
 const AssignmentCreator = () => {
   // STATES FOR ALL ACTIVITIES
-  const [assignment, setAssignment] = useState([]);
+  const [assignmentState, DispatchSetAssignment] = useReducer(reducerFunction, {
+    letter: [
+      {
+        activity_type: "trace",
+        trace_data: [],
+      },
+    ],
+  });
 
   // 1. Tracing
   const [tracingLetters, setTracingLetters] = useState({});
   const triggerTraceDataState = (tracing_letter_new) => {
+    console.log("inside trigger: ", tracing_letter_new);
+    const key = Object.keys(tracing_letter_new);
+    let index;
+    let values;
+
+    if (key[0]) {
+      const arr = key[0].split("_");
+      index = arr[0];
+      console.log("index: ", index);
+      values = Object.values(tracing_letter_new[key[0]]);
+      console.log("values: ", values);
+    }
+
+    DispatchSetAssignment({
+      type: ADD_TRACING,
+      payload: {
+        index,
+        data: values,
+      },
+    });
     setTracingLetters(tracing_letter_new);
     console.log(tracingLetters);
   };
@@ -25,11 +76,115 @@ const AssignmentCreator = () => {
   // 2. DnD
   const [dndBucketLetters, setDndBucketLetters] = useState([]);
   const triggerDndBucketLetters = (dnd_bucket_letters) => {
+    console.log("inside triggerDndBucketLetters: ", dnd_bucket_letters);
+
+    let key = Object.keys(dnd_bucket_letters)[0];
+
+    let index = key.split("_")[0];
+    console.log("index column: ", index);
+
+    let values = Object.values(dnd_bucket_letters[key]);
+    console.log("column values: ", values);
+
+    let dndObject = { ...assignmentState.letter[index] };
+
+    let columns = {};
+    let columnOrder = [];
+
+    let taskIds = [];
+    if (Object.values(dndObject.dnd_data.tasks).length > 0) {
+      Object.values(dndObject.dnd_data.tasks).forEach((value, index) => {
+        taskIds.push(value.id);
+      });
+    }
+
+    // console.log("options: ", dndOptionsLetters);
+    // let optionsKey = Object.keys(dndOptionsLetters)[0];
+    // let optionsValues = Object.values(dndOptionsLetters[optionsKey]);
+    // console.log("options values: ", optionsValues);
+
+    values.forEach((value, index) => {
+      let columnName = `column-${index + 1}`;
+      if (index === 0) {
+        columns[columnName] = {
+          id: columnName,
+          name: value,
+          taskIds: taskIds,
+        };
+
+        columnOrder.push(columnName);
+
+        return;
+      }
+      columns[columnName] = {
+        id: columnName,
+        name: value,
+        taskIds: [],
+      };
+      columnOrder.push(columnName);
+
+      return;
+    });
+    console.log(columns);
+
+    dndObject.dnd_data.columns = columns;
+    dndObject.dnd_data.columnOrder = columnOrder;
+
+    DispatchSetAssignment({
+      type: ADD_DATA,
+      payload: {
+        index,
+        data: dndObject,
+      },
+    });
+
     setDndBucketLetters(dnd_bucket_letters);
+
     console.log(dndBucketLetters);
   };
   const [dndOptionsLetters, setDndOptionsLetters] = useState([]);
   const triggerDndOptionLetters = (dnd_options_letters) => {
+    console.log("tasks: ", dndOptionsLetters);
+
+    let key = Object.keys(dnd_options_letters)[0];
+
+    let index = key.split("_")[0];
+    console.log("index option: ", index);
+
+    let values = Object.values(dnd_options_letters[key]);
+
+    console.log("Option values: ", values);
+
+    let dndObject = { ...assignmentState.letter[index] };
+    console.log("dnd Object: ", dndObject);
+
+    let tasks = {};
+
+    let tasIdsData = [];
+    values.forEach((value, index) => {
+      let taskName = `task-${index + 1}`;
+      tasIdsData.push(taskName);
+      tasks[taskName] = {
+        id: taskName,
+        content: value,
+      };
+
+      return;
+    });
+
+    if (dndObject.dnd_data.columns["column-1"]) {
+      dndObject.dnd_data.columns["column-1"].taskIds = tasIdsData;
+    }
+
+    dndObject.dnd_data.tasks = tasks;
+    DispatchSetAssignment({
+      type: ADD_DATA,
+      payload: {
+        index,
+        data: dndObject,
+      },
+    });
+
     setDndOptionsLetters(dnd_options_letters);
     console.log(dndOptionsLetters);
   };
@@ -38,7 +193,12 @@ const AssignmentCreator = () => {
   const [audioFile, setAudioFile] = useState([]);
   const [identifyOptions, setIdentifyOptions] = useState([]);
 
+  const [incrementerVal, setIncrementerVal] = useState(0);
+  const [selectedActivity, setSelectedActivity] = useState(0);
   const assignment_cards = ["Tracing", "Drag and Drop", "Identify by audio"];
+
+  // store the
+  const [activityCompList, setActivityCompList] = useState([0]);
 
   const assignment_component_map = {
     0: (inc, trace_letter_state = triggerTraceDataState) => {
@@ -82,16 +242,43 @@ const AssignmentCreator = () => {
     },
   };
 
-  const [incrementerVal, setIncrementerVal] = useState(0);
-  const [selectedActivity, setSelectedActivity] = useState("0");
-
-  // store the
-  const [activityCompList, setActivityCompList] = useState([0]);
-
   const handleChange = (event) => {
     setSelectedActivity(event.target.value);
     console.log(activityCompList);
     console.log("Selected activity index:" + selectedActivity);
+  };
+
+  const newAddActivity = () => {
+    if (selectedActivity === 0) {
+      let traceActivity = {
+        activity_type: "trace",
+        trace_data: [],
+      };
+      DispatchSetAssignment({
+        type: ADD_ACTIVITY,
+        payload: traceActivity,
+      });
+    } else if (selectedActivity === 1) {
+      let dndActivity = {
+        activity_type: "dnd",
+        identifier: "position",
+        activity_ques_title:
+          "Drag and drop words which have Alif at initial, middle or final position",
+        dnd_data: {
+          tasks: {},
+          columns: {},
+          columnOrder: [],
+        },
+      };
+      DispatchSetAssignment({
+        type: ADD_ACTIVITY,
+        payload: dndActivity,
+      });
+    }
+  };
+
+  const CreateAssignmentHandler = () => {
+    createAssignment(assignmentState);
   };
 
   const addNewActivity = () => {
@@ -99,7 +286,9 @@ const AssignmentCreator = () => {
     setActivityCompList([...activityCompList, [parseInt(selectedActivity)]]);
     console.log(activityCompList);
     console.log("Added activity index:" + selectedActivity);
+    newAddActivity();
   };
+  console.log("Assignment State: ", assignmentState);
 
   return (
     <div>
@@ -165,6 +354,7 @@ const AssignmentCreator = () => {
           }}
         >
           <Button
+            onClick={CreateAssignmentHandler}
             variant="outlined"
             className="w-full h-full bg-dark-purple  text-white hover:bg-cyan-800"
           >

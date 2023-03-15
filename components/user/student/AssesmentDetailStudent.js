@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import grayBgImg from "@/components/src/img/grayBgImg.png";
 import Sidebar from "@/components/Layout/navigation/Sidebar";
 import CreateBatch from "@/components/user/admin/CreateBatch";
@@ -12,9 +12,20 @@ import AssignmentDetailsCard from "@/components/Modules/assignments/AssignmentDe
 import Link from "next/link";
 import MarkRemarkSec from "@/components/Layout/elements/MarkRemarkSec";
 import CardLayout from "@/components/Layout/card/CardLayout";
+import { useRouter } from "next/router";
+import AuthContext from "@/components/Context/store/auth-context";
 
-const AssignmentDetails = () => {
-  
+const AssesmentDetailStudent = () => {
+  const router = useRouter();
+  const authCtx = useContext(AuthContext);
+  const studentId = authCtx.userEmail;
+
+  let subModule;
+
+  if (router.query.assignment_details) {
+    subModule = router.query.assignment_details;
+  }
+
   return (
     <div
       style={{
@@ -27,25 +38,32 @@ const AssignmentDetails = () => {
       }}
     >
       <div className="flex min-h-screen h-full">
-        <Sidebar nav_index={1} />
+        <Sidebar nav_index={2} />
         <div className="flex-1  p-7  ">
           <div className="m-0 p-10 w-full h-fit">
-            <div className="grid grid-cols-2 w-full mx-auto my-5 gap-10">
-              <div className="col-span-2">
+            <div className="grid grid-cols-5 w-full mx-auto my-5 gap-10">
+              <div className="col-span-3">
                 <h1 className=" my-auto text-2xl mt-3 ">
                   <BackButton /> Assignmets Details for assingnment 1
                 </h1>
               </div>
-              
+
+              <div className="col-span-2 ml-auto">
+                <div className="px-2 w-full"></div>
+              </div>
             </div>
             <Divider variant="middle" />
           </div>
           <div className="m-0 p-10 w-full h-fit">
-            <AssignmentDetailsCard
-              markRemark=<div className="my-10 mx-5">
-                <CardLayout isFull="true" fullComp=<MarkRemarkSec /> />{" "}
+            {subModule && studentId && (
+              <div className="m-0 p-10 w-full h-fit">
+                <AssignmentDetailsCard
+                  studentId={studentId}
+                  subModule={subModule}
+                  type="showAssignmentStudent"
+                />
               </div>
-            />
+            )}
           </div>
         </div>
       </div>
@@ -53,4 +71,4 @@ const AssignmentDetails = () => {
   );
 };
 
-export default AssignmentDetails;
+export default AssesmentDetailStudent;

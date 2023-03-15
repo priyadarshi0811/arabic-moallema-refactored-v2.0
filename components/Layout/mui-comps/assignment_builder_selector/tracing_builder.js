@@ -74,9 +74,9 @@ const TracingBuilder = (props) => {
             );
           })}
 
-          <div className="col-span-2">
+          {/* <div className="col-span-2">
             <TextFieldCard />
-          </div>
+          </div> */}
         </div>
       </div>
     </>
