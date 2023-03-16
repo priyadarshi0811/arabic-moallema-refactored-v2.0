@@ -6,12 +6,20 @@ import {
   InputLabel,
   Button,
 } from "@mui/material";
-import React, { useEffect, useReducer, useRef, useState } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
+} from "react";
 import DragDropBuilder from "@/components/Layout/mui-comps/assignment_builder_selector/drag_and_drop";
 import IdentifyByAudioBuilder from "@/components/Layout/mui-comps/assignment_builder_selector/identify_by_audio";
 import TracingBuilder from "@/components/Layout/mui-comps/assignment_builder_selector/tracing_builder";
 import CreateAssignment from "@/pages/admin/assignments/create-assignment";
 import { createAssignment } from "@/backend/Assignment/CreateAssignmentDB";
+import BatchContext from "@/components/Context/store/batch-context";
+import { useRouter } from "next/router";
 
 const ADD_ACTIVITY = "Add Activity";
 const ADD_TRACING = "Add Tracing";
@@ -34,6 +42,20 @@ const reducerFunction = (state, action) => {
   }
   return state;
 };
+
+const modules = [
+  { id: 1, name: "Harakat" },
+  { id: 2, name: "Alphabates" },
+  { id: 3, name: "Tanveen" },
+  { id: 4, name: "Hamza" },
+];
+
+const submodules = [
+  { id: 1, name: "Daal" },
+  { id: 2, name: "Dhaal" },
+  { id: 3, name: "Raa" },
+  { id: 4, name: "Zai" },
+];
 
 const AssignmentCreator = () => {
   // STATES FOR ALL ACTIVITIES
@@ -276,9 +298,27 @@ const AssignmentCreator = () => {
       });
     }
   };
+  const batchCtx = useContext(BatchContext);
+
+  const [selectedModule, setSelectedModule] = useState(modules[0].id);
+  const [selectedSubmodule, setSelectedSubmodule] = useState(submodules[0].id);
+  console.log("module: ", selectedModule);
+  console.log("sub module: ", selectedSubmodule);
+  const router = useRouter();
+
+  function handleModuleChange(event) {
+    setSelectedModule(event.target.value);
+  }
+
+  function handleSubmoduleChange(event) {
+    setSelectedSubmodule(event.target.value);
+  }
 
   const CreateAssignmentHandler = () => {
-    createAssignment(assignmentState);
+    createAssignment(assignmentState, selectedModule, selectedSubmodule);
+
+    batchCtx.setSubmittedHandler(true);
+    router.replace("/admin/assignments");
   };
 
   const addNewActivity = () => {
@@ -298,6 +338,54 @@ const AssignmentCreator = () => {
             <InputLabel>
               Select the activity to be added into the assignment:
             </InputLabel>
+            <div className="flex mt-10">
+              <div className="mr-4">
+                <label
+                  htmlFor="module"
+                  className="block font-medium text-gray-700 mb-1"
+                >
+                  Module
+                </label>
+                <select
+                  id="module"
+                  name="module"
+                  className="form-select block w-44 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  value={selectedModule}
+                  onChange={handleModuleChange}
+                >
+                  <option selected>Select Module</option>
+
+                  {modules.map((module) => (
+                    <option key={module.name} value={module.name}>
+                      {module.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label
+                  htmlFor="submodule"
+                  className="block font-medium text-gray-700 mb-1"
+                >
+                  Submodule
+                </label>
+                <select
+                  id="submodule"
+                  name="submodule"
+                  className="form-select w-44 block  py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  value={selectedSubmodule}
+                  onChange={handleSubmoduleChange}
+                >
+                  <option selected>Select Sub-Module</option>
+
+                  {submodules.map((submodule) => (
+                    <option key={submodule.name} value={submodule.name}>
+                      {submodule.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
             <div className="mt-5 grid grid-cols-4 gap-10">
               <div className="col-span-3">
                 <Select
