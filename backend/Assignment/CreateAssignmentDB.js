@@ -1,9 +1,9 @@
 import supabase from "@/supabaseClient";
 
-export const createAssignment = async (assignmentJSON) => {
+export const createAssignment = async (assignmentJSON, module, subModule) => {
   const { data, error } = await supabase.from("activity").insert({
-    module: "Alphabates",
-    sub_module: "Khaa",
+    module: module,
+    sub_module: subModule,
     assignment_json: assignmentJSON,
   });
 

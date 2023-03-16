@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import grayBgImg from "@/components/src/img/grayBgImg.png";
 import Sidebar from "@/components/Layout/navigation/Sidebar";
 import CreateBatch from "@/components/user/admin/CreateBatch";
@@ -11,6 +11,8 @@ import Button from "@mui/material/Button";
 import CardList from "@/components/user/admin/CardList";
 import Link from "next/link";
 import { fetchAllAssignments } from "@/backend/Assignment/FetchAssignmentDB";
+import SuccessPrompt from "@/components/Layout/elements/SuccessPrompt";
+import BatchContext from "@/components/Context/store/batch-context";
 
 const style = {
   position: "absolute",
@@ -26,6 +28,7 @@ const style = {
 const AssignmentHome = () => {
   const [open, setOpen] = React.useState(false);
   const [assignment, setAssignments] = React.useState(false);
+  const batchCtx = useContext(BatchContext);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -36,7 +39,7 @@ const AssignmentHome = () => {
       setAssignments(data);
     };
     fetchActivity();
-  }, []);
+  }, [batchCtx.submitted]);
 
   return (
     <div
@@ -77,13 +80,21 @@ const AssignmentHome = () => {
               </div>
             </div>
             <Divider variant="middle" />
+            {batchCtx.submitted && (
+              <SuccessPrompt
+                type="edit"
+                title="Activity Created Successfully"
+                setSubmitted={batchCtx.setSubmittedHandler}
+              />
+            )}
           </div>
+
           <div className="m-0 p-10 w-full h-fit grid grid-cols-2 lg:grid-cols-3  ">
             {assignment &&
               assignment.map((activity) => (
                 <div className=" w-full m-4 p-4">
                   <CardList
-                    disc={activity.sub_module}
+                    subTitle={activity.sub_module}
                     title={activity.module}
                     user="Module"
                     minTitle="Activity for"
