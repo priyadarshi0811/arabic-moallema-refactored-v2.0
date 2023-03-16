@@ -6,6 +6,7 @@ import { updateTeacher } from "@/backend/Batches/UpdateBatchTeacher";
 import { fetchTeachersData } from "@/backend/Teachers/TeacherDB";
 import { Box } from "@mui/system";
 import BatchContext from "@/components/Context/store/batch-context";
+import { fetchBatchesForTeacher } from "@/backend/Batches/BatchesDB";
 
 const EditTeacher = ({
   user,
@@ -22,6 +23,8 @@ const EditTeacher = ({
 }) => {
   const [teachersList, setTeachersList] = React.useState();
   const [selectedTeacher, setSelectedTeacher] = React.useState("");
+  const [teacherData, setTeacherData] = React.useState();
+
   const batchCtx = React.useContext(BatchContext);
 
   const handleChange = () => {
@@ -36,10 +39,23 @@ const EditTeacher = ({
     fetchTeachersDetail();
   }, []);
 
+  React.useEffect(() => {
+    if (userName) {
+      const fetchTeachersDetail = async () => {
+        const data = await fetchBatchesForTeacher(userName);
+        setTeacherData(data);
+      };
+      fetchTeachersDetail();
+    }
+  }, []);
+
+  console.log(teacherData);
+
   console.log("selected Teacher: ", selectedTeacher);
 
   const submitHandlerBatchDetail = () => {
     console.log("submitted");
+    console.log(batchName);
     updateTeacher(batchName, selectedTeacher);
     setOpen(false);
     batchCtx.setSubmittedHandler(true);
@@ -56,10 +72,12 @@ const EditTeacher = ({
     if (type === "Teacher" && operation !== "changeTeacher") {
       deleteTeacherRecords(selectedTeacher);
     }
-    // if (operation === "changeTeacher") {
-    //   submitHandlerBatchDetail();
-    // }
+    if (action === "Change" && type === "Teacher") {
+      submitHandlerBatchDetail();
+      batchCtx.setSubmittedHandler(true);
+    }
   };
+
   const closeHandlerBatchDetail = (e) => {
     e.preventDefault();
     closeBatchDetailPopUP(false);
@@ -76,13 +94,13 @@ const EditTeacher = ({
             {action} {type}{" "}
           </h1>
           <Stack sx={{ width: "100%" }} spacing={2} className="my-10">
-            {replace && (
+            {replace && teacherData && (
               <Alert severity="warning">
-                {user} is Currently taking 3 Batches and 10 Assingnments
+                {user} is Currently taking {teacherData.length} Batches
               </Alert>
             )}
             <Alert severity="error">
-              Do you realy want to {action} {batchName} from the database?
+              Do you realy want to {action} {userName} from the database?
             </Alert>
             {/* <Alert severity="success">
               The {user} has been {action}d Successfully
@@ -123,7 +141,8 @@ const EditTeacher = ({
                     htmlFor="user-type"
                     className="block text-sm  font-medium text-gray-700 border-b-2 py-1 px-3 "
                   >
-                    {batchName ? batchName : userName}
+                    {batchName && action !== "Change" ? batchName : ""}
+                    {userName && userName}
                   </label>
                 </div>
               </div>

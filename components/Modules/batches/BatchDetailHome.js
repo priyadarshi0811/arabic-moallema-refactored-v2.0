@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import grayBgImg from "@/components/src/img/grayBgImg.png";
 import Sidebar from "@/components/Layout/navigation/Sidebar";
 import EditIcon from "@mui/icons-material/Edit";
@@ -15,6 +15,10 @@ import { Button } from "@mui/material";
 import { fetchEnrolledStudentsInBatch } from "@/backend/Batches/BatchesDB";
 import UserList from "@/components/Modules/batches/UserList";
 import { fetchSessionDataForBatch } from "@/backend/Session/SessionDB";
+import { fetchBatchesData } from "@/backend/Announcement/AnnouncementDB";
+import BatchContext from "@/components/Context/store/batch-context";
+import SuccessPrompt from "@/components/Layout/elements/SuccessPrompt";
+import WarningCard from "@/components/Layout/card/WarningCard";
 
 const style = {
   position: "absolute",
@@ -32,13 +36,27 @@ const BatchDetailHome = ({ batchName }) => {
   const [open, setOpen] = React.useState(false);
   const [enrollStudents, setEnrollStudents] = React.useState([]);
   const [batchHistory, setBatchHistory] = React.useState([]);
+  const [batchDetail, setBatchDetail] = React.useState([]);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const batchCtx = useContext(BatchContext);
 
-  function tableData( name, date, user, status) {
+  function tableData(name, date, user, status) {
     return { name, date, user, status };
-  } 
+  }
+
+  React.useEffect(() => {
+    const fetchBatches = async () => {
+      const data = await fetchBatchesData();
+      setBatchDetail(data);
+    };
+    fetchBatches();
+  }, [open]);
+
+  //filtering the bathches data
+  const detail = batchDetail.filter((batch) => batch.batch_name === batchName);
+
   //getting the student for the selected batch
   React.useEffect(() => {
     const studentBatch = async () => {
@@ -81,6 +99,7 @@ const BatchDetailHome = ({ batchName }) => {
                   <BackButton /> Batch Details.
                 </h1>
               </div>
+
               <div className="">
                 <div className=" w-full  ">
                   <Button
@@ -96,33 +115,53 @@ const BatchDetailHome = ({ batchName }) => {
             </div>
             <Divider variant="middle" />
           </div>
+          {batchCtx.submitted && (
+            <SuccessPrompt
+              type="edit"
+              title="Batch Teacher Changed Successfully"
+              setSubmitted={batchCtx.setSubmittedHandler}
+            />
+          )}
           <div className="m-0 p-10 w-full bg-white h-fit border-4 border-white rounded-xl">
             <BatchEdit batchName={batchName} actionBtn="Edit Batch" link="" />
-
           </div>
           <div className="bg-white p-0 my-5 h-fit">
-            <BatchHistory batchHistory={batchHistory} />
+            {batchHistory.length > 0 ? (
+              <BatchHistory batchHistory={batchHistory} />
+            ) : (
+              <WarningCard title="No Session Data" />
+            )}
           </div>
           <div className=" mt-10">
-            <UserList batchName={batchName} enrollStudents={enrollStudents} />
-          </div>
-          <Modal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Box sx={style}>
-              <RemoveUser
-                userName={"Teacher Name"}
-                operation="changeTeacher"
-                user="Teacher 1"
-                isReplace={true}
-                type="Teacher"
-                action="Change"
+            {enrollStudents.length > 0 ? (
+              <UserList batchName={batchName} enrollStudents={enrollStudents} />
+            ) : (
+              <WarningCard
+                title={`No Student Enrolled in ${batchName} batch`}
               />
-            </Box>
-          </Modal>
+            )}
+          </div>
+          {detail[0] && (
+            <Modal
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={style}>
+                <RemoveUser
+                  userName={detail[0].teacher_email}
+                  operation="changeTeacher"
+                  user="Teacher 1"
+                  isReplace={true}
+                  type="Teacher"
+                  setOpen={setOpen}
+                  action="Change"
+                  batchName={batchName}
+                />
+              </Box>
+            </Modal>
+          )}
         </div>
       </div>
     </div>

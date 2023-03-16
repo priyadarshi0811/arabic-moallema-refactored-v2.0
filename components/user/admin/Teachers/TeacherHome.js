@@ -53,7 +53,7 @@ const TeacherHome = () => {
       authCtx.setTeachersData(data);
     };
     getUser();
-  }, [batchCtx.submitted]);
+  }, [batchCtx.submitted, batchCtx.submittedDelete]);
 
   //get the filtered value
   const handleSelectedItem = (batchData) => {
@@ -119,10 +119,18 @@ const TeacherHome = () => {
             </div>
             <Divider variant="middle" />
           </div>
-          {batchCtx.submitted && (
+          {batchCtx.submitted && !batchCtx.submittedDelete && (
             <SuccessPrompt
+              type="add"
               title="Teacher Added Successfully"
               setSubmitted={batchCtx.setSubmittedHandler}
+            />
+          )}
+          {batchCtx.submittedDelete && (
+            <SuccessPrompt
+              type="delete"
+              title="Teacher Deleted Successfully"
+              setSubmitted2={batchCtx.setSubmittedDeleteHandler}
             />
           )}
           <div className="m-0 p-10 w-full h-fit">

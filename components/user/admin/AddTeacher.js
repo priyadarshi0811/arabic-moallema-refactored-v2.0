@@ -13,6 +13,7 @@ import axios from "axios";
 import { updateStudentDetail } from "@/backend/Students/StudentDB";
 import { updateTeacherDetail } from "@/backend/Teachers/TeacherDB";
 import BatchContext from "@/components/Context/store/batch-context";
+import Spinner from "@/components/Layout/spinner/Spinner";
 
 // const names = ["Batch 1", "Batch 2", "Batch 3", "Batch 4", "Batch 5"];
 
@@ -45,6 +46,7 @@ export default function AddUser({
   const [contact, setContact] = React.useState("");
   const [email, setEmail] = React.useState("");
 
+  const [isLoading, setIsLoading] = React.useState(false);
   const batchCtx = React.useContext(BatchContext);
 
   let isEdit;
@@ -70,6 +72,8 @@ export default function AddUser({
 
   const addTeacherHandler = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+
     console.log("adding teacher");
 
     if (name && contact && email) {
@@ -92,9 +96,11 @@ export default function AddUser({
         .catch((err) => console.log("error: ", err));
 
       console.log(`User ${data.email} created successfully`);
+      setIsLoading(false);
       setOpen(false);
       batchCtx.setSubmittedHandler(true);
     } else {
+      setIsLoading(false);
       console.log("Please fill in all fields");
     }
   };
@@ -104,13 +110,13 @@ export default function AddUser({
     console.log("update Teacher Detail");
     updateTeacherDetail(email, name, contact);
     batchCtx.setSubmittedHandler(true);
-
   };
 
   return (
     <div className=" p-5 rounded-md bg-white  pl-2">
-      <h1 className="text-2xl pl-2 pb-2">{title || user + " Details"}</h1>
+      {isLoading && <Spinner title="Adding Teacher" />}
 
+      <h1 className="text-2xl pl-2 pb-2">{title || user + " Details"}</h1>
       <Box
         component="form"
         sx={{

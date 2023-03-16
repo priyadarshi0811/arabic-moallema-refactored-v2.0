@@ -64,6 +64,7 @@ const TeacherProfile = ({ email }) => {
   const deleteTeacherRecords = (teacherEmail) => {
     deleteTeacher(email, teacherEmail);
     deleteFromAuth(email);
+    batchCtx.setSubmittedDeleteHandler(true);
     router.push("/admin/teachers");
   };
 
@@ -115,6 +116,7 @@ const TeacherProfile = ({ email }) => {
           </div>
           {batchCtx.submitted && (
             <SuccessPrompt
+              type="edit"
               title="Teachers Details Edited Successfully"
               setSubmitted={batchCtx.setSubmittedHandler}
             />
@@ -141,9 +143,9 @@ const TeacherProfile = ({ email }) => {
               {profileData && (
                 <RemoveUser
                   setOpen={setOpen}
-                  userName={profileData[0].name}
+                  userName={profileData[0].email}
                   deleteTeacherRecords={deleteTeacherRecords}
-                  user="Teacher 1"
+                  user="Teacher"
                   isReplace={true}
                   type="Teacher"
                   action="Remove"

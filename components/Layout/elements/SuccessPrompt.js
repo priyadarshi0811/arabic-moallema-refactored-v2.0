@@ -1,10 +1,21 @@
 import { useRouter } from "next/router";
 import React from "react";
 
-const SuccessPrompt = ({ setSubmitted, title, paths }) => {
+const SuccessPrompt = ({
+  setSubmitted,
+  setSubmitted2,
+  title,
+  paths,
+  type,
+}) => {
   const goToAdmin = (e) => {
-    console.log("in");
-    setSubmitted(false);
+    if ((type === "add" && type !== "delete") || (type === "edit")) {
+      console.log("in");
+      setSubmitted(false);
+    }
+    if (type === "delete") {
+      setSubmitted2(false);
+    }
   };
 
   return (

@@ -25,6 +25,7 @@ import { addStudentToBatch } from "@/backend/Batches/AddStudentToBatchDB";
 import { fetchStudentBasedonEmail } from "@/backend/UserProfile/StudentTeacherProfileDB";
 import { updateStudentDetail } from "@/backend/Students/StudentDB";
 import BatchContext from "@/components/Context/store/batch-context";
+import Spinner from "@/components/Layout/spinner/Spinner";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -50,6 +51,8 @@ export default function AddUser({
 
   const [batch, setBatch] = React.useState(batchName);
   const [edit, setEdit] = React.useState(false);
+
+  const [isLoading, setIsLoading] = React.useState(false);
 
   //get batches
   const auth = React.useContext(AuthContext);
@@ -84,6 +87,7 @@ export default function AddUser({
   //add a student to DB and Batch
   const addStudentHandler = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     console.log("adding student");
 
     if (name && contact && email && batch) {
@@ -107,9 +111,12 @@ export default function AddUser({
         .catch((err) => console.log("error: ", err));
 
       console.log(`User ${data.email} created successfully`);
+      setIsLoading(false);
       setOpen(false);
       batchCtx.setSubmittedHandler(true);
     } else {
+      setIsLoading(false);
+
       console.log("Please fill in all fields");
     }
   };
@@ -124,6 +131,7 @@ export default function AddUser({
   return (
     <>
       <div className=" p-5 rounded-md bg-white  pl-2">
+        {isLoading && <Spinner title="Adding Student" />}
         <h1 className="text-2xl pl-2 pb-2">{title || user + " Details"}</h1>
 
         <Box

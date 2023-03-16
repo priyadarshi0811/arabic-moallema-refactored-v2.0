@@ -55,7 +55,7 @@ const StudentHome = () => {
       authCtx.setStudentsData(data);
     };
     getUser();
-  }, [batchCtx.submitted]);
+  }, [batchCtx.submitted, batchCtx.submittedDelete]);
 
   useEffect(() => {});
 
@@ -127,10 +127,18 @@ const StudentHome = () => {
             </div>
             <Divider variant="middle" />
           </div>
-          {batchCtx.submitted && (
+          {batchCtx.submitted && !batchCtx.submittedDelete && (
             <SuccessPrompt
+              type="add"
               title="Student Added Successfully"
               setSubmitted={batchCtx.setSubmittedHandler}
+            />
+          )}
+          {batchCtx.submittedDelete && (
+            <SuccessPrompt
+              type="delete"
+              title="Student Deleted Successfully"
+              setSubmitted2={batchCtx.setSubmittedDeleteHandler}
             />
           )}
           {error && (

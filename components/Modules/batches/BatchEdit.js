@@ -3,6 +3,7 @@ import AuthContext from "@/components/Context/store/auth-context";
 import { fetchTeachersData } from "@/backend/Teachers/TeacherDB";
 import { postCreateBatch } from "@/backend/Batches/BatchesDB";
 import BatchContext from "@/components/Context/store/batch-context";
+import Spinner from "@/components/Layout/spinner/Spinner";
 
 const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
@@ -11,6 +12,7 @@ const BatchEdit = ({ actionBtn, link, setOpen }) => {
   const [selectedDays, setSelectedDays] = useState([]);
   const [submitted, setSubmitted] = useState(false);
   const batchCtx = useContext(BatchContext);
+  const [isLoading, setIsLoading] = useState(false);
 
   //convert time formate
   function convertTimeTo12HourFormat(time) {
@@ -65,6 +67,7 @@ const BatchEdit = ({ actionBtn, link, setOpen }) => {
 
   const onBatchCreateHandler = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     //getting the values
     const enteredBatchName = nameRef.current.value;
@@ -100,15 +103,19 @@ const BatchEdit = ({ actionBtn, link, setOpen }) => {
       dateRef.current.value = "";
       setSelectedDays([]);
       setOpen(false);
+      setIsLoading(false);
       batchCtx.setSubmittedHandler(true);
     } else {
       console.log("else");
       setError(true);
+      setIsLoading(false);
     }
   };
 
   return (
     <form onSubmit={onBatchCreateHandler}>
+      {isLoading && <Spinner title="Creating batch" />}
+
       <div className="overflow-hidden ">
         <div className="">
           <h1 className="text-2xl mt-0 text-dark-purple text-center pb-5">

@@ -16,6 +16,7 @@ import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
 import { fetchStudentAttendance } from "@/backend/Students/StudentAttendanceDB";
+import WarningCard from "@/components/Layout/card/WarningCard";
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -164,79 +165,85 @@ export default function CustomPaginationActionsTable({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md">
-      <div className=" border-b-2 p-3   ">
-        <h1 className="text-2xl pt-2">Students Attendance History</h1>
+    <>
+      <div className="bg-white rounded-lg shadow-md">
+        {attendaceList && attendaceList.length > 0 && (
+          <div className=" border-b-2 p-3   ">
+            <h1 className="text-2xl pt-2">Students Attendance History</h1>
+          </div>
+        )}
+        {attendaceList && attendaceList.length > 0 && (
+          <TableContainer>
+            <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
+              <TableBody>
+                {(rowsPerPage > 0
+                  ? attendaceList.slice(
+                      page * rowsPerPage,
+                      page * rowsPerPage + rowsPerPage
+                    )
+                  : rows
+                ).map((attendance) => (
+                  <TableRow key={attendance.chapter_name}>
+                    <TableCell component="th" scope="row">
+                      {attendance.chapter_name}
+                    </TableCell>
+                    <TableCell style={{ width: 160 }} align="right">
+                      {attendance.starting_time.substring(0, 10)}
+                    </TableCell>
+
+                    {attendance.students_present.students.includes(
+                      studentEmail
+                    ) ? (
+                      <td className="whitespace-nowrap px-3 py-4  text-green-600 text-md">
+                        Present
+                      </td>
+                    ) : (
+                      <td className="whitespace-nowrap px-3 py-4  text-red-600 text-md">
+                        Absent
+                      </td>
+                    )}
+                  </TableRow>
+                ))}
+
+                {emptyRows > 0 && (
+                  <TableRow style={{ height: 53 * emptyRows }}>
+                    <TableCell colSpan={5} />
+                  </TableRow>
+                )}
+              </TableBody>
+              <TableFooter>
+                <TableRow>
+                  <TablePagination
+                    rowsPerPageOptions={[
+                      5,
+                      6,
+                      10,
+                      25,
+                      { label: "All", value: -1 },
+                    ]}
+                    colSpan={3}
+                    count={attendaceList.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    SelectProps={{
+                      inputProps: {
+                        "aria-label": "rows per page",
+                      },
+                      native: true,
+                    }}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    ActionsComponent={TablePaginationActions}
+                  />
+                </TableRow>
+              </TableFooter>
+            </Table>
+          </TableContainer>
+        )}
+        {attendaceList && attendaceList.length === 0 && (
+          <WarningCard title={`No Session Attendance For The Student`} />
+        )}
       </div>
-      {attendaceList && (
-        <TableContainer>
-          <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
-            <TableBody>
-              {(rowsPerPage > 0
-                ? attendaceList.slice(
-                    page * rowsPerPage,
-                    page * rowsPerPage + rowsPerPage
-                  )
-                : rows
-              ).map((attendance) => (
-                <TableRow key={attendance.chapter_name}>
-                  <TableCell component="th" scope="row">
-                    {attendance.chapter_name}
-                  </TableCell>
-                  <TableCell style={{ width: 160 }} align="right">
-                    {attendance.starting_time.substring(0, 10)}
-                  </TableCell>
-
-                  {attendance.students_present.students.includes(
-                    studentEmail
-                  ) ? (
-                    <td className="whitespace-nowrap px-3 py-4  text-green-600 text-md">
-                      Present
-                    </td>
-                  ) : (
-                    <td className="whitespace-nowrap px-3 py-4  text-red-600 text-md">
-                      Absent
-                    </td>
-                  )}
-                </TableRow>
-              ))}
-
-              {emptyRows > 0 && (
-                <TableRow style={{ height: 53 * emptyRows }}>
-                  <TableCell colSpan={5} />
-                </TableRow>
-              )}
-            </TableBody>
-            <TableFooter>
-              <TableRow>
-                <TablePagination
-                  rowsPerPageOptions={[
-                    5,
-                    6,
-                    10,
-                    25,
-                    { label: "All", value: -1 },
-                  ]}
-                  colSpan={3}
-                  count={attendaceList.length}
-
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  SelectProps={{
-                    inputProps: {
-                      "aria-label": "rows per page",
-                    },
-                    native: true,
-                  }}
-                  onPageChange={handleChangePage}
-                  onRowsPerPageChange={handleChangeRowsPerPage}
-                  ActionsComponent={TablePaginationActions}
-                />
-              </TableRow>
-            </TableFooter>
-          </Table>
-        </TableContainer>
-      )}
-    </div>
+    </>
   );
 }
