@@ -14,6 +14,7 @@ import {
 } from "@/backend/Assignment/FetchAssignmentDB";
 import BatchContext from "@/components/Context/store/batch-context";
 import SuccessPrompt from "@/components/Layout/elements/SuccessPrompt";
+import WarningCard from "@/components/Layout/card/WarningCard";
 
 const ClassDetais = () => {
   const [loading, setLoading] = React.useState(false);
@@ -24,7 +25,7 @@ const ClassDetais = () => {
 
   const [filteredAssignment, setFilteredAssignment] = React.useState([]);
 
-  const batchCtx = React.useContext(BatchContext)
+  const batchCtx = React.useContext(BatchContext);
 
   //getting the student for the selected batch
   React.useEffect(() => {
@@ -83,11 +84,12 @@ const ClassDetais = () => {
       <div className="px-3 lg:px-8 ">
         {batchCtx.submitted && (
           <SuccessPrompt
+            type="edit"
             title="Student graded successfully"
             setSubmitted={batchCtx.setSubmittedHandler}
           />
         )}
-      
+
         <div className="">
           <CardLayout
             firstComp=<div>
@@ -118,24 +120,31 @@ const ClassDetais = () => {
             No Assignment for the selected Student
           </p>
         )}
-        <MUISlider
-          card={
-            !error &&
-            dataToDisplay &&
-            dataToDisplay.map((assignment) => (
-              <div className="px-2">
-                <MUIMiniCard
-                  title={assignment.sub_module}
-                  disc="15/02/23"
-                  isBtn={true}
-                  btnText="View"
-                  link={`/teacher/student/${selectedStudent}/${assignment.sub_module}`}
-                />
-              </div>
-            ))
-          }
-        />
+        {dataToDisplay && (
+          <div>
+            <MUISlider
+              card={
+                !error &&
+                dataToDisplay &&
+                dataToDisplay.map((assignment) => (
+                  <div className="px-2">
+                    <MUIMiniCard
+                      title={assignment.sub_module}
+                      disc="15/02/23"
+                      isBtn={true}
+                      btnText="View"
+                      link={`/teacher/student/${selectedStudent}/${assignment.sub_module}`}
+                    />
+                  </div>
+                ))
+              }
+            />
+          </div>
+        )}
 
+        {dataToDisplay && dataToDisplay.length === 0 && (
+          <WarningCard title={`No Assignment submitted in this batch`} />
+        )}
         <h1 className="text-lg  mt-10">Unchecked Assignments</h1>
         <MUISlider
           card=<MUIMiniCard

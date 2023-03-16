@@ -58,3 +58,26 @@ export const fetchSubmittedAssignmentBasedOnStudentBatchSubModule = async (
   }
   return data;
 };
+
+export const fetchAllAssignments = async (letter) => {
+  const { data, error } = await supabase.from("activity").select("*");
+
+  if (error) {
+    console.log("Error fetching batches data: ", error);
+    return null;
+  }
+  return data;
+};
+
+export const fetchAssignmentBasedOnSubModule = async (subModule) => {
+  const { data, error } = await supabase
+    .from("activity")
+    .select("*")
+    .eq("sub_module", subModule);
+
+  if (error) {
+    console.log("Error fetching batches data: ", error);
+    return null;
+  }
+  return data;
+};

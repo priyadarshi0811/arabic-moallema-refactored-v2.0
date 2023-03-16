@@ -2,6 +2,7 @@ import React from "react";
 import BatchDetailsMin from "@/components/Modules/batches/BatchDetaisMin";
 import UserList from "@/components/Modules/batches/UserList";
 import CardLayout from "@/components/Layout/card/CardLayout";
+import WarningCard from "@/components/Layout/card/WarningCard";
 
 const LiveBatchDetails = ({
   detail,
@@ -16,7 +17,12 @@ const LiveBatchDetails = ({
           <BatchDetailsMin detail={detail} sheduleData={sheduleData} />
         </div>
         <div className="col-span-1">
-          <UserList batchName={batchName} enrollStudents={enrollStudents} />
+          {enrollStudents.length > 0 ? (
+            <UserList batchName={batchName} enrollStudents={enrollStudents} />
+          ) : (
+            <WarningCard title={`No Student Enrolled in ${batchName} batch`} />
+          )}
+          
         </div>
       </div>
 
@@ -24,9 +30,10 @@ const LiveBatchDetails = ({
         {detail[0] && (
           <CardLayout
             title="Class 1"
-            path="/"
+            sheduleData={sheduleData}
+            path={detail[0].g_meet}
             description={detail[0].g_meet}
-            isBtn='true'
+            isBtn="true"
             svg=""
             btn="Join Class"
             onClick={""}

@@ -14,6 +14,7 @@ import { fetchBatchesData } from "@/backend/Announcement/AnnouncementDB";
 import AuthContext from "@/components/Context/store/auth-context";
 import BatchContext from "@/components/Context/store/batch-context";
 import SuccessPrompt from "@/components/Layout/elements/SuccessPrompt";
+import Spinner from "@/components/Layout/spinner/Spinner";
 
 const style = {
   position: "absolute",
@@ -72,13 +73,13 @@ const AdminHomePage = () => {
         <Sidebar nav_index={0} />
         <div className="flex-1 p-7  ">
           <div className="m-0 p-10 w-full h-fit">
-          <div className="grid grid-cols-5 lg:grid-cols-3 w-full mx-auto my-5 gap-10">
+            <div className="grid grid-cols-5 lg:grid-cols-3 w-full mx-auto my-5 gap-10">
               <div className="lg:col-span-1 col-span-5">
                 <h1 className=" my-auto text-2xl mt-3 ">
                   <BackButton /> Batches
                 </h1>
               </div>
-              <div className="col-span-3 lg:col-span-1">  
+              <div className="col-span-3 lg:col-span-1">
                 <div className="px-2 w-full ">
                   <SelectDropdown
                     handleSelectedItem={handleSelectedItem}
@@ -90,7 +91,6 @@ const AdminHomePage = () => {
               </div>
               <div className="lg:col-span-1 col-span-2">
                 <div className="text-end w-full mt-2">
-                  
                   <Button
                     variant="contained"
                     className="bg-dark-purple"
@@ -107,6 +107,7 @@ const AdminHomePage = () => {
           <div className="m-0 p-10 w-full h-fit">
             {batchCtx.submitted && (
               <SuccessPrompt
+                type="add"
                 title="Batch Created Successfully"
                 setSubmitted={batchCtx.setSubmittedHandler}
               />

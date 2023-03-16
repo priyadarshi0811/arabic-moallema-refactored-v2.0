@@ -194,6 +194,13 @@ const ListItemObj = (props) => {
 };
 
 function nav_reference(batchName) {
+  const [batch, setBatch] = useState();
+
+  useEffect(() => {
+    const batch = localStorage.getItem("batchName");
+    setBatch(batch);
+  }, []);
+
   let nav_reference_ovj;
   nav_reference_ovj = {
     0: [
@@ -235,6 +242,11 @@ function nav_reference(batchName) {
         img: <DashboardIcon className="text-dark-purple" />,
       },
 
+      {
+        linkname: "Batch progress",
+        link: `/teacher/batch-detail/${batch}`,
+        img: <GroupsIcon className="text-dark-purple" />,
+      },
       {
         linkname: "Student Report",
         link: "/teacher/student",

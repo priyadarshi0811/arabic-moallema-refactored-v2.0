@@ -14,6 +14,7 @@ import { fetchAssignmentForLetter } from "@/backend/Assignment/FetchAssignmentDB
 import index from "@/pages/admin";
 import BatchContext from "@/components/Context/store/batch-context";
 import { fetchTeacherIdForBatchName } from "@/backend/Batches/BatchesDB";
+import WarningCard from "@/components/Layout/card/WarningCard";
 
 const DrawingCanvas = (props) => {
   const canvasRef = useRef(null);
@@ -72,8 +73,10 @@ const DrawingCanvas = (props) => {
   useEffect(() => {
     const fetchAssignment = async () => {
       const data = await fetchAssignmentForLetter(letterName);
-      setAssignment(data[0].assignment_json.letter);
-      setCurrentIndex(index);
+      if (data[0]) {
+        setAssignment(data[0].assignment_json.letter);
+        setCurrentIndex(index);
+      }
     };
     fetchAssignment();
   }, [letterName]);
@@ -103,7 +106,6 @@ const DrawingCanvas = (props) => {
           .catch((er) => console.log(er));
       }
       setMyArray([]);
-      
     }
   }, [currentIndex]);
 
@@ -131,34 +133,36 @@ const DrawingCanvas = (props) => {
     context = canvas.getContext("2d");
   }
   useEffect(() => {
-    canvas = canvasRef.current;
-    canvas.width = 1120;
-    canvas.height = 280;
+    if (assignment && assignment.length > 0) {
+      canvas = canvasRef.current;
+      canvas.width = 1120;
+      canvas.height = 280;
 
-    context = canvas.getContext("2d");
-    context.lineCap = "round";
+      context = canvas.getContext("2d");
+      context.lineCap = "round";
 
-    context.font = "150px 'Ubuntu Mono', monospace";
-    // context.font = "100px Arial";
+      context.font = "150px 'Ubuntu Mono', monospace";
+      // context.font = "100px Arial";
 
-    context.fillStyle = "lightgray";
+      context.fillStyle = "lightgray";
 
-    // Align the text horizontally and vertically
-    context.textAlign = "center";
+      // Align the text horizontally and vertically
+      context.textAlign = "center";
 
-    if (assignment[currentIndex] && activityType !== "dnd") {
-      const traceData = assignment[currentIndex].trace_data;
-      traceData.map((value, index) =>
-        context.fillText(value, 200 * index + 400, 180)
-      );
-    } else if (activityType === "dnd" && userType === "instructor") {
-      router.replace(`/teacher/activity/dnd/${props.id}/${currentIndex}`);
-    } else if (activityType === "dnd" && userType === "student") {
-      router.replace(`/student/activity/dnd/${props.id}/${currentIndex}`);
+      if (assignment[currentIndex] && activityType !== "dnd") {
+        const traceData = assignment[currentIndex].trace_data;
+        traceData.map((value, index) =>
+          context.fillText(value, 200 * index + 400, 180)
+        );
+      } else if (activityType === "dnd" && userType === "instructor") {
+        router.replace(`/teacher/activity/dnd/${props.id}/${currentIndex}`);
+      } else if (activityType === "dnd" && userType === "student") {
+        router.replace(`/student/activity/dnd/${props.id}/${currentIndex}`);
+      }
+
+      context.lineWidth = 5;
+      contextRef.current = context;
     }
-
-    context.lineWidth = 5;
-    contextRef.current = context;
   }, [id, props.symbol, assignment, currentIndex]);
   if (context) {
     context.strokeStyle = "black";
@@ -221,70 +225,77 @@ const DrawingCanvas = (props) => {
 
   return (
     <>
-      <div className="w-full cursor-cell flex justify-center ">
-        <canvas
-          className="bg-white border-2 rounded-lg shadow-lg border-1"
-          style={{
-            // backgroundImage: `url(${alifV.src})`,
-            backgroundRepeat: "repeat-x",
-          }}
-          ref={canvasRef}
-          onMouseDown={startDrawing}
-          onMouseMove={draw}
-          onMouseUp={stopDrawing}
-          onMouseLeave={stopDrawing}
-        ></canvas>
-      </div>
-      <div className="mt-8 mr-14">
-        <h1>{props.bgImg} </h1>
+      {assignment && assignment.length > 0 && (
+        <div>
+          <div className="w-full cursor-cell flex justify-center ">
+            <canvas
+              className="bg-white border-2 rounded-lg shadow-lg border-1"
+              style={{
+                // backgroundImage: `url(${alifV.src})`,
+                backgroundRepeat: "repeat-x",
+              }}
+              ref={canvasRef}
+              onMouseDown={startDrawing}
+              onMouseMove={draw}
+              onMouseUp={stopDrawing}
+              onMouseLeave={stopDrawing}
+            ></canvas>
+          </div>
+          <div className="mt-8 mr-14">
+            <h1>{props.bgImg} </h1>
 
-        <ButtonGroup
-          variant="contained"
-          aria-label="outlined primary button group"
-        >
-          <Button
-            onClick={setToDraw}
-            className="bg-dark-purple"
-            startIcon={<EditIcon />}
-          >
-            Draw
-          </Button>
-          <Button
-            onClick={setToErase}
-            className="bg-dark-purple"
-            startIcon={<CleaningServicesIcon />}
-          >
-            Erase
-          </Button>
-          <Button
-            onClick={setToClear}
-            className="bg-dark-purple"
-            startIcon={<DeleteForeverIcon />}
-          >
-            Clear
-          </Button>
-        </ButtonGroup>
-
-        <div className="mt-5">
-          {userType !== "instructor" && (
-            <button
-              className="p-3 ml-4 text-white bg-red-500 rounded-md hover:bg-red-600 hover:shadow-lg"
-              onClick={saveImageToLocal}
+            <ButtonGroup
+              variant="contained"
+              aria-label="outlined primary button group"
             >
-              Submit Activity
-            </button>
-          )}
+              <Button
+                onClick={setToDraw}
+                className="bg-dark-purple"
+                startIcon={<EditIcon />}
+              >
+                Draw
+              </Button>
+              <Button
+                onClick={setToErase}
+                className="bg-dark-purple"
+                startIcon={<CleaningServicesIcon />}
+              >
+                Erase
+              </Button>
+              <Button
+                onClick={setToClear}
+                className="bg-dark-purple"
+                startIcon={<DeleteForeverIcon />}
+              >
+                Clear
+              </Button>
+            </ButtonGroup>
 
-          {userType !== "student" && (
-            <Button
-              onClick={handleNextButtonClick}
-              className="p-3 ml-4 text-white bg-dark-purple rounded-md  hover:bg-blue-600 hover:shadow-lg"
-            >
-              Next Activity
-            </Button>
-          )}
+            <div className="mt-5">
+              {userType !== "instructor" && (
+                <button
+                  className="p-3 ml-4 text-white bg-red-500 rounded-md hover:bg-red-600 hover:shadow-lg"
+                  onClick={saveImageToLocal}
+                >
+                  Submit Activity
+                </button>
+              )}
+
+              {userType !== "student" && (
+                <Button
+                  onClick={handleNextButtonClick}
+                  className="p-3 ml-4 text-white bg-dark-purple rounded-md  hover:bg-blue-600 hover:shadow-lg"
+                >
+                  Next Activity
+                </Button>
+              )}
+            </div>
+          </div>
         </div>
-      </div>
+      )}
+      {assignment && assignment.length === 0 && (
+        <WarningCard title={`Asssignment not created for ${letterName}`} />
+      )}
     </>
   );
 };

@@ -7,6 +7,8 @@ const BatchContext = React.createContext({
   attendanceList: [],
   setSubmittedHandler: (bool) => {},
   submitted: true,
+  setSubmittedDeleteHandler: (bool) => {},
+  submittedDelete: false,
   setBatchNameHandler: (batchName) => {},
   batchName: "",
 });
@@ -16,6 +18,7 @@ export const BatchContextProvider = (props) => {
   const [batchName, setBatchName] = useState();
   const [attendanceList, setAttendanceList] = useState();
   const [myArray, setMyArray] = useState([]);
+  const [submittedDelete, setDeletedUser] = useState(false);
 
   const [submitted, setSubmitted] = useState(false);
 
@@ -31,6 +34,11 @@ export const BatchContextProvider = (props) => {
     setSubmitted(bool);
   };
 
+  const setSubmittedDeleteHandler = (bool) => {
+    console.log("boll", bool);
+    console.log(submitted);
+    setDeletedUser(bool);
+  };
   const setBatchNameHandler = (batchNameData) => {
     if (batchNameData) {
       localStorage.setItem("batchName", batchNameData);
@@ -49,6 +57,8 @@ export const BatchContextProvider = (props) => {
     batchName,
     setMyArray,
     myArray,
+    setSubmittedDeleteHandler,
+    submittedDelete,
   };
 
   return (

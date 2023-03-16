@@ -64,6 +64,7 @@ const StudentProfile = ({ email }) => {
   const deleteStudentRecords = () => {
     deleteStudent(email);
     deleteFromAuth(email);
+    batchCtx.setSubmittedDeleteHandler(true);
     router.push("/admin/students");
   };
   console.log(batchesData);
@@ -93,12 +94,6 @@ const StudentProfile = ({ email }) => {
 
               <div className="">
                 <div className=" w-full mt-3 ">
-                  {/* <button
-                      className="px-5 py-2 bg-red-500 text-white text-center rounded-lg hover:bg-red-800 mx-3 "
-                      onClick={handleOpen}
-                    >
-                      <DeleteIcon className="mb-1" /> Remove Student
-                    </button> */}
                   <Button
                     variant="contained"
                     className="bg-red-600 hover:bg-red-700 "
@@ -114,6 +109,7 @@ const StudentProfile = ({ email }) => {
           </div>
           {batchCtx.submitted && (
             <SuccessPrompt
+              type="edit"
               title="Student Details Edited Successfully"
               setSubmitted={batchCtx.setSubmittedHandler}
             />
