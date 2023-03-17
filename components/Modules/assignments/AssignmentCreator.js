@@ -21,6 +21,7 @@ import { createAssignment } from "@/backend/Assignment/CreateAssignmentDB";
 import BatchContext from "@/components/Context/store/batch-context";
 import { useRouter } from "next/router";
 import { fetchSubModulesCreatedActivity } from "@/backend/Assignment/FetchAssignmentDB";
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 const Alphabates = [
   { letter: "خ", title: "Khaa" },
@@ -383,12 +384,12 @@ const AssignmentCreator = () => {
   return (
     <div>
       <center>
-        <Card sx={{ fontFamily: "Ubuntu Mono", textAlign: "left" }}>
+        <Card sx={{ textAlign: "left" }}>
           <CardContent className="p-5">
             <InputLabel>
               Select the activity to be added into the assignment:
             </InputLabel>
-            <div className="flex mt-10">
+            {/* <div className="flex mt-10">
               <div className="mr-4">
                 <label
                   htmlFor="module"
@@ -422,7 +423,7 @@ const AssignmentCreator = () => {
                 <select
                   id="submodule"
                   name="submodule"
-                  className=""
+                  className="border-2 redious-md"
                   value={selectedSubmodule}
                   onChange={handleSubmoduleChange}
                 >
@@ -436,14 +437,59 @@ const AssignmentCreator = () => {
                     ))}
                 </select>
               </div>
+            </div> */}
+            <div className="mt-5 grid grid-cols-8 gap-10">
+              <div className="col-span-3">
+              <p>Module</p>
+                <Select
+                  labelId="demo-simple-select-label"
+                  className="w-full "
+                  label="Age"
+                  id="module"
+                  name="module"
+                  value={selectedModule}
+                  onChange={handleModuleChange}
+                >
+                 
+                  {modules.map((module) => (
+                  
+                     <MenuItem key={module.name} value={module.name} selected={true}>
+                      {module.name}
+                   </MenuItem>
+                  ))}
+                </Select>
+              </div>
+              <div className="col-span-3">
+                <p>Submodule</p>
+              <Select
+                  labelId="demo-simple-select-label"
+                  className="w-full "
+                  label="Age"
+                  id="submodule"
+                  name="submodule"
+                  value={selectedSubmodule}
+                  onChange={handleSubmoduleChange}
+                >
+                
+                 
+                  {resultArray &&
+                    resultArray.map((submodule) => (
+                  
+                     <MenuItem key={submodule.title} value={submodule.title} selected={true}>
+                      {submodule.title}
+                   </MenuItem>
+                  ))}
+                </Select>
+              </div>
+             
             </div>
             <div className="mt-5 grid grid-cols-4 gap-10">
               <div className="col-span-3">
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  className="w-full"
-                  label="Age"
+                  className="w-full "
+                  label="a"
                   value={selectedActivity}
                   onChange={handleChange}
                 >
@@ -456,11 +502,12 @@ const AssignmentCreator = () => {
                   })}
                 </Select>
               </div>
-              <div className="col-span-1">
+              <div className="col-span-1 w-full">
                 <Button
                   variant="contained"
-                  className="bg-dark-purple h-full"
+                  className="bg-dark-purple h-full w-full"
                   onClick={addNewActivity}
+                  startIcon={<AddCircleOutlineIcon />}
                 >
                   Add New Activity
                 </Button>

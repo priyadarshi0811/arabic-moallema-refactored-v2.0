@@ -9,8 +9,8 @@ import TopTitleWithImg from "@/components/Layout/section/TopTitleWithImg";
 import Link from "next/link";
 import HomeActivityCard from "@/components/Layout/card/HomeActivityCard";
 import logo from "@/components/src/img/AMLogo.png";
-
-
+import { Button } from "@mui/material";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 const Alphabates = [
   { letter: "خ", title: "Khaa" },
   { letter: "ح", title: "Haa" },
@@ -60,27 +60,29 @@ const index = () => {
         <img src={teacherOverlay.src} alt="" />
       </div> */}
       <div className=" w-full p-2 rounded-md  flex flex-row justify-center content-center pt-5">
-          <img src={logo.src} className="h-14" alt="" />{" "}
-          <h1 className="ml-10 pt-5 text-white">Activity 1: Letter Tracing</h1>
-        </div>
+        <Link href="/teacher">
+          <Button className="bg-white text-dark-purple" variant="contained" startIcon={<ArrowBackIcon />}>
+            Back to Dashboard
+          </Button>
+        </Link>
+        <h1 className="ml-10 pt-2 text-white">Activity 1: Letter Tracing</h1>
+      </div>
       <div className="grid grid-cols-4 gap-5 ">
         <div className="col-span-1 pl-16 w-full h-fit max-xl:hidden">
           <img src={teacherImg.src} className="w-72" alt="" />
         </div>
         <div className="col-span-4 xl:col-span-3 pt-10">
           <div className="p-3 lg:p-5  grid grid-cols-7 m-4 justify-center  ">
-
-            {/* <div className="flex  flex-col-reverse "> */}            
+            {/* <div className="flex  flex-col-reverse "> */}
             {Alphabates.map((alphabate) => (
               <HomeActivityCard
                 name={alphabate.letter}
                 title={alphabate.title}
                 letter={setLetterName}
-                link='tracing'
+                link="tracing"
               />
             ))}
             {/* </div> */}
-            
           </div>
         </div>
       </div>

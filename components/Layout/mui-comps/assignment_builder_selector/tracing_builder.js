@@ -51,9 +51,9 @@ const TracingBuilder = (props) => {
 
   return (
     <>
-      <h1 className="mt-10 px-5">Task 1: Tracing </h1>
+      <h1 className="mt-10 px-5 pb-3 border-b-2 text-xl">Task: Tracing </h1>
       <div className=" p-5 rounded-md ">
-        <h1 className="">
+        <h1 className="font-normal">
           Enter the words that can be traced by the students
         </h1>
         <div className="grid grid-cols-6 gap-8 p-5">

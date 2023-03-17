@@ -18,18 +18,7 @@ export default function CheckboxListSecondary({
   const [checked, setChecked] = React.useState([]);
   const batchCtx = React.useContext(BatchContext);
 
-  const handleToggle = (value) => () => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
 
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
-    setChecked(newChecked);
-  };
   batchCtx.setAttendanceList(checked);
 
   console.log(checked);
@@ -42,41 +31,15 @@ export default function CheckboxListSecondary({
   }
 
   return (
-    <List
-      dense
-      sx={{ width: "100%", maxWidth: 480, bgcolor: "background.paper" }}
-    >
-      {attendanceArray &&
-        attendanceArray.map((value) => {
-          const labelId = `checkbox-list-secondary-label-${value}`;
-          return (
-            <ListItem
-              key={value}
-              secondaryAction={
-                <Checkbox
-                  edge="end"
-                  onChange={handleToggle(value)}
-                  checked={checked.indexOf(value) !== -1}
-                  inputProps={{ "aria-labelledby": labelId }}
-                />
-              }
-              disablePadding
-            >
-              <ListItemButton>
-                <ListItemAvatar>
-                  <Avatar
-                    alt={`Student`}
-                    src={`/static/images/avatar/User.jpg`}
-                  />
-                </ListItemAvatar>
-                <ListItemText
-                  id={labelId}
-                  primary={`${type === "present" ? value : value.student_id}`}
-                />{" "}
-              </ListItemButton>
-            </ListItem>
-          );
-        })}
-    </List>
+   <>
+    {attendanceArray &&
+      attendanceArray.map((value) => {
+        const labelId = `checkbox-list-secondary-label-${value}`;
+        return (
+          <>
+          <p className="px-2 py-3 w-full">{`${type === "present" ? value : value.student_id}`}</p>
+          </>
+        );
+      })}</>
   );
 }

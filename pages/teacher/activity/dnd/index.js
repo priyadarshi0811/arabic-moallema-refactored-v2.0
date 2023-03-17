@@ -7,6 +7,10 @@ import logo from "@/components/src/img/AMLogo.png";
 import DND from "@/components/Modules/models/DND";
 import Activity from "@/components/Modules/models/DNDActivity/Activity";
 import BackButton from "@/components/Layout/elements/BackButton";
+import Link from "next/link";
+import { Button } from "@mui/material";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+
 
 
 const index = ({ data }) => {
@@ -24,16 +28,14 @@ const index = ({ data }) => {
           minHeight: "100vh",
         }}
       >
-       <div className=" w-full p-5 ">
-       <h1 className=" my-auto  pt-10 text-3xl  text-white mx-3 ml-5 ">
-          <span className="bg-white rounded-full p-0 h-fit">
-            <BackButton />
-          </span>{" "}
-          Drag and Drop
-        </h1>
-          {/* <img src={logo.src} className="h-14" alt="" />{" "}
-          <h1 className="ml-10 pt-5 text-white">Activity 2: Drag And Drops</h1>           */}
-        </div>  
+      <div className=" w-full p-2 rounded-md  flex flex-row justify-center content-center pt-5">
+        <Link href="/teacher">
+          <Button className="bg-white text-dark-purple" variant="contained" startIcon={<ArrowBackIcon />}>
+            Back to Dashboard
+          </Button>
+        </Link>
+        <h1 className="ml-10 pt-2 text-white">Activity 2: Drag and Drop</h1>
+      </div>
         <div className="mx-10 rounded-md">
         {/* <DND /> */}
         <Activity />
