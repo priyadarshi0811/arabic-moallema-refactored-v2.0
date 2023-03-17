@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 
 let logoutTimer;
@@ -32,6 +33,8 @@ export const AuthContextProvider = (props) => {
   const [studentList, setStudentsList] = useState([]);
   const [teachersList, setTeachersList] = useState([]);
   const [batchesList, setBatchesList] = useState([]);
+
+  const router = useRouter();
 
   const [token, setToken] = useState("");
   const [userType, setUserType] = useState("admin");
@@ -70,6 +73,8 @@ export const AuthContextProvider = (props) => {
     if (logoutHandler) {
       clearTimeout(logoutTimer);
     }
+    window.location.href = "/";
+
     console.log("In auth Logout");
   };
 

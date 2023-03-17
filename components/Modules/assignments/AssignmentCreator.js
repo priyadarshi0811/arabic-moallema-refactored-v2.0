@@ -20,6 +20,45 @@ import CreateAssignment from "@/pages/admin/assignments/create-assignment";
 import { createAssignment } from "@/backend/Assignment/CreateAssignmentDB";
 import BatchContext from "@/components/Context/store/batch-context";
 import { useRouter } from "next/router";
+import { fetchSubModulesCreatedActivity } from "@/backend/Assignment/FetchAssignmentDB";
+
+const Alphabates = [
+  { letter: "خ", title: "Khaa" },
+  { letter: "ح", title: "Haa" },
+  { letter: "ج", title: "Jeem" },
+  { letter: "ث", title: "Thaa" },
+  { letter: "ت", title: "Ta" },
+  { letter: "ب", title: "Baa" },
+  { letter: "ا", title: "Alif" },
+  { letter: "ص", title: "Saad" },
+  { letter: "ش", title: "Sheen" },
+  { letter: "س", title: "Seen" },
+  { letter: "ز", title: "Zai" },
+  { letter: "ر", title: "Raa" },
+  { letter: "ذ", title: "Dhaal" },
+  { letter: "د", title: "Daal" },
+  { letter: "ق", title: "Qaaf" },
+  { letter: "ف", title: "Faa" },
+  { letter: "غ", title: "Ghayn" },
+  { letter: "ع", title: "Ayn" },
+  { letter: "ظ", title: "Dhaa" },
+  { letter: "ط", title: "Taa" },
+  { letter: "ض", title: "Daad" },
+  { letter: "ي", title: "Yaa" },
+  { letter: "و", title: "Waaw" },
+  { letter: "ه", title: "Ha" },
+  { letter: "ن", title: "Noon" },
+  { letter: "م", title: "Meem" },
+  { letter: "ل", title: "Laam" },
+  { letter: "ك", title: "Kaaf" },
+];
+
+const modules = [
+  { id: 1, name: "Harakat" },
+  { id: 2, name: "Alphabates" },
+  { id: 3, name: "Tanveen" },
+  { id: 4, name: "Hamza" },
+];
 
 const ADD_ACTIVITY = "Add Activity";
 const ADD_TRACING = "Add Tracing";
@@ -42,20 +81,6 @@ const reducerFunction = (state, action) => {
   }
   return state;
 };
-
-const modules = [
-  { id: 1, name: "Harakat" },
-  { id: 2, name: "Alphabates" },
-  { id: 3, name: "Tanveen" },
-  { id: 4, name: "Hamza" },
-];
-
-const submodules = [
-  { id: 1, name: "Daal" },
-  { id: 2, name: "Dhaal" },
-  { id: 3, name: "Raa" },
-  { id: 4, name: "Zai" },
-];
 
 const AssignmentCreator = () => {
   // STATES FOR ALL ACTIVITIES
@@ -298,10 +323,35 @@ const AssignmentCreator = () => {
       });
     }
   };
+
+  const [submoduleArray, setSubmoduleArray] = useState();
+  const [resultArray, setResultArray] = useState([]);
+  useEffect(() => {
+    const fethSubModule = async () => {
+      const data = await fetchSubModulesCreatedActivity();
+      setSubmoduleArray(data);
+    };
+    fethSubModule();
+  }, []);
+
+  useEffect(() => {
+    if (submoduleArray) {
+      const filteredArray = Alphabates.filter((alphabet) => {
+        return !submoduleArray.some(
+          (submodule) => submodule.sub_module === alphabet.title
+        );
+      });
+      setResultArray(filteredArray);
+    }
+  }, [submoduleArray]);
+
+  console.log("subModule: ", submoduleArray);
+  console.log("result: ", resultArray);
+
   const batchCtx = useContext(BatchContext);
 
-  const [selectedModule, setSelectedModule] = useState(modules[0].id);
-  const [selectedSubmodule, setSelectedSubmodule] = useState(submodules[0].id);
+  const [selectedModule, setSelectedModule] = useState();
+  const [selectedSubmodule, setSelectedSubmodule] = useState();
   console.log("module: ", selectedModule);
   console.log("sub module: ", selectedSubmodule);
   const router = useRouter();
@@ -349,7 +399,7 @@ const AssignmentCreator = () => {
                 <select
                   id="module"
                   name="module"
-                  className="form-select block w-44 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className=""
                   value={selectedModule}
                   onChange={handleModuleChange}
                 >
@@ -372,17 +422,18 @@ const AssignmentCreator = () => {
                 <select
                   id="submodule"
                   name="submodule"
-                  className="form-select w-44 block  py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className=""
                   value={selectedSubmodule}
                   onChange={handleSubmoduleChange}
                 >
                   <option selected>Select Sub-Module</option>
 
-                  {submodules.map((submodule) => (
-                    <option key={submodule.name} value={submodule.name}>
-                      {submodule.name}
-                    </option>
-                  ))}
+                  {resultArray &&
+                    resultArray.map((submodule) => (
+                      <option key={submodule.title} value={submodule.title}>
+                        {submodule.title}
+                      </option>
+                    ))}
                 </select>
               </div>
             </div>

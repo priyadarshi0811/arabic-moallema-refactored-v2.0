@@ -5,7 +5,7 @@ import alphapbets1 from "@/components/src/gif/alphapbets1.gif";
 import alphapbets3 from "@/components/src/gif/alphapbets3.gif";
 import alphapbets4 from "@/components/src/gif/alphapbets4.gif";
 import alphapbets6 from "@/components/src/gif/alphapbets6.gif";
-
+import alphapbets2 from "@/components/src/gif/alphapbets2.gif";
 const AlphabatesDescription = [
   {
     name: "Alif",
@@ -33,6 +33,8 @@ const AlphabatesDescription = [
     description: { initial: "تـ", middle: "ـتـ", final: "ـت" },
     example: { initial: "تَرَكَ", middle: "فَتَحَ", final: "بَعَثَ" },
     harakat: { zabar: "تَ", zer: "تِ", pesh: "تُ" },
+    gif: alphapbets2.src,
+
   },
   {
     name: "Thaa",

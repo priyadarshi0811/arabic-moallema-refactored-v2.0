@@ -16,7 +16,7 @@ import MicIcon from "@mui/icons-material/Mic";
 import canvasImg from "@/components/src/img/canvas(10).png";
 import CardLayout from "@/components/Layout/card/CardLayout";
 import MarkRemarkSec from "@/components/Layout/elements/MarkRemarkSec";
-import { fetchSubmittedAssignmentBasedOnStudentBatchSubModule } from "@/backend/Assignment/FetchAssignmentDB";
+import { fetchAssignmentSubmissionStatus, fetchSubmittedAssignmentBasedOnStudentBatchSubModule } from "@/backend/Assignment/FetchAssignmentDB";
 import { markAssignment } from "@/backend/Assignment/MarkAssignmentDB";
 import BatchContext from "@/components/Context/store/batch-context";
 import { useRouter } from "next/router";
@@ -24,6 +24,8 @@ import { useRouter } from "next/router";
 const AssignmentDetails = ({ studentId, subModule, type }) => {
   const [assignmentDetail, setAssignmentDetail] = useState();
   const [activityType, setactivityType] = useState();
+  const [assessed, setAssessed] = useState();
+
 
   const [marks, setMarks] = useState([]);
   const [remark, setRemark] = useState([]);
@@ -76,8 +78,27 @@ const AssignmentDetails = ({ studentId, subModule, type }) => {
     assignmentDetail();
   }, []);
 
+  useEffect(() => {
+    const assignmentDetail = async () => {
+      const batch = localStorage.getItem("batchName");
+
+      const data = await fetchAssignmentSubmissionStatus(
+        studentId,
+        batch,
+        subModule
+      );
+      if (data[0]) {
+        setAssessed(data[0].is_assesed);
+      }
+    };
+    assignmentDetail();
+  }, []);
+
   if (assignmentDetail) {
     console.log(assignmentDetail);
+  }
+  if (assessed) {
+    console.log(assessed);
   }
 
   return (
@@ -184,7 +205,7 @@ const AssignmentDetails = ({ studentId, subModule, type }) => {
             )}
           </div>
         ))}
-      {type !== "showAssignmentStudent" && (
+      {type !== "showAssignmentStudent" && !assessed && (
         <Button
           onClick={gradeAssignment}
           className="w-full bg-dark-purple mt-5"

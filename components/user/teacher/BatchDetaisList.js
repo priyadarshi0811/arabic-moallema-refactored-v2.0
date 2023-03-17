@@ -293,11 +293,10 @@ const ClassDetais = ({ batchName, user }) => {
                 <h1 className="p-5 border-b-2">Batch Details</h1>
                 <div className="w-full grid grid-cols-5 gap-20 rounded-lg overflow-hidden shadow-lg  items-center justify-center bg-slate-50 ">
                   <div className=" m-10 w-full  col-span-3">
-                    <InputWithLable
-                      lable="G Meet"
-                      type="text"
-                      placeholder={detail[0].g_meet}
-                    />
+                    <label>G Meet</label>
+                    <span class="ml-10 inline-flex items-center justify-center px-4 py-2 text-base font-medium text-black  rounded-lg shadow-md ">
+                      {detail[0].g_meet}
+                    </span>
                   </div>
                   <div className="  my-5 col-span-2">
                     <div className="flex items-center justify-end ">

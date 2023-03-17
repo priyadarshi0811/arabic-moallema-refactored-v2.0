@@ -19,6 +19,7 @@ import { fetchBatchesData } from "@/backend/Announcement/AnnouncementDB";
 import BatchContext from "@/components/Context/store/batch-context";
 import SuccessPrompt from "@/components/Layout/elements/SuccessPrompt";
 import WarningCard from "@/components/Layout/card/WarningCard";
+import BatchEditNew from "./BatchEditNew";
 
 const style = {
   position: "absolute",
@@ -123,7 +124,7 @@ const BatchDetailHome = ({ batchName }) => {
             />
           )}
           <div className="m-0 p-10 w-full bg-white h-fit border-4 border-white rounded-xl">
-            <BatchEdit batchName={batchName} actionBtn="Edit Batch" link="" />
+            <BatchEditNew batchName={batchName} actionBtn="Edit Batch" link="" />
           </div>
           <div className="bg-white p-0 my-5 h-fit">
             {batchHistory.length > 0 ? (

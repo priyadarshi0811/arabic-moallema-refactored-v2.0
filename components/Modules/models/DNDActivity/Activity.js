@@ -195,6 +195,8 @@ const LetterActivity = () => {
           .catch((er) => console.log(er));
       }
       setMyArray([]);
+      router.replace("/student/activity/tracing");
+      window.location.href = "/student/activity/tracing";
     }
   }, [activityIndex, currentIndex, assignment]);
 
