@@ -106,6 +106,8 @@ const DrawingCanvas = (props) => {
           .catch((er) => console.log(er));
       }
       setMyArray([]);
+      router.replace("/student/activity/tracing");
+      window.location.href = "/student/activity/tracing";
     }
   }, [currentIndex]);
 
@@ -141,8 +143,8 @@ const DrawingCanvas = (props) => {
       context = canvas.getContext("2d");
       context.lineCap = "round";
 
-      context.font = "150px 'Ubuntu Mono', monospace";
-      // context.font = "100px Arial";
+      context.font = "150px  Ubuntu , IBM Plex Sans Arabic";
+      // context.font = "150px Arial";
 
       context.fillStyle = "lightgray";
 

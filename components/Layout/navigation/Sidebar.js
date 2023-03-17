@@ -50,7 +50,7 @@ const Sidebar = (props) => {
   const logoutHandler = (e) => {
     console.log("LoggOut");
     authCtx.logout();
-    router.replace("/");
+    // router.replace("/");
   };
   const [open, setOpen] = useState(true);
 

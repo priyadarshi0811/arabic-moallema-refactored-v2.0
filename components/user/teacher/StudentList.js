@@ -145,16 +145,6 @@ const ClassDetais = () => {
         {dataToDisplay && dataToDisplay.length === 0 && (
           <WarningCard title={`No Assignment submitted in this batch`} />
         )}
-        <h1 className="text-lg  mt-10">Unchecked Assignments</h1>
-        <MUISlider
-          card=<MUIMiniCard
-            title="Assignment 1"
-            disc="Un-Checked"
-            // isBtn=""
-            // btnText="Check"
-            // link=""
-          />
-        />
       </div>
     </div>
   );

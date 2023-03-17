@@ -109,13 +109,13 @@ const ClassDetais = ({ batchName, user }) => {
           card={
             !loading &&
             upcomingChapters &&
-            upcomingChapters.map((chapter) => (
+            upcomingChapters.map((chapter, index) => (
               <div className="px-2">
                 <MUIMiniCard
                   title={chapter.chapter_name}
                   disc="15/02/23"
                   isChip="true"
-                  chipLable="Upcomming"
+                  chipLable={index === 0 ? "In-Progress" : "Upcomming"}
                 />
               </div>
             ))
