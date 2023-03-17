@@ -23,7 +23,7 @@ const LetterDetails = (props) => {
 
   return (
     <>
-      <div className=" w-full p-2 rounded-md  flex flex-row justify-center content-center pt-5">
+      <div className=" w-full p-2 rounded-md  flex flex-row justify-center content-center pt-2">
         <img src={logo.src} className="h-14" alt="" />{" "}
         <h1 className="ml-10 pt-5 text-white text-lg">
           Arabic Alphabets :{" "}

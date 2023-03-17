@@ -60,7 +60,6 @@ const AssignmentDetails = ({ studentId, subModule, type }) => {
   };
 
   console.log(marks);
-  console.log(remark);
 
   useEffect(() => {
     const assignmentDetail = async () => {
@@ -108,7 +107,7 @@ const AssignmentDetails = ({ studentId, subModule, type }) => {
           <div>
             {!assignment.submission.tasks && (
               <div>
-                <h1 className="">Task: Tracing </h1>
+                <h1 className="mt-10 px-5 pb-3 border-b-2">Task 1: Tracing </h1>
                 <div className="bg-gray-50 mt-5 lg:p-5 p-2 rounded-md shadow-md">
                   <h1 className="lg:px-5 p-2">
                     Queston: Enter the words that can be traced by the students
@@ -155,19 +154,63 @@ const AssignmentDetails = ({ studentId, subModule, type }) => {
             )}
             {assignment.submission.tasks && (
               <div>
-                <h1 className="mt-10">Task: Drag and Drop </h1>
+                <h1 className="mt-10 text-lg">Task: Drag and Drop </h1>
                 <div className="bg-gray-50 mt-5 lg:p-5 p-2 rounded-md shadow-md">
                   <h1 className="p-2 lg:px-5">
                     Queston: Drag the words and drop it in Heavy or Light Ra
                     bucket:
                   </h1>
-                  <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2  gap-10 m-5">
-                    <div className="col-span-1 border-2 rounded-md lg:p-3 p-2 cursor-pointer">
-                      <p className="pb-3">Initial</p>
-                      <div className="my-3">
-                        <MUIMiniCard
-                          title={assignment.submission.columns.name}
-                        />
+                  <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2  gap-10 m-5 ">
+                    <div className="col-span-1 border-2 rounded-md cursor-pointer ">
+                      <h1 className="text-white bg-dark-purple w-full p-2 rounded-t-md">
+                        {assignment.submission.columns["column-2"].name}
+                      </h1>
+                      {/* {assignment.submission.columns["column-2"].name.map((col) => {
+                          <p>{col}</p>;
+                        })} */}
+                      <div className="my-3 ">
+                        {assignment.submission.columns["column-2"].taskIds[0] && (
+                          <p className="p-3 bg-lime-200  rounded-md my-2">
+                            {
+                              assignment.submission.columns["column-2"].taskIds[0]
+                            }
+                          </p>
+                        )}
+                        {assignment.submission.columns["column-2"].taskIds[1] && (
+                          <p className="p-3 bg-lime-200  rounded-md my-2">
+                            {
+                              assignment.submission.columns["column-2"].taskIds[1]
+                            }
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                    <div className="col-span-1 border-2 rounded-md cursor-pointer ">
+                      <h1 className="text-white bg-dark-purple w-full p-2 rounded-t-md">
+                        {assignment.submission.columns["column-3"].name}
+                      </h1>
+                      <div className="my-3 ">
+                        {assignment.submission.columns["column-3"].taskIds[0] && (
+                          <p className="p-3 bg-lime-200  rounded-md my-2">
+                            {
+                              assignment.submission.columns["column-3"].taskIds[0]
+                            }
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                    <div className="col-span-1 border-2 rounded-md cursor-pointer ">
+                      <h1 className="text-white bg-dark-purple w-full p-2 rounded-t-md">
+                        {assignment.submission.columns["column-4"].name}
+                      </h1>
+                      <div className="my-3 ">
+                        {assignment.submission.columns["column-4"].taskIds[0] && (
+                          <p className="p-3 bg-lime-200  rounded-md my-2">
+                            {
+                              assignment.submission.columns["column-4"].taskIds[0]
+                            }
+                          </p>
+                        )}
                       </div>
                     </div>
                   </div>

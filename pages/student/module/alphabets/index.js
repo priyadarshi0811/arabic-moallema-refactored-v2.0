@@ -8,6 +8,9 @@ import TopTitleWithImg from "@/components/Layout/section/TopTitleWithImg";
 import Link from "next/link";
 import HomeActivityCard from "@/components/Layout/card/HomeActivityCard";
 import logo from "@/components/src/img/AMLogo.png";
+import { Button } from "@mui/material";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import Link from "next/link";
 
 
 const Alphabates = [
@@ -55,6 +58,14 @@ const index = () => {
         minHeight: "100vh",
       }}
     >
+      <div className=" w-full p-2 rounded-md  flex flex-row justify-center content-center pt-5">
+        <Link href="/student">
+          <Button className="bg-white text-dark-purple" variant="contained" startIcon={<ArrowBackIcon />}>
+            Back to Dashboard
+          </Button>
+        </Link>
+        <h1 className="ml-10 pt-2 text-white">Activity 2: Drag and Drop</h1>
+      </div>
       <div className=" w-full p-2 rounded-md  flex flex-row justify-center content-center pt-5">
           <img src={logo.src} className="h-14" alt="" />{" "}
           <h1 className="ml-10 pt-5 text-white">Module 1 Arabic Alphabets</h1>

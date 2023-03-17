@@ -39,7 +39,7 @@ const CreateAssignments = () => {
         </div>
       </div>
 
-      <h1 className="mt-10">Task 1: Tracing </h1>
+      <h1 className="mt-10 text-2xl">Task 1: Tracing </h1>
       <div className="bg-gray-50 mt-5 p-5 rounded-md shadow-md">
         <h1 className="px-5">
           Enter the words that can be traced by the students
