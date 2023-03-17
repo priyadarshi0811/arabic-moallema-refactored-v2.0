@@ -12,30 +12,7 @@ import AuthContext from "@/components/Context/store/auth-context";
 import { LoginUser } from "@/backend/Login/LoginDB";
 import { useRouter } from "next/router";
 
-function ModeToggle() {
-  const [mounted, setMounted] = React.useState(false);
-  const { mode, setMode } = useColorScheme();
 
-  // necessary for server-side rendering
-  // because mode is undefined on the server
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
-  if (!mounted) {
-    return null;
-  }
-
-  return (
-    <Button
-      variant="outlined"
-      onClick={() => {
-        setMode(mode === "light" ? "dark" : "light");
-      }}
-    >
-      {mode === "light" ? "Turn dark" : "Turn light"}
-    </Button>
-  );
-}
 
 export default function App() {
   const router = useRouter();
@@ -82,23 +59,21 @@ export default function App() {
   return (
     <CssVarsProvider>
       <main>
-        <ModeToggle />
         <Sheet
           sx={{
-            width: 400,
+            width: 425,
             mx: "auto", // margin left & right
-            my: 4, // margin top & botom
             py: 3, // padding top & bottom
             px: 2, // padding left & right
             display: "flex",
             flexDirection: "column",
-            gap: 2,
-            borderRadius: "sm",
-            boxShadow: "md",
+            border: 0,
+            backgroundColor: 'transparent'
           }}
           variant="outlined"
         >
-          <div>
+         <div className="bg-white border-2 rounded-md my-5 p-5">
+         <div className="">
             <img
               className="mx-auto mt-5  w-5/6 p-10"
               src={logo.src}
@@ -163,6 +138,7 @@ export default function App() {
           >
             Don&apos;t have an account?
           </Typography>
+         </div>
         </Sheet>
       </main>
     </CssVarsProvider>
