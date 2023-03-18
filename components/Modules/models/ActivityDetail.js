@@ -34,7 +34,6 @@ const AlphabatesDescription = [
     example: { initial: "تَرَكَ", middle: "فَتَحَ", final: "بَعَثَ" },
     harakat: { zabar: "تَ", zer: "تِ", pesh: "تُ" },
     gif: alphapbets2.src,
-
   },
   {
     name: "Thaa",
@@ -252,7 +251,9 @@ const AlphabatesDescription = [
   },
 ];
 
-const ActivityDetail = ({ id, type, symbol }) => {
+const ActivityDetail = ({ id, type, symbol, user }) => {
+  console.log("user: ", user);
+
   console.log(id);
   console.log(symbol);
   const filteredData = AlphabatesDescription.filter((item) => item.name === id);
@@ -262,6 +263,7 @@ const ActivityDetail = ({ id, type, symbol }) => {
     <>
       {type == "LetterDetails" ? (
         <LetterDetailsCopy
+          user={user}
           name={filteredData[0].name}
           symbol={filteredData[0].symbol}
           initial={filteredData[0].description.initial}
@@ -278,6 +280,7 @@ const ActivityDetail = ({ id, type, symbol }) => {
       )}
       {type == "LetterTracing" && filteredData[0] && (
         <LetterDetails
+          user={user}
           id={id}
           name={filteredData[0].name}
           symbol={filteredData[0].symbol}

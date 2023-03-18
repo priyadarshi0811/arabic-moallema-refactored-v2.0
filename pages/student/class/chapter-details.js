@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import grayBgImg from "@/components/src/img/grayBgImg.png";
 
 import ClassList from "@/components/user/teacher/BatchList";
@@ -9,10 +9,41 @@ import BackButton from "@/components/Layout/elements/BackButton";
 import { Divider } from "@mui/material";
 import BatchDetails from "@/pages/admin/batch-details";
 import AttandanceList from "@/components/user/teacher/AttandanceList";
+import AuthContext from "@/components/Context/store/auth-context";
+import { useRouter } from "next/router";
 // import InProgress from "@/components/Layout/screen/InProgress";
 // import MiniCard from "@/components/Layout/card/MiniCard";
 
 const index = () => {
+
+  const authCtx = useContext(AuthContext);
+
+  const router = useRouter();
+  const type = authCtx.userType;
+
+  const loggedIn = authCtx.isLoggedIn;
+
+  const typeStudent = authCtx.userType === "student" ? true : false;
+
+  if (!typeStudent && loggedIn) {
+    router.replace("/");
+  }
+
+  useEffect(() => {
+    console.log("in");
+    if (typeStudent && loggedIn) {
+      if (!typeStudent && !loggedIn) {
+        console.log("second in");
+        router.replace("/");
+      }
+    }
+
+    if (!typeStudent && !loggedIn) {
+      console.log("second in");
+      router.replace("/");
+    }
+  }, [loggedIn, typeStudent]);
+
   function tableData(name, date, user, status) {
     return { name, date, user, status };
   }

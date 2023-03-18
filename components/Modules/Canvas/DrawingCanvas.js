@@ -87,7 +87,7 @@ const DrawingCanvas = (props) => {
       router.replace("/teacher/module/alphabets");
     }
     if (currentIndex > assignment.length - 1 && userType === "student") {
-      router.replace("/student/activity/tracing");
+      router.replace("/student/module/alphabets");
     }
     if (currentIndex > assignment.length - 1 && userType === "student") {
       if (id && batch) {
@@ -106,8 +106,8 @@ const DrawingCanvas = (props) => {
           .catch((er) => console.log(er));
       }
       setMyArray([]);
-      router.replace("/student/activity/tracing");
-      window.location.href = "/student/activity/tracing";
+      router.replace("/student/module/alphabets");
+      window.location.href = "/student/module/alphabets";
     }
   }, [currentIndex]);
 

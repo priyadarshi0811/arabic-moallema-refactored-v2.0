@@ -5,8 +5,10 @@ import AudioButton from "@/components/Layout/elements/AudioBtn";
 import Link from "next/link";
 import { Button } from "@mui/material";
 import logo from "@/components/src/img/AMLogo.png";
+import { addActivityStartStatus } from "@/backend/ActivityStartLog/SetActivityLogDB";
 
 const LetterDetails = (props) => {
+  console.log("user: ", props.user);
   const [showCanvas, setShowCanvas] = useState(false);
   const [getColor, setColor] = useState("red");
 
@@ -15,6 +17,20 @@ const LetterDetails = (props) => {
     setColor(colorData);
   };
   console.log(getColor);
+
+  const setActivitySubmodule = () => {
+    if (props.user !== "student") {
+      const batch = localStorage.getItem("batchName");
+      const subModule = props.name;
+      if (subModule) {
+        let data = addActivityStartStatus("Alphabets", subModule, batch);
+
+        if (!data) {
+          console.log("already added");
+        }
+      }
+    }
+  };
 
   const canvasHandler = () => {
     setShowCanvas((prev) => !prev);
@@ -44,16 +60,20 @@ const LetterDetails = (props) => {
                 <AudioButton url={props.audioUrl} />
               </button>
               <div className="mx-5">
-                <Link href="/teacher/module/alphabets" className="mx-3">
+                <Link href={`/${props.user}/module/alphabets`} className="mx-3">
                   <Button variant="contained" className="bg-dark-purple">
                     Back
                   </Button>
                 </Link>
                 <Link
-                  href={`/teacher/activity/tracing/${props.name}/${0}`}
+                  href={`/${props.user}/activity/tracing/${props.name}/${0}`}
                   className="mx-3"
                 >
-                  <Button variant="contained" className="bg-dark-purple">
+                  <Button
+                    onClick={setActivitySubmodule}
+                    variant="contained"
+                    className="bg-dark-purple"
+                  >
                     Activity
                   </Button>
                 </Link>

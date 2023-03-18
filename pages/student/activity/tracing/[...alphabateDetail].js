@@ -1,10 +1,11 @@
 import ActivityDetail from "@/components/Modules/models/ActivityDetail";
 // import LetterDetails from "@/components/layout/LetterDetails";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import colorBgImg from "@/components/src/img/colorBgImg.png";
 import AlphabetSlider from "@/components/Modules/models/AlphabetSlider";
 import logo from "@/components/src/img/AMLogo.png";
+import AuthContext from "@/components/Context/store/auth-context";
 
 const index = () => {
   const router = useRouter();
@@ -13,8 +14,33 @@ const index = () => {
     id = router.query.alphabateDetail[0];
   }
 
-  //accessing id
-  // console.log(id);
+  const authCtx = useContext(AuthContext);
+
+  const loggedIn = authCtx.isLoggedIn;
+
+  const typeStudent = authCtx.userType === "student" ? true : false;
+
+  if (!typeStudent && loggedIn) {
+    router.replace("/");
+  }
+
+  useEffect(() => {
+    console.log("in");
+    if (typeStudent && loggedIn) {
+      if (!typeStudent && !loggedIn) {
+        console.log("second in");
+        router.replace("/");
+      }
+    }
+
+    const localType = localStorage.getItem("type");
+
+    if (localType !== "student") {
+      console.log("second in");
+      router.replace("/");
+    }
+  }, [loggedIn, typeStudent]);
+
   return (
     <>
       <div
@@ -29,7 +55,7 @@ const index = () => {
         }}
       >
         {/* <AlphabetSlider id={id} type='tracing' /> */}
-        <ActivityDetail id={id} type="LetterTracing" />
+        <ActivityDetail user="student" id={id} type="LetterTracing" />
 
         {/* <div className="p-5 grid grid-cols-12 gap-5">
           <div className="col-span-1">

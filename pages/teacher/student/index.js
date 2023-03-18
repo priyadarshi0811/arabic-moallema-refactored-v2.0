@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import grayBgImg from "@/components/src/img/grayBgImg.png";
 
 import ClassList from "@/components/user/teacher/BatchList";
@@ -7,10 +7,40 @@ import StudentList from "@/components/user/teacher/StudentList";
 import BatchList from "@/components/user/teacher/BatchList";
 import BackButton from "@/components/Layout/elements/BackButton";
 import { Divider } from "@mui/material";
+import { useRouter } from "next/router";
+import AuthContext from "@/components/Context/store/auth-context";
 // import InProgress from "@/components/Layout/screen/InProgress";
 // import MiniCard from "@/components/Layout/card/MiniCard";
 
 const index = () => {
+  const authCtx = useContext(AuthContext);
+  const router = useRouter();
+
+  
+  /**************Restricting Teachers Route************************* */
+  const loggedIn = authCtx.isLoggedIn;
+  const typeTeacher = authCtx.userType === "instructor" ? true : false;
+  if (!typeTeacher && loggedIn) {
+    router.replace("/");
+  }
+
+  useEffect(() => {
+    console.log("in");
+    if (typeTeacher && loggedIn) {
+      if (!typeTeacher && !loggedIn) {
+        console.log("second in");
+        router.replace("/");
+      }
+    }
+    const localType = localStorage.getItem("type");
+    if (localType !== "instructor") {
+      console.log("second in");
+      router.replace("/");
+    }
+  }, [loggedIn, typeTeacher]);
+
+  /**************Restricting Teachers Route************************* */
+
   return (
     <div
       className=""
@@ -37,7 +67,7 @@ const index = () => {
 
               <Divider variant="middle" />
               <div className="col-span-1">
-                <StudentList user='teacher' />
+                <StudentList user="teacher" />
               </div>
             </div>
           </div>

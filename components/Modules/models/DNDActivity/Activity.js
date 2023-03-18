@@ -170,7 +170,7 @@ const LetterActivity = () => {
     }
     if (currentIndex > assignment.length - 1 && userType === "student") {
       console.log("third");
-      router.replace("/student/activity/tracing");
+      router.replace("/student/module/alphabets");
     }
 
     if (currentIndex > assignment.length - 1 && userType === "instructor") {
@@ -195,8 +195,8 @@ const LetterActivity = () => {
           .catch((er) => console.log(er));
       }
       setMyArray([]);
-      router.replace("/student/activity/tracing");
-      window.location.href = "/student/activity/tracing";
+      router.replace("/student/module/alphabets");
+      window.location.href = "/student/module/alphabets";
     }
   }, [activityIndex, currentIndex, assignment]);
 
