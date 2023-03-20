@@ -2,6 +2,7 @@ import * as React from "react";
 import Link from "next/link";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
+import { useNavigate } from "react-router-dom";
 import {
   Avatar,
   Button,
@@ -50,6 +51,7 @@ const ClassDetais = ({ batchName, user }) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  // const navigate = useNavigate();
 
   const [batchDetail, setBatchDetail] = React.useState([]);
   const [enrollStudents, setEnrollStudents] = React.useState([]);
@@ -146,6 +148,7 @@ const ClassDetais = ({ batchName, user }) => {
 
   React.useEffect(() => {
     const currentDate = new Date();
+
     const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     const currentDayName = daysOfWeek[currentDate.getDay()]; // Returns the name of the day (e.g. "Monday")
 
@@ -228,12 +231,17 @@ const ClassDetais = ({ batchName, user }) => {
   };
   const router = useRouter();
   const startingLiveClass = () => {
+    let routes = {};  
     if (user !== "student") {
       setOpen(true);
 
       let batchId = detail[0].batch_name;
       let chapterName = chapters;
       postLiveClassData(batchId, chapterName);
+    } else {
+         
+
+      // navigate("/student/module/alphabets");
     }
     if (user === "student") {
       router.replace("/student/module/alphabets");

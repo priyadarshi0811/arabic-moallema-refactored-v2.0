@@ -52,15 +52,16 @@ const Sidebar = (props) => {
     authCtx.logout();
     // router.replace("/");
   };
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState( false );
 
   // var width = (window.innerWidth)
 
   // if(1060>=1050){
-  //   setOpen(false)
+  //   console.log('wS', width)
   // }
 
   // window.innerWidth <= 1050 ? setOpen(true)
+  
 
   return (
     <div className="flex ">
@@ -156,6 +157,7 @@ const Sidebar = (props) => {
           <Link href="/">
             <li
               // key={index}
+              onClick={logoutHandler}
               className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4`}
             >
               <Tooltip title="Log Out">
@@ -167,7 +169,7 @@ const Sidebar = (props) => {
                 </span>
               </Tooltip>
               <span
-                onClick={logoutHandler}
+                
                 className={`${
                   !open && "hidden"
                 } origin-left duration-200 text-base`}

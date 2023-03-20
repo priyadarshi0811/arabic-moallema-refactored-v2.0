@@ -10,6 +10,7 @@ import { fetchChapters } from "@/backend/Chapters/GetChaptersDB";
 import { fetchTeacherBatches } from "@/backend/Batches/BatchesForTeachersStudentsDB";
 import { fetchIndividualBatch } from "@/backend/Batches/BatchesDB";
 import LoadingSpinner from "@/components/Layout/spinner/LoadingSpinner";
+import WarningCard from "@/components/Layout/card/WarningCard";
 
 const ClassDetais = ({ batchName, user }) => {
   const [completedChapters, setcompletedChapters] = React.useState([]);
@@ -80,10 +81,10 @@ const ClassDetais = ({ batchName, user }) => {
         </div>
         <h1 className="text-lg  mt-10">Completed Chapters</h1>
         {!loading && completedChapters.length === 0 && (
-          <p className=" text-red-400 text-xl mt-10 ml-10">
-            No chapter completed
-          </p>
+         
+            <WarningCard title={`No chapter completed`} />
         )}
+       
         <div className="mt-4  relative">{loading && <LoadingSpinner />}</div>
         <MUISlider
           card={

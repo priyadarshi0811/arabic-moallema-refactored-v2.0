@@ -89,7 +89,7 @@ const StudentHome = () => {
         backgroundSize: "100%",
         backgroundPosition: "center top",
         widows: "100vw",
-        height: "100vh",
+        minHeight: "100vh",
       }}
     >
       <div className="flex min-h-screen h-full">
@@ -128,11 +128,14 @@ const StudentHome = () => {
             <Divider variant="middle" />
           </div>
           {batchCtx.submitted && !batchCtx.submittedDelete && (
-            <SuccessPrompt
+            
+              <SuccessPrompt
               type="add"
               title="Student Added Successfully"
               setSubmitted={batchCtx.setSubmittedHandler}
             />
+         
+           
           )}
           {batchCtx.submittedDelete && (
             <SuccessPrompt

@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const SuccessPrompt = ({
   setSubmitted,
@@ -15,8 +15,23 @@ const SuccessPrompt = ({
     }
     if (type === "delete") {
       setSubmitted2(false);
-    }
+    } 
   };
+  const [visible, setVisible] = useState(true)
+   useEffect(() => {
+     // message is empty (meaning no errors). Adjust as needed
+     if(!title){
+      setVisible(false)
+      return
+     }
+     // error exists. Display the title and hide after 5 secs
+     setVisible(true)
+     const timer = setTimeout(() => {
+       setVisible(false)
+     }, 2500);
+     return () => clearTimeout(timer);
+   }, [title]) // executes every time `title` changes. Adjust as needed
+   if(!visible) return null
 
   return (
     <>
