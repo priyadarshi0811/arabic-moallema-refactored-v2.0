@@ -18,7 +18,18 @@ export default function CheckboxListSecondary({
   const [checked, setChecked] = React.useState([]);
   const batchCtx = React.useContext(BatchContext);
 
+  const handleToggle = (value) => () => {
+    const currentIndex = checked.indexOf(value);
+    const newChecked = [...checked];
 
+    if (currentIndex === -1) {
+      newChecked.push(value);
+    } else {
+      newChecked.splice(currentIndex, 1);
+    }
+
+    setChecked(newChecked);
+  };
   batchCtx.setAttendanceList(checked);
 
   console.log(checked);
@@ -28,23 +39,33 @@ export default function CheckboxListSecondary({
 
   if (type === "markAttendance") {
     attendanceArray = enrollStudents;
-  } 
+  }
 
   return (
-   <>
-    {attendanceArray &&
-      attendanceArray.map((value) => {
-        const labelId = `checkbox-list-secondary-label-${value}`;
-        return (
-          <>
-          <div className="flex px-2 py-3">
-          <p className=" w-full">{`${type === "present" ? value : value.student_id}`}</p>
-          {type==='markAttendance' ? (
-            <input type="checkbox" class="rounded-md py-2 px-3" />
-          ): ''}
-          </div>
-          </>
-        );
-      })}</>
+    <>
+      {attendanceArray &&
+        attendanceArray.map((value) => {
+          const labelId = `checkbox-list-secondary-label-${value}`;
+          return (
+            <>
+              <div className="flex px-2 py-3">
+                <p className=" w-full">{`${
+                  type === "present" ? value : value.student_id
+                }`}</p>
+                {type === "markAttendance" ? (
+                  <input
+                    type="checkbox"
+                    onChange={handleToggle(value)}
+                    checked={checked.indexOf(value) !== -1}
+                    class="rounded-md py-2 px-3"
+                  />
+                ) : (
+                  ""
+                )}
+              </div>
+            </>
+          );
+        })}
+    </>
   );
 }

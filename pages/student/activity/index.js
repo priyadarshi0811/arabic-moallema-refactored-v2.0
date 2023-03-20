@@ -116,7 +116,7 @@ const index = () => {
                 title="Alphabets"
                 isBtn="true"
                 btnText="View"
-                link="/student/activity/tracing"
+                link="/student/module/alphabets"
               />
             </div>
           </div>

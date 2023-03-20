@@ -8,6 +8,7 @@ import Chip from "@mui/material/Chip";
 import { Box, Modal, Button } from "@mui/material";
 import RemoveUser from "@/components/Modules/batches/RemoveUser";
 import { fetchBatchesData } from "@/backend/Announcement/AnnouncementDB";
+import { useRouter } from "next/router";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -43,10 +44,11 @@ export default function MultipleSelectChip({ batchesData }) {
   const [allBatches, setAllBatches] = React.useState();
   const [selectedBatch, setSelectedBatch] = React.useState();
 
+  const router = useRouter();
+
   const [open, setOpen] = React.useState(false);
   const handleOpen = (batchName) => {
-    setOpen(true);
-    setSelectedBatch(batchName);
+    router.replace(`/admin/batches/batches-detail/${batchName}`);
   };
 
   const handleClose = () => setOpen(false);
@@ -90,7 +92,11 @@ export default function MultipleSelectChip({ batchesData }) {
   const handleDelete = (value) => {
     console.log(value);
     console.info("You clicked the delete icon.");
-    setPersonName((prevSelected) => prevSelected.filter((val) => val !== value));
+    setSelectedBatch(value);
+    setOpen(true);
+    setPersonName((prevSelected) =>
+      prevSelected.filter((val) => val !== value)
+    );
   };
   console.log(personName);
 
@@ -109,10 +115,10 @@ export default function MultipleSelectChip({ batchesData }) {
   return (
     <div>
       <div className="grid grid-cols-5 ">
-        <div className="col-span-1 mt-3 pl-2">
+        {/* <div className="col-span-1 mt-3 pl-2">
           <label className=" mt-3 pt-2 ">Select Batches</label>
-        </div>
-        <div className="col-span-4">
+        </div> */}
+        {/* <div className="col-span-4">
           {filteredBatches && (
             <FormControl sx={{ m: 1 }} className="w-full">
               <Select
@@ -144,10 +150,10 @@ export default function MultipleSelectChip({ batchesData }) {
               </Select>
             </FormControl>
           )}
-        </div>
+        </div> */}
       </div>
 
-      <FormControl sx={{ m: 1, minWidth: 120, width: "100%" }}>
+      {/* <FormControl sx={{ m: 1, minWidth: 120, width: "100%" }}>
         <Select
           value={personName}
           onChange={handleChange}
@@ -179,7 +185,7 @@ export default function MultipleSelectChip({ batchesData }) {
             </MenuItem>
           ))}
         </Select>
-      </FormControl>
+      </FormControl> */}
       <div className=" m-4">
         <h1 className="m-2 mb-4">Assigned Batches</h1>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
@@ -189,7 +195,7 @@ export default function MultipleSelectChip({ batchesData }) {
               label={batch.batch_name}
               value={selectedBatch}
               onClick={() => handleOpen(batch.batch_name)}
-              onDelete={handleDelete}
+              onDelete={() => handleDelete(batch.batch_name)}
               className="bg-dark-purple text-white p-3"
             />
           ))}

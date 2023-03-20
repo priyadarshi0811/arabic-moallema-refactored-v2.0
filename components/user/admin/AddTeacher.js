@@ -110,6 +110,21 @@ export default function AddUser({
     console.log("update Teacher Detail");
     updateTeacherDetail(email, name, contact);
     batchCtx.setSubmittedHandler(true);
+
+    // if (userType === "showTeacher") {
+    //   let prevEmail;
+
+    //   setEmail((prev) => {
+    //     prevEmail = prev;
+    //   });
+    //   if (email != prevEmail) {
+    //     console.log(email);
+
+    //     console.log("email changed");
+    //   } else {
+    //     console.log("not changed");
+    //   }
+    // }
   };
 
   return (
@@ -142,14 +157,16 @@ export default function AddUser({
           id="contact"
           type="number"
         />
-        <InputWithLable
-          value={email}
-          defaultValue={email}
-          setValue={setEmail}
-          lable="Email"
-          id="email"
-          type="email"
-        />
+        {userType !== "showTeacher" && (
+          <InputWithLable
+            value={email}
+            defaultValue={email}
+            setValue={setEmail}
+            lable="Email"
+            id="email"
+            type="email"
+          />
+        )}
       </Box>
 
       {!isEdit && userType !== "addTeacher" && (
