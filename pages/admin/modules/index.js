@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import grayBgImg from "@/components/src/img/grayBgImg.png";
 import Sidebar from "@/components/Layout/navigation/Sidebar";
 import CreateBatch from "@/components/user/admin/CreateBatch";
@@ -11,6 +11,8 @@ import BackButton from "@/components/Layout/elements/BackButton";
 import Button from "@mui/material/Button";
 import CardList from "@/components/user/admin/CardList";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import AuthContext from "@/components/Context/store/auth-context";
 
 const style = {
   position: "absolute",
@@ -28,6 +30,33 @@ const index = () => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const router = useRouter();
+  const authCtx = useContext(AuthContext);
+
+  /**************Restricting Admin Route************************* */
+  const loggedIn = authCtx.isLoggedIn;
+  const typeAdmin = authCtx.userType === "admin" ? true : false;
+
+  if (!typeAdmin && loggedIn) {
+    router.replace("/");
+  }
+
+  useEffect(() => {
+    console.log("in");
+    if (typeAdmin && loggedIn) {
+      if (!typeAdmin && !loggedIn) {
+        console.log("second in");
+        router.replace("/");
+      }
+    }
+    const localType = localStorage.getItem("type");
+    if (localType !== "admin") {
+      console.log("second in");
+      router.replace("/");
+    }
+  }, [loggedIn, typeAdmin]);
+
+  /**************Restricting Admin Route************************* */
   return (
     <div
       className=""

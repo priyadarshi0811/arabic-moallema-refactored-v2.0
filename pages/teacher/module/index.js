@@ -1,5 +1,5 @@
 import InProgress from "@/components/Layout/screen/InProgress";
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import grayBgImg from "@/components/src/img/grayBgImg.png";
 import colorBgImg from "@/components/src/img/colorBgImg.png";
 import teacherImg from "@/components/src/img/ArabicMollemaMascot-06.png";
@@ -7,8 +7,36 @@ import AddUser from "@/components/user/admin/AddStudent";
 import TopTitleWithImg from "@/components/Layout/section/TopTitleWithImg";
 import Link from "next/link";
 import { Button } from "@mui/material";
+import { useRouter } from "next/router";
+import AuthContext from "@/components/Context/store/auth-context";
 
 const index = () => {
+  const router = useRouter();
+  const authCtx = useContext(AuthContext);
+  
+  /**************Restricting Teachers Route************************* */
+  const loggedIn = authCtx.isLoggedIn;
+  const typeTeacher = authCtx.userType === "instructor" ? true : false;
+  if (!typeTeacher && loggedIn) {
+    router.replace("/");
+  }
+
+  useEffect(() => {
+    console.log("in");
+    if (typeTeacher && loggedIn) {
+      if (!typeTeacher && !loggedIn) {
+        console.log("second in");
+        router.replace("/");
+      }
+    }
+    const localType = localStorage.getItem("type");
+    if (localType !== "instructor") {
+      console.log("second in");
+      router.replace("/");
+    }
+  }, [loggedIn, typeTeacher]);
+
+  /**************Restricting Teachers Route************************* */
   return (
     <div
       className=""
@@ -69,7 +97,7 @@ const index = () => {
               </Button>
             </Link>
           </div>
-         \
+          \
         </div>
       </div>
     </div>

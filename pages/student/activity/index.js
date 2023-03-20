@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import grayBgImg from "@/components/src/img/grayBgImg.png";
 import Sidebar from "@/components/Layout/navigation/Sidebar";
 import CreateBatch from "@/components/user/admin/CreateBatch";
@@ -12,6 +12,7 @@ import CardList from "@/components/user/admin/CardList";
 import Link from "next/link";
 import MUIMiniCard from "@/components/Layout/card/MUIMiniCard";
 import AuthContext from "@/components/Context/store/auth-context";
+import { useRouter } from "next/router";
 
 const style = {
   position: "absolute",
@@ -32,6 +33,35 @@ const index = () => {
   const authCtx = useContext(AuthContext);
 
   const type = authCtx.userType;
+
+  const router = useRouter();
+
+  const loggedIn = authCtx.isLoggedIn;
+
+  const typeStudent = authCtx.userType === "student" ? true : false;
+
+  if (!typeStudent && loggedIn) {
+    console.log("first in");
+    router.replace("/");
+  }
+  console.log("log", loggedIn);
+  console.log("stu", typeStudent);
+
+  useEffect(() => {
+    console.log("in");
+    if (typeStudent && loggedIn) {
+      if (!typeStudent && !loggedIn) {
+        console.log("second in");
+        router.replace("/");
+      }
+    }
+    const localType = localStorage.getItem("type");
+
+    if (localType !== "student") {
+      console.log("second in");
+      router.replace("/");
+    }
+  }, []);
 
   return (
     <div

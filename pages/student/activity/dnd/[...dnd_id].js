@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 // import { GetServerSideProps } from "next";
 import { resetServerContext } from "react-beautiful-dnd";
 // import { DndWrapper } from "../../components/DndWrapper";
@@ -9,9 +9,37 @@ import Link from "next/link";
 import Activity from "@/components/Modules/models/DNDActivity/Activity";
 import { Button } from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import AuthContext from "@/components/Context/store/auth-context";
+import { useRouter } from "next/router";
+
 
 const index = ({ data }) => {
+  const authCtx = useContext(AuthContext);
+  const router = useRouter();
 
+  const loggedIn = authCtx.isLoggedIn;
+
+  const typeStudent = authCtx.userType === "student" ? true : false;
+
+  if (!typeStudent && loggedIn) {
+    router.replace("/");
+  }
+
+  useEffect(() => {
+    console.log("in");
+    if (typeStudent && loggedIn) {
+      if (!typeStudent && !loggedIn) {
+        console.log("second in");
+        router.replace("/");
+      }
+    }
+    const localType = localStorage.getItem("type");
+
+    if (localType !== "student") {
+      console.log("second in");
+      router.replace("/");
+    }
+  }, [loggedIn, typeStudent]);
   return (
     <>
       <div

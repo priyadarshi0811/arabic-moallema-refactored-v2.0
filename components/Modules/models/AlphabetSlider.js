@@ -74,6 +74,8 @@ function a11yProps(id) {
 }
 
 export default function VerticalTabs(props) {
+  console.log("user: ", props.user);
+
   const [value, setValue] = React.useState(0);
   const [symbol, setSymbol] = React.useState();
 
@@ -114,7 +116,7 @@ export default function VerticalTabs(props) {
         >
           {Alphabates.map((alphabate) => (
             <Link
-              href={`/teacher/activity/tracing/${alphabate.title}`}
+              href={`/${props.user}/activity/tracing/${alphabate.title}`}
               className=" p-0 my-2 rounded-full text-center"
             >
               <Tab
@@ -149,7 +151,7 @@ export default function VerticalTabs(props) {
         >
           {Alphabates.map((alphabate) => (
             <Link
-              href={`/teacher/module/alphabets/${alphabate.title}`}
+              href={`/${props.user}/module/alphabets/${alphabate.title}`}
               className=" p-0 my-2 rounded-full text-center"
             >
               <Tab
@@ -167,7 +169,13 @@ export default function VerticalTabs(props) {
       )}
       {props.type == "alphabets" ? (
         <TabPanel value={value} index={0}>
-          {props.id && <ActivityDetail id={props.id} type="LetterDetails" />}
+          {props.id && (
+            <ActivityDetail
+              id={props.id}
+              user={props.user}
+              type="LetterDetails"
+            />
+          )}
         </TabPanel>
       ) : (
         ""

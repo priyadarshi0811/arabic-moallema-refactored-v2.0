@@ -13,6 +13,7 @@ import Link from "next/link";
 import MUIMiniCard from "@/components/Layout/card/MUIMiniCard";
 import AuthContext from "@/components/Context/store/auth-context";
 import { fetchSubmittedAssignmentBasedOnStudent } from "@/backend/Assignment/FetchAssignmentDB";
+import { useRouter } from "next/router";
 
 const Alphabates = [
   { letter: "خ", title: "Khaa" },
@@ -63,6 +64,35 @@ const index = () => {
 
   const authCtx = useContext(AuthContext);
   const studentId = authCtx.userEmail;
+
+  const router = useRouter();
+  const type = authCtx.userType;
+
+  const loggedIn = authCtx.isLoggedIn;
+
+  const typeStudent = authCtx.userType === "student" ? true : false;
+
+  if (!typeStudent && loggedIn) {
+    router.replace("/");
+  }
+
+  useEffect(() => {
+    console.log("in");
+    if (typeStudent && loggedIn) {
+      if (!typeStudent && !loggedIn) {
+        console.log("second in");
+        router.replace("/");
+      }
+    }
+
+    const localType = localStorage.getItem("type");
+
+    if (localType !== "student") {
+      console.log("second in");
+      router.replace("/");
+    }
+  }, [loggedIn, typeStudent]);
+
   console.log(studentId);
 
   useEffect(() => {

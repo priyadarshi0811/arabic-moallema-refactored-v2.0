@@ -1,5 +1,5 @@
 import InProgress from "@/components/Layout/screen/InProgress";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import grayBgImg from "@/components/src/img/grayBgImg.png";
 import colorBgImg from "@/components/src/img/colorBgImg.png";
 import teacherImg from "@/components/src/img/ArabicMollemaMascot-03.png";
@@ -12,6 +12,8 @@ import HomeActivityCardStudent from "@/components/Layout/card/HomeActivityCardSt
 import BatchContext from "@/components/Context/store/batch-context";
 import { Button } from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import AuthContext from "@/components/Context/store/auth-context";
+import { useRouter } from "next/router";
 
 const Alphabates = [
   { letter: "خ", title: "Khaa" },
@@ -47,6 +49,33 @@ const Alphabates = [
 const index = () => {
   const [letterName, setLetterName] = useState();
   const { myArray, setMyArray } = useContext(BatchContext);
+
+  const authCtx = useContext(AuthContext);
+  const router = useRouter();
+
+  const loggedIn = authCtx.isLoggedIn;
+
+  const typeStudent = authCtx.userType === "student" ? true : false;
+
+  if (!typeStudent && loggedIn) {
+    router.replace("/");
+  }
+
+  useEffect(() => {
+    console.log("in");
+    if (typeStudent && loggedIn) {
+      if (!typeStudent && !loggedIn) {
+        console.log("second in");
+        router.replace("/");
+      }
+    }
+    const localType = localStorage.getItem("type");
+
+    if (localType !== "student") {
+      console.log("second in");
+      router.replace("/");
+    }
+  }, [loggedIn, typeStudent]);
 
   console.log("obj: ", myArray);
   return (

@@ -33,6 +33,7 @@ import { postSessionData } from "@/backend/Session/SessionDB";
 import { fetchChapters } from "@/backend/Chapters/GetChaptersDB";
 import BatchContext from "@/components/Context/store/batch-context";
 import { chapterCompletedBatch } from "@/backend/Chapters/ChapterCompletedDB";
+import { useRouter } from "next/router";
 const style = {
   position: "absolute",
   top: "50%",
@@ -225,7 +226,7 @@ const ClassDetais = ({ batchName, user }) => {
     );
     setOpen(false);
   };
-
+  const router = useRouter();
   const startingLiveClass = () => {
     if (user !== "student") {
       setOpen(true);
@@ -233,6 +234,9 @@ const ClassDetais = ({ batchName, user }) => {
       let batchId = detail[0].batch_name;
       let chapterName = chapters;
       postLiveClassData(batchId, chapterName);
+    }
+    if (user === "student") {
+      router.replace("/student/module/alphabets");
     }
   };
   return (

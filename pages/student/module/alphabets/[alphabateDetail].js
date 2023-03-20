@@ -6,8 +6,6 @@ import colorBgImg from "@/components/src/img/colorBgImg.png";
 import AlphabetSlider from "@/components/Modules/models/AlphabetSlider";
 import logo from "@/components/src/img/AMLogo.png";
 
-
-
 const index = () => {
   const router = useRouter();
   const id = router.query.alphabateDetail;
@@ -27,8 +25,7 @@ const index = () => {
           minHeight: "100vh",
         }}
       >
-        
-        <AlphabetSlider id={id} type= "alphabets" />
+        <AlphabetSlider user="student" id={id} type="alphabets" />
 
         {/* <div className="p-5 grid grid-cols-12 gap-5">
           <div className="col-span-1">
@@ -40,7 +37,6 @@ const index = () => {
         
         </div> */}
       </div>
-     
     </>
   );
 };

@@ -29,7 +29,7 @@ const ClassDetais = ({ batchName, user }) => {
       const chapterData = await fetchChapters();
       const data2 = await fetchIndividualBatch(batchName);
 
-      if (data2[0].chapter_completed) {
+      if (data2 && data2[0].chapter_completed) {
         setcompletedChapters(data2[0].chapter_completed);
 
         const nextChapter = chapterData.filter(
