@@ -85,11 +85,11 @@ const LetterDetails = (props) => {
               <h2 className="text-lg  ">
                 How to Write "{props.name || "Mim"}"
               </h2>
-              <div className="bg-gray-400 p-4 w-96  ml-64 mt-2 flex  items-center ">
+              <div className=" p-4 w-full border-2   mt-2 flex  items-center ">
                 <img
-                  src={props.gif}
+                  src={props.gif || 'https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExZjA2ZWUyMGYxNWMwODZlZTJiYWE3YTk5MTUxMWQwMzRmM2U4NGU2MyZjdD1z/Qhg5vbmLB0iszYoktc/giphy.gif'}
                   alt="Example GIF"
-                  className="h-96 object-cover"
+                  className="h-80 object-cover mx-auto"
                 />
               </div>
 

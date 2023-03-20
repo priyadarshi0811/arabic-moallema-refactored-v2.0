@@ -28,7 +28,7 @@ export default function CheckboxListSecondary({
 
   if (type === "markAttendance") {
     attendanceArray = enrollStudents;
-  }
+  } 
 
   return (
    <>
@@ -37,7 +37,12 @@ export default function CheckboxListSecondary({
         const labelId = `checkbox-list-secondary-label-${value}`;
         return (
           <>
-          <p className="px-2 py-3 w-full">{`${type === "present" ? value : value.student_id}`}</p>
+          <div className="flex px-2 py-3">
+          <p className=" w-full">{`${type === "present" ? value : value.student_id}`}</p>
+          {type==='markAttendance' ? (
+            <input type="checkbox" class="rounded-md py-2 px-3" />
+          ): ''}
+          </div>
           </>
         );
       })}</>

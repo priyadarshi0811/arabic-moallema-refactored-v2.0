@@ -8,7 +8,7 @@ const MiniCard = ({ disc, title, isBtn, btnText, link }) => {
         <div className="items-center p-5 overflow-hidden rounded-md shadow-lg min:h-fit min-w-60 justify-cente min:w-fit bg-slate-50">
           <div className="grid content-between grid-cols-1 gap-4 font-bold text-center text-dark-purple">
             <div>
-              <h2 className="text-3xl ">{title}</h2>
+              <h2 className="text-2xl ">{title}</h2>
             </div>
             <div>
               <h2 className="py-2 text-lg">{disc}</h2>

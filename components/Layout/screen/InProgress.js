@@ -8,7 +8,7 @@ const InProgress = () => {
     <div className="justify-center m-0 text-center align-middle">
       <h1 className="p-5">work-in-progress</h1>
       <img
-        src="https://cdn-icons-png.flaticon.com/512/5038/5038308.png"
+        src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExZjA2ZWUyMGYxNWMwODZlZTJiYWE3YTk5MTUxMWQwMzRmM2U4NGU2MyZjdD1z/Qhg5vbmLB0iszYoktc/giphy.gif"
         alt=""
         className="mx-auto my-5 w-80 h-fit"
       />

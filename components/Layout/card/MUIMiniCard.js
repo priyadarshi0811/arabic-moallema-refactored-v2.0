@@ -44,7 +44,7 @@ const MUIMiniCard = ({
             {minTitle}
           </Typography>
           <Typography variant="h5" component="div" className="w-full">
-            <h1 className="text-xl xl:text-2xl">{title}</h1>
+            <h1 className="text-lg xl:text-xl">{title}</h1>
           </Typography>
           <Typography sx={{ mb: 1.5 }}>{subTitle}</Typography>
           <Typography variant="body2">{disc}</Typography>

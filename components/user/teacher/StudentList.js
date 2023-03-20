@@ -81,7 +81,7 @@ const ClassDetais = () => {
 
   return (
     <div className="">
-      <div className="px-3 lg:px-8 ">
+      <div className="px-3 lg:px-8  ">
         {batchCtx.submitted && (
           <SuccessPrompt
             type="edit"
@@ -116,9 +116,8 @@ const ClassDetais = () => {
         </div>
         <h1 className="text-lg  mt-20">Completed Assignments</h1>
         {error && (
-          <p className="text-red-500 justify-center items-center flex text-xl font-bold mt-16">
-            No Assignment for the selected Student
-          </p>
+         
+          <WarningCard title={` No Assignment for the selected Student`} />
         )}
         {dataToDisplay && (
           <div>
