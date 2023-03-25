@@ -173,11 +173,14 @@ export default function AddUser({
         )}
       </Box>
 
+
       {!isEdit && userType !== "addTeacher" && (
         <div className="m-0 p-0 w-full">
           {batchesData && <MultipleSelectChip batchesData={batchesData} />}
         </div>
       )}
+
+
 
       <div className="items-center  py-3 text-right mt-2">
         <Button
@@ -191,6 +194,8 @@ export default function AddUser({
           {title || "Edit " + user + " Details"}
         </Button>
       </div>
+
+      
       {isEdit && (
         <div className="m-0 p-0 w-full">
           {batchesData && <MultipleSelectChip batchesData={batchesData} />}
@@ -204,6 +209,45 @@ export default function AddUser({
           </Button>
         </div>
       )}
+
+{isEdit && userType !== "addTeacher" &&  (
+            <div className=" mt-5 p-5 rounded-md bg-white  pl-2">
+            {isLoading && <Spinner title="Adding Student" />}
+            <h1 className="text-2xl pl-2 pb-2">Change Email Address</h1>
+    
+            <Box
+              component="form"
+              sx={{
+                "& > :not(style)": { m: 1, width: "100%" },
+              }}
+              noValidate
+              autoComplete="off"
+              className=" border-t-2 border-gray-300 mt-1"
+            >
+              <InputWithLable
+                value={email}
+                defaultValue={email}
+                setValue={setEmail}
+                lable="Email"
+                id="email"
+                type="email"
+              />
+            </Box>
+    
+            <div className="items-center  py-3 text-right mt-2">
+              <Button
+                // onClick={
+                //   userType === "EditStudent" ? editStudentDetail : addStudentHandler
+                // }
+                variant="contained"
+                className="w-full bg-dark-purple my-3 mx-2"
+                disableElevation
+              >
+                Edit Email
+              </Button>
+            </div>
+          </div>
+          )}
 
       <Modal
         // open={open}
@@ -221,5 +265,7 @@ export default function AddUser({
         </Box>
       </Modal>
     </div>
+
+
   );
 }
