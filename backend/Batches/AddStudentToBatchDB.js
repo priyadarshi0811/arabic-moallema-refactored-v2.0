@@ -1,9 +1,9 @@
 import supabase from "@/supabaseClient";
 
-export const addStudentToBatch = async (email, selectedBatch) => {
+export const addStudentToBatch = async (studentId, batchId) => {
   const { data, error } = await supabase
-    .from("batch_student_relation")
-    .insert({ student_id: email, batch_id: selectedBatch })
+    .from("exp_duplicate_batch_student_relation")
+    .insert({ student_id: studentId, batch_id: batchId })
     .select();
 
   if (error) {

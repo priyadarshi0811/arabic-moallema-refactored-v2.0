@@ -14,7 +14,11 @@ import CardList from "@/components/user/admin/CardList";
 import AuthContext from "@/components/Context/store/auth-context";
 import { getStudentTeacherList } from "@/backend/ManageUser/ManageStudentTeacher";
 import { fetchBatchesData } from "@/backend/Announcement/AnnouncementDB";
-import { fetchBatchesForTeacherBasedOnBatchName } from "@/backend/Batches/BatchesDB";
+import {
+  fetchBatcheIdBasedOnBatchName,
+  fetchBatchesForTeacherBasedOnBatchId,
+  fetchBatchesForTeacherBasedOnBatchName,
+} from "@/backend/Batches/BatchesDB";
 import BatchContext from "@/components/Context/store/batch-context";
 import SuccessPrompt from "@/components/Layout/elements/SuccessPrompt";
 
@@ -49,22 +53,30 @@ const TeacherHome = () => {
 
   useEffect(() => {
     const getUser = async () => {
-      const data = await getStudentTeacherList("teachers");
+      const data = await getStudentTeacherList("teachers_exp_duplicate");
       authCtx.setTeachersData(data);
     };
     getUser();
   }, [batchCtx.submitted, batchCtx.submittedDelete]);
 
   //get the filtered value
-  const handleSelectedItem = (batchData) => {
-    console.log("batchData", batchData);
-    const fetchStudentBatch = async () => {
-      const data = await fetchBatchesForTeacherBasedOnBatchName(batchData);
+  const handleSelectedItem = async (batchData) => {
+    let batchId;
+    const idData = await fetchBatcheIdBasedOnBatchName(batchData);
+    if (idData[0]) {
+      batchId = idData[0].batch_id;
+    }
 
-      let selectedTeacher = authCtx.teachersList.filter((obj1) =>
-        data.some((obj2) => obj1.email === obj2.teacher_email)
-      );
-      setfilteredTeacher(selectedTeacher);
+    console.log("batchData", batchId);
+    const fetchStudentBatch = async () => {
+      if (batchId) {
+        const data = await fetchBatchesForTeacherBasedOnBatchId(batchId);
+
+        let selectedTeacher = authCtx.teachersList.filter((obj1) =>
+          data.some((obj2) => obj1.teacher_id === obj2.teacher_id)
+        );
+        setfilteredTeacher(selectedTeacher);
+      }
     };
     fetchStudentBatch();
   };

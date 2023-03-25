@@ -1,37 +1,46 @@
 import React, { useContext, useEffect, useState } from "react";
 import SelectDropdown from "@/components/Layout/elements/SelectDropdown";
 import { Button, IconButton, TextField } from "@mui/material";
-import { DevicesFoldRounded } from "@mui/icons-material";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import TextFieldCard from "@/components/Layout/card/TextFieldCard";
-import DriveFolderUploadIcon from "@mui/icons-material/DriveFolderUpload";
-import AudioBtn from "@/components/Layout/elements/AudioBtn";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
-import MUIMiniCard from "@/components/Layout/card/MUIMiniCard";
-import MicIcon from "@mui/icons-material/Mic";
-import canvasImg from "@/components/src/img/canvas(10).png";
+
 import CardLayout from "@/components/Layout/card/CardLayout";
 import MarkRemarkSec from "@/components/Layout/elements/MarkRemarkSec";
-import { fetchAssignmentSubmissionStatus, fetchSubmittedAssignmentBasedOnStudentBatchSubModule } from "@/backend/Assignment/FetchAssignmentDB";
+import {
+  fetchAssignmentSubmissionStatus,
+  fetchSubmittedAssignmentBasedOnStudentBatchSubModule,
+} from "@/backend/Assignment/FetchAssignmentDB";
 import { markAssignment } from "@/backend/Assignment/MarkAssignmentDB";
 import BatchContext from "@/components/Context/store/batch-context";
 import { useRouter } from "next/router";
+import { fetchBatcheIdBasedOnBatchName } from "@/backend/Batches/BatchesDB";
+import { fetchStudentIdBasedOnEmail } from "@/backend/Students/StudentDB";
 
 const AssignmentDetails = ({ studentId, subModule, type }) => {
   const [assignmentDetail, setAssignmentDetail] = useState();
   const [activityType, setactivityType] = useState();
   const [assessed, setAssessed] = useState();
 
-
   const [marks, setMarks] = useState([]);
   const [remark, setRemark] = useState([]);
   const batchCtx = useContext(BatchContext);
   const router = useRouter();
 
+  const [batchId, setBatchId] = React.useState();
+
+  //getting the batch id
+  React.useEffect(() => {
+    const setBatchIdData = async () => {
+      const batch = localStorage.getItem("batchName");
+      const idData = await fetchBatcheIdBasedOnBatchName(batch);
+      if (idData[0]) {
+        setBatchId(idData[0].batch_id);
+      }
+    };
+    setBatchIdData();
+  }, []);
+
+  console.log(+batchId);
+  console.log(subModule);
+  console.log(+studentId);
   const handleMarksChange = (index, value) => {
     const newMarks = [...marks];
     newMarks[index] = value;
@@ -53,45 +62,47 @@ const AssignmentDetails = ({ studentId, subModule, type }) => {
         remark: remark[index],
       };
     });
-    const batch = localStorage.getItem("batchName");
-    markAssignment(studentId, batch, subModule, updatedArray);
-    batchCtx.setSubmittedHandler(true);
-    router.replace("/teacher/student");
+    if (batchId && studentId && subModule) {
+      markAssignment(+studentId, +batchId, subModule, updatedArray);
+      batchCtx.setSubmittedHandler(true);
+      router.replace("/teacher/student");
+    }
   };
 
   console.log(marks);
 
   useEffect(() => {
     const assignmentDetail = async () => {
-      const batch = localStorage.getItem("batchName");
-
-      const data = await fetchSubmittedAssignmentBasedOnStudentBatchSubModule(
-        studentId,
-        batch,
-        subModule
-      );
-      if (data[0]) {
-        setAssignmentDetail(data[0].submission);
+      if (studentId && batchId && subModule) {
+        const data = await fetchSubmittedAssignmentBasedOnStudentBatchSubModule(
+          +studentId,
+          +batchId,
+          subModule
+        );
+        console.log(data);
+        if (data[0]) {
+          setAssignmentDetail(data[0].submission);
+        }
       }
     };
     assignmentDetail();
-  }, []);
+  }, [studentId, batchId, subModule]);
 
   useEffect(() => {
     const assignmentDetail = async () => {
-      const batch = localStorage.getItem("batchName");
-
-      const data = await fetchAssignmentSubmissionStatus(
-        studentId,
-        batch,
-        subModule
-      );
-      if (data[0]) {
-        setAssessed(data[0].is_assesed);
+      if (studentId && batchId && subModule) {
+        const data = await fetchAssignmentSubmissionStatus(
+          +studentId,
+          +batchId,
+          subModule
+        );
+        if (data[0]) {
+          setAssessed(data[0].is_assesed);
+        }
       }
     };
     assignmentDetail();
-  }, []);
+  }, [studentId, batchId, subModule]);
 
   if (assignmentDetail) {
     console.log(assignmentDetail);
@@ -169,17 +180,21 @@ const AssignmentDetails = ({ studentId, subModule, type }) => {
                           <p>{col}</p>;
                         })} */}
                       <div className="my-3 ">
-                        {assignment.submission.columns["column-2"].taskIds[0] && (
+                        {assignment.submission.columns["column-2"]
+                          .taskIds[0] && (
                           <p className="p-3 bg-lime-200  rounded-md my-2">
                             {
-                              assignment.submission.columns["column-2"].taskIds[0]
+                              assignment.submission.columns["column-2"]
+                                .taskIds[0]
                             }
                           </p>
                         )}
-                        {assignment.submission.columns["column-2"].taskIds[1] && (
+                        {assignment.submission.columns["column-2"]
+                          .taskIds[1] && (
                           <p className="p-3 bg-lime-200  rounded-md my-2">
                             {
-                              assignment.submission.columns["column-2"].taskIds[1]
+                              assignment.submission.columns["column-2"]
+                                .taskIds[1]
                             }
                           </p>
                         )}
@@ -190,10 +205,12 @@ const AssignmentDetails = ({ studentId, subModule, type }) => {
                         {assignment.submission.columns["column-3"].name}
                       </h1>
                       <div className="my-3 ">
-                        {assignment.submission.columns["column-3"].taskIds[0] && (
+                        {assignment.submission.columns["column-3"]
+                          .taskIds[0] && (
                           <p className="p-3 bg-lime-200  rounded-md my-2">
                             {
-                              assignment.submission.columns["column-3"].taskIds[0]
+                              assignment.submission.columns["column-3"]
+                                .taskIds[0]
                             }
                           </p>
                         )}
@@ -204,10 +221,12 @@ const AssignmentDetails = ({ studentId, subModule, type }) => {
                         {assignment.submission.columns["column-4"].name}
                       </h1>
                       <div className="my-3 ">
-                        {assignment.submission.columns["column-4"].taskIds[0] && (
+                        {assignment.submission.columns["column-4"]
+                          .taskIds[0] && (
                           <p className="p-3 bg-lime-200  rounded-md my-2">
                             {
-                              assignment.submission.columns["column-4"].taskIds[0]
+                              assignment.submission.columns["column-4"]
+                                .taskIds[0]
                             }
                           </p>
                         )}

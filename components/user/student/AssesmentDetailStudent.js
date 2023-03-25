@@ -14,8 +14,11 @@ import MarkRemarkSec from "@/components/Layout/elements/MarkRemarkSec";
 import CardLayout from "@/components/Layout/card/CardLayout";
 import { useRouter } from "next/router";
 import AuthContext from "@/components/Context/store/auth-context";
+import { fetchStudentIdBasedOnEmail } from "@/backend/Students/StudentDB";
 
 const AssesmentDetailStudent = () => {
+  const [studentIdNew, setStudentIdNew] = React.useState();
+
   const router = useRouter();
   const authCtx = useContext(AuthContext);
   const studentId = authCtx.userEmail;
@@ -25,6 +28,21 @@ const AssesmentDetailStudent = () => {
   if (router.query.assignment_details) {
     subModule = router.query.assignment_details;
   }
+
+  //getting the student for the selected batch
+  React.useEffect(() => {
+    const getStudentId = async () => {
+      if (studentId) {
+        const data = await fetchStudentIdBasedOnEmail(studentId);
+        if (data[0]) {
+          setStudentIdNew(data[0].student_id);
+        }
+      }
+    };
+    getStudentId();
+  }, [studentId]);
+
+  console.log(studentIdNew);
 
   return (
     <div
@@ -55,10 +73,10 @@ const AssesmentDetailStudent = () => {
             <Divider variant="middle" />
           </div>
           <div className="m-0 p-10 w-full h-fit">
-            {subModule && studentId && (
+            {subModule && studentIdNew && (
               <div className="m-0 p-10 w-full h-fit">
                 <AssignmentDetailsCard
-                  studentId={studentId}
+                  studentId={studentIdNew}
                   subModule={subModule}
                   type="showAssignmentStudent"
                 />

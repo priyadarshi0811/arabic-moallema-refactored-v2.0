@@ -5,33 +5,51 @@ import teacherOverlay from "@/components/src/img/ArabicMollemaMascotR-02.png";
 import BackButton from "@/components/Layout/elements/BackButton";
 import { fetchActivtyStartStatus } from "@/backend/ActivityStartLog/ActivityStartStatusDB";
 import WarningCard from "@/components/Layout/card/WarningCard";
+import { fetchBatcheIdBasedOnBatchName } from "@/backend/Batches/BatchesDB";
 
 const LetterDetails = (props) => {
   const [activityStatus, setActivityStatus] = useState();
-
+  const [batchId, setBatchId] = useState();
+  console.log(props.id);
+  console.log(props.module);
+  console.log(props.name);
   useEffect(() => {
-    const batch = localStorage.getItem("batchName");
+    const getId = async () => {
+      const batch = localStorage.getItem("batchName");
+      const data = await fetchBatcheIdBasedOnBatchName(batch);
+      if (data[0]) {
+        setBatchId(data[0].batch_id);
+      }
+    };
+    getId();
+  }, []);
+
+  console.log(batchId);
+  useEffect(() => {
     const subModule = props.name;
 
-    if (subModule) {
+    if (props.module) {
       const fetchActivity = async () => {
-        const data = await fetchActivtyStartStatus(
-          "Alphabets",
-          subModule,
-          batch
-        );
-        if (data[0]) {
-          data[0].is_open_for_activity === true
-            ? setActivityStatus(true)
-            : setActivityStatus(false);
-        }
-        if (!data[0]) {
-          setActivityStatus(false);
+        if (batchId) {
+          console.log(batchId);
+          const data = await fetchActivtyStartStatus(
+            props.module,
+            subModule,
+            batchId
+          );
+          if (data[0]) {
+            data[0].is_open_for_activity === true
+              ? setActivityStatus(true)
+              : setActivityStatus(false);
+          }
+          if (!data[0]) {
+            setActivityStatus(false);
+          }
         }
       };
       fetchActivity();
     }
-  }, []);
+  }, [batchId, props.module]);
 
   console.log(activityStatus);
 
@@ -67,6 +85,7 @@ const LetterDetails = (props) => {
                   <DrawingCanvas
                     user={props.user}
                     id={props.id}
+                    module={props.module}
                     symbol={props.symbol}
                     newSymbol={props.newSymbol}
                     bgImg={props.name}
@@ -91,6 +110,7 @@ const LetterDetails = (props) => {
                   <DrawingCanvas
                     user={props.user}
                     id={props.id}
+                    module={props.module}
                     symbol={props.symbol}
                     newSymbol={props.newSymbol}
                     bgImg={props.name}

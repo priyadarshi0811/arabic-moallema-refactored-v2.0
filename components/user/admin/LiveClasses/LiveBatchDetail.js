@@ -12,14 +12,20 @@ import {
   fetchBatchesSchedule,
   fetchEnrolledStudentsInBatch,
 } from "@/backend/Batches/BatchesDB";
+import { useRouter } from "next/router";
+import { fetchStudentsData } from "@/backend/Students/StudentDB";
 
-const LiveBatchDetail = ({ batchName }) => {
+const LiveBatchDetail = ({ batchId }) => {
   //user management hooks for batch
   const [showUserList, setshowUserList] = React.useState(false);
   const [batchDetail, setBatchDetail] = React.useState([]);
   const [enrollStudents, setEnrollStudents] = React.useState([]);
   const [scheduleDetail, setScheduleDetail] = React.useState();
+  const [allStudentsInBatchData, setAllStudentsInBatchData] = React.useState(
+    []
+  );
 
+  console.log(batchId);
   //getting the data of batches
   React.useEffect(() => {
     const fetchBatches = async () => {
@@ -41,14 +47,35 @@ const LiveBatchDetail = ({ batchName }) => {
   //getting the student for the selected batch
   React.useEffect(() => {
     const studentBatch = async () => {
-      const data = await fetchEnrolledStudentsInBatch(batchName);
-      setEnrollStudents(data);
+      if (batchId) {
+        const data = await fetchEnrolledStudentsInBatch(+batchId);
+        setEnrollStudents(data);
+      }
     };
     studentBatch();
-  }, []);
+  }, [+batchId]);
+
+  //get all students email for the current batch based on their id's
+  React.useEffect(() => {
+    const getAllStudents = async () => {
+      const data = await fetchStudentsData();
+      if (enrollStudents) {
+        let getStudentsDetail = data
+          .filter((item1) =>
+            enrollStudents.some(
+              (item2) => item1.student_id === item2.student_id
+            )
+          )
+          .map((item) => item.email);
+
+        setAllStudentsInBatchData(getStudentsDetail);
+      }
+    };
+    getAllStudents();
+  }, [batchId, enrollStudents]);
 
   //filtering the bathches data
-  const detail = batchDetail.filter((batch) => batch.batch_name === batchName);
+  const detail = batchDetail.filter((batch) => batch.batch_id === +batchId);
 
   let arr;
   if (scheduleDetail) {
@@ -64,6 +91,7 @@ const LiveBatchDetail = ({ batchName }) => {
   console.log("batch detail: ", detail);
   console.log("batch schedule: ", sheduleData);
   console.log("enroll students : ", enrollStudents);
+  console.log("enroll students1 : ", allStudentsInBatchData);
 
   return (
     <div
@@ -87,26 +115,16 @@ const LiveBatchDetail = ({ batchName }) => {
                   <BackButton /> Live Details
                 </h1>
               </div>
-              {/* <div className="col-span-2">
-            <div className="px-5 w-full">
-              <SelectDropdown type="Batch" lable="Select Batch" />
-            </div>
-          </div>
-          <div className="col-span-2">
-            <div className="px-5 w-full">
-              <SelectDropdown type="student" lable="Select student" />
-            </div>
-          </div> */}
             </div>
             <Divider variant="middle" />
           </div>
           <div className="m-0 p-10 w-full h-fit">
             {enrollStudents && detail && (
               <LiveBatchDetails
-                batchName={batchName}
+                batchId={batchId}
                 detail={detail}
                 sheduleData={sheduleData}
-                enrollStudents={enrollStudents}
+                enrollStudents={allStudentsInBatchData}
               />
             )}
           </div>

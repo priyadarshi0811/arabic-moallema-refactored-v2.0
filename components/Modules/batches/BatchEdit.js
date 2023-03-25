@@ -1,6 +1,9 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import AuthContext from "@/components/Context/store/auth-context";
-import { fetchTeachersData } from "@/backend/Teachers/TeacherDB";
+import {
+  fetchTeachersData,
+  fetchTeachersIdBasedOnEmail,
+} from "@/backend/Teachers/TeacherDB";
 import { postCreateBatch } from "@/backend/Batches/BatchesDB";
 import BatchContext from "@/components/Context/store/batch-context";
 import Spinner from "@/components/Layout/spinner/Spinner";
@@ -10,9 +13,36 @@ const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const BatchEdit = ({ actionBtn, link, setOpen }) => {
   const [error, setError] = useState(false);
   const [selectedDays, setSelectedDays] = useState([]);
+  const [selectedTeacher, setSelecteTeacher] = useState();
+  const [teacherId, setTeacherId] = useState();
+
   const [submitted, setSubmitted] = useState(false);
   const batchCtx = useContext(BatchContext);
   const [isLoading, setIsLoading] = useState(false);
+
+  //handle input fields data
+  const nameRef = useRef();
+  const typeRef = useRef();
+  const timeRef = useRef();
+  const dateRef = useRef();
+  const gmeetLink = useRef();
+
+  //getting the data of teacher
+  React.useEffect(() => {
+    const fetchTeacherId = async () => {
+      const data = await fetchTeachersIdBasedOnEmail(selectedTeacher);
+      console.log(data);
+      if (data[0]) {
+        setTeacherId(data[0].teacher_id);
+      }
+    };
+    fetchTeacherId();
+  }, [selectedTeacher]);
+
+  //filtering the bathches data
+  // const detail = batchDetail.filter((batch) => batch.batch_name === batchName);
+
+  console.log(teacherId);
 
   //convert time formate
   function convertTimeTo12HourFormat(time) {
@@ -45,14 +75,6 @@ const BatchEdit = ({ actionBtn, link, setOpen }) => {
     }
   };
 
-  //handle input fields data
-  const nameRef = useRef();
-  const typeRef = useRef();
-  const teacherNameRef = useRef();
-  const timeRef = useRef();
-  const dateRef = useRef();
-  const gmeetLink = useRef();
-
   const authCtx = useContext(AuthContext);
   let options = authCtx.teachersList;
 
@@ -72,7 +94,6 @@ const BatchEdit = ({ actionBtn, link, setOpen }) => {
     //getting the values
     const enteredBatchName = nameRef.current.value;
     const enteredType = typeRef.current.value;
-    const enteredTeacherEmail = teacherNameRef.current.value;
     const time = timeRef.current.value;
     const date = dateRef.current.value;
     const glink = gmeetLink.current.value;
@@ -86,9 +107,17 @@ const BatchEdit = ({ actionBtn, link, setOpen }) => {
       batchName: enteredBatchName,
     };
 
+    let finalTeacherId;
+    if (teacherId) {
+      finalTeacherId = teacherId;
+    }
+
+    console.log(obj);
+    console.log(finalTeacherId);
+
     const data1 = await postCreateBatch(
       enteredBatchName,
-      enteredTeacherEmail,
+      finalTeacherId,
       enteredType,
       obj,
       glink
@@ -178,7 +207,8 @@ const BatchEdit = ({ actionBtn, link, setOpen }) => {
                     </label>
 
                     <select
-                      ref={teacherNameRef}
+                      value={selectedTeacher}
+                      onChange={(e) => setSelecteTeacher(e.target.value)}
                       required
                       className="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                     >

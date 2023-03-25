@@ -13,8 +13,13 @@ import { useRouter } from "next/router";
 import { fetchAssignmentForLetter } from "@/backend/Assignment/FetchAssignmentDB";
 import index from "@/pages/admin";
 import BatchContext from "@/components/Context/store/batch-context";
-import { fetchTeacherIdForBatchName } from "@/backend/Batches/BatchesDB";
+import {
+  fetchBatcheIdBasedOnBatchName,
+  fetchTeacherIdBasedOnBatchId,
+  fetchTeacherIdForBatchName,
+} from "@/backend/Batches/BatchesDB";
 import WarningCard from "@/components/Layout/card/WarningCard";
+import { fetchStudentIdBasedOnEmail } from "@/backend/Students/StudentDB";
 
 const DrawingCanvas = (props) => {
   const canvasRef = useRef(null);
@@ -22,6 +27,8 @@ const DrawingCanvas = (props) => {
   const [batch, setBatch] = useState();
   const [teacher, setTeacher] = useState();
   const { myArray, setMyArray } = useContext(BatchContext);
+  const [batchId, setBatchId] = useState();
+  const [studentId, setStudentId] = useState();
 
   // const [statusData, setStatusData] = useState("");
 
@@ -29,6 +36,30 @@ const DrawingCanvas = (props) => {
 
   const id = authCtx.userEmail;
   const userType = authCtx.userType;
+
+  useEffect(() => {
+    const getId = async () => {
+      if (id) {
+        const data = await fetchStudentIdBasedOnEmail(id);
+        if (data[0]) {
+          setStudentId(data[0].student_id);
+        }
+      }
+    };
+    getId();
+  }, [id]);
+
+  useEffect(() => {
+    const getId = async () => {
+      const batch = localStorage.getItem("batchName");
+      const data = await fetchBatcheIdBasedOnBatchName(batch);
+      if (data[0]) {
+        setBatchId(data[0].batch_id);
+      }
+    };
+    getId();
+  }, []);
+
   useEffect(() => {
     const batch = localStorage.getItem("batchName");
     setBatch(batch);
@@ -36,18 +67,22 @@ const DrawingCanvas = (props) => {
 
   useEffect(() => {
     const fetchTeacher = async () => {
-      if (batch) {
-        const data = await fetchTeacherIdForBatchName(batch);
+      if (batchId) {
+        const data = await fetchTeacherIdBasedOnBatchId(batchId);
         if (data[0]) {
-          setTeacher(data[0].teacher_email);
+          setTeacher(data[0].teacher_id);
         }
       }
     };
     fetchTeacher();
-  }, [batch]);
+  }, [batchId]);
 
   console.log("techer: ", teacher);
-  console.log(batch);
+  console.log("batch: ", batchId);
+  console.log("student: ", studentId);
+  console.log("id: ", props.id);
+  console.log("module: ", props.module);
+
   const [isDrawing, setIsDrawing] = useState(false);
   const [image, setImage] = useState(false);
   const [assignment, setAssignment] = useState([]);
@@ -60,8 +95,8 @@ const DrawingCanvas = (props) => {
   let index;
 
   if (router.query.alphabateDetail) {
-    letterName = router.query.alphabateDetail[0];
-    index = router.query.alphabateDetail[1];
+    letterName = router.query.alphabateDetail[1];
+    index = router.query.alphabateDetail[2];
   }
 
   let activityType;
@@ -72,15 +107,19 @@ const DrawingCanvas = (props) => {
   //get the assignment for the selected activity
   useEffect(() => {
     const fetchAssignment = async () => {
-      const data = await fetchAssignmentForLetter(letterName);
-      if (data[0]) {
-        setAssignment(data[0].assignment_json.letter);
-        setCurrentIndex(index);
+      if (props.id && props.module) {
+        const data = await fetchAssignmentForLetter(props.id, props.module);
+        if (data[0]) {
+          setAssignment(data[0].assignment_json.letter);
+          setCurrentIndex(index);
+        }
       }
     };
     fetchAssignment();
-  }, [letterName]);
+  }, [props.module, props.id]);
 
+  console.log(assignment);
+  console.log(props.id);
   //if no avtivities then navigate to modules
   useEffect(() => {
     if (currentIndex > assignment.length - 1 && userType === "instructor") {
@@ -90,15 +129,15 @@ const DrawingCanvas = (props) => {
       router.replace("/student/module/alphabets");
     }
     if (currentIndex > assignment.length - 1 && userType === "student") {
-      if (id && batch) {
+      if (studentId && batchId && teacher && props.module) {
         supabase
-          .from("assignments")
+          .from("assignments_exp_duplicate")
           .insert({
             assignment_name: "letterPractice",
-            student_id: id,
-            batch_id: batch,
+            student_id: studentId,
+            batch_id: batchId,
             submission: myArray,
-            module_name: "Alphabate",
+            module_name: props.module,
             sub_module: props.id,
             teacher_id: teacher,
           })
@@ -118,7 +157,9 @@ const DrawingCanvas = (props) => {
     setCurrentIndex(+currentIndex + 1);
     if (activityType === "dnd" && userType === "instructor") {
       console.log("teacher");
-      router.replace(`/teacher/activity/dnd/${props.id}/${currentIndex}`);
+      router.replace(
+        `/teacher/activity/dnd/${props.module}/${props.id}/${currentIndex}`
+      );
     }
   };
 
@@ -157,9 +198,13 @@ const DrawingCanvas = (props) => {
           context.fillText(value, 200 * index + 400, 180)
         );
       } else if (activityType === "dnd" && userType === "instructor") {
-        router.replace(`/teacher/activity/dnd/${props.id}/${currentIndex}`);
+        router.replace(
+          `/teacher/activity/dnd/${props.module}/${props.id}/${currentIndex}`
+        );
       } else if (activityType === "dnd" && userType === "student") {
-        router.replace(`/student/activity/dnd/${props.id}/${currentIndex}`);
+        router.replace(
+          `/student/activity/dnd/${props.module}/${props.id}/${currentIndex}`
+        );
       }
 
       context.lineWidth = 5;
@@ -296,7 +341,7 @@ const DrawingCanvas = (props) => {
         </div>
       )}
       {assignment && assignment.length === 0 && (
-        <WarningCard title={`Asssignment not created for ${letterName}`} />
+        <WarningCard title={`Asssignment not created for ${props.id}`} />
       )}
     </>
   );

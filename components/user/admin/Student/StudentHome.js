@@ -13,7 +13,10 @@ import { Button } from "@mui/material";
 import CardList from "@/components/user/admin/CardList";
 import AuthContext from "@/components/Context/store/auth-context";
 import { getStudentTeacherList } from "@/backend/ManageUser/ManageStudentTeacher";
-import { fetchEnrolledStudentsInBatch } from "@/backend/Batches/BatchesDB";
+import {
+  fetchBatcheIdBasedOnBatchName,
+  fetchEnrolledStudentsInBatch,
+} from "@/backend/Batches/BatchesDB";
 import { fetchBatchesData } from "@/backend/Announcement/AnnouncementDB";
 import BatchContext from "@/components/Context/store/batch-context";
 import SuccessPrompt from "@/components/Layout/elements/SuccessPrompt";
@@ -51,7 +54,7 @@ const StudentHome = () => {
 
   useEffect(() => {
     const getUser = async () => {
-      const data = await getStudentTeacherList("students");
+      const data = await getStudentTeacherList("students_exp_duplicate");
       authCtx.setStudentsData(data);
     };
     getUser();
@@ -60,17 +63,29 @@ const StudentHome = () => {
   useEffect(() => {});
 
   //get the filtered value
-  const handleSelectedItem = (batchData) => {
+  const handleSelectedItem = async (batchData) => {
+    let batchId;
     console.log("batchData", batchData);
+    const idData = await fetchBatcheIdBasedOnBatchName(batchData);
+    if (idData[0]) {
+      batchId = idData[0].batch_id;
+    }
+
+    console.log(batchId);
     const fetchStudentBatch = async () => {
-      const data = await fetchEnrolledStudentsInBatch(batchData);
-      let selectedStudent = authCtx.studentsList.filter((obj1) =>
-        data.some((obj2) => obj1.email === obj2.student_id)
-      );
-      if (batchData) {
-        selectedStudent.length === 0 ? setError(true) : setError(false);
+      if (batchId) {
+        console.log(batchId);
+
+        const data = await fetchEnrolledStudentsInBatch(batchId);
+        console.log(data);
+        let selectedStudent = authCtx.studentsList.filter((obj1) =>
+          data.some((obj2) => obj1.student_id === obj2.student_id)
+        );
+        if (batchData) {
+          selectedStudent.length === 0 ? setError(true) : setError(false);
+        }
+        setFilteredStudent(selectedStudent);
       }
-      setFilteredStudent(selectedStudent);
     };
     fetchStudentBatch();
   };
@@ -128,14 +143,11 @@ const StudentHome = () => {
             <Divider variant="middle" />
           </div>
           {batchCtx.submitted && !batchCtx.submittedDelete && (
-            
-              <SuccessPrompt
+            <SuccessPrompt
               type="add"
               title="Student Added Successfully"
               setSubmitted={batchCtx.setSubmittedHandler}
             />
-         
-           
           )}
           {batchCtx.submittedDelete && (
             <SuccessPrompt

@@ -2,7 +2,7 @@ import supabase from "@/supabaseClient";
 
 export const addActivityStartStatus = async (module, subModule, batch) => {
   const { data, error } = await supabase
-    .from("teacher_activity_log")
+    .from("exp_duplicate_teacher_activity_log")
     .insert({
       module: module,
       sub_module: subModule,

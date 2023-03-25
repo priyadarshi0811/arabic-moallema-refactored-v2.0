@@ -13,7 +13,7 @@ const index = () => {
 
   let id;
   if (router.query.alphabateDetail) {
-    id = router.query.alphabateDetail[0];
+    id = router.query.alphabateDetail[1];
   }
 
   console.log(id);
@@ -54,7 +54,14 @@ const index = () => {
           minHeight: "100vh",
         }}
       >
-        <ActivityDetail user="teacher" id={id} type="LetterTracing" />
+        {id && (
+          <ActivityDetail
+            user="teacher"
+            id={id}
+            type="LetterTracing"
+            module="alphabets"
+          />
+        )}
       </div>
     </>
   );

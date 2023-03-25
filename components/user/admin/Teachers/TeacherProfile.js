@@ -11,8 +11,15 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import BackButton from "@/components/Layout/elements/BackButton";
 import { Button } from "@mui/material";
-import { fetchTeachersBasedonEmail } from "@/backend/UserProfile/StudentTeacherProfileDB";
-import { fetchBatchesForTeacher } from "@/backend/Batches/BatchesDB";
+import {
+  fetchTeacherIdBasedonEmail,
+  fetchTeachersBasedonEmail,
+  fetchTeachersDetailBasedonId,
+} from "@/backend/UserProfile/StudentTeacherProfileDB";
+import {
+  fetchBatchesDataForTeacherBasedOnId,
+  fetchBatchesForTeacher,
+} from "@/backend/Batches/BatchesDB";
 import BatchContext from "@/components/Context/store/batch-context";
 import SuccessPrompt from "@/components/Layout/elements/SuccessPrompt";
 import { deleteTeacher } from "@/backend/DeleteUser/DeleteTeacherDB";
@@ -36,6 +43,8 @@ const TeacherProfile = ({ email }) => {
 
   const [profileData, setProfileData] = React.useState();
   const [batchesData, setBatchData] = React.useState();
+  const [teacherId, setTeacherId] = React.useState();
+  const [batchId, setBatchId] = React.useState();
 
   const batchCtx = React.useContext(BatchContext);
 
@@ -44,28 +53,54 @@ const TeacherProfile = ({ email }) => {
 
   let router = useRouter();
 
+  //get teacher id
   React.useEffect(() => {
-    const studentprofile = async () => {
-      const data = await fetchTeachersBasedonEmail(email);
-      setProfileData(data);
+    const TeacherId = async () => {
+      const data = await fetchTeacherIdBasedonEmail(email);
+      if (data[0]) {
+        setTeacherId(data[0].teacher_id);
+      }
     };
-    studentprofile();
-  }, [email, batchCtx.submitted]);
+    TeacherId();
+  }, [batchCtx.submitted, email]);
+
+  console.log(teacherId);
+
+  //getting the profile data for teachers
+  React.useEffect(() => {
+    const teacherprofile = async () => {
+      if (teacherId) {
+        const data = await fetchTeachersDetailBasedonId(teacherId);
+        setProfileData(data);
+      }
+    };
+    teacherprofile();
+  }, [teacherId, batchCtx.submitted]);
+
+  console.log(profileData);
 
   //getting the batch data for the teachers
   React.useEffect(() => {
     const fetchTeachersBatchDetail = async () => {
-      const data = await fetchBatchesForTeacher(email);
-      setBatchData(data);
+      if (teacherId) {
+        const data = await fetchBatchesDataForTeacherBasedOnId(teacherId);
+        setBatchData(data);
+        if (data[0]) {
+          setBatchId(data[0].batch_id);
+        }
+      }
     };
     fetchTeachersBatchDetail();
-  }, [email, batchCtx.submitted]);
+  }, [teacherId, batchCtx.submitted]);
 
-  const deleteTeacherRecords = (teacherEmail) => {
-    deleteTeacher(email, teacherEmail);
-    deleteFromAuth(email);
-    batchCtx.setSubmittedDeleteHandler(true);
-    router.push("/admin/teachers");
+  const deleteTeacherRecords = (selectedTeacherId) => {
+    console.log(selectedTeacherId);
+    if (teacherId) {
+      deleteTeacher(email, selectedTeacherId, teacherId);
+      deleteFromAuth(email);
+      batchCtx.setSubmittedDeleteHandler(true);
+      router.push("/admin/teachers");
+    }
   };
 
   console.log(profileData);
@@ -103,12 +138,6 @@ const TeacherProfile = ({ email }) => {
                   >
                     Remove Teacher
                   </Button>
-                  {/* <button
-                      
-                      className="px-5 py-2 bg-sky-500 text-white text-center rounded-lg hover:bg-sky-900 "
-                    >
-                      <ArrowBackIcon className="mb-1"  /> Back
-                    </button> */}
                 </div>
               </div>
             </div>
@@ -124,8 +153,8 @@ const TeacherProfile = ({ email }) => {
           <div className="m-0 p-10 w-full h-fit">
             {profileData && batchesData && (
               <UserDetails
-                teacherEmail={email}
-                batchesData={batchesData}
+                teacherId={teacherId}
+                batchDataTeacher={batchesData}
                 profileData={profileData}
                 userType="showTeacher"
                 user="teacher"
@@ -144,6 +173,7 @@ const TeacherProfile = ({ email }) => {
                 <RemoveUser
                   setOpen={setOpen}
                   userName={profileData[0].email}
+                  teacherIdToBeRemoved={teacherId}
                   deleteTeacherRecords={deleteTeacherRecords}
                   user="Teacher"
                   isReplace={true}

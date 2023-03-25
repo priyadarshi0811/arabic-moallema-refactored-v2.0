@@ -4,21 +4,40 @@ import AttendanceListTeacher from "@/components/Modules/batches/AttendanceListTe
 import AddStudent from "@/components/user/admin/AddStudent";
 import AddTeacher from "@/components/user/admin/AddTeacher";
 import SelectDropdown from "@/components/Layout/elements/SelectDropdown";
+import { fetchBatchDataBasedOnBatchId } from "@/backend/Batches/BatchesDB";
 
 const LiveBatchDetails = ({
   user,
   isStudent,
   userType,
   profileData,
-  batchesData,
-  studentEmail,
-  teacherEmail,
+  batchId,
+  batchDataTeacher,
+  studentId,
+  teacherId,
 }) => {
   console.log(` and isStudent = ${isStudent} `);
+  const [batchName, setBatchName] = React.useState();
+  const [batchesData, setBatchData] = React.useState();
 
-  function tableData(name, date, user, status) {
-    return { name, date, user, status };
-  }
+  //get student batch data
+  React.useEffect(() => {
+    const batchData = async () => {
+      if (batchId) {
+        const data = await fetchBatchDataBasedOnBatchId(batchId);
+        setBatchData(data);
+        if (data[0]) {
+          setBatchName(data[0].batch_name);
+        }
+      }
+    };
+    batchData();
+  }, [batchId]);
+
+  console.log(studentId);
+  console.log(batchId);
+  console.log(batchName);
+  console.log(batchesData);
 
   return (
     <div>
@@ -26,9 +45,9 @@ const LiveBatchDetails = ({
         {isStudent && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
             <div className="col-span-1">
-              {batchesData && (
+              {batchId && batchName && (
                 <AddStudent
-                  batchName={batchesData[0].batch_id}
+                  batchName={batchName}
                   batchesData={batchesData}
                   profileData={profileData}
                   userType={userType}
@@ -39,10 +58,11 @@ const LiveBatchDetails = ({
               )}
             </div>
             <div className="col-span-1">
-              {batchesData && (
+              {batchId && (
                 <AttendanceListStudent
-                  studentEmail={studentEmail}
-                  batchName={batchesData[0].batch_id}
+                  // studentEmail={studentEmail}
+                  studentsId={studentId}
+                  batchId={batchId}
                   chapter="Huruf"
                   date="21/02/2023"
                   lastCol="Attended"
@@ -54,9 +74,9 @@ const LiveBatchDetails = ({
         {!isStudent && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
             <div className="col-span-1">
-              {batchesData && profileData && (
+              {batchDataTeacher && profileData && (
                 <AddTeacher
-                  batchesData={batchesData}
+                  batchesData={batchDataTeacher}
                   profileData={profileData}
                   userType={userType}
                   link="/admin/students"
@@ -67,14 +87,12 @@ const LiveBatchDetails = ({
               )}
             </div>
             <div className="col-span-1">
-
               <AttendanceListTeacher
-                teacherEmail={teacherEmail}
-                batchesData={batchesData}
+                teacherId={teacherId}
+                batchDataTeacher={batchDataTeacher}
                 chapter="Huruf"
                 date="21/02/2023"
                 lastCol="Attended"
-
               />
             </div>
           </div>

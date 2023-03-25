@@ -8,10 +8,9 @@ import DND from "@/components/Modules/models/DND";
 import Link from "next/link";
 import Activity from "@/components/Modules/models/DNDActivity/Activity";
 import { Button } from "@mui/material";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import AuthContext from "@/components/Context/store/auth-context";
 import { useRouter } from "next/router";
-
 
 const index = ({ data }) => {
   const authCtx = useContext(AuthContext);
@@ -54,33 +53,30 @@ const index = ({ data }) => {
         }}
       >
         <div className=" w-full p-2 rounded-md  flex flex-row justify-center content-center pt-5">
-        <Link href="/student">
-          <Button className="bg-white text-dark-purple" variant="contained" startIcon={<ArrowBackIcon />}>
-            Back to Dashboard
-          </Button>
-        </Link>
-        <h1 className="ml-10 pt-2 text-white">Activity 2: Drag and Drop</h1>
-      </div>
-        <div className="mx-10 rounded-md">
-        {/* <DND /> */}
-        <Activity />
+          <Link href="/student">
+            <Button
+              className="bg-white text-dark-purple"
+              variant="contained"
+              startIcon={<ArrowBackIcon />}
+            >
+              Back to Dashboard
+            </Button>
+          </Link>
+          <h1 className="ml-10 pt-2 text-white">Activity 2: Drag and Drop</h1>
         </div>
-        
+        <div className="mx-10 rounded-md">
+          {/* <DND /> */}
+          <Activity />
+        </div>
       </div>
-     
     </>
   );
 };
 
-
-
 export default index;
 
-export async function getServerSideProps({query}){
+export async function getServerSideProps({ query }) {
+  resetServerContext(); // <-- CALL RESET SERVER CONTEXT, SERVER SIDE
 
-  resetServerContext()   // <-- CALL RESET SERVER CONTEXT, SERVER SIDE
-
-  return {props: { data : []}}
-
+  return { props: { data: [] } };
 }
-

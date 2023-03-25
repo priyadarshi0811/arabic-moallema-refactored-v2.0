@@ -50,7 +50,7 @@ export default function CheckboxListSecondary({
             <>
               <div className="flex px-2 py-3">
                 <p className=" w-full">{`${
-                  type === "present" ? value : value.student_id
+                  type === "present" ? value : value
                 }`}</p>
                 {type === "markAttendance" ? (
                   <input

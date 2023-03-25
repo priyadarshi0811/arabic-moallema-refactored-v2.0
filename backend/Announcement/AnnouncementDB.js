@@ -1,7 +1,9 @@
 import supabase from "@/supabaseClient";
 
 export const fetchBatchesData = async () => {
-  const { data, error } = await supabase.from("batches").select("*");
+  const { data, error } = await supabase
+    .from("batches_exp_duplicate")
+    .select("*");
   if (error) {
     console.log("Error fetching batches data: ", error);
     return null;

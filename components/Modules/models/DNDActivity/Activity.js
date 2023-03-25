@@ -18,8 +18,13 @@ import { useRouter } from "next/router";
 import { fetchAssignmentForLetter } from "@/backend/Assignment/FetchAssignmentDB";
 import AuthContext from "@/components/Context/store/auth-context";
 import supabase from "@/supabaseClient";
-import { fetchTeacherIdForBatchName } from "@/backend/Batches/BatchesDB";
+import {
+  fetchBatcheIdBasedOnBatchName,
+  fetchTeacherIdBasedOnBatchId,
+  fetchTeacherIdForBatchName,
+} from "@/backend/Batches/BatchesDB";
 import BatchContext from "@/components/Context/store/batch-context";
+import { fetchStudentIdBasedOnEmail } from "@/backend/Students/StudentDB";
 
 const activity = {
   Alif: [
@@ -90,6 +95,8 @@ const LetterActivity = () => {
   const [teacher, setTeacher] = useState();
   const { myArray, setMyArray } = useContext(BatchContext);
 
+  const [batchId, setBatchId] = useState();
+  const [studentId, setStudentId] = useState();
   // const [statusData, setStatusData] = useState("");
 
   const authCtx = useContext(AuthContext);
@@ -98,33 +105,59 @@ const LetterActivity = () => {
   const userType = authCtx.userType;
 
   useEffect(() => {
+    const getId = async () => {
+      if (id) {
+        const data = await fetchStudentIdBasedOnEmail(id);
+        if (data[0]) {
+          setStudentId(data[0].student_id);
+        }
+      }
+    };
+    getId();
+  }, [id]);
+
+  useEffect(() => {
+    const getId = async () => {
+      const batch = localStorage.getItem("batchName");
+      const data = await fetchBatcheIdBasedOnBatchName(batch);
+      if (data[0]) {
+        setBatchId(data[0].batch_id);
+      }
+    };
+    getId();
+  }, [batch]);
+
+  useEffect(() => {
     const batch = localStorage.getItem("batchName");
     setBatch(batch);
   }, []);
 
   useEffect(() => {
     const fetchTeacher = async () => {
-      if (batch) {
-        const data = await fetchTeacherIdForBatchName(batch);
+      if (batchId) {
+        const data = await fetchTeacherIdBasedOnBatchId(batchId);
         if (data[0]) {
-          setTeacher(data[0].teacher_email);
+          setTeacher(data[0].teacher_id);
         }
       }
     };
     fetchTeacher();
-  }, [batch]);
+  }, [batchId]);
 
   console.log("techer: ", teacher);
-  console.log(batch);
+  console.log("batch: ", batchId);
+  console.log("student: ", studentId);
 
   //getting the URl route
   const router = useRouter();
   let alphabate;
   let activityIndex;
+  let module;
 
   if (router.query.dnd_id) {
-    alphabate = router.query.dnd_id[0];
-    activityIndex = router.query.dnd_id[1];
+    module = router.query.dnd_id[0];
+    alphabate = router.query.dnd_id[1];
+    activityIndex = router.query.dnd_id[2];
   }
 
   let activityType;
@@ -141,14 +174,16 @@ const LetterActivity = () => {
       if (activityType === "trace" && currentIndex <= +assignment.length - 1) {
         console.log("first");
         router.replace(
-          `/teacher/activity/tracing/${alphabate}/${currentIndex}`
+          `/teacher/activity/tracing/${module}/${alphabate}/${currentIndex}`
         );
       } else if (
         activityType === "dnd" &&
         currentIndex <= +assignment.length - 1
       ) {
         console.log("second");
-        router.replace(`/teacher/activity/dnd/${alphabate}/${currentIndex}`);
+        router.replace(
+          `/teacher/activity/dnd/${module}/${alphabate}/${currentIndex}`
+        );
       }
     }
 
@@ -158,14 +193,16 @@ const LetterActivity = () => {
       if (activityType === "trace" && currentIndex <= +assignment.length - 1) {
         console.log("first");
         router.replace(
-          `/student/activity/tracing/${alphabate}/${currentIndex}`
+          `/student/activity/tracing/${module}/${alphabate}/${currentIndex}`
         );
       } else if (
         activityType === "dnd" &&
         currentIndex <= +assignment.length - 1
       ) {
         console.log("second");
-        router.replace(`/student/activity/dnd/${alphabate}/${currentIndex}`);
+        router.replace(
+          `/student/activity/dnd/${module}/${alphabate}/${currentIndex}`
+        );
       }
     }
     if (currentIndex > assignment.length - 1 && userType === "student") {
@@ -179,15 +216,15 @@ const LetterActivity = () => {
     }
 
     if (currentIndex > assignment.length - 1 && userType === "student") {
-      if (id && batch) {
+      if (studentId && batchId && teacher && module) {
         supabase
-          .from("assignments")
+          .from("assignments_exp_duplicate")
           .insert({
             assignment_name: "letterPractice",
-            student_id: id,
-            batch_id: batch,
+            student_id: studentId,
+            batch_id: batchId,
             submission: myArray,
-            module_name: "Alphabate",
+            module_name: module,
             sub_module: alphabate,
             teacher_id: teacher,
           })
@@ -208,12 +245,14 @@ const LetterActivity = () => {
     console.log("inside 2");
 
     const fetchAssignment = async () => {
-      const data = await fetchAssignmentForLetter(alphabate);
-      setAssignment(data[0].assignment_json.letter);
-      setCurrentIndex(activityIndex);
+      const data = await fetchAssignmentForLetter(alphabate, module);
+      if (data[0]) {
+        setAssignment(data[0].assignment_json.letter);
+        setCurrentIndex(activityIndex);
+      }
     };
     fetchAssignment();
-  }, [alphabate, activityIndex, currentIndex]);
+  }, [alphabate, activityIndex, currentIndex, module]);
 
   // when click on the next activity
   const handleNextButtonClick = () => {

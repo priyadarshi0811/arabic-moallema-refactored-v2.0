@@ -21,44 +21,51 @@ import { createAssignment } from "@/backend/Assignment/CreateAssignmentDB";
 import BatchContext from "@/components/Context/store/batch-context";
 import { useRouter } from "next/router";
 import { fetchSubModulesCreatedActivity } from "@/backend/Assignment/FetchAssignmentDB";
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
-const Alphabates = [
-  { letter: "خ", title: "Khaa" },
-  { letter: "ح", title: "Haa" },
-  { letter: "ج", title: "Jeem" },
-  { letter: "ث", title: "Thaa" },
-  { letter: "ت", title: "Ta" },
-  { letter: "ب", title: "Baa" },
-  { letter: "ا", title: "Alif" },
-  { letter: "ص", title: "Saad" },
-  { letter: "ش", title: "Sheen" },
-  { letter: "س", title: "Seen" },
-  { letter: "ز", title: "Zai" },
-  { letter: "ر", title: "Raa" },
-  { letter: "ذ", title: "Dhaal" },
-  { letter: "د", title: "Daal" },
-  { letter: "ق", title: "Qaaf" },
-  { letter: "ف", title: "Faa" },
-  { letter: "غ", title: "Ghayn" },
-  { letter: "ع", title: "Ayn" },
-  { letter: "ظ", title: "Dhaa" },
-  { letter: "ط", title: "Taa" },
-  { letter: "ض", title: "Daad" },
-  { letter: "ي", title: "Yaa" },
-  { letter: "و", title: "Waaw" },
-  { letter: "ه", title: "Ha" },
-  { letter: "ن", title: "Noon" },
-  { letter: "م", title: "Meem" },
-  { letter: "ل", title: "Laam" },
-  { letter: "ك", title: "Kaaf" },
-];
+const Modules_Option = {
+  alphabets: [
+    { letter: "خ", title: "Khaa" },
+    { letter: "ح", title: "Haa" },
+    { letter: "ج", title: "Jeem" },
+    { letter: "ث", title: "Thaa" },
+    { letter: "ت", title: "Ta" },
+    { letter: "ب", title: "Baa" },
+    { letter: "ا", title: "Alif" },
+    { letter: "ص", title: "Saad" },
+    { letter: "ش", title: "Sheen" },
+    { letter: "س", title: "Seen" },
+    { letter: "ز", title: "Zai" },
+    { letter: "ر", title: "Raa" },
+    { letter: "ذ", title: "Dhaal" },
+    { letter: "د", title: "Daal" },
+    { letter: "ق", title: "Qaaf" },
+    { letter: "ف", title: "Faa" },
+    { letter: "غ", title: "Ghayn" },
+    { letter: "ع", title: "Ayn" },
+    { letter: "ظ", title: "Dhaa" },
+    { letter: "ط", title: "Taa" },
+    { letter: "ض", title: "Daad" },
+    { letter: "ي", title: "Yaa" },
+    { letter: "و", title: "Waaw" },
+    { letter: "ه", title: "Ha" },
+    { letter: "ن", title: "Noon" },
+    { letter: "م", title: "Meem" },
+    { letter: "ل", title: "Laam" },
+    { letter: "ك", title: "Kaaf" },
+  ],
+  harkat: [
+    { id: 1, title: "Fatah" },
+    { id: 2, title: "Dumma" },
+    { id: 3, title: "Kasra" },
+  ],
+};
 
 const modules = [
-  { id: 1, name: "Harakat" },
-  { id: 2, name: "Alphabates" },
-  { id: 3, name: "Tanveen" },
-  { id: 4, name: "Hamza" },
+  { id: 1, title: "harkat" },
+  { id: 2, title: "alphabets" },
+  { id: 3, title: "tanveen" },
+  { id: 4, title: "hamza" },
 ];
 
 const ADD_ACTIVITY = "Add Activity";
@@ -325,8 +332,15 @@ const AssignmentCreator = () => {
     }
   };
 
+  const batchCtx = useContext(BatchContext);
+
+  const [selectedModule, setSelectedModule] = useState();
+  const [selectedSubmodule, setSelectedSubmodule] = useState();
+  const [universalSubModule, setUniversalSubModule] = useState();
+
   const [submoduleArray, setSubmoduleArray] = useState();
   const [resultArray, setResultArray] = useState([]);
+
   useEffect(() => {
     const fethSubModule = async () => {
       const data = await fetchSubModulesCreatedActivity();
@@ -335,29 +349,33 @@ const AssignmentCreator = () => {
     fethSubModule();
   }, []);
 
+  
   useEffect(() => {
-    if (submoduleArray) {
-      const filteredArray = Alphabates.filter((alphabet) => {
+    if (submoduleArray && universalSubModule) {
+      console.log("universalModule: ", universalSubModule);
+
+      let array = Modules_Option[`${universalSubModule}`];
+
+      const filteredArray = array.filter((alphabet) => {
         return !submoduleArray.some(
           (submodule) => submodule.sub_module === alphabet.title
         );
       });
       setResultArray(filteredArray);
     }
-  }, [submoduleArray]);
+  }, [submoduleArray, universalSubModule]);
+
+  console.log("module: ", selectedModule);
+  console.log("sub module: ", selectedSubmodule);
 
   console.log("subModule: ", submoduleArray);
   console.log("result: ", resultArray);
 
-  const batchCtx = useContext(BatchContext);
-
-  const [selectedModule, setSelectedModule] = useState();
-  const [selectedSubmodule, setSelectedSubmodule] = useState();
-  console.log("module: ", selectedModule);
-  console.log("sub module: ", selectedSubmodule);
   const router = useRouter();
 
   function handleModuleChange(event) {
+    const module = event.target.value;
+    setUniversalSubModule(module);
     setSelectedModule(event.target.value);
   }
 
@@ -367,7 +385,6 @@ const AssignmentCreator = () => {
 
   const CreateAssignmentHandler = () => {
     createAssignment(assignmentState, selectedModule, selectedSubmodule);
-
     batchCtx.setSubmittedHandler(true);
     router.replace("/admin/assignments");
   };
@@ -389,58 +406,10 @@ const AssignmentCreator = () => {
             <InputLabel>
               Select the activity to be added into the assignment:
             </InputLabel>
-            {/* <div className="flex mt-10">
-              <div className="mr-4">
-                <label
-                  htmlFor="module"
-                  className="block font-medium text-gray-700 mb-1"
-                >
-                  Module
-                </label>
-                <select
-                  id="module"
-                  name="module"
-                  className=""
-                  value={selectedModule}
-                  onChange={handleModuleChange}
-                >
-                  <option selected>Select Module</option>
 
-                  {modules.map((module) => (
-                    <option key={module.name} value={module.name}>
-                      {module.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label
-                  htmlFor="submodule"
-                  className="block font-medium text-gray-700 mb-1"
-                >
-                  Submodule
-                </label>
-                <select
-                  id="submodule"
-                  name="submodule"
-                  className="border-2 redious-md"
-                  value={selectedSubmodule}
-                  onChange={handleSubmoduleChange}
-                >
-                  <option selected>Select Sub-Module</option>
-
-                  {resultArray &&
-                    resultArray.map((submodule) => (
-                      <option key={submodule.title} value={submodule.title}>
-                        {submodule.title}
-                      </option>
-                    ))}
-                </select>
-              </div>
-            </div> */}
             <div className="mt-5 grid grid-cols-8 gap-10">
               <div className="col-span-3">
-              <p>Module</p>
+                <p>Module</p>
                 <Select
                   labelId="demo-simple-select-label"
                   className="w-full "
@@ -450,38 +419,42 @@ const AssignmentCreator = () => {
                   value={selectedModule}
                   onChange={handleModuleChange}
                 >
-                 
                   {modules.map((module) => (
-                  
-                     <MenuItem key={module.name} value={module.name} selected={true}>
-                      {module.name}
-                   </MenuItem>
+                    <MenuItem
+                      key={module.title}
+                      value={module.title}
+                      selected={true}
+                    >
+                      {module.title}
+                    </MenuItem>
                   ))}
                 </Select>
               </div>
-              <div className="col-span-3">
-                <p>Submodule</p>
-              <Select
-                  labelId="demo-simple-select-label"
-                  className="w-full "
-                  label="Age"
-                  id="submodule"
-                  name="submodule"
-                  value={selectedSubmodule}
-                  onChange={handleSubmoduleChange}
-                >
-                
-                 
-                  {resultArray &&
-                    resultArray.map((submodule) => (
-                  
-                     <MenuItem key={submodule.title} value={submodule.title} selected={true}>
-                      {submodule.title}
-                   </MenuItem>
-                  ))}
-                </Select>
-              </div>
-             
+              {universalSubModule && (
+                <div className="col-span-3">
+                  <p>Submodule</p>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    className="w-full "
+                    label="Age"
+                    id="submodule"
+                    name="submodule"
+                    value={selectedSubmodule}
+                    onChange={handleSubmoduleChange}
+                  >
+                    {resultArray &&
+                      resultArray.map((submodule) => (
+                        <MenuItem
+                          key={submodule.title}
+                          value={submodule.title}
+                          selected={true}
+                        >
+                          {submodule.title}
+                        </MenuItem>
+                      ))}
+                  </Select>
+                </div>
+              )}
             </div>
             <div className="mt-5 grid grid-cols-4 gap-10">
               <div className="col-span-3">

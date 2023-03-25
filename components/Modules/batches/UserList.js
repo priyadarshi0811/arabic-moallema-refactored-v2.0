@@ -36,9 +36,9 @@ export default function PinnedSubheaderList({ enrollStudents, batchName }) {
           <ul>
             <ListSubheader>{`From ${batchName}`}</ListSubheader>
             {enrollStudents.map((student) => (
-              <ListItem key={student.id}>
-                <ListItemText primary={student.student_id} />
-                <Button onClick={() => goToUserProfile(student.student_id)}>
+              <ListItem key={student}>
+                <ListItemText primary={student} />
+                <Button onClick={() => goToUserProfile(student)}>
                   View Profile
                 </Button>
               </ListItem>

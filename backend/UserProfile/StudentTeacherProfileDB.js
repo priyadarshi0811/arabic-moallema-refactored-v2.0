@@ -13,11 +13,23 @@ export const fetchStudentTeacherProfile = async (role, email) => {
   return data;
 };
 
-export const fetchStudentBasedonEmail = async (emailId) => {
+export const fetchStudentIdBasedonEmail = async (email) => {
   const { data, error } = await supabase
-    .from("students")
+    .from("students_exp_duplicate")
+    .select("student_id")
+    .match({ email: email });
+  if (error) {
+    console.log("Error fetching students data: ", error);
+    return null;
+  }
+  return data;
+};
+
+export const fetchStudentDetailBasedonId = async (studentId) => {
+  const { data, error } = await supabase
+    .from("students_exp_duplicate")
     .select("*")
-    .match({ email: emailId });
+    .match({ student_id: studentId });
 
   if (error) {
     console.log("Error fetching students data: ", error);
@@ -26,11 +38,35 @@ export const fetchStudentBasedonEmail = async (emailId) => {
   return data;
 };
 
-export const fetchTeachersBasedonEmail = async (emailId) => {
+export const fetchTeacherIdBasedonEmail = async (email) => {
   const { data, error } = await supabase
-    .from("teachers")
+    .from("teachers_exp_duplicate")
+    .select("teacher_id")
+    .match({ email: email });
+  if (error) {
+    console.log("Error fetching students data: ", error);
+    return null;
+  }
+  return data;
+};
+
+export const fetchTeachersDetailBasedonId = async (teacherId) => {
+  const { data, error } = await supabase
+    .from("teachers_exp_duplicate")
     .select("*")
-    .match({ email: emailId });
+    .match({ teacher_id: teacherId });
+  if (error) {
+    console.log("Error fetching students data: ", error);
+    return null;
+  }
+  return data;
+};
+
+export const fetchTeacherEmailBasedonId = async (teacherId) => {
+  const { data, error } = await supabase
+    .from("teachers_exp_duplicate")
+    .select("email")
+    .match({ teacher_id: teacherId });
   if (error) {
     console.log("Error fetching students data: ", error);
     return null;

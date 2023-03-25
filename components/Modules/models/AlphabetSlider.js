@@ -151,7 +151,7 @@ export default function VerticalTabs(props) {
         >
           {Alphabates.map((alphabate) => (
             <Link
-              href={`/${props.user}/module/alphabets/${alphabate.title}`}
+              href={`/${props.user}/module/${props.type}/${alphabate.title}`}
               className=" p-0 my-2 rounded-full text-center"
             >
               <Tab
@@ -174,6 +174,7 @@ export default function VerticalTabs(props) {
               id={props.id}
               user={props.user}
               type="LetterDetails"
+              module={props.module}
             />
           )}
         </TabPanel>

@@ -36,6 +36,18 @@ export const addStudentTeacherToDB = async (
     .select();
 
   console.log(errorTable);
+};
 
- 
+export const getStudentId = async (email) => {
+  const { data, error } = await supabase
+    .from("students_exp_duplicate")
+    .select("student_id")
+    .match({ email: email });
+
+  if (error) {
+    console.log(error);
+    return;
+  }
+  console.log(data);
+  return data;
 };

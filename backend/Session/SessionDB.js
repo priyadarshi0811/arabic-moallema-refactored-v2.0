@@ -2,7 +2,7 @@ import supabase from "@/supabaseClient";
 
 export const postSessionData = async (
   currTime,
-  moduleName,
+  // moduleName,
   attendanceList,
   batchId,
   teacherId,
@@ -10,15 +10,15 @@ export const postSessionData = async (
   status
 ) => {
   const { data, error } = await supabase
-    .from("session")
+    .from("session_exp_duplicate")
     .insert({
       starting_time: currTime,
-      module_name: moduleName,
+      // module_name: moduleName,
       students_present: { students: attendanceList },
       batch_id: batchId,
       teacher_id: teacherId,
       chapter_completion_status: status,
-      chapter_name: chapterName,
+      chapter_id: chapterName,
     })
     .select();
 
@@ -31,15 +31,15 @@ export const postSessionData = async (
 export const fetchSessionAttendance = async (
   batch_id,
   session_id,
-  chapter_name
+  chapter_id
 ) => {
   const { data, error } = await supabase
-    .from("session")
+    .from("session_exp_duplicate")
     .select("students_present")
     .match({
       batch_id: batch_id,
       session_id: session_id,
-      chapter_name: chapter_name,
+      chapter_id: chapter_id,
     });
   if (error) {
     console.log("Error fetching batches data: ", error);
@@ -48,11 +48,14 @@ export const fetchSessionAttendance = async (
   return data;
 };
 
-export const fetchSessionData = async (batch_id, chapter_name) => {
-  const { data, error } = await supabase.from("session").select("*").match({
-    batch_id: batch_id,
-    chapter_name: chapter_name,
-  });
+export const fetchSessionData = async (batch_id, chapter_id) => {
+  const { data, error } = await supabase
+    .from("session_exp_duplicate")
+    .select("*")
+    .match({
+      batch_id: batch_id,
+      chapter_id: chapter_id,
+    });
   if (error) {
     console.log("Error fetching batches data: ", error);
     return null;
@@ -61,9 +64,12 @@ export const fetchSessionData = async (batch_id, chapter_name) => {
 };
 
 export const fetchSessionDataForBatch = async (batch_id) => {
-  const { data, error } = await supabase.from("session").select("*").match({
-    batch_id: batch_id,
-  });
+  const { data, error } = await supabase
+    .from("session_exp_duplicate")
+    .select("*")
+    .match({
+      batch_id: batch_id,
+    });
   if (error) {
     console.log("Error fetching batches data: ", error);
     return null;

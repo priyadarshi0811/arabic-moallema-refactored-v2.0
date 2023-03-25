@@ -9,6 +9,7 @@ import { Box, Modal, Button } from "@mui/material";
 import RemoveUser from "@/components/Modules/batches/RemoveUser";
 import { fetchBatchesData } from "@/backend/Announcement/AnnouncementDB";
 import { useRouter } from "next/router";
+import { fetchBatcheIdBasedOnBatchName } from "@/backend/Batches/BatchesDB";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -43,6 +44,7 @@ export default function MultipleSelectChip({ batchesData }) {
   const [personName, setPersonName] = React.useState([]);
   const [allBatches, setAllBatches] = React.useState();
   const [selectedBatch, setSelectedBatch] = React.useState();
+  const [batchIdNew, setBatchIdNew] = React.useState();
 
   const router = useRouter();
 
@@ -89,9 +91,17 @@ export default function MultipleSelectChip({ batchesData }) {
   }
   console.log(filteredBatches);
 
-  const handleDelete = (value) => {
+  const handleDelete = async (value) => {
     console.log(value);
     console.info("You clicked the delete icon.");
+
+    let batchId;
+    const idData = await fetchBatcheIdBasedOnBatchName(value);
+    if (idData[0]) {
+      batchId = idData[0].batch_id;
+    }
+    setBatchIdNew(batchId);
+
     setSelectedBatch(value);
     setOpen(true);
     setPersonName((prevSelected) =>
@@ -114,78 +124,6 @@ export default function MultipleSelectChip({ batchesData }) {
 
   return (
     <div>
-      <div className="grid grid-cols-5 ">
-        {/* <div className="col-span-1 mt-3 pl-2">
-          <label className=" mt-3 pt-2 ">Select Batches</label>
-        </div> */}
-        {/* <div className="col-span-4">
-          {filteredBatches && (
-            <FormControl sx={{ m: 1 }} className="w-full">
-              <Select
-                labelId="demo-multiple-chip-label"
-                id="demo-multiple-chip"
-                multiple
-                // size='small'
-                value={personName}
-                onChange={handleChange}
-                input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-                renderValue={(selected) => (
-                  <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                    {selected.map((value) => (
-                      <Chip key={value} label={value} />
-                    ))}
-                  </Box>
-                )}
-                MenuProps={MenuProps}
-              >
-                {filteredBatches.map((batch) => (
-                  <MenuItem
-                    key={batch.batch_name}
-                    value={batch.batch_name}
-                    style={getStyles(batch.batch_name, personName, theme)}
-                  >
-                    {batch.batch_name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          )}
-        </div> */}
-      </div>
-
-      {/* <FormControl sx={{ m: 1, minWidth: 120, width: "100%" }}>
-        <Select
-          value={personName}
-          onChange={handleChange}
-          // displayEmpty
-          inputProps={{ readOnly: true }}
-          input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-          renderValue={(selected) => (
-            <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-              {selected.map((value) => (
-                <Chip
-                  key={value}
-                  label={value}
-                  onClick={handleOpen}
-                  onDelete={handleDelete}
-
-                  className="bg-dark-purple text-white p-3"
-                />
-              ))}
-            </Box>
-          )}
-        >
-          {names.map((name) => (
-            <MenuItem
-              key={name}
-              value={name}
-              style={getStyles(name, personName, theme)}
-            >
-              {name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl> */}
       <div className=" m-4">
         <h1 className="m-2 mb-4">Assigned Batches</h1>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
@@ -208,14 +146,17 @@ export default function MultipleSelectChip({ batchesData }) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <RemoveUser
-            setOpen={setOpen}
-            batchName={selectedBatch}
-            user="Batch 1"
-            isReplace={false}
-            type="Batch"
-            action="Remove"
-          />
+          {batchesData[0] && batchIdNew && (
+            <RemoveUser
+              setOpen={setOpen}
+              batchId={batchIdNew}
+              batchName={selectedBatch}
+              user="Batch 1"
+              isReplace={false}
+              type="Batch"
+              action="Remove"
+            />
+          )}
         </Box>
       </Modal>
     </div>

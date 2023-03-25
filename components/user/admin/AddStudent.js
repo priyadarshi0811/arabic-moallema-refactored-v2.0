@@ -26,11 +26,7 @@ import { fetchStudentBasedonEmail } from "@/backend/UserProfile/StudentTeacherPr
 import { updateStudentDetail } from "@/backend/Students/StudentDB";
 import BatchContext from "@/components/Context/store/batch-context";
 import Spinner from "@/components/Layout/spinner/Spinner";
-
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-
-const names = ["Batch 1", "Batch 2", "Batch 3", "Batch 4", "Batch 5"];
+import { fetchBatcheIdBasedOnBatchName } from "@/backend/Batches/BatchesDB";
 
 export default function AddUser({
   link,
@@ -48,8 +44,11 @@ export default function AddUser({
   const [name, setName] = React.useState("");
   const [contact, setContact] = React.useState("");
   const [email, setEmail] = React.useState("");
+  const [studentId, setStudentId] = React.useState("");
 
   const [batch, setBatch] = React.useState(batchName);
+  const [batchId, setBatchId] = React.useState();
+
   const [edit, setEdit] = React.useState(false);
 
   const [isLoading, setIsLoading] = React.useState(false);
@@ -57,6 +56,20 @@ export default function AddUser({
   //get batches
   const auth = React.useContext(AuthContext);
   const batchCtx = React.useContext(BatchContext);
+
+  //getting the bacthId
+  React.useEffect(() => {
+    const fetchBatchId = async () => {
+      console.log("in");
+      const data = await fetchBatcheIdBasedOnBatchName(batch);
+      if (data[0]) {
+        setBatchId(data[0].batch_id);
+      }
+    };
+    fetchBatchId();
+  }, [batch]);
+
+  console.log(batchId);
 
   React.useEffect(() => {
     const fetchBatches = async () => {
@@ -75,6 +88,7 @@ export default function AddUser({
         setName(profileData[0].name);
         setContact(profileData[0].contact);
         setEmail(profileData[0].email);
+        setStudentId(profileData[0].student_id);
       }
     }, [edit, profileData, batchesData]);
   }
@@ -90,8 +104,9 @@ export default function AddUser({
     setIsLoading(true);
     console.log("adding student");
 
-    if (name && contact && email && batch) {
+    if (name && contact && email && batchId) {
       const password = uuidv4() + "@123AM"; // Generate a unique password for each user
+      console.log("batch id: ", batchId);
 
       const data = await createStudentTeacher(email, password, "student");
 
@@ -105,7 +120,7 @@ export default function AddUser({
           userPath: "student",
           name,
           contact,
-          batch,
+          batchId,
         })
         .then((res) => console.log("res: ", res))
         .catch((err) => console.log("error: ", err));
@@ -116,16 +131,17 @@ export default function AddUser({
       batchCtx.setSubmittedHandler(true);
     } else {
       setIsLoading(false);
-
       console.log("Please fill in all fields");
     }
   };
 
   const editStudentDetail = async (e) => {
     e.preventDefault();
-    console.log("updateStudentSetail");
-    updateStudentDetail(email, name, contact, batch);
-    batchCtx.setSubmittedHandler(true);
+    if (studentId && batchId) {
+      console.log("updateStudentSetail");
+      updateStudentDetail(email, name, contact, batchId, studentId);
+      batchCtx.setSubmittedHandler(true);
+    }
   };
 
   return (
@@ -159,14 +175,16 @@ export default function AddUser({
             id="contact"
             type="number"
           />
-          <InputWithLable
-            value={email}
-            defaultValue={email}
-            setValue={setEmail}
-            lable="Email"
-            id="email"
-            type="email"
-          />
+          {userType !== "EditStudent" && (
+            <InputWithLable
+              value={email}
+              defaultValue={email}
+              setValue={setEmail}
+              lable="Email"
+              id="email"
+              type="email"
+            />
+          )}
         </Box>
 
         <FormControl sx={{ m: 1, width: "250", minWidth: "100%" }}>

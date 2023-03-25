@@ -45,6 +45,7 @@ export default function AddUser({
   const [name, setName] = React.useState("");
   const [contact, setContact] = React.useState("");
   const [email, setEmail] = React.useState("");
+  const [teacherId, setTeacherId] = React.useState("");
 
   const [isLoading, setIsLoading] = React.useState(false);
   const batchCtx = React.useContext(BatchContext);
@@ -66,6 +67,7 @@ export default function AddUser({
         setName(profileData[0].name);
         setContact(profileData[0].contact);
         setEmail(profileData[0].email);
+        setTeacherId(profileData[0].teacher_id);
       }
     }
   }, [profileData, batchesData]);
@@ -108,9 +110,11 @@ export default function AddUser({
   const editTeachersDetail = async (e) => {
     e.preventDefault();
     console.log("update Teacher Detail");
-    updateTeacherDetail(email, name, contact);
-    batchCtx.setSubmittedHandler(true);
 
+    if (teacherId) {
+      updateTeacherDetail(email, name, contact, teacherId);
+      batchCtx.setSubmittedHandler(true);
+    }
     // if (userType === "showTeacher") {
     //   let prevEmail;
 

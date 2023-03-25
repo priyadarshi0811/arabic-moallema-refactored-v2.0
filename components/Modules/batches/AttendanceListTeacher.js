@@ -20,6 +20,9 @@ import { MenuItem, Select } from "@mui/material";
 import { Label } from "@mui/icons-material";
 import { fetchTeachersAttendance } from "@/backend/Students/StudentAttendanceDB";
 import WarningCard from "@/components/Layout/card/WarningCard";
+import { fetchBatcheIdBasedOnBatchName } from "@/backend/Batches/BatchesDB";
+import { fetchChapters } from "@/backend/Chapters/GetChaptersDB";
+import { fetchBatchesData } from "@/backend/Announcement/AnnouncementDB";
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -95,30 +98,16 @@ function createData(name, calories, fat) {
   return { name, calories, fat };
 }
 
-const rows = [
-  // createData({chapter}, {date}, {lastCol}),
-  createData("Huruf", "02/03/2023", "Batch 1"),
-  createData("Huruf", "02/03/2023", "Batch 2"),
-  createData("Huruf", "02/03/2023", "Batch 3"),
-  createData("Huruf", "01/03/2023", "Batch 1"),
-  createData("Huruf", "01/03/2023", "Batch 2"),
-  createData("Huruf", "01/03/2023", "Batch 3"),
-  createData("Huruf", "28/02/2023", "Batch 1"),
-  createData("Huruf", "28/02/2023", "Batch 2"),
-  createData("Huruf", "28/02/2023", "Batch 3"),
-  createData("Huruf", "29/02/2023", "Batch 1"),
-  createData("Huruf", "29/02/2023", "Batch 2"),
-  createData("Huruf", "29/02/2023", "Batch 3"),
-].sort((a, b) => (a.calories < b.calories ? -1 : 1));
-
 export default function CustomPaginationActionsTable({
-  teacherEmail,
-  batchesData,
+  teacherId,
+  batchDataTeacher,
 }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(6);
   const [selectedOption, setSelectedOption] = React.useState();
   const [attendaceList, setAttendanceList] = React.useState();
+  const [allChapters, setAllChapters] = React.useState();
+  const [allBatches, setAllBatches] = React.useState();
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -133,16 +122,37 @@ export default function CustomPaginationActionsTable({
     setPage(0);
   };
 
+  const getSelectedBatch = async (value) => {
+    setSelectedOption(value);
+    let batchId;
+    const idData = await fetchBatcheIdBasedOnBatchName(value);
+    if (idData[0]) {
+      batchId = idData[0].batch_id;
+    }
+
+    const data = await fetchTeachersAttendance(batchId, teacherId);
+    setAttendanceList(data);
+  };
+
   React.useEffect(() => {
-    const fetchAttendance = async () => {
-      const data = await fetchTeachersAttendance(selectedOption, teacherEmail);
-      setAttendanceList(data);
+    const fetchChaptersData = async () => {
+      const data = await fetchChapters();
+      setAllChapters(data);
     };
-    fetchAttendance();
-  }, [selectedOption]);
+    fetchChaptersData();
+  }, []);
+  React.useEffect(() => {
+    const getBatches = async () => {
+      const data = await fetchBatchesData();
+      setAllBatches(data);
+    };
+    getBatches();
+  }, []);
+
+  console.log(allChapters);
 
   console.log(attendaceList);
-
+  console.log(batchDataTeacher);
   return (
     <>
       <div className="bg-white rounded-lg shadow-md">
@@ -150,7 +160,7 @@ export default function CustomPaginationActionsTable({
           <h1 className="text-2xl pt-2">Teacher Attendance History</h1>
         </div>
 
-        {batchesData && (
+        {batchDataTeacher && (
           <Box>
             <div className="col-span-1 mt-3">
               <label className=" mt-3 ml-4 p-4 text-gray-700">
@@ -161,9 +171,9 @@ export default function CustomPaginationActionsTable({
               style={{ width: "90%" }}
               className=" m-6"
               value={selectedOption}
-              onChange={(e) => setSelectedOption(e.target.value)}
+              onChange={(e) => getSelectedBatch(e.target.value)}
             >
-              {batchesData.map((batch) => (
+              {batchDataTeacher.map((batch) => (
                 <MenuItem key={batch.id} value={batch.batch_name}>
                   {batch.batch_name}
                 </MenuItem>
@@ -184,13 +194,24 @@ export default function CustomPaginationActionsTable({
                 ).map((attendance) => (
                   <TableRow key={attendance.session_id}>
                     <TableCell component="th" scope="row">
-                      {attendance.chapter_name}
+                      {allChapters &&
+                        allChapters
+                          .filter(
+                            (batch) =>
+                              batch.chapter_id === attendance.chapter_id
+                          )
+                          .map((item) => item.chapter_name)}
                     </TableCell>
                     <TableCell style={{ width: 160 }} align="right">
                       {attendance.starting_time.substring(0, 10)}
                     </TableCell>
                     <TableCell style={{ width: 160 }} align="right">
-                      {attendance.batch_id}
+                      {allBatches &&
+                        allBatches
+                          .filter(
+                            (batch) => batch.batch_id === attendance.batch_id
+                          )
+                          .map((item) => item.batch_name)}
                     </TableCell>
                   </TableRow>
                 ))}
@@ -230,7 +251,7 @@ export default function CustomPaginationActionsTable({
             </Table>
           </TableContainer>
         )}
-        
+
         {selectedOption && attendaceList && attendaceList.length === 0 && (
           <WarningCard title={`No Session Attendance For ${selectedOption}`} />
         )}

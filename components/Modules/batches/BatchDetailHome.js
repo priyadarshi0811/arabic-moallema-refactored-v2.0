@@ -12,7 +12,10 @@ import Divider from "@mui/material/Divider";
 import Link from "next/link";
 import BackButton from "@/components/Layout/elements/BackButton";
 import { Button } from "@mui/material";
-import { fetchEnrolledStudentsInBatch } from "@/backend/Batches/BatchesDB";
+import {
+  fetchBatcheIdBasedOnBatchName,
+  fetchEnrolledStudentsInBatch,
+} from "@/backend/Batches/BatchesDB";
 import UserList from "@/components/Modules/batches/UserList";
 import { fetchSessionDataForBatch } from "@/backend/Session/SessionDB";
 import { fetchBatchesData } from "@/backend/Announcement/AnnouncementDB";
@@ -20,6 +23,12 @@ import BatchContext from "@/components/Context/store/batch-context";
 import SuccessPrompt from "@/components/Layout/elements/SuccessPrompt";
 import WarningCard from "@/components/Layout/card/WarningCard";
 import BatchEditNew from "./BatchEditNew";
+import {
+  fetchTeacherBasedonId,
+  fetchTeacherEmailBasedonId,
+  fetchTeachersBasedonEmail,
+} from "@/backend/UserProfile/StudentTeacherProfileDB";
+import { fetchStudentsData } from "@/backend/Students/StudentDB";
 
 const style = {
   position: "absolute",
@@ -38,15 +47,45 @@ const BatchDetailHome = ({ batchName }) => {
   const [enrollStudents, setEnrollStudents] = React.useState([]);
   const [batchHistory, setBatchHistory] = React.useState([]);
   const [batchDetail, setBatchDetail] = React.useState([]);
-
+  const [batchId, setBatchId] = React.useState();
+  const [teacherId, setTeacherId] = React.useState();
+  const [teacherEmail, setTeacherEmail] = React.useState();
+  const [allStudentsInBatchData, setAllStudentsInBatchData] = React.useState(
+    []
+  );
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const batchCtx = useContext(BatchContext);
 
-  function tableData(name, date, user, status) {
-    return { name, date, user, status };
-  }
+  //getting the bacthId
+  React.useEffect(() => {
+    const fetchTeacherId = async () => {
+      const data = await fetchBatcheIdBasedOnBatchName(batchName);
+      if (data[0]) {
+        setBatchId(data[0].batch_id);
+        setTeacherId(data[0].teacher_id);
+        console.log(data[0].teacher_id);
+      }
+    };
+    fetchTeacherId();
+  }, [batchName]);
 
+  console.log(batchId);
+  console.log(teacherEmail);
+  console.log(teacherId);
+
+  //getting the teacher email
+  React.useEffect(() => {
+    const fetchTeacherEmail = async () => {
+      const data = await fetchTeacherEmailBasedonId(teacherId);
+      if (data) {
+        setTeacherEmail(data[0].email);
+      }
+    };
+    fetchTeacherEmail();
+  }, [teacherId, open]);
+
+  //getting the bacth details
   React.useEffect(() => {
     const fetchBatches = async () => {
       const data = await fetchBatchesData();
@@ -56,26 +95,56 @@ const BatchDetailHome = ({ batchName }) => {
   }, [open]);
 
   //filtering the bathches data
-  const detail = batchDetail.filter((batch) => batch.batch_name === batchName);
+  const detail = batchDetail.filter((batch) => batch.batch_id === +batchId);
+  if (detail) {
+    console.log(detail);
+  }
 
   //getting the student for the selected batch
   React.useEffect(() => {
     const studentBatch = async () => {
-      const data = await fetchEnrolledStudentsInBatch(batchName);
-      setEnrollStudents(data);
+      if (batchId) {
+        const data = await fetchEnrolledStudentsInBatch(batchId);
+        setEnrollStudents(data);
+      }
     };
     studentBatch();
-  }, []);
+  }, [batchId]);
+
+  console.log(enrollStudents);
 
   //getting the batch history for the selected batch
   React.useEffect(() => {
     const studentBatch = async () => {
-      const data = await fetchSessionDataForBatch(batchName);
-      setBatchHistory(data);
+      if (batchId) {
+        const data = await fetchSessionDataForBatch(batchId);
+        setBatchHistory(data);
+      }
     };
     studentBatch();
-  }, []);
+  }, [batchId]);
 
+  //get all students email for the current batch based on their id's
+  React.useEffect(() => {
+    const getAllStudents = async () => {
+      const data = await fetchStudentsData();
+
+      if (enrollStudents) {
+        let getStudentsDetail = data
+          .filter((item1) =>
+            enrollStudents.some(
+              (item2) => item1.student_id === item2.student_id
+            )
+          )
+          .map((item) => item.email);
+
+        setAllStudentsInBatchData(getStudentsDetail);
+      }
+    };
+    getAllStudents();
+  }, [batchId, enrollStudents]);
+
+  console.log(allStudentsInBatchData);
   console.log(batchHistory);
 
   return (
@@ -124,18 +193,28 @@ const BatchDetailHome = ({ batchName }) => {
             />
           )}
           <div className="m-0 p-10 w-full bg-white h-fit border-4 border-white rounded-xl">
-            <BatchEditNew batchName={batchName} actionBtn="Edit Batch" link="" />
+            {batchId && (
+              <BatchEditNew
+                batchId={batchId}
+                batchName={batchName}
+                actionBtn="Edit Batch"
+                link=""
+              />
+            )}
           </div>
           <div className="bg-white p-0 my-5 h-fit">
-            {batchHistory.length > 0 ? (
+            {batchHistory && batchHistory.length > 0 ? (
               <BatchHistory batchHistory={batchHistory} />
             ) : (
               <WarningCard title="No Session Data" />
             )}
           </div>
           <div className=" mt-10">
-            {enrollStudents.length > 0 ? (
-              <UserList batchName={batchName} enrollStudents={enrollStudents} />
+            {allStudentsInBatchData && allStudentsInBatchData.length > 0 ? (
+              <UserList
+                batchName={batchName}
+                enrollStudents={allStudentsInBatchData}
+              />
             ) : (
               <WarningCard
                 title={`No Student Enrolled in ${batchName} batch`}
@@ -151,7 +230,8 @@ const BatchDetailHome = ({ batchName }) => {
             >
               <Box sx={style}>
                 <RemoveUser
-                  userName={detail[0].teacher_email}
+                  userName={teacherEmail}
+                  batchId={batchId}
                   operation="changeTeacher"
                   user="Teacher 1"
                   isReplace={true}
