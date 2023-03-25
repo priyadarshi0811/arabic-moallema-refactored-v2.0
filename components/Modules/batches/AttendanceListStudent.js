@@ -17,6 +17,8 @@ import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
 import { fetchStudentAttendance } from "@/backend/Students/StudentAttendanceDB";
 import WarningCard from "@/components/Layout/card/WarningCard";
+import { fetchStudentsData } from "@/backend/Students/StudentDB";
+import { fetchChapters } from "@/backend/Chapters/GetChaptersDB";
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -92,64 +94,48 @@ function createData(name, calories, fat) {
   return { name, calories, fat };
 }
 
-const rows = [
-  // createData({chapter}, {date}, {lastCol}),
-  createData(
-    "Huruf",
-    "02/03/2023",
-    <span className="text-green-500">Attendet</span>
-  ),
-  createData(
-    "Huruf",
-    "01/03/2023",
-    <span className="text-green-500">Attendet</span>
-  ),
-  createData(
-    "Huruf",
-    "28/02/2023",
-    <span className="text-green-500">Attendet</span>
-  ),
-  createData(
-    "Huruf",
-    "27/02/2023",
-    <span className="text-red-500">Absent</span>
-  ),
-  createData(
-    "Huruf",
-    "26/02/2023",
-    <span className="text-green-500">Attendet</span>
-  ),
-  createData(
-    "Huruf",
-    "25/02/2023",
-    <span className="text-green-500">Attendet</span>
-  ),
-].sort((a, b) => (a.calories < b.calories ? -1 : 1));
-
-export default function CustomPaginationActionsTable({
-  batchName,
-  studentEmail,
-}) {
+export default function CustomPaginationActionsTable({ batchId, studentsId }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(6);
 
   //attendance data supabase
 
   const [attendaceList, setAttendanceList] = React.useState();
+  const [allStudents, setAllStudents] = React.useState();
+  const [allChapters, setAllChapters] = React.useState();
+
+  const [id, setId] = React.useState();
 
   React.useEffect(() => {
     const fetchAttendance = async () => {
-      if (batchName) {
-        const data = await fetchStudentAttendance(batchName);
+      if (batchId) {
+        const data = await fetchStudentAttendance(batchId);
         setAttendanceList(data);
       }
     };
     fetchAttendance();
-  }, [batchName]);
+  }, [batchId]);
+
+  React.useEffect(() => {
+    const fetchChaptersData = async () => {
+      if (batchId) {
+        const data = await fetchChapters();
+        setAllChapters(data);
+      }
+    };
+    fetchChaptersData();
+  }, []);
+  console.log(allChapters);
+  React.useEffect(() => {
+    const fetchAttendanceStudent = async () => {
+      const data = await fetchStudentsData();
+      setAllStudents(data);
+    };
+    fetchAttendanceStudent();
+  }, []);
 
   console.log(attendaceList);
-
-  console.log("inside attendance: ", batchName);
+  console.log(allStudents);
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -163,7 +149,19 @@ export default function CustomPaginationActionsTable({
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+  React.useEffect(() => {
+    if (allStudents && studentsId) {
+      console.log(studentsId);
+      let idNew = allStudents
+        .filter((all) => all.student_id == +studentsId)
+        .map((item) => item.email);
+      if (idNew[0]) {
+        setId(idNew[0]);
+      }
+    }
+  }, [allStudents, studentsId]);
 
+  console.log(id);
   return (
     <>
       <div className="bg-white rounded-lg shadow-md">
@@ -183,17 +181,22 @@ export default function CustomPaginationActionsTable({
                     )
                   : rows
                 ).map((attendance) => (
-                  <TableRow key={attendance.chapter_name}>
+                  <TableRow key={attendance.chapter_id}>
                     <TableCell component="th" scope="row">
-                      {attendance.chapter_name}
+                      {allChapters &&
+                        allChapters
+                          .filter(
+                            (batch) =>
+                              batch.chapter_id === attendance.chapter_id
+                          )
+                          .map((item) => item.chapter_name)}
                     </TableCell>
                     <TableCell style={{ width: 160 }} align="right">
                       {attendance.starting_time.substring(0, 10)}
                     </TableCell>
 
-                    {attendance.students_present.students.includes(
-                      studentEmail
-                    ) ? (
+                    {allStudents &&
+                    attendance.students_present.students.includes(id) ? (
                       <td className="whitespace-nowrap px-3 py-4  text-green-600 text-md">
                         Present
                       </td>

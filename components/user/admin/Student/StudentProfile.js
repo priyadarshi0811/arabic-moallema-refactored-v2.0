@@ -12,8 +12,16 @@ import Divider from "@mui/material/Divider";
 import Link from "next/link";
 import BackButton from "@/components/Layout/elements/BackButton";
 import { Button } from "@mui/material";
-import { fetchStudentBasedonEmail } from "@/backend/UserProfile/StudentTeacherProfileDB";
-import { fetchstudentBatches } from "@/backend/Batches/BatchesForTeachersStudentsDB";
+import {
+  fetchStudentBasedonEmail,
+  fetchStudentDetailBasedonId,
+  fetchStudentIdBasedonEmail,
+} from "@/backend/UserProfile/StudentTeacherProfileDB";
+import {
+  fetchstudentBatcheIdBasedOnId,
+  fetchstudentBatcheIdBasedOnStudentId,
+  fetchstudentBatches,
+} from "@/backend/Batches/BatchesForTeachersStudentsDB";
 import BatchContext from "@/components/Context/store/batch-context";
 import SuccessPrompt from "@/components/Layout/elements/SuccessPrompt";
 import { deleteStudent } from "@/backend/DeleteUser/DeleteStudentDB";
@@ -36,6 +44,8 @@ const StudentProfile = ({ email }) => {
   const [open, setOpen] = React.useState(false);
   const [profileData, setProfileData] = React.useState();
   const [batchesData, setBatchData] = React.useState();
+  const [studentId, setStudnetId] = React.useState();
+  const [batchId, setBatchId] = React.useState();
 
   let router = useRouter();
 
@@ -44,30 +54,55 @@ const StudentProfile = ({ email }) => {
 
   const batchCtx = React.useContext(BatchContext);
 
+  //get student id
   React.useEffect(() => {
-    const studentprofile = async () => {
-      const data = await fetchStudentBasedonEmail(email);
-      setProfileData(data);
+    const studentId = async () => {
+      const data = await fetchStudentIdBasedonEmail(email);
+      if (data[0]) {
+        setStudnetId(data[0].student_id);
+      }
     };
-    studentprofile();
-  }, [batchCtx.submitted]);
+    studentId();
+  }, [batchCtx.submitted, email]);
 
-  //getting the batch data for the student
+  console.log(studentId);
+
+  //get student profile data
+
+  React.useEffect(() => {
+    const studentProfileDetail = async () => {
+      if (studentId) {
+        const data = await fetchStudentDetailBasedonId(studentId);
+        setProfileData(data);
+      }
+    };
+    studentProfileDetail();
+  }, [batchCtx.submitted, studentId]);
+  console.log(profileData);
+
+  //getting the batch id for the student
   React.useEffect(() => {
     const fetchStudentBatchDetail = async () => {
-      const data = await fetchstudentBatches(email);
-      setBatchData(data);
+      if (studentId) {
+        const data = await fetchstudentBatcheIdBasedOnStudentId(studentId);
+        if (data[0]) {
+          setBatchId(data[0].batch_id);
+        }
+      }
     };
     fetchStudentBatchDetail();
-  }, [email, batchCtx.submitted]);
+  }, [studentId, batchCtx.submitted]);
+
+  console.log(batchId);
 
   const deleteStudentRecords = () => {
-    deleteStudent(email);
-    deleteFromAuth(email);
-    batchCtx.setSubmittedDeleteHandler(true);
-    router.push("/admin/students");
+    if (studentId) {
+      deleteStudent(studentId);
+      deleteFromAuth(email);
+      batchCtx.setSubmittedDeleteHandler(true);
+      router.push("/admin/students");
+    }
   };
-  console.log(batchesData);
 
   return (
     <div
@@ -115,10 +150,10 @@ const StudentProfile = ({ email }) => {
             />
           )}
           <div className="m-0 p-10 w-full h-fit">
-            {batchesData && (
+            {batchId && studentId && (
               <UserDetails
-                studentEmail={email}
-                batchesData={batchesData}
+                studentId={studentId}
+                batchId={batchId}
                 profileData={profileData}
                 userType="EditStudent"
                 user="student"

@@ -15,6 +15,7 @@ import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
 import { Button, Chip, TableHead } from "@mui/material";
+import { fetchChapters } from "@/backend/Chapters/GetChaptersDB";
 
 // commenting to resolve merge
 
@@ -106,6 +107,7 @@ export default function CustomPaginationActionsTable({
 }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(6);
+  const [allChapters, setAllChapters] = React.useState();
 
   // function tableData(name, date, calories, fat) {
   //   return { name, date, calories, fat };
@@ -125,7 +127,13 @@ export default function CustomPaginationActionsTable({
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
+  React.useEffect(() => {
+    const fetchChaptersData = async () => {
+      const data = await fetchChapters();
+      setAllChapters(data);
+    };
+    fetchChaptersData();
+  }, []);
   return (
     <div className="bg-white rounded-lg shadow-md">
       <div className=" border-b-2 p-3 ">
@@ -150,7 +158,7 @@ export default function CustomPaginationActionsTable({
             </TableRow>
           </TableHead>
           <TableBody>
-            {(rowsPerPage > 0
+            {(batchHistory && rowsPerPage > 0
               ? batchHistory.slice(
                   page * rowsPerPage,
                   page * rowsPerPage + rowsPerPage
@@ -159,7 +167,12 @@ export default function CustomPaginationActionsTable({
             ).map((chapter) => (
               <TableRow key={chapter.session_id}>
                 <TableCell component="th" scope="row">
-                  {chapter.chapter_name}
+                  {allChapters &&
+                    allChapters
+                      .filter(
+                        (batch) => batch.chapter_id === chapter.chapter_id
+                      )
+                      .map((item) => item.chapter_name)}
                 </TableCell>
                 <TableCell component="th" scope="row">
                   {chapter.starting_time.substring(0, 10)} ,

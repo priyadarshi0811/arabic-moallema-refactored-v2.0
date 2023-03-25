@@ -3,10 +3,16 @@ import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
 import { Button, MenuItem, Select } from "@mui/material";
 import { updateTeacher } from "@/backend/Batches/UpdateBatchTeacher";
-import { fetchTeachersData } from "@/backend/Teachers/TeacherDB";
+import {
+  fetchTeachersData,
+  fetchTeachersIdBasedOnEmail,
+} from "@/backend/Teachers/TeacherDB";
 import { Box } from "@mui/system";
 import BatchContext from "@/components/Context/store/batch-context";
-import { fetchBatchesForTeacher } from "@/backend/Batches/BatchesDB";
+import {
+  fetchBatchesForTeacher,
+  fetchBatchesForTeacherBasedOnId,
+} from "@/backend/Batches/BatchesDB";
 
 const EditTeacher = ({
   user,
@@ -17,13 +23,16 @@ const EditTeacher = ({
   batchName,
   setOpen,
   userName,
+  teacherIdToBeRemoved,
   deleteStudentRecords,
   deleteTeacherRecords,
   operation,
+  batchId,
 }) => {
   const [teachersList, setTeachersList] = React.useState();
   const [selectedTeacher, setSelectedTeacher] = React.useState("");
   const [teacherData, setTeacherData] = React.useState();
+  const [teacherId, setTeacherId] = React.useState();
 
   const batchCtx = React.useContext(BatchContext);
 
@@ -37,28 +46,47 @@ const EditTeacher = ({
       setTeachersList(data);
     };
     fetchTeachersDetail();
-  }, []);
+  }, [open]);
 
   React.useEffect(() => {
     if (userName) {
       const fetchTeachersDetail = async () => {
-        const data = await fetchBatchesForTeacher(userName);
+        const data = await fetchBatchesForTeacherBasedOnId(
+          teacherIdToBeRemoved
+        );
         setTeacherData(data);
       };
       fetchTeachersDetail();
     }
-  }, []);
+  }, [batchCtx.submitted]);
+
+  React.useEffect(() => {
+    const fetchTeacherId = async () => {
+      const data = await fetchTeachersIdBasedOnEmail(selectedTeacher);
+      console.log(data);
+      if (data[0]) {
+        setTeacherId(data[0].teacher_id);
+      }
+    };
+
+    fetchTeacherId();
+  }, [selectedTeacher]);
 
   console.log(teacherData);
+  console.log(teacherId);
 
   console.log("selected Teacher: ", selectedTeacher);
 
   const submitHandlerBatchDetail = () => {
-    console.log("submitted");
-    console.log(batchName);
-    updateTeacher(batchName, selectedTeacher);
-    setOpen(false);
-    batchCtx.setSubmittedHandler(true);
+    console.log("in");
+    console.log(batchId);
+    if (batchId) {
+      console.log("submitted");
+      console.log(batchId);
+      updateTeacher(batchId, teacherId);
+      setOpen(false);
+      batchCtx.setSubmittedHandler(true);
+    }
   };
 
   const handleDeletion = () => {
@@ -70,7 +98,7 @@ const EditTeacher = ({
       deleteStudentRecords();
     }
     if (type === "Teacher" && operation !== "changeTeacher") {
-      deleteTeacherRecords(selectedTeacher);
+      deleteTeacherRecords(teacherId);
     }
     if (action === "Change" && type === "Teacher") {
       submitHandlerBatchDetail();

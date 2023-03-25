@@ -8,8 +8,21 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
+import { fetchTeachersData } from "@/backend/Teachers/TeacherDB";
+import teachers from "@/pages/admin/teachers";
 
 export default function AccessibleTable({ detail, sheduleData }) {
+  const [techersData, setTeachers] = React.useState();
+
+  React.useEffect(() => {
+    const getTeachers = async () => {
+      const data = await fetchTeachersData();
+      setTeachers(data);
+    };
+    getTeachers();
+  }, []);
+  console.log(techersData);
+
   return (
     <div className="bg-white rounded-lg shadow-md">
       <div className="w-full border-b-2 p-3 border-dark-black">
@@ -64,9 +77,11 @@ export default function AccessibleTable({ detail, sheduleData }) {
               >
                 Teacher
               </TableCell>
-              {detail[0] && (
+              {detail[0] && techersData && (
                 <TableCell style={{ padding: "20px 10px" }}>
-                  {detail[0].teacher_email}
+                  {techersData
+                    .filter((item) => item.teacher_id === detail[0].teacher_id)
+                    .map((itemNew) => itemNew.email)}
                 </TableCell>
               )}
             </TableRow>

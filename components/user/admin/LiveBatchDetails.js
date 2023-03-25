@@ -4,12 +4,7 @@ import UserList from "@/components/Modules/batches/UserList";
 import CardLayout from "@/components/Layout/card/CardLayout";
 import WarningCard from "@/components/Layout/card/WarningCard";
 
-const LiveBatchDetails = ({
-  detail,
-  sheduleData,
-  enrollStudents,
-  batchName,
-}) => {
+const LiveBatchDetails = ({ detail, sheduleData, enrollStudents, batchId }) => {
   return (
     <div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
@@ -18,11 +13,10 @@ const LiveBatchDetails = ({
         </div>
         <div className="col-span-1">
           {enrollStudents.length > 0 ? (
-            <UserList batchName={batchName} enrollStudents={enrollStudents} />
+            <UserList batchName={batchId} enrollStudents={enrollStudents} />
           ) : (
-            <WarningCard title={`No Student Enrolled in ${batchName} batch`} />
+            <WarningCard title={`No Student Enrolled in ${batchId} batch`} />
           )}
-          
         </div>
       </div>
 

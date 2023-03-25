@@ -251,9 +251,9 @@ const AlphabatesDescription = [
   },
 ];
 
-const ActivityDetail = ({ id, type, symbol, user }) => {
+const ActivityDetail = ({ id, type, symbol, user, module }) => {
   console.log("user: ", user);
-
+  console.log(module);
   console.log(id);
   console.log(symbol);
   const filteredData = AlphabatesDescription.filter((item) => item.name === id);
@@ -264,6 +264,7 @@ const ActivityDetail = ({ id, type, symbol, user }) => {
       {type == "LetterDetails" ? (
         <LetterDetailsCopy
           user={user}
+          module={module}
           name={filteredData[0].name}
           symbol={filteredData[0].symbol}
           initial={filteredData[0].description.initial}
@@ -282,6 +283,7 @@ const ActivityDetail = ({ id, type, symbol, user }) => {
         <LetterDetails
           user={user}
           id={id}
+          module={module}
           name={filteredData[0].name}
           symbol={filteredData[0].symbol}
           newSymbol={symbol}

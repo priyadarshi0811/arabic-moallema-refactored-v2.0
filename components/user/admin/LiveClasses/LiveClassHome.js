@@ -8,6 +8,7 @@ import CardList from "@/components/user/admin/CardList";
 import { fetchLiveClassData } from "@/backend/LiveClass/LiveClassDB";
 import { fetchBatchesData } from "@/backend/Announcement/AnnouncementDB";
 import AuthContext from "@/components/Context/store/auth-context";
+import { fetchBatcheIdBasedOnBatchName } from "@/backend/Batches/BatchesDB";
 
 const LiveClassHome = () => {
   const [liveClass, setLiveClass] = React.useState([]);
@@ -32,12 +33,23 @@ const LiveClassHome = () => {
     fetchBatches();
   }, []);
 
+  console.log(authCtx.batchesList);
+
   //get the filtered value
-  const handleSelectedItem = (batchData) => {
+  const handleSelectedItem = async (batchData) => {
     console.log("batchData", batchData);
-    let selectedBatch = liveClass.filter(
-      (batch) => batch.batch_id === batchData
-    );
+
+    let batchId;
+    console.log("batchData", batchData);
+
+    const idData = await fetchBatcheIdBasedOnBatchName(batchData);
+    if (idData[0]) {
+      batchId = idData[0].batch_id;
+    }
+
+    console.log(batchId);
+
+    let selectedBatch = liveClass.filter((batch) => batch.batch_id === batchId);
     if (batchData) {
       selectedBatch.length === 0 ? setError(true) : setError(false);
     }
@@ -45,7 +57,7 @@ const LiveClassHome = () => {
   };
 
   const dataToDisplay = filteredBatch.length === 0 ? liveClass : filteredBatch;
-
+  console.log(dataToDisplay);
   console.log("okl");
 
   return (
@@ -94,19 +106,18 @@ const LiveClassHome = () => {
                 dataToDisplay &&
                 dataToDisplay.map((classData) => (
                   <div>
-                  <CardList
-                    title={classData.batch_id}
-                    subTitle={classData.chapter_name}
-                    link={`/admin/live-batches/livebatchdetail/${classData.batch_id}`}
-                  />
+                    <CardList
+                      title={authCtx.batchesList
+                        .filter(
+                          (batch) => batch.batch_id === classData.batch_id
+                        )
+                        .map((item) => item.batch_name)}
+                      subTitle={classData.chapter_name}
+                      link={`/admin/live-batches/livebatchdetail/${classData.batch_id}`}
+                    />
                   </div>
                 ))}
             </div>
-            {/* title="Chapter 2"
-    disc="from Batch 2"
-    isBtn="true"
-    btnText="open"
-    link="/admin/live-batches/live-batch-details" */}
           </div>
         </div>
       </div>

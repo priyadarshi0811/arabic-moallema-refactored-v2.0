@@ -11,7 +11,7 @@ const index = () => {
   const router = useRouter();
   let id;
   if (router.query.alphabateDetail) {
-    id = router.query.alphabateDetail[0];
+    id = router.query.alphabateDetail[1];
   }
 
   const authCtx = useContext(AuthContext);
@@ -55,17 +55,12 @@ const index = () => {
         }}
       >
         {/* <AlphabetSlider id={id} type='tracing' /> */}
-        <ActivityDetail user="student" id={id} type="LetterTracing" />
-
-        {/* <div className="p-5 grid grid-cols-12 gap-5">
-          <div className="col-span-1">
-
-          </div>
-          <div className="col-span-11">
-          {id && <ActivityDetail id={id} />}
-          </div>
-        
-        </div> */}
+        <ActivityDetail
+          user="student"
+          id={id}
+          type="LetterTracing"
+          module="alphabets"
+        />
       </div>
     </>
   );

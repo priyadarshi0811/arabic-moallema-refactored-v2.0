@@ -1,18 +1,25 @@
 import { createTransport } from "nodemailer";
 import supabase from "@/supabaseClient";
-import { addStudentTeacherToDB } from "@/backend/CreateUser/CreateStudentTeacherDB";
+import {
+  addStudentTeacherToDB,
+  getStudentId,
+} from "@/backend/CreateUser/CreateStudentTeacherDB";
 import { addStudentToBatch } from "@/backend/Batches/AddStudentToBatchDB";
 
 export default async function sendEmail(req, res) {
   if (req.method !== "POST") {
     return res.status(405).end();
   }
-  const { email, password, userPath, name, contact, batch } = req.body;
+  const { email, password, userPath, name, contact, batchId } = req.body;
   console.log(email);
   console.log(password);
   console.log(userPath);
+  console.log("batchId: ", batchId);
 
-  let finalUser = userPath === "student" ? "students" : "teachers";
+  let finalUser =
+    userPath === "student"
+      ? "students_exp_duplicate"
+      : "teachers_exp_duplicate";
   let typeUser = userPath === "student" ? "student" : "instructor";
 
   try {
@@ -26,13 +33,22 @@ export default async function sendEmail(req, res) {
     });
 
     //inserting data to student/teacher table
-
-    addStudentTeacherToDB(finalUser, email, name, contact, typeUser);
+    setTimeout(() => {
+      addStudentTeacherToDB(finalUser, email, name, contact, typeUser);
+    }, 2000);
 
     if (userPath === "student") {
+      let studentId;
       setTimeout(() => {
-        addStudentToBatch(email, batch);
-      }, 2000);
+        const getTid = async () => {
+          const data = await getStudentId(email);
+
+          if (data[0]) {
+            addStudentToBatch(data[0].student_id, batchId);
+          }
+        };
+        getTid();
+      }, 3000);
     }
 
     const mailOptions = {

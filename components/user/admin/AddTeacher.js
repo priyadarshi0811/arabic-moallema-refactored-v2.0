@@ -45,6 +45,7 @@ export default function AddUser({
   const [name, setName] = React.useState("");
   const [contact, setContact] = React.useState("");
   const [email, setEmail] = React.useState("");
+  const [teacherId, setTeacherId] = React.useState("");
 
   const [isLoading, setIsLoading] = React.useState(false);
   const batchCtx = React.useContext(BatchContext);
@@ -66,6 +67,7 @@ export default function AddUser({
         setName(profileData[0].name);
         setContact(profileData[0].contact);
         setEmail(profileData[0].email);
+        setTeacherId(profileData[0].teacher_id);
       }
     }
   }, [profileData, batchesData]);
@@ -108,8 +110,25 @@ export default function AddUser({
   const editTeachersDetail = async (e) => {
     e.preventDefault();
     console.log("update Teacher Detail");
-    updateTeacherDetail(email, name, contact);
-    batchCtx.setSubmittedHandler(true);
+
+    if (teacherId) {
+      updateTeacherDetail(email, name, contact, teacherId);
+      batchCtx.setSubmittedHandler(true);
+    }
+    // if (userType === "showTeacher") {
+    //   let prevEmail;
+
+    //   setEmail((prev) => {
+    //     prevEmail = prev;
+    //   });
+    //   if (email != prevEmail) {
+    //     console.log(email);
+
+    //     console.log("email changed");
+    //   } else {
+    //     console.log("not changed");
+    //   }
+    // }
   };
 
   return (
@@ -142,14 +161,16 @@ export default function AddUser({
           id="contact"
           type="number"
         />
-        <InputWithLable
-          value={email}
-          defaultValue={email}
-          setValue={setEmail}
-          lable="Email"
-          id="email"
-          type="email"
-        />
+        {userType !== "showTeacher" && (
+          <InputWithLable
+            value={email}
+            defaultValue={email}
+            setValue={setEmail}
+            lable="Email"
+            id="email"
+            type="email"
+          />
+        )}
       </Box>
 
       {!isEdit && userType !== "addTeacher" && (

@@ -1,7 +1,8 @@
+import { fetchBatchNameBasedOnBatchId } from "@/backend/Batches/BatchesForTeachersStudentsDB";
 import AuthContext from "@/components/Context/store/auth-context";
 import LiveBatchDetail from "@/components/user/admin/LiveClasses/LiveBatchDetail";
 import { useRouter } from "next/router";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 const liveClasses = () => {
   const router = useRouter();
@@ -39,7 +40,9 @@ const liveClasses = () => {
 
   /**************Restricting Admin Route************************* */
 
-  return <>{id && <LiveBatchDetail batchName={id} />}</>;
+  console.log(+id);
+
+  return <>{id && <LiveBatchDetail batchId={id} />}</>;
 };
 
 export default liveClasses;

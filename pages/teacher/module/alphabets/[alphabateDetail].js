@@ -7,14 +7,12 @@ import AlphabetSlider from "@/components/Modules/models/AlphabetSlider";
 import logo from "@/components/src/img/AMLogo.png";
 import AuthContext from "@/components/Context/store/auth-context";
 
-
-
 const index = () => {
   const router = useRouter();
   const id = router.query.alphabateDetail;
 
   const authCtx = useContext(AuthContext);
-  
+
   /**************Restricting Teachers Route************************* */
   const loggedIn = authCtx.isLoggedIn;
   const typeTeacher = authCtx.userType === "instructor" ? true : false;
@@ -53,20 +51,13 @@ const index = () => {
           minHeight: "100vh",
         }}
       >
-        
-        <AlphabetSlider user="teacher" id={id} type= "alphabets" />
-
-        {/* <div className="p-5 grid grid-cols-12 gap-5">
-          <div className="col-span-1">
-
-          </div>
-          <div className="col-span-11">
-          {id && <ActivityDetail id={id} />}
-          </div>
-        
-        </div> */}
+        <AlphabetSlider
+          user="teacher"
+          id={id}
+          type="alphabets"
+          module="alphabets"
+        />
       </div>
-     
     </>
   );
 };

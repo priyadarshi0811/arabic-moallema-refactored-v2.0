@@ -1,10 +1,10 @@
 import supabase from "@/supabaseClient";
 
-export const fetchAssignmentForLetter = async (letter) => {
+export const fetchAssignmentForLetter = async (letter, module) => {
   const { data, error } = await supabase
-    .from("activity")
+    .from("activity_exp_duplicate")
     .select("assignment_json")
-    .eq("sub_module", letter);
+    .match({ sub_module: letter, module: module });
 
   if (error) {
     console.log("Error fetching batches data: ", error);
@@ -15,7 +15,7 @@ export const fetchAssignmentForLetter = async (letter) => {
 
 export const fetchSubmittedAssignment = async (batch) => {
   const { data, error } = await supabase
-    .from("assignments")
+    .from("assignments_exp_duplicate")
     .select("*")
     .eq("batch_id", batch);
 
@@ -27,13 +27,13 @@ export const fetchSubmittedAssignment = async (batch) => {
 };
 
 export const fetchSubmittedAssignmentBasedOnStudent = async (
-  student,
-  batch
+  studentId,
+  batchId
 ) => {
   const { data, error } = await supabase
-    .from("assignments")
+    .from("assignments_exp_duplicate")
     .select("*")
-    .match({ student_id: student, batch_id: batch });
+    .match({ student_id: studentId, batch_id: batchId });
 
   if (error) {
     console.log("Error fetching batches data: ", error);
@@ -48,19 +48,21 @@ export const fetchSubmittedAssignmentBasedOnStudentBatchSubModule = async (
   sub_module
 ) => {
   const { data, error } = await supabase
-    .from("assignments")
+    .from("assignments_exp_duplicate")
     .select("*")
     .match({ student_id: student, batch_id: batch, sub_module: sub_module });
 
   if (error) {
-    console.log("Error fetching batches data: ", error);
+    console.log("Error fetching assignment data: ", error);
     return null;
   }
   return data;
 };
 
 export const fetchAllAssignments = async (letter) => {
-  const { data, error } = await supabase.from("activity").select("*");
+  const { data, error } = await supabase
+    .from("activity_exp_duplicate")
+    .select("*");
 
   if (error) {
     console.log("Error fetching batches data: ", error);
@@ -88,7 +90,7 @@ export const fetchAssignmentSubmissionStatus = async (
   sub_module
 ) => {
   const { data, error } = await supabase
-    .from("assignments")
+    .from("assignments_exp_duplicate")
     .select("is_assesed")
     .match({ student_id: student, batch_id: batch, sub_module: sub_module });
 
@@ -100,7 +102,9 @@ export const fetchAssignmentSubmissionStatus = async (
 };
 
 export const fetchSubModulesCreatedActivity = async () => {
-  const { data, error } = await supabase.from("activity").select("sub_module");
+  const { data, error } = await supabase
+    .from("activity_exp_duplicate")
+    .select("sub_module");
 
   if (error) {
     console.log("Error fetching batches data: ", error);

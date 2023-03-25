@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ColorOptions from "@/components/Modules/Canvas/ColorOptions";
 import colorBgImg from "@/components/src/img/MouthImg.png";
 import AudioButton from "@/components/Layout/elements/AudioBtn";
@@ -6,11 +6,13 @@ import Link from "next/link";
 import { Button } from "@mui/material";
 import logo from "@/components/src/img/AMLogo.png";
 import { addActivityStartStatus } from "@/backend/ActivityStartLog/SetActivityLogDB";
+import { fetchBatcheIdBasedOnBatchName } from "@/backend/Batches/BatchesDB";
 
 const LetterDetails = (props) => {
   console.log("user: ", props.user);
   const [showCanvas, setShowCanvas] = useState(false);
   const [getColor, setColor] = useState("red");
+  const [batchId, setBatchId] = useState();
 
   const changeColorPri = (colorData) => {
     //console.log(getColor);
@@ -18,13 +20,26 @@ const LetterDetails = (props) => {
   };
   console.log(getColor);
 
+  useEffect(() => {
+    const getId = async () => {
+      const batch = localStorage.getItem("batchName");
+
+      const data = await fetchBatcheIdBasedOnBatchName(batch);
+      if (data[0]) {
+        setBatchId(data[0].batch_id);
+      }
+    };
+    getId();
+  }, []);
+
+  console.log(batchId);
+  console.log(props.module);
+
   const setActivitySubmodule = () => {
     if (props.user !== "student") {
-      const batch = localStorage.getItem("batchName");
       const subModule = props.name;
-      if (subModule) {
-        let data = addActivityStartStatus("Alphabets", subModule, batch);
-
+      if (subModule && batchId && props.module) {
+        let data = addActivityStartStatus(props.module, subModule, batchId);
         if (!data) {
           console.log("already added");
         }
@@ -66,7 +81,9 @@ const LetterDetails = (props) => {
                   </Button>
                 </Link>
                 <Link
-                  href={`/${props.user}/activity/tracing/${props.name}/${0}`}
+                  href={`/${props.user}/activity/tracing/alphabets/${
+                    props.name
+                  }/${0}`}
                   className="mx-3"
                 >
                   <Button
@@ -87,7 +104,10 @@ const LetterDetails = (props) => {
               </h2>
               <div className=" p-4 w-full border-2   mt-2 flex  items-center ">
                 <img
-                  src={props.gif || 'https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExZjA2ZWUyMGYxNWMwODZlZTJiYWE3YTk5MTUxMWQwMzRmM2U4NGU2MyZjdD1z/Qhg5vbmLB0iszYoktc/giphy.gif'}
+                  src={
+                    props.gif ||
+                    "https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExZjA2ZWUyMGYxNWMwODZlZTJiYWE3YTk5MTUxMWQwMzRmM2U4NGU2MyZjdD1z/Qhg5vbmLB0iszYoktc/giphy.gif"
+                  }
                   alt="Example GIF"
                   className="h-80 object-cover mx-auto"
                 />

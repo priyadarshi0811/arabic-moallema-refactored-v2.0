@@ -7,28 +7,65 @@ import { Button, Divider } from "@mui/material";
 import Sidebar from "@/components/Layout/navigation/Sidebar";
 import BatchDetaisCards from "@/components/user/teacher/BatchDetaisCards";
 import AuthContext from "@/components/Context/store/auth-context";
-import { fetchBatchNameForStudent } from "@/backend/Batches/BatchesForTeachersStudentsDB";
+import {
+  fetchBatchNameBasedOnBatchId,
+  fetchBatchNameForStudent,
+  fetchstudentBatcheIdBasedOnStudentId,
+} from "@/backend/Batches/BatchesForTeachersStudentsDB";
 import BatchContext from "@/components/Context/store/batch-context";
+import { fetchStudentIdBasedOnEmail } from "@/backend/Students/StudentDB";
 
 const StudentHomePage = () => {
-  const [batchName, setBatchName] = useState();
   const authCtx = useContext(AuthContext);
   const batchCtx = useContext(BatchContext);
 
   const email = authCtx.userEmail;
+  const [batchName, setBatchName] = useState();
+  const [studentId, setStudntId] = useState();
+  const [batchId, setBatchId] = useState();
+
+  useEffect(() => {
+    const getId = async () => {
+      if (email) {
+        const data = await fetchStudentIdBasedOnEmail(email);
+        if (data[0]) {
+          setStudntId(data[0].student_id);
+        }
+      }
+    };
+    getId();
+  }, [email]);
+  console.log(studentId);
 
   useEffect(() => {
     const fetchBatch = async () => {
-      const data = await fetchBatchNameForStudent(email);
-      if (data[0]) {
-        setBatchName(data[0].batch_id);
-        batchCtx.setBatchNameHandler(data[0].batch_id);
+      if (studentId) {
+        const data = await fetchstudentBatcheIdBasedOnStudentId(studentId);
+        if (data[0]) {
+          setBatchId(data[0].batch_id);
+          // batchCtx.setBatchNameHandler(data[0].batch_id);
+        }
       }
     };
     fetchBatch();
-  }, [email]);
+  }, [studentId]);
 
+  useEffect(() => {
+    const fetchBatchName = async () => {
+      if (batchId) {
+        const data = await fetchBatchNameBasedOnBatchId(batchId);
+        if (data[0]) {
+          setBatchName(data[0].batch_name);
+          batchCtx.setBatchNameHandler(data[0].batch_name);
+        }
+      }
+    };
+    fetchBatchName();
+  }, [batchId]);
+
+  console.log(batchId);
   console.log(batchName);
+
   return (
     <>
       <div

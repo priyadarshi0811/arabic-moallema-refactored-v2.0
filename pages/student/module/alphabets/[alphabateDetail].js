@@ -25,17 +25,12 @@ const index = () => {
           minHeight: "100vh",
         }}
       >
-        <AlphabetSlider user="student" id={id} type="alphabets" />
-
-        {/* <div className="p-5 grid grid-cols-12 gap-5">
-          <div className="col-span-1">
-
-          </div>
-          <div className="col-span-11">
-          {id && <ActivityDetail id={id} />}
-          </div>
-        
-        </div> */}
+        <AlphabetSlider
+          user="student"
+          id={id}
+          type="alphabets"
+          module="alphabets"
+        />
       </div>
     </>
   );

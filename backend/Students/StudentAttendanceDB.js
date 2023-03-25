@@ -2,7 +2,7 @@ import supabase from "@/supabaseClient";
 
 export const fetchStudentAttendance = async (batchName) => {
   const { data, error } = await supabase
-    .from("session")
+    .from("session_exp_duplicate")
     .select("*")
     .eq("batch_id", batchName);
   if (error) {
@@ -12,11 +12,11 @@ export const fetchStudentAttendance = async (batchName) => {
   return data;
 };
 
-export const fetchTeachersAttendance = async (batchName, email) => {
+export const fetchTeachersAttendance = async (batchId, teacherId) => {
   const { data, error } = await supabase
-    .from("session")
+    .from("session_exp_duplicate")
     .select("*")
-    .match({ batch_id: batchName, teacher_id: email });
+    .match({ batch_id: batchId, teacher_id: teacherId });
   if (error) {
     console.log("Error fetching students data: ", error);
     return null;

@@ -1,30 +1,34 @@
 import supabase from "@/supabaseClient";
 
-export const fetchBatchesSchedule = async () => {
-  const { data, error } = await supabase.from("batches").select("schedule");
+export const fetchBatcheIdBasedOnBatchName = async (batchName) => {
+  const { data, error } = await supabase
+    .from("batches_exp_duplicate")
+    .select("*")
+    .match({ batch_name: batchName });
   if (error) {
-    console.log("Error fetching batches data: ", error);
+    console.log("Error fetching batche id: ", error);
     return null;
   }
   return data;
 };
 
-export const fetchIndividualBatch = async (name) => {
+export const fetchBatchDataBasedOnBatchId = async (batchId) => {
   const { data, error } = await supabase
-    .from("batches")
-    .select("chapter_completed")
-    .eq("batch_name", name);
+    .from("batches_exp_duplicate")
+    .select("*")
+    .match({ batch_id: batchId });
   if (error) {
-    console.log("Error fetching batches data: ", error);
+    console.log("Error fetching batche id: ", error);
     return null;
   }
   return data;
 };
 
-export const fetchStudentBatchData = async () => {
+export const fetchBatchesDataForTeacherBasedOnId = async (teacherId) => {
   const { data, error } = await supabase
-    .from("batch_student_relation")
-    .select("*");
+    .from("batches_exp_duplicate")
+    .select("*")
+    .match({ teacher_id: teacherId });
 
   if (error) {
     console.log("Error fetching batch_student_relation data: ", error);
@@ -33,19 +37,66 @@ export const fetchStudentBatchData = async () => {
   return data;
 };
 
+export const fetchBatchesForTeacherBasedOnId = async (teacherId) => {
+  const { data, error } = await supabase
+    .from("batches_exp_duplicate")
+    .select("*")
+    .match({ teacher_id: teacherId });
+
+  if (error) {
+    console.log("Error fetching batch_student_relation data: ", error);
+    return null;
+  }
+  return data;
+};
+
+export const fetchBatchesSchedule = async () => {
+  const { data, error } = await supabase
+    .from("batches_exp_duplicate")
+    .select("schedule");
+  if (error) {
+    console.log("Error fetching batches data: ", error);
+    return null;
+  }
+  return data;
+};
+
+export const fetchIndividualBatch = async (batchId) => {
+  const { data, error } = await supabase
+    .from("batches_exp_duplicate")
+    .select("chapter_completed")
+    .eq("batch_id", batchId);
+  if (error) {
+    console.log("Error fetching batches data: ", error);
+    return null;
+  }
+  return data;
+};
+
+// export const fetchStudentBatchData = async () => {
+//   const { data, error } = await supabase
+//     .from("batch_student_relation")
+//     .select("*");
+
+//   if (error) {
+//     console.log("Error fetching batch_student_relation data: ", error);
+//     return null;
+//   }
+//   return data;
+// };
+
 export const postCreateBatch = async (
   enteredBatchName,
-  enteredTeacherEmail,
+  teacherId,
   enteredType,
-
   obj,
   glink
 ) => {
   const { data, error } = await supabase
-    .from("batches")
+    .from("batches_exp_duplicate")
     .insert({
       batch_name: enteredBatchName,
-      teacher_email: enteredTeacherEmail,
+      teacher_id: teacherId,
       type: enteredType,
       schedule: obj,
       g_meet: glink,
@@ -60,11 +111,11 @@ export const postCreateBatch = async (
   return data;
 };
 
-export const fetchEnrolledStudentsInBatch = async (batchName) => {
+export const fetchEnrolledStudentsInBatch = async (batchId) => {
   const { data, error } = await supabase
-    .from("batch_student_relation")
-    .select("*")
-    .match({ batch_id: batchName });
+    .from("exp_duplicate_batch_student_relation")
+    .select("student_id")
+    .match({ batch_id: batchId });
 
   if (error) {
     console.log("Error fetching batch_student_relation data: ", error);
@@ -73,36 +124,23 @@ export const fetchEnrolledStudentsInBatch = async (batchName) => {
   return data;
 };
 
-export const fetchIndividualBatchBasedOnName = async (name) => {
-  const { data, error } = await supabase
-    .from("batches")
-    .select("id")
-    .eq("batch_name", name);
-  if (error) {
-    console.log("Error fetching batches data: ", error);
-    return null;
-  }
-  return data;
-};
+// export const fetchIndividualBatchBasedOnName = async (name) => {
+//   const { data, error } = await supabase
+//     .from("batches")
+//     .select("id")
+//     .eq("batch_name", name);
+//   if (error) {
+//     console.log("Error fetching batches data: ", error);
+//     return null;
+//   }
+//   return data;
+// };
 
-export const fetchBatchesForTeacher = async (email) => {
+export const fetchBatchesForTeacherBasedOnBatchId = async (batchId) => {
   const { data, error } = await supabase
-    .from("batches")
+    .from("batches_exp_duplicate")
     .select("*")
-    .match({ teacher_email: email });
-
-  if (error) {
-    console.log("Error fetching batch_student_relation data: ", error);
-    return null;
-  }
-  return data;
-};
-
-export const fetchBatchesForTeacherBasedOnBatchName = async (batch) => {
-  const { data, error } = await supabase
-    .from("batches")
-    .select("*")
-    .match({ batch_name: batch });
+    .match({ batch_id: batchId });
 
   if (error) {
     console.log("Error fetching batches data: ", error);
@@ -111,11 +149,11 @@ export const fetchBatchesForTeacherBasedOnBatchName = async (batch) => {
   return data;
 };
 
-export const fetchTeacherIdForBatchName = async (batch) => {
+export const fetchTeacherIdBasedOnBatchId = async (batchId) => {
   const { data, error } = await supabase
-    .from("batches")
-    .select("teacher_email")
-    .match({ batch_name: batch });
+    .from("batches_exp_duplicate")
+    .select("teacher_id")
+    .match({ batch_id: batchId });
 
   if (error) {
     console.log("Error fetching batch_student_relation data: ", error);

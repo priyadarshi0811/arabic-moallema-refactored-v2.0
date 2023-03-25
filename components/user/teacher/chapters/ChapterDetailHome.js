@@ -8,10 +8,15 @@ import BatchList from "@/components/user/teacher/BatchList";
 import BackButton from "@/components/Layout/elements/BackButton";
 import { Divider } from "@mui/material";
 import AttandanceList from "@/components/user/teacher/AttandanceList";
-import { fetchEnrolledStudentsInBatch } from "@/backend/Batches/BatchesDB";
+import {
+  fetchBatcheIdBasedOnBatchName,
+  fetchEnrolledStudentsInBatch,
+} from "@/backend/Batches/BatchesDB";
 import { fetchBatchesData } from "@/backend/Announcement/AnnouncementDB";
 import { fetchSessionData } from "@/backend/Session/SessionDB";
 import { fetchSessionAttendance } from "@/backend/Session/SessionDB";
+import { fetchChapterIdBasedOnChapterName } from "@/backend/Chapters/GetChaptersDB";
+import { fetchStudentsData } from "@/backend/Students/StudentDB";
 // import InProgress from "@/components/Layout/screen/InProgress";
 // import MiniCard from "@/components/Layout/card/MiniCard";
 
@@ -19,20 +24,48 @@ const ChapterDetailHome = ({ chapterName, batchName }) => {
   console.log(chapterName, " ", batchName);
   const [presentStudent, setPresentStudent] = useState();
   const [allStudentsInBatch, setAllStudentsInBatch] = useState([]);
+  const [allStudentsInBatchData, setAllStudentsInBatchData] = useState([]);
+
+  const [batchId, setBatchId] = useState();
+  const [chapterId, setChapterId] = useState();
 
   const [addAbsentStudent, setaddAbsentStudent] = useState([]);
   const [chapterDetail, setchapterDetail] = useState();
   const [presentStudentsArray, setpresentStudentsArray] = useState();
   const [absentStudents, setabsentStudents] = useState([]);
 
+  React.useEffect(() => {
+    const setBatchIdData = async () => {
+      const idData = await fetchBatcheIdBasedOnBatchName(batchName);
+      if (idData[0]) {
+        setBatchId(idData[0].batch_id);
+      }
+    };
+    setBatchIdData();
+  }, [batchName]);
+  console.log(batchId);
+
+  React.useEffect(() => {
+    const setBatchIdData = async () => {
+      const idData = await fetchChapterIdBasedOnChapterName(chapterName);
+      if (idData[0]) {
+        setChapterId(idData[0].chapter_id);
+      }
+    };
+    setBatchIdData();
+  }, [chapterName]);
+  console.log(chapterId);
+
   //get all students for the batch
   useEffect(() => {
     const getStudents = async () => {
-      const data = await fetchEnrolledStudentsInBatch(batchName);
-      setAllStudentsInBatch(data);
+      if (batchId) {
+        const data = await fetchEnrolledStudentsInBatch(batchId);
+        setAllStudentsInBatch(data);
+      }
     };
     getStudents();
-  }, [batchName, addAbsentStudent]);
+  }, [batchId, addAbsentStudent]);
 
   //present students
   useEffect(() => {
@@ -41,40 +74,63 @@ const ChapterDetailHome = ({ chapterName, batchName }) => {
       arr = JSON.parse(presentStudent);
       setpresentStudentsArray(arr[0].students_present.students);
     }
-    console.log("present: ", presentStudentsArray);
   }, [presentStudent, addAbsentStudent]);
-  console.log("present: ", presentStudentsArray);
-  console.log(absentStudents);
-  //get abasent students
 
+  //get abasent students
   useEffect(() => {
     let absent;
-    if (allStudentsInBatch && presentStudentsArray) {
-      console.log("allStudents: ", allStudentsInBatch);
-      absent = allStudentsInBatch.filter(
-        (allStudent) => !presentStudentsArray.includes(allStudent.student_id)
+    if (allStudentsInBatchData && presentStudentsArray) {
+      absent = allStudentsInBatchData.filter(
+        (allStudent) => !presentStudentsArray.includes(allStudent)
       );
       setabsentStudents(absent);
-      console.log("absent: ", absentStudents);
     }
   }, [presentStudentsArray, addAbsentStudent, presentStudent]);
 
+  console.log("present: ", presentStudentsArray);
+  console.log("Total Batch Student: ", allStudentsInBatch);
+  console.log("All: ", allStudentsInBatchData);
+  console.log("absent: ", absentStudents);
+
+  //get all students for the batch
+  useEffect(() => {
+    const getAllStudents = async () => {
+      const data = await fetchStudentsData();
+      console.log(data);
+
+      if (allStudentsInBatch) {
+        console.log(allStudentsInBatch);
+        let getStudentsDetail = data
+          .filter((item1) =>
+            allStudentsInBatch.some(
+              (item2) => item1.student_id === item2.student_id
+            )
+          )
+          .map((item) => item.email);
+
+        console.log(getStudentsDetail);
+        setAllStudentsInBatchData(getStudentsDetail);
+      }
+    };
+    getAllStudents();
+  }, [batchId, allStudentsInBatch, presentStudent]);
+
   useEffect(() => {
     const fetchSession = async () => {
-      const data = await fetchSessionData(batchName, chapterName);
-      setchapterDetail(data);
+      if (batchId && chapterId) {
+        const data = await fetchSessionData(batchId, chapterId);
+        setchapterDetail(data);
+      }
     };
     fetchSession();
-  }, []);
+  }, [batchId, chapterId]);
 
   const getAttandanceSelectedSession = async (value) => {
     const sessionId = value;
-    const data = await fetchSessionAttendance(
-      batchName,
-      sessionId,
-      chapterName
-    );
-    setPresentStudent(JSON.stringify(data, null, 2));
+    if (batchId && chapterId) {
+      const data = await fetchSessionAttendance(batchId, sessionId, chapterId);
+      setPresentStudent(JSON.stringify(data, null, 2));
+    }
   };
 
   return (

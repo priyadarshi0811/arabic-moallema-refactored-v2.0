@@ -6,7 +6,6 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
 const BasicSelect = ({ allItems, type, lable, handleSelectedItem }) => {
-
   const [selectedItem, setSelectedItem] = React.useState("");
 
   React.useEffect(() => {
@@ -52,9 +51,7 @@ const BasicSelect = ({ allItems, type, lable, handleSelectedItem }) => {
                   onChange={(e) => setSelectedItem(e.target.value)}
                 >
                   {allItems.map((item) => (
-                    <MenuItem value={item.student_id}>
-                      {item.student_id}
-                    </MenuItem>
+                    <MenuItem value={item}>{item}</MenuItem>
                   ))}
                 </Select>
               </FormControl>

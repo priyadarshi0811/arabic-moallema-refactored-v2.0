@@ -14,6 +14,8 @@ import MUIMiniCard from "@/components/Layout/card/MUIMiniCard";
 import AuthContext from "@/components/Context/store/auth-context";
 import { fetchSubmittedAssignmentBasedOnStudent } from "@/backend/Assignment/FetchAssignmentDB";
 import { useRouter } from "next/router";
+import { fetchStudentIdBasedOnEmail } from "@/backend/Students/StudentDB";
+import { fetchBatcheIdBasedOnBatchName } from "@/backend/Batches/BatchesDB";
 
 const Alphabates = [
   { letter: "خ", title: "Khaa" },
@@ -61,6 +63,8 @@ const style = {
 const index = () => {
   const [filteredAssignment, setFilteredAssignment] = useState([]);
   const [error, setError] = useState();
+  const [studentIdNew, setStudntIdNew] = useState();
+  const [batchId, setBatchId] = useState();
 
   const authCtx = useContext(AuthContext);
   const studentId = authCtx.userEmail;
@@ -96,20 +100,46 @@ const index = () => {
   console.log(studentId);
 
   useEffect(() => {
-    const batch = localStorage.getItem("batchName");
-
     const fetchStudentBatch = async () => {
-      const data = await fetchSubmittedAssignmentBasedOnStudent(
-        studentId,
-        batch
-      );
-      if (studentId) {
-        data.length === 0 ? setError(true) : setError(false);
+      if (studentIdNew && batchId) {
+        const data = await fetchSubmittedAssignmentBasedOnStudent(
+          studentIdNew,
+          batchId
+        );
+        if (studentId) {
+          data.length === 0 ? setError(true) : setError(false);
+        }
+        setFilteredAssignment(data);
       }
-      setFilteredAssignment(data);
     };
     fetchStudentBatch();
+  }, [studentIdNew, batchId]);
+
+  useEffect(() => {
+    const getId = async () => {
+      if (studentId) {
+        const data = await fetchStudentIdBasedOnEmail(studentId);
+        if (data[0]) {
+          setStudntIdNew(data[0].student_id);
+        }
+      }
+    };
+    getId();
   }, [studentId]);
+
+  useEffect(() => {
+    const getId = async () => {
+      const batch = localStorage.getItem("batchName");
+      const data = await fetchBatcheIdBasedOnBatchName(batch);
+      if (data[0]) {
+        setBatchId(data[0].batch_id);
+      }
+    };
+    getId();
+  }, []);
+
+  console.log("batch: ", batchId);
+  console.log("student: ", studentIdNew);
 
   console.log(filteredAssignment);
 

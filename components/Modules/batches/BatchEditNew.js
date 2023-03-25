@@ -7,14 +7,23 @@ import {
 } from "@/backend/Batches/BatchesDB";
 import BatchContext from "@/components/Context/store/batch-context";
 import { fetchBatchesData } from "@/backend/Announcement/AnnouncementDB";
+import {
+  updateBatch,
+  updateLiveClassBatchName,
+  updateStudentAssignmentBatchName,
+  updateStudentBatchName,
+  updateTeacherActivityLog,
+} from "@/backend/Batches/UpdateBatchTeacher";
+import { useRouter } from "next/router";
 
 const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
-const BatchEditNew = ({ actionBtn, link, setOpen, batchName }) => {
+const BatchEditNew = ({ actionBtn, link, setOpen, batchName, batchId }) => {
   const [error, setError] = useState(false);
   const [selectedDays, setSelectedDays] = useState([]);
   const [submitted, setSubmitted] = useState(false);
   const batchCtx = useContext(BatchContext);
+  const [update, setUpdate] = React.useState(false);
 
   const [batchDetail, setBatchDetail] = React.useState([]);
   const [scheduleDetail, setScheduleDetail] = React.useState();
@@ -26,7 +35,7 @@ const BatchEditNew = ({ actionBtn, link, setOpen, batchName }) => {
       setBatchDetail(data);
     };
     fetchBatches();
-  }, []);
+  }, [update]);
 
   //getting batches schedule
   React.useEffect(() => {
@@ -35,7 +44,7 @@ const BatchEditNew = ({ actionBtn, link, setOpen, batchName }) => {
       setScheduleDetail(JSON.stringify(data, null, 2));
     };
     batchSchedule();
-  }, []);
+  }, [update]);
 
   //filtering the bathches data
   const detail = batchDetail.filter((batch) => batch.batch_name === batchName);
@@ -72,6 +81,13 @@ const BatchEditNew = ({ actionBtn, link, setOpen, batchName }) => {
     return `${year}-${month}-${day}`;
   }
 
+  //inputFields
+  const [nameData, setBatchName] = React.useState("");
+
+  if (sheduleData) {
+    console.log(sheduleData);
+  }
+
   //handle selected days
   const handleChange = (event) => {
     const day = event.target.value;
@@ -86,15 +102,20 @@ const BatchEditNew = ({ actionBtn, link, setOpen, batchName }) => {
 
   //handle input fields data
   const nameRef = useRef();
-  const bookNameRef = useRef();
   const typeRef = useRef();
-  const teacherNameRef = useRef();
   const timeRef = useRef();
   const dateRef = useRef();
   const gmeetLink = useRef();
 
   const authCtx = useContext(AuthContext);
   let options = authCtx.teachersList;
+
+  useEffect(() => {
+    if (sheduleData) {
+      console.log("inside");
+      setSelectedDays(sheduleData[0].schedule.days);
+    }
+  }, [scheduleDetail, detail[0]]);
 
   //getting the teachers
   useEffect(() => {
@@ -105,58 +126,80 @@ const BatchEditNew = ({ actionBtn, link, setOpen, batchName }) => {
     fetchTeachers();
   }, []);
 
-  const onBatchCreateHandler = async (e) => {
+  console.log(selectedDays);
+  const onBatchEditHandler = async (e) => {
     e.preventDefault();
+    setUpdate((prev) => !prev);
 
     //getting the values
     const enteredBatchName = nameRef.current.value;
-    const enteredBookName = bookNameRef.current.value;
     const enteredType = typeRef.current.value;
-    const enteredTeacherEmail = teacherNameRef.current.value;
     const time = timeRef.current.value;
     const date = dateRef.current.value;
     const glink = gmeetLink.current.value;
+    let finalTime;
 
-    let finalTime = convertTimeTo12HourFormat(time);
+    if (time) {
+      finalTime = convertTimeTo12HourFormat(time);
+    }
+    let batchNameData;
+    if (detail[0]) {
+      batchNameData = detail[0].batch_name;
+    }
+    let daysForSchedule;
+    let timeForSchedule;
+    let dateForSchedule;
+    if (sheduleData[0]) {
+      daysForSchedule = sheduleData[0].schedule.days;
+      timeForSchedule = sheduleData[0].schedule.time;
+      dateForSchedule = sheduleData[0].schedule.startDate;
+    }
 
     const obj = {
-      days: selectedDays,
-      time: finalTime,
-      startDate: date,
-      batchName: enteredBatchName,
+      days: selectedDays.length > 0 ? selectedDays : daysForSchedule,
+      time: finalTime !== undefined ? finalTime : timeForSchedule,
+      startDate: date ? date : dateForSchedule,
+      batchName: enteredBatchName ? enteredBatchName : detail[0].batch_name,
     };
 
-    const data1 = await postCreateBatch(
-      enteredBatchName,
-      enteredTeacherEmail,
-      enteredType,
-      enteredBookName,
-      obj,
-      glink
-    );
+    if (enteredBatchName || enteredType || glink) {
+      console.log("changed");
+      console.log(enteredBatchName);
+      console.log(enteredType);
+      console.log(glink);
+      console.log(batchNameData);
 
-    if (data1) {
-      console.log("in");
-      setError(false);
-      setSubmitted(true);
-      nameRef.current.value = "";
-      bookNameRef.current.value = "";
-      timeRef.current.value = "";
-      dateRef.current.value = "";
-      dateRef.current.value = "";
-      setSelectedDays([]);
-      setOpen(false);
-      batchCtx.setSubmittedHandler(true);
-    } else {
-      console.log("else");
-      setError(true);
+      console.log(obj);
+
+      if (batchId) {
+        const data1 = await updateBatch(
+          enteredBatchName,
+          enteredType,
+          obj,
+          glink,
+          batchId
+        );
+
+        if (data1) {
+          console.log("in");
+          if (enteredBatchName !== detail[0].batch_name) {
+            window.location.href = `/admin/batches/batches-detail/${enteredBatchName}`;
+          } else {
+            window.location.href = `/admin/batches/batches-detail/${detail[0].batch_name}`;
+          }
+          batchCtx.setSubmittedHandler(true);
+        } else {
+          console.log("else");
+          setError(true);
+        }
+      }
     }
   };
 
   return (
     <>
       {
-        <form onSubmit={onBatchCreateHandler}>
+        <form onSubmit={onBatchEditHandler}>
           <div className="overflow-hidden ">
             <div className="">
               <h1 className="text-2xl mt-0 text-dark-purple text-center pb-5">
@@ -221,27 +264,7 @@ const BatchEditNew = ({ actionBtn, link, setOpen, batchName }) => {
 
                   <div className="col-span-6">
                     <div className="grid grid-cols-9 gap-3">
-                      <div className="col-span-9 sm:col-span-3">
-                        <label
-                          htmlFor="Type"
-                          className="block text-sm font-medium text-gray-700"
-                        >
-                          Select Teacher
-                        </label>
-
-                        <select
-                          ref={teacherNameRef}
-                          required
-                          className="block w-96 px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                        >
-                          {options.map((option) => (
-                            <option key={option.id} value={option.email}>
-                              {option.name}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                      <div className="col-span-9 sm:col-span-3 ml-32">
+                      <div className="col-span-9 sm:col-span-3 ml-0">
                         <label
                           htmlFor="gmeet"
                           className="block text-sm font-medium text-gray-700"
@@ -254,7 +277,6 @@ const BatchEditNew = ({ actionBtn, link, setOpen, batchName }) => {
                             ref={gmeetLink}
                             type="text"
                             name="gmeet"
-                            required
                             placeholder="G Meet Link"
                             className="block w-96  px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                           />
@@ -266,25 +288,31 @@ const BatchEditNew = ({ actionBtn, link, setOpen, batchName }) => {
                   <div className="col-span-6 daily-on">
                     <h4 className="my-2">Weekly on.</h4>
                     <div className="grid grid-cols-8 gap-3 sm:grid-cols-7 lg:gap-5">
-                      {days.map((day) => (
-                        <div className="col-span-2 pb-3 pl-1 border-2 border-gray-300 rounded-md shadow-sm appearance-none cursor-pointer sm:col-span-1">
-                          <input
-                            type="checkbox"
-                            id={day}
-                            value={day}
-                            name={day}
-                            onChange={handleChange}
-                            checked={selectedDays.includes(day)}
-                            className="block mt-1 border-solid rounded-full appearance-none day-card focus:outline-none after:border-none focus:border-none sm:text-sm"
-                          />
-                          <label
-                            htmlFor={day}
-                            className="block text-sm font-medium text-center text-gray-700 cursor-pointer"
-                          >
-                            {day}
-                          </label>
-                        </div>
-                      ))}
+                      {sheduleData &&
+                        days.map((day) => (
+                          <div className="col-span-2 pb-3 pl-1 border-2 border-gray-300 rounded-md shadow-sm appearance-none cursor-pointer sm:col-span-1">
+                            <input
+                              type="checkbox"
+                              id={day}
+                              value={day}
+                              name={day}
+                              onChange={handleChange}
+                              checked={
+                                sheduleData[0].schedule.days &&
+                                selectedDays.length === 0
+                                  ? sheduleData[0].schedule.days.includes(day)
+                                  : selectedDays.includes(day)
+                              }
+                              className="block mt-1 border-solid rounded-full appearance-none day-card focus:outline-none after:border-none focus:border-none sm:text-sm"
+                            />
+                            <label
+                              htmlFor={day}
+                              className="block text-sm font-medium text-center text-gray-700 cursor-pointer"
+                            >
+                              {day}
+                            </label>
+                          </div>
+                        ))}
                     </div>
                   </div>
 
@@ -299,14 +327,13 @@ const BatchEditNew = ({ actionBtn, link, setOpen, batchName }) => {
                         </label>
                         {sheduleData && (
                           <input
-                            defaultValue={sheduleData[0].schedule.time}
+                            defaultValue="10:00"
                             type="time"
+                            ref={timeRef}
                             min="07:00"
                             max="20:00"
                             name="time"
                             id="time"
-                            ref={timeRef}
-                            required
                             className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                           />
                         )}
@@ -320,13 +347,11 @@ const BatchEditNew = ({ actionBtn, link, setOpen, batchName }) => {
                         </label>
                         {sheduleData && (
                           <input
-                            value={sheduleData[0].schedule.startDate}
                             type="date"
                             name="date"
                             id="date"
                             min={getCurrentDate()}
                             ref={dateRef}
-                            required
                             className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                           />
                         )}
