@@ -118,9 +118,14 @@ export default function CustomPaginationActionsTable({
   };
 
   const handleChangeRowsPerPage = (event) => {
+    console.log("value: ", event.target.value);
+
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+  console.log("per page: ", rowsPerPage);
+  console.log("empty row: ", emptyRows);
+  console.log("set page: ", page);
 
   const getSelectedBatch = async (value) => {
     setSelectedOption(value);

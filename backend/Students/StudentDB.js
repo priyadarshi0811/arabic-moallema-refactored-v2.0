@@ -40,3 +40,10 @@ export const fetchStudentIdBasedOnEmail = async (email) => {
   }
   return data;
 };
+
+export const updateStudentEmail = async (email, studentId) => {
+  const { data4, error4 } = await supabase
+    .from("students_exp_duplicate")
+    .update({ email: email })
+    .match({ student_id: studentId });
+};
