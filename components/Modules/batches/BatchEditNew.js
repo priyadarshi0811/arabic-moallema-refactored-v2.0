@@ -137,11 +137,7 @@ const BatchEditNew = ({ actionBtn, link, setOpen, batchName, batchId }) => {
     const time = timeRef.current.value;
     const date = dateRef.current.value;
     const glink = gmeetLink.current.value;
-    let finalTime;
 
-    if (time) {
-      finalTime = convertTimeTo12HourFormat(time);
-    }
     let batchNameData;
     if (detail[0]) {
       batchNameData = detail[0].batch_name;
@@ -157,7 +153,7 @@ const BatchEditNew = ({ actionBtn, link, setOpen, batchName, batchId }) => {
 
     const obj = {
       days: selectedDays.length > 0 ? selectedDays : daysForSchedule,
-      time: finalTime !== undefined ? finalTime : timeForSchedule,
+      time: time !== undefined ? time : timeForSchedule,
       startDate: date ? date : dateForSchedule,
       batchName: enteredBatchName ? enteredBatchName : detail[0].batch_name,
     };
@@ -172,6 +168,8 @@ const BatchEditNew = ({ actionBtn, link, setOpen, batchName, batchId }) => {
       console.log(obj);
 
       if (batchId) {
+        console.log("in");
+
         const data1 = await updateBatch(
           enteredBatchName,
           enteredType,
@@ -327,7 +325,7 @@ const BatchEditNew = ({ actionBtn, link, setOpen, batchName, batchId }) => {
                         </label>
                         {sheduleData && (
                           <input
-                            defaultValue="10:00"
+                            defaultValue={sheduleData[0].schedule.time}
                             type="time"
                             ref={timeRef}
                             min="07:00"
@@ -347,10 +345,11 @@ const BatchEditNew = ({ actionBtn, link, setOpen, batchName, batchId }) => {
                         </label>
                         {sheduleData && (
                           <input
+                            defaultValue={sheduleData[0].schedule.startDate}
                             type="date"
                             name="date"
                             id="date"
-                            min={getCurrentDate()}
+                            // min={getCurrentDate()}
                             ref={dateRef}
                             className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                           />

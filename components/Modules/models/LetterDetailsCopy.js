@@ -102,7 +102,7 @@ const LetterDetails = (props) => {
               <h2 className="text-lg  ">
                 How to Write "{props.name || "Mim"}"
               </h2>
-              <div className=" p-4 w-full border-2   mt-2 flex  items-center ">
+              <div className=" p-4 w-full border-2   mt-2 flex  items-center font-sans">
                 <img
                   src={
                     props.gif ||
@@ -118,7 +118,7 @@ const LetterDetails = (props) => {
                   <div className="m-3 span-cols-2 ">
                     <span>Initial Form</span>
                     <h1
-                      className="mt-5 text-5xl text-gray-300 "
+                      className="mt-5 text-5xl text-gray-300 font-sans font-sans"
                       dir="rtl"
                       lang="ar"
                     >
@@ -128,7 +128,7 @@ const LetterDetails = (props) => {
                   <div className="m-3 span-cols-2 ">
                     <span>Medial Form</span>
                     <h1
-                      className="mt-5 text-5xl text-gray-300 "
+                      className="mt-5 text-5xl text-gray-300 font-sans "
                       dir="rtl"
                       lang="ar"
                     >
@@ -138,7 +138,7 @@ const LetterDetails = (props) => {
                   <div className="m-3 span-cols-2  h-fit">
                     <span>Final Form</span>
                     <h1
-                      className="mt-5 text-5xl text-gray-300 "
+                      className="mt-5 text-5xl text-gray-300 font-sans "
                       dir="rtl"
                       lang="ar"
                     >
@@ -150,19 +150,19 @@ const LetterDetails = (props) => {
                 <div className="grid grid-cols-3 py-5 mx-0 mt-5 text-white rounded-md bg-cyan-900">
                   <div className="m-3 span-cols-2 ">
                     <span>Zabar</span>
-                    <h1 className="mt-5 text-5xl " dir="rtl" lang="ar">
+                    <h1 className="mt-5 text-5xl font-sans" dir="rtl" lang="ar">
                       {props.exInitial || ﻳَﻮﻡ}
                     </h1>
                   </div>
                   <div className="m-3 span-cols-2 ">
                     <span>Zer</span>
-                    <h1 className="mt-5 text-5xl " dir="rtl" lang="ar">
+                    <h1 className="mt-5 text-5xl font-sans" dir="rtl" lang="ar">
                       {props.exMiddle || ﻳَﻮﻡ}
                     </h1>
                   </div>
                   <div className="m-3 span-cols-2  h-fit">
                     <span>Pesh</span>
-                    <h1 className="mt-5 text-5xl " dir="rtl" lang="ar">
+                    <h1 className="mt-5 text-5xl font-sans" dir="rtl" lang="ar">
                       {props.exFinal || ﻋَﺎﻡ}
                     </h1>
                   </div>

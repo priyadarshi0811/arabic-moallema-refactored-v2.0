@@ -135,7 +135,7 @@ export default function CustomPaginationActionsTable({ batchId, studentsId }) {
   }, []);
 
   console.log(attendaceList);
-  console.log(allStudents);
+  // console.log(allStudents);
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -146,9 +146,14 @@ export default function CustomPaginationActionsTable({ batchId, studentsId }) {
   };
 
   const handleChangeRowsPerPage = (event) => {
+    console.log("value: ", event.target.value);
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+  console.log("per page: ", rowsPerPage);
+  console.log("empty row: ", emptyRows);
+  console.log("set page: ", page);
+
   React.useEffect(() => {
     if (allStudents && studentsId) {
       console.log(studentsId);

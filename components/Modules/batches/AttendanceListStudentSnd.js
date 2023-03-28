@@ -98,10 +98,7 @@ function createData(name, calories, fat) {
   return { name, calories, fat };
 }
 
-export default function CustomPaginationActionsTable({
-  teacherId,
-  batchDataTeacher,
-}) {
+export default function AttendanceListStudentSnd({ batchId, studentsId }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(6);
   const [selectedOption, setSelectedOption] = React.useState();
@@ -118,14 +115,9 @@ export default function CustomPaginationActionsTable({
   };
 
   const handleChangeRowsPerPage = (event) => {
-    console.log("value: ", event.target.value);
-
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-  console.log("per page: ", rowsPerPage);
-  console.log("empty row: ", emptyRows);
-  console.log("set page: ", page);
 
   const getSelectedBatch = async (value) => {
     setSelectedOption(value);
@@ -154,18 +146,18 @@ export default function CustomPaginationActionsTable({
     getBatches();
   }, []);
 
-  console.log(allChapters);
+  // console.log(allChapters);
 
-  console.log(attendaceList);
-  console.log(batchDataTeacher);
+  // console.log(attendaceList);
+  // console.log(batchDataTeacher);
   return (
     <>
       <div className="bg-white rounded-lg shadow-md">
         <div className=" border-b-2 p-3 ">
-          <h1 className="text-2xl pt-2">Teacher Attendance History</h1>
+          <h1 className="text-2xl pt-2">Student Attendance History</h1>
         </div>
 
-        {batchDataTeacher && (
+        {/* {batchDataTeacher && (
           <Box>
             <div className="col-span-1 mt-3">
               <label className=" mt-3 ml-4 p-4 text-gray-700">
@@ -185,8 +177,8 @@ export default function CustomPaginationActionsTable({
               ))}
             </Select>
           </Box>
-        )}
-        {selectedOption && attendaceList && attendaceList.length > 0 && (
+        )} */}
+        { attendaceList && attendaceList.length > 0 && (
           <TableContainer>
             <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
               <TableBody>
@@ -257,7 +249,7 @@ export default function CustomPaginationActionsTable({
           </TableContainer>
         )}
 
-        {selectedOption && attendaceList && attendaceList.length === 0 && (
+        { attendaceList && attendaceList.length === 0 && (
           <WarningCard title={`No Session Attendance For ${selectedOption}`} />
         )}
       </div>

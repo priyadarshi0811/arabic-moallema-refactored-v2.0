@@ -122,7 +122,7 @@ export default function VerticalTabs(props) {
               <Tab
                 value={alphabate.letter}
                 onChange={() => getSymbol(alphabate.letter)}
-                className={`text-3xl  py-3 px-0 mx-0 text-white font-bold rounded-full  focus:bg-cyan-400 bg-black`} // ${styleBg}
+                className={`text-3xl  py-3 px-0 mx-0 text-white font-bold rounded-full font-sans  focus:bg-cyan-400 bg-black`} // ${styleBg}
                 label={alphabate.letter}
                 id={props.id}
                 sx={{ border: "2px solid white" }}
@@ -155,7 +155,7 @@ export default function VerticalTabs(props) {
               className=" p-0 my-2 rounded-full text-center"
             >
               <Tab
-                className={`text-3xl  py-3 px-0 mx-0 text-white font-bold rounded-full  focus:bg-cyan-400 bg-black`} // ${styleBg}
+                className={`text-3xl  py-3 px-0 mx-0 text-white font-bold rounded-full font-sans  focus:bg-cyan-400 bg-black`} // ${styleBg}
                 label={alphabate.letter}
                 id={props.id}
                 sx={{ border: "2px solid white" }}
