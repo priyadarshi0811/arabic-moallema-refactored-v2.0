@@ -45,6 +45,9 @@ const LetterDetails = (props) => {
         }
       }
     }
+    window.location.href = `/${props.user}/activity/tracing/alphabets/${
+      props.name
+    }/${0}`;
   };
 
   const canvasHandler = () => {
@@ -80,20 +83,14 @@ const LetterDetails = (props) => {
                     Back
                   </Button>
                 </Link>
-                <Link
-                  href={`/${props.user}/activity/tracing/alphabets/${
-                    props.name
-                  }/${0}`}
-                  className="mx-3"
+
+                <Button
+                  onClick={setActivitySubmodule}
+                  variant="contained"
+                  className="bg-dark-purple"
                 >
-                  <Button
-                    onClick={setActivitySubmodule}
-                    variant="contained"
-                    className="bg-dark-purple"
-                  >
-                    Activity
-                  </Button>
-                </Link>
+                  Activity
+                </Button>
               </div>
             </div>
           </div>

@@ -113,14 +113,15 @@ const AdminHomePage = () => {
               />
             )}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full mx-auto my-10 gap-10">
-              {dataToDisplay.map((batch) => (
-                <CardList
-                  subTitle={batch.book_name}
-                  title={batch.batch_name}
-                  id={batch.id}
-                  link={`/admin/batches/batches-detail/${batch.batch_name}`}
-                />
-              ))}
+              {dataToDisplay &&
+                dataToDisplay.map((batch) => (
+                  <CardList
+                    subTitle={batch.book_name}
+                    title={batch.batch_name}
+                    id={batch.id}
+                    link={`/admin/batches/batches-detail/${batch.batch_name}`}
+                  />
+                ))}
             </div>
           </div>
         </div>
