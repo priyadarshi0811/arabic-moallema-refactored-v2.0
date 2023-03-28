@@ -98,11 +98,11 @@ const BatchEdit = ({ actionBtn, link, setOpen }) => {
     const date = dateRef.current.value;
     const glink = gmeetLink.current.value;
 
-    let finalTime = convertTimeTo12HourFormat(time);
+    console.log(time);
 
     const obj = {
       days: selectedDays,
-      time: finalTime,
+      time: time,
       startDate: date,
       batchName: enteredBatchName,
     };

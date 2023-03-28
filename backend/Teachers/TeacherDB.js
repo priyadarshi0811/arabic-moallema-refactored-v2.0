@@ -29,3 +29,9 @@ export const fetchTeachersIdBasedOnEmail = async (email) => {
   }
   return data;
 };
+export const updateTeacherEmail = async (email, teacherId) => {
+  const { data4, error4 } = await supabase
+    .from("teachers_exp_duplicate")
+    .update({ email: email })
+    .match({ teacher_id: teacherId });
+};

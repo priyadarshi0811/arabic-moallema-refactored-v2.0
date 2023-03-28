@@ -23,10 +23,15 @@ import { fetchBatchesData } from "@/backend/Announcement/AnnouncementDB";
 import AuthContext from "@/components/Context/store/auth-context";
 import { addStudentToBatch } from "@/backend/Batches/AddStudentToBatchDB";
 import { fetchStudentBasedonEmail } from "@/backend/UserProfile/StudentTeacherProfileDB";
-import { updateStudentDetail } from "@/backend/Students/StudentDB";
+import {
+  updateStudentDetail,
+  updateStudentEmail,
+} from "@/backend/Students/StudentDB";
 import BatchContext from "@/components/Context/store/batch-context";
 import Spinner from "@/components/Layout/spinner/Spinner";
 import { fetchBatcheIdBasedOnBatchName } from "@/backend/Batches/BatchesDB";
+import { updateTeacherEmailFromAuth } from "@/backend/Teachers/UpdateTeacherEmail";
+import supabaseAdmin from "@/backend/DeleteUser/SupabaseAdmin";
 
 export default function AddUser({
   link,
@@ -45,6 +50,7 @@ export default function AddUser({
   const [contact, setContact] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [studentId, setStudentId] = React.useState("");
+  const [newEmail, setNewEmail] = React.useState("");
 
   const [batch, setBatch] = React.useState(batchName);
   const [batchId, setBatchId] = React.useState();
@@ -88,6 +94,8 @@ export default function AddUser({
         setName(profileData[0].name);
         setContact(profileData[0].contact);
         setEmail(profileData[0].email);
+        setNewEmail(profileData[0].email);
+
         setStudentId(profileData[0].student_id);
       }
     }, [edit, profileData, batchesData]);
@@ -142,6 +150,67 @@ export default function AddUser({
       updateStudentDetail(email, name, contact, batchId, studentId);
       batchCtx.setSubmittedHandler(true);
     }
+  };
+
+  const EditEmailHandler = async (e) => {
+    e.preventDefault();
+    console.log("update student Email");
+    console.log(studentId);
+
+    console.log(email);
+    console.log(newEmail);
+
+    if (newEmail) {
+      updateStudentEmail(newEmail, studentId);
+    }
+
+    const { data, error } = await supabaseAdmin.auth.admin.listUsers();
+    const userList = data.users;
+
+    const updateUser = userList.filter((user) => user.email === email);
+
+    const userId = updateUser[0].id;
+
+    if (userId && newEmail) {
+      updateTeacherEmailFromAuth(userId, newEmail);
+    }
+
+    if (email && newEmail) {
+      await axios
+        .post("/api/update-email", {
+          newEmail,
+          email,
+          user: "student",
+        })
+        .then((res) => console.log("res: ", res))
+        .catch((err) => console.log("error: ", err));
+
+      // setIsLoading(false);
+      // setOpen(false);
+      // batchCtx.setSubmittedHandler(true);
+    } else {
+      // setIsLoading(false);
+      console.log("Please fill in all fields");
+    }
+    if (email && newEmail) {
+      await axios
+        .post("/api/updated-email-message", {
+          newEmail,
+          email,
+          user: "student",
+        })
+        .then((res) => console.log("res: ", res))
+        .catch((err) => console.log("error: ", err));
+
+      // setIsLoading(false);
+      // setOpen(false);
+      // batchCtx.setSubmittedHandler(true);
+    } else {
+      // setIsLoading(false);
+      console.log("Please fill in all fields");
+    }
+
+    window.location.href = `/admin/students/studentprofile/${newEmail}`;
   };
 
   return (
@@ -224,6 +293,42 @@ export default function AddUser({
           </Button>
         </div>
       </div>
+      {userType == "EditStudent" && (
+        <div className=" mt-5 p-5 rounded-md bg-white  pl-2">
+          {isLoading && <Spinner title="Adding Student" />}
+          <h1 className="text-2xl pl-2 pb-2">Change Email Address</h1>
+
+          <Box
+            component="form"
+            sx={{
+              "& > :not(style)": { m: 1, width: "100%" },
+            }}
+            noValidate
+            autoComplete="off"
+            className=" border-t-2 border-gray-300 mt-1"
+          >
+            <InputWithLable
+              value={newEmail}
+              defaultValue={newEmail}
+              setValue={setNewEmail}
+              lable="Email"
+              id="email"
+              type="email"
+            />
+          </Box>
+
+          <div className="items-center  py-3 text-right mt-2">
+            <Button
+              onClick={EditEmailHandler}
+              variant="contained"
+              className="w-full bg-dark-purple my-3 mx-2"
+              disableElevation
+            >
+              Edit Email
+            </Button>
+          </div>
+        </div>
+      )}
     </>
   );
 }
