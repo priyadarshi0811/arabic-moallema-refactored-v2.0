@@ -205,7 +205,7 @@ const DrawingCanvas = (props) => {
       context = canvas.getContext("2d");
       context.lineCap = "round";
 
-      context.font = "100px Noto Sans Arabic";
+      context.font = "100px 'Noto Sans Arabic'";
       // context.font = "150px Arial";
 
       context.fillStyle = "lightgray";
@@ -310,7 +310,7 @@ const DrawingCanvas = (props) => {
               onMouseLeave={stopDrawing}
             ></canvas>
           </div>
-          <div className="mt-8 mr-14">
+          <div className="mt-8 ">
             <h1>{props.bgImg} </h1>
 
             <ButtonGroup
