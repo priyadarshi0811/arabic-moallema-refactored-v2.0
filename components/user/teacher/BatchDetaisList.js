@@ -37,6 +37,7 @@ import BatchContext from "@/components/Context/store/batch-context";
 import { chapterCompletedBatch } from "@/backend/Chapters/ChapterCompletedDB";
 import { useRouter } from "next/router";
 import { fetchStudentsData } from "@/backend/Students/StudentDB";
+import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
 const style = {
   position: "absolute",
   top: "50%",
@@ -66,6 +67,8 @@ const ClassDetais = ({ batchName, user }) => {
   const [isDisabled, setIsDisabled] = React.useState(false);
   const [batchId, setBatchId] = React.useState();
   const [getModuleName, setModuleName] = React.useState();
+
+  const [recording, setRecording] = React.useState(false)
 
   const batchCtx = React.useContext(BatchContext);
   const attendanceList = batchCtx.attendanceList;
@@ -434,9 +437,13 @@ const ClassDetais = ({ batchName, user }) => {
               aria-labelledby="modal-modal-title"
               aria-describedby="modal-modal-description"
             >
-              <Box sx={style} className="bg-white rounded-md">
-                <div className="my-2 grid grid-cols-2">
-                  <div className="text-start">
+              <Box
+                sx={style}
+                className="bg-white rounded-md"
+                style={{ width: "720px" }}
+              >
+                <div className="my-2 grid grid-cols-4">
+                  <div className="text-start col-span-2">
                     <Typography
                       id="modal-modal-title"
                       variant="h6"
@@ -446,11 +453,25 @@ const ClassDetais = ({ batchName, user }) => {
                     </Typography>
                   </div>
                   <div className="text-end">
+                    <Button
+                      variant="contained"
+                      className="bg-dark-purple text-xs"
+                      onClick={()=>setRecording(!recording)}
+                    >
+                      {recording == true ? <RadioButtonCheckedIcon className="text-xs mx-1 text-red-500" /> : "Start "}
+                      
+                       Recording
+                    </Button>
+                  </div>
+                  <div className="text-end">
                     <Link
                       href={`/teacher/module/${getModuleName}`}
                       target="_blank"
                     >
-                      <Button variant="contained" className="bg-dark-purple">
+                      <Button
+                        variant="contained"
+                        className="bg-dark-purple text-xs"
+                      >
                         Start Module
                       </Button>
                     </Link>
