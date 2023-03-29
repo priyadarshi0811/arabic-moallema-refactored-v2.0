@@ -100,6 +100,11 @@ const index = () => {
             Back to Dashboard
           </Button>
         </Link>
+        <Link href="https://heyzine.com/flip-book/3a9219391d.html">
+          <Button className="bg-white text-dark-purple mx-5" variant="contained" startIcon={<ArrowBackIcon />}>
+            Flip Book
+          </Button>
+        </Link>
         <h1 className="ml-10 pt-2 text-white">Activity 2: Drag and Drop</h1>
       </div>
       <div className=" w-full p-2 rounded-md  flex flex-row justify-center content-center pt-5">
