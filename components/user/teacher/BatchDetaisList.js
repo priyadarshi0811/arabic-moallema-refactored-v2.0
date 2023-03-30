@@ -37,7 +37,9 @@ import BatchContext from "@/components/Context/store/batch-context";
 import { chapterCompletedBatch } from "@/backend/Chapters/ChapterCompletedDB";
 import { useRouter } from "next/router";
 import { fetchStudentsData } from "@/backend/Students/StudentDB";
-import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
+import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
+import Spinner from "@/components/Layout/spinner/Spinner";
+import { useEffect } from "react";
 const style = {
   position: "absolute",
   top: "50%",
@@ -68,7 +70,7 @@ const ClassDetais = ({ batchName, user }) => {
   const [batchId, setBatchId] = React.useState();
   const [getModuleName, setModuleName] = React.useState();
 
-  const [recording, setRecording] = React.useState(false)
+  const [recording, setRecording] = React.useState(false);
 
   const batchCtx = React.useContext(BatchContext);
   const attendanceList = batchCtx.attendanceList;
@@ -246,66 +248,278 @@ const ClassDetais = ({ batchName, user }) => {
 
   /////////////////////Session handling/////////////////////////////////
 
-  const chapterCompleted = async () => {
-    // let batchId = detail[0].batch_name;
+  /*************************Recording************************************ */
+  const [chapterCompletedClicked, setchapterCompletedClicked] =
+    React.useState(false);
+
+  const [chapterProgressClicked, setchapterProgressClicked] =
+    React.useState(false);
+  //Recording states
+  const [stream, setStream] = React.useState(null);
+  const [recorder, setRecorder] = React.useState(null);
+  const [isRecording, setIsRecording] = React.useState(false);
+  const [recordedVideo, setRecordedVideo] = React.useState(null);
+  const [finalVideo, setFinalVideo] = React.useState(null);
+  const [uploadingVideo, setUploadingVideo] = React.useState(false);
+
+  const videoRef = React.useRef(null);
+
+  /**************************complete chapter****************************** */
+  let statusName;
+
+  useEffect(() => {
     let chapterName = +chapters;
-    if (batchId) {
-      const data2 = await fetchIndividualBatch(batchId);
-      console.log(data2);
-      console.log(chapterName);
-      let array = [];
-      console.log(chapterName);
-      if (data2[0].chapter_completed) {
-        data2[0].chapter_completed.map((chapter) => array.push(+chapter));
+    const chapterCompletedFinal = async (videoUrl) => {
+      if (batchId && chapterCompletedClicked && chapters && finalVideo) {
+        const data2 = await fetchIndividualBatch(batchId);
+        console.log(data2);
+        console.log(chapterName);
+        let array = [];
+        console.log(chapterName);
+        if (data2[0].chapter_completed) {
+          data2[0].chapter_completed.map((chapter) => array.push(+chapter));
+        }
+        array.push(chapterName);
+        console.log(array);
+
+        chapterCompletedBatch(array, batchId);
+
+        let currentTime = new Date();
+        let currTime = currentTime.toLocaleString();
+        let teacherId = detail[0].teacher_id;
+        let status = "Completed";
+
+        deleteLiveClass(batchId);
+
+        const data = await postSessionData(
+          currTime,
+          attendanceList,
+          batchId,
+          teacherId,
+          chapterName,
+          status,
+          finalVideo
+        );
+        setchapterCompletedClicked(false);
+        window.location.reload();
       }
-      array.push(chapterName);
-      console.log(array);
+    };
+    chapterCompletedFinal();
+  }, [chapterCompletedClicked, batchId, chapters, finalVideo]);
 
-      chapterCompletedBatch(array, batchId);
+  const chapterCompleted = async () => {
+    statusName = "Completed";
 
-      let currentTime = new Date();
-      let currTime = currentTime.toLocaleString();
-      let teacherId = detail[0].teacher_id;
-      let status = "Completed";
+    setchapterCompletedClicked(true);
+    setTimeout(() => {
+      if (recording) {
+        setIsRecording(false);
+        recorder.stop();
+        stream.getTracks().forEach((track) => track.stop());
+      }
+    }, 1000);
 
-      deleteLiveClass(batchId);
+    if (!recording) {
+      if (batchId) {
+        let chapterName = +chapters;
 
-      postSessionData(
-        currTime,
-        attendanceList,
-        batchId,
-        teacherId,
-        chapterName,
-        status
-      );
+        const data2 = await fetchIndividualBatch(batchId);
+        console.log(data2);
+        console.log(chapterName);
+        let array = [];
+        console.log(chapterName);
+        if (data2[0].chapter_completed) {
+          data2[0].chapter_completed.map((chapter) => array.push(+chapter));
+        }
+        array.push(chapterName);
+        console.log(array);
+
+        chapterCompletedBatch(array, batchId);
+
+        let currentTime = new Date();
+        let currTime = currentTime.toLocaleString();
+        let teacherId = detail[0].teacher_id;
+        let status = "Completed";
+
+        deleteLiveClass(batchId);
+
+        const data = await postSessionData(
+          currTime,
+          attendanceList,
+          batchId,
+          teacherId,
+          chapterName,
+          status,
+          finalVideo
+        );
+        setchapterCompletedClicked(false);
+
+        if (data) {
+          window.location.reload();
+        }
+      }
+
       setOpen(false);
     }
-    window.location.reload();
   };
 
+  /**************************in-progress chapter****************************** */
+
+  useEffect(() => {
+    if (batchId && chapterProgressClicked && chapters && finalVideo) {
+      const postSession = async () => {
+        let currentTime = new Date();
+        let currTime = currentTime.toLocaleString();
+        // let moduleName = detail[0].book_name;
+        // let batchId = detail[0].batch_name;
+        let teacherId = detail[0].teacher_id;
+        let chapterName = chapters;
+        let status = "In Progress ";
+
+        deleteLiveClass(batchId);
+        console.log("in progress");
+
+        console.log("inside progress");
+        const data = await postSessionData(
+          currTime,
+          // moduleName,
+          attendanceList,
+          batchId,
+          teacherId,
+          chapterName,
+          status,
+          finalVideo
+        );
+        setchapterProgressClicked(false);
+        window.location.reload();
+      };
+      postSession();
+    }
+  }, [chapterProgressClicked, batchId, chapters, finalVideo]);
+
   const startSession = async () => {
-    if (batchId) {
-      let currentTime = new Date();
-      let currTime = currentTime.toLocaleString();
-      // let moduleName = detail[0].book_name;
-      // let batchId = detail[0].batch_name;
-      let teacherId = detail[0].teacher_id;
-      let chapterName = chapters;
-      let status = "In Progress ";
+    statusName = "InProgress";
+    setchapterProgressClicked(true);
+    setTimeout(() => {
+      if (recording) {
+        setIsRecording(false);
+        recorder.stop();
+        stream.getTracks().forEach((track) => track.stop());
+      }
+    }, 1000);
+    console.log("outside stop recording");
 
-      deleteLiveClass(batchId);
-      console.log("in progress");
+    if (!recording) {
+      if (batchId) {
+        let currentTime = new Date();
+        let currTime = currentTime.toLocaleString();
+        // let moduleName = detail[0].book_name;
+        // let batchId = detail[0].batch_name;
+        let teacherId = detail[0].teacher_id;
+        let chapterName = chapters;
+        let status = "In Progress ";
 
-      postSessionData(
-        currTime,
-        // moduleName,
-        attendanceList,
-        batchId,
-        teacherId,
-        chapterName,
-        status
-      );
+        deleteLiveClass(batchId);
+        console.log("in progress");
+
+        console.log("inside progress");
+        const data = await postSessionData(
+          currTime,
+          // moduleName,
+          attendanceList,
+          batchId,
+          teacherId,
+          chapterName,
+          status,
+          finalVideo
+        );
+        setchapterProgressClicked(false);
+
+        if (data) {
+          window.location.reload();
+        }
+      }
       setOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    if (chapterCompletedClicked) {
+      statusName = "Completed";
+    }
+    if (chapterProgressClicked) {
+      statusName = "InProgress";
+    }
+  }, [chapterCompletedClicked, chapterProgressClicked]);
+
+  const startSessionRecording = async () => {
+    setRecording(!recording);
+    try {
+      const audioStream = await navigator.mediaDevices.getUserMedia({
+        audio: {
+          volume: 1, // increase the audio volume
+        },
+      });
+      const videoStream = await navigator.mediaDevices.getDisplayMedia({
+        video: true,
+        audio: {
+          volume: 1, // increase the audio volume
+        },
+      });
+      const stream = new MediaStream([
+        ...audioStream.getTracks(),
+        ...videoStream.getTracks(),
+      ]);
+      setStream(stream);
+      const recorder = new MediaRecorder(stream);
+      setRecorder(recorder);
+      setIsRecording(true);
+
+      const chunks = [];
+      recorder.ondataavailable = (e) => {
+        if (e.data && e.data.size > 0) {
+          chunks.push(e.data);
+        }
+      };
+
+      recorder.onstop = async () => {
+        const blob = new Blob(chunks, { type: "video/webm" });
+        setRecordedVideo(blob);
+        const url = URL.createObjectURL(blob);
+        // videoRef.current.src = url;
+        // videoRef.current.volume = 1; // increase the video volume
+
+        const myFile = new File([blob], "demo.video/webm", {
+          type: "video/webm",
+        });
+
+        setUploadingVideo(true);
+
+        console.log(myFile);
+        const data = new FormData();
+        data.append("file", myFile);
+        data.append("upload_preset", "my_uploads");
+        data.append("cloud_name", "dbqeq2yxq");
+        data.append("resource_type", "video");
+
+        fetch("https://api.cloudinary.com/v1_1/dbqeq2yxq/video/upload", {
+          method: "post",
+          body: data,
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            setFinalVideo(data.url);
+            setOpen(false);
+            setUploadingVideo(false);
+            console.log(data);
+            return data.url;
+          })
+          .catch((err) => console.log(err));
+      };
+
+      recorder.start();
+    } catch (error) {
+      console.error("Error capturing screen stream:", error);
     }
   };
 
@@ -324,6 +538,8 @@ const ClassDetais = ({ batchName, user }) => {
       router.replace(`/student/module/${getModuleName}`);
     }
   };
+  console.log(recordedVideo);
+  console.log(finalVideo);
   return (
     <>
       {detail[0] && sheduleData && (
@@ -442,6 +658,13 @@ const ClassDetais = ({ batchName, user }) => {
                 className="bg-white rounded-md"
                 style={{ width: "720px" }}
               >
+                {uploadingVideo && (
+                  <div className="mb-10 flex justify-center">
+                    <Spinner />
+                    <label>Uploading Recorded Video....</label>
+                  </div>
+                )}
+
                 <div className="my-2 grid grid-cols-4">
                   <div className="text-start col-span-2">
                     <Typography
@@ -456,11 +679,14 @@ const ClassDetais = ({ batchName, user }) => {
                     <Button
                       variant="contained"
                       className="bg-dark-purple text-xs"
-                      onClick={()=>setRecording(!recording)}
+                      onClick={startSessionRecording}
                     >
-                      {recording == true ? <RadioButtonCheckedIcon className="text-xs mx-1 text-red-500" /> : "Start "}
-                      
-                       Recording
+                      {recording == true ? (
+                        <RadioButtonCheckedIcon className="text-xs mx-1 text-red-500" />
+                      ) : (
+                        "Start "
+                      )}
+                      Recording
                     </Button>
                   </div>
                   <div className="text-end">

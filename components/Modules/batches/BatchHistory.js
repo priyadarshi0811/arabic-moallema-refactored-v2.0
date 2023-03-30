@@ -104,6 +104,8 @@ export default function CustomPaginationActionsTable({
   batchHistory,
   type,
   getAttandanceSelectedSession,
+  user,
+  getRecordedVideo,
 }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(6);
@@ -145,14 +147,23 @@ export default function CustomPaginationActionsTable({
             <TableRow className=" bg-gray-50 ">
               <TableCell className=" font-semibold ">Chapter</TableCell>
               <TableCell className=" font-semibold ">Date and Time</TableCell>
-              {/* <TableCell >Time</TableCell> */}
-              <TableCell className=" font-semibold ">Total Students</TableCell>
+              {user !== "student" && (
+                <TableCell className=" font-semibold ">
+                  Total Students
+                </TableCell>
+              )}
               <TableCell className=" font-semibold " align="center">
                 Status
               </TableCell>
-              {type === "chapterDetail" && (
+
+              {type === "chapterDetail" && user !== "student" && (
                 <TableCell className=" font-semibold " align="center">
                   Attendance
+                </TableCell>
+              )}
+              {user === "student" && (
+                <TableCell className=" font-semibold " align="center">
+                  Recorded Video
                 </TableCell>
               )}
             </TableRow>
@@ -179,9 +190,12 @@ export default function CustomPaginationActionsTable({
                   {new Date(chapter.starting_time).getHours()}:
                   {new Date(chapter.starting_time).getMinutes()}
                 </TableCell>
-                <TableCell>
-                  {chapter.students_present.students.length} Students
-                </TableCell>
+                {user !== "student" && (
+                  <TableCell>
+                    {chapter.students_present.students.length} Students
+                  </TableCell>
+                )}
+
                 <TableCell style={{ width: 180 }} align="center">
                   {chapter.chapter_completion_status === "Completed" ? (
                     <Chip
@@ -197,7 +211,8 @@ export default function CustomPaginationActionsTable({
                     />
                   )}
                 </TableCell>
-                {type === "chapterDetail" && (
+
+                {type === "chapterDetail" && user !== "student" && (
                   <TableCell align="center">
                     <Button
                       onClick={() =>
@@ -205,6 +220,15 @@ export default function CustomPaginationActionsTable({
                       }
                     >
                       See Attendance
+                    </Button>
+                  </TableCell>
+                )}
+                {user === "student" && (
+                  <TableCell align="center">
+                    <Button
+                      onClick={() => getRecordedVideo(chapter.session_id)}
+                    >
+                      Video
                     </Button>
                   </TableCell>
                 )}

@@ -7,7 +7,8 @@ export const postSessionData = async (
   batchId,
   teacherId,
   chapterName,
-  status
+  status,
+  finalVideo
 ) => {
   const { data, error } = await supabase
     .from("session_exp_duplicate")
@@ -19,6 +20,7 @@ export const postSessionData = async (
       teacher_id: teacherId,
       chapter_completion_status: status,
       chapter_id: chapterName,
+      recorded_video: finalVideo,
     })
     .select();
 
@@ -26,6 +28,7 @@ export const postSessionData = async (
     console.log("Error creating session: ", error);
     return null;
   }
+  return data;
 };
 
 export const fetchSessionAttendance = async (
@@ -36,6 +39,26 @@ export const fetchSessionAttendance = async (
   const { data, error } = await supabase
     .from("session_exp_duplicate")
     .select("students_present")
+    .match({
+      batch_id: batch_id,
+      session_id: session_id,
+      chapter_id: chapter_id,
+    });
+  if (error) {
+    console.log("Error fetching batches data: ", error);
+    return null;
+  }
+  return data;
+};
+
+export const fetchSessionRecording = async (
+  batch_id,
+  session_id,
+  chapter_id
+) => {
+  const { data, error } = await supabase
+    .from("session_exp_duplicate")
+    .select("recorded_video")
     .match({
       batch_id: batch_id,
       session_id: session_id,
