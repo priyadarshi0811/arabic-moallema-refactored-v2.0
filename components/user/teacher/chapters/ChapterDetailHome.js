@@ -13,16 +13,22 @@ import {
   fetchEnrolledStudentsInBatch,
 } from "@/backend/Batches/BatchesDB";
 import { fetchBatchesData } from "@/backend/Announcement/AnnouncementDB";
-import { fetchSessionData } from "@/backend/Session/SessionDB";
+import {
+  fetchSessionData,
+  fetchSessionRecording,
+} from "@/backend/Session/SessionDB";
 import { fetchSessionAttendance } from "@/backend/Session/SessionDB";
 import { fetchChapterIdBasedOnChapterName } from "@/backend/Chapters/GetChaptersDB";
 import { fetchStudentsData } from "@/backend/Students/StudentDB";
+import WarningCard from "@/components/Layout/card/WarningCard";
 // import InProgress from "@/components/Layout/screen/InProgress";
 // import MiniCard from "@/components/Layout/card/MiniCard";
 
-const ChapterDetailHome = ({ chapterName, batchName }) => {
+const ChapterDetailHome = ({ chapterName, batchName, user }) => {
   console.log(chapterName, " ", batchName);
   const [presentStudent, setPresentStudent] = useState();
+  const [sessionRecording, setSessionRecording] = useState();
+
   const [allStudentsInBatch, setAllStudentsInBatch] = useState([]);
   const [allStudentsInBatchData, setAllStudentsInBatchData] = useState([]);
 
@@ -133,6 +139,22 @@ const ChapterDetailHome = ({ chapterName, batchName }) => {
     }
   };
 
+  const getRecordedVideo = async (value) => {
+    const sessionId = value;
+
+    console.log(sessionId);
+
+    if (batchId && chapterId) {
+      const data = await fetchSessionRecording(batchId, sessionId, chapterId);
+      console.log(data);
+      if (data) {
+        setSessionRecording(data[0].recorded_video);
+      }
+    }
+  };
+
+  console.log(sessionRecording);
+
   return (
     <div
       className=""
@@ -161,41 +183,62 @@ const ChapterDetailHome = ({ chapterName, batchName }) => {
               <div className="col-span-1">
                 {chapterDetail && (
                   <BatchHistory
+                    user={user}
                     title="Class History"
                     action="btn"
                     type="chapterDetail"
                     batchHistory={chapterDetail}
                     getAttandanceSelectedSession={getAttandanceSelectedSession}
+                    getRecordedVideo={getRecordedVideo}
                   />
                 )}
               </div>
-              <div className="col-span-1 ">
-                <div className="bg-white rounded-md p-5 ">
-                  <h1 className="py-2 border-b-2 ">Attendance</h1>
-                  <div className=" flex  justify-around mt-10">
-                    <div className="w-full px-2">
-                      <h1 className="py-2 border-b-2 ">Present Students</h1>
-                      {presentStudentsArray && (
-                        <AttandanceList
-                          presentStudentsArray={presentStudentsArray}
-                          value="Student"
-                          type="present"
-                        />
-                      )}
-                    </div>
-                    <div className="w-full px-2">
-                      <h1 className="py-2 border-b-2 ">Absent Students</h1>
-                      {absentStudents && (
-                        <AttandanceList
-                          absentStudents={absentStudents}
-                          value="Student"
-                          type="absent"
-                        />
-                      )}
+              {user !== "student" && (
+                <div className="col-span-1 ">
+                  <div className="bg-white rounded-md p-5 ">
+                    <h1 className="py-2 border-b-2 ">Attendance</h1>
+                    <div className=" flex  justify-around mt-10">
+                      <div className="w-full px-2">
+                        <h1 className="py-2 border-b-2 ">Present Students</h1>
+                        {presentStudentsArray && (
+                          <AttandanceList
+                            presentStudentsArray={presentStudentsArray}
+                            value="Student"
+                            type="present"
+                          />
+                        )}
+                      </div>
+                      <div className="w-full px-2">
+                        <h1 className="py-2 border-b-2 ">Absent Students</h1>
+                        {absentStudents && (
+                          <AttandanceList
+                            absentStudents={absentStudents}
+                            value="Student"
+                            type="absent"
+                          />
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              )}
+              {user === "student" && sessionRecording && (
+                <div className=" items-center justify-center ">
+                  <label className=" border-b-2 flex items-center justify-center text-2xl font-semibold mb-10">
+                    Session Recording
+                  </label>
+                  <div className=" flex justify-center">
+                    <video
+                      className=" flex items-center justify-center bg-slate-400 rounded-lg shadow-lg h-96 "
+                      src={sessionRecording}
+                      controls
+                    />
+                  </div>
+                </div>
+              )}
+              {user === "student" && sessionRecording == null && (
+                <WarningCard title="No Session Recording" />
+              )}
             </div>
           </div>
         </div>
