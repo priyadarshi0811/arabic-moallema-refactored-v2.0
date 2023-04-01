@@ -119,24 +119,44 @@ const ClassDetais = ({ batchName, user }) => {
         )}
 
         <div className="mt-4  relative">{loading && <LoadingSpinner />}</div>
-        <MUISlider
-          card={
-            !loading &&
-            completedChaptersData &&
-            completedChaptersData.map((chapter) => (
-              <div className="px-2">
-                <MUIMiniCard
-                  title={chapter}
-                  disc="15/02/23"
-                  isBtn={user === "student" ? false : true}
-                  btnText="View"
-                  link={`/teacher/chapter-detail/${chapter}/${batchName}`}
-                />
-              </div>
-            ))
-          }
-        />
-
+        {user !== "student" && (
+          <MUISlider
+            card={
+              !loading &&
+              completedChaptersData &&
+              completedChaptersData.map((chapter) => (
+                <div className="px-2">
+                  <MUIMiniCard
+                    title={chapter}
+                    disc="15/02/23"
+                    isBtn={true}
+                    btnText="View"
+                    link={`/teacher/chapter-detail/${chapter}/${batchName}`}
+                  />
+                </div>
+              ))
+            }
+          />
+        )}
+        {user === "student" && (
+          <MUISlider
+            card={
+              !loading &&
+              completedChaptersData &&
+              completedChaptersData.map((chapter) => (
+                <div className="px-2">
+                  <MUIMiniCard
+                    title={chapter}
+                    disc="15/02/23"
+                    isBtn={true}
+                    btnText="View"
+                    link={`/student/chapter-detail/${chapter}/${batchName}`}
+                  />
+                </div>
+              ))
+            }
+          />
+        )}
         <h1 className="text-lg  mt-10">Upcoming Chapters</h1>
         <div className="mt-4  relative">{loading && <LoadingSpinner />}</div>
         <MUISlider

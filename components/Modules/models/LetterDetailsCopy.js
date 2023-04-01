@@ -115,7 +115,7 @@ const LetterDetails = (props) => {
                   <div className="m-3 span-cols-2 ">
                     <span>Initial Form</span>
                     <h1
-                      className="mt-5 text-5xl text-gray-300 font-sans "
+                      className="mt-5 text-5xl text-gray-300 font-sans"
                       dir="rtl"
                       lang="ar"
                     >
