@@ -61,6 +61,7 @@ const index = () => {
     router.replace("/");
   }
 
+  
   useEffect(() => {
     console.log("in");
     if (typeStudent && loggedIn) {

@@ -13,28 +13,28 @@ import AuthContext from "@/components/Context/store/auth-context";
 const index = () => {
   const router = useRouter();
   const authCtx = useContext(AuthContext);
-  
+
   /**************Restricting Teachers Route************************* */
   const loggedIn = authCtx.isLoggedIn;
-  const typeTeacher = authCtx.userType === "instructor" ? true : false;
-  if (!typeTeacher && loggedIn) {
+  const typeStudent = authCtx.userType === "student" ? true : false;
+  if (!typeStudent && loggedIn) {
     router.replace("/");
   }
 
   useEffect(() => {
     console.log("in");
-    if (typeTeacher && loggedIn) {
-      if (!typeTeacher && !loggedIn) {
+    if (typeStudent && loggedIn) {
+      if (!typeStudent && !loggedIn) {
         console.log("second in");
         router.replace("/");
       }
     }
     const localType = localStorage.getItem("type");
-    if (localType !== "instructor") {
+    if (localType !== "student") {
       console.log("second in");
       router.replace("/");
     }
-  }, [loggedIn, typeTeacher]);
+  }, [loggedIn, typeStudent]);
 
   /**************Restricting Teachers Route************************* */
   return (

@@ -5,9 +5,40 @@ import FullCard from "@/components/Layout/card/FullCard";
 import AudioButton from "@/components/Layout/elements/AudioBtn";
 import Link from "next/link";
 import { Button } from "@mui/material";
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+
+import { useContext } from "react";
+import AuthContext from "@/components/Context/store/auth-context";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 const positioning = () => {
+  const router = useRouter();
+  const authCtx = useContext(AuthContext);
+
+  /**************Restricting Students Route************************* */
+  const loggedIn = authCtx.isLoggedIn;
+  const typeStudent = authCtx.userType === "student" ? true : false;
+  if (!typeStudent && loggedIn) {
+    router.replace("/");
+  }
+
+  useEffect(() => {
+    console.log("in");
+    if (typeStudent && loggedIn) {
+      if (!typeStudent && !loggedIn) {
+        console.log("second in");
+        router.replace("/");
+      }
+    }
+    const localType = localStorage.getItem("type");
+    if (localType !== "student") {
+      console.log("second in");
+      router.replace("/");
+    }
+  }, [loggedIn, typeStudent]);
+
+  /**************Restricting Students Route************************* */
   return (
     <div
       className=""
@@ -36,7 +67,15 @@ const positioning = () => {
           btn=<AudioButton url="https://assets.mixkit.co/active_storage/sfx/212/212-preview.mp3" />
         />
         <div className="mt-5 text-end">
-            <Link href ='/student/module/harakat/harkat-details'><Button variant="contained" className="bg-dark-purple"  endIcon={<NavigateNextIcon />} >Next</Button></Link>
+          <Link href="/student/module/harakat/harkat-details">
+            <Button
+              variant="contained"
+              className="bg-dark-purple"
+              endIcon={<NavigateNextIcon />}
+            >
+              Next
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
