@@ -24,7 +24,6 @@ const index = () => {
   if (!typeTeacher && loggedIn) {
     router.replace("/");
   }
-
   useEffect(() => {
     console.log("in");
     if (typeTeacher && loggedIn) {
@@ -33,6 +32,7 @@ const index = () => {
         router.replace("/");
       }
     }
+
     const localType = localStorage.getItem("type");
     if (localType !== "instructor") {
       console.log("second in");

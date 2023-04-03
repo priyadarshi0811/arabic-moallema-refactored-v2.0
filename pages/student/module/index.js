@@ -8,7 +8,39 @@ import TopTitleWithImg from "@/components/Layout/section/TopTitleWithImg";
 import Link from "next/link";
 import { Button } from "@mui/material";
 
+import { useContext } from "react";
+import AuthContext from "@/components/Context/store/auth-context";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+
 const index = () => {
+  const router = useRouter();
+  const authCtx = useContext(AuthContext);
+
+  /**************Restricting Students Route************************* */
+  const loggedIn = authCtx.isLoggedIn;
+  const typeStudent = authCtx.userType === "student" ? true : false;
+  if (!typeStudent && loggedIn) {
+    router.replace("/");
+  }
+
+  useEffect(() => {
+    console.log("in");
+    if (typeStudent && loggedIn) {
+      if (!typeStudent && !loggedIn) {
+        console.log("second in");
+        router.replace("/");
+      }
+    }
+    const localType = localStorage.getItem("type");
+    if (localType !== "student") {
+      console.log("second in");
+      router.replace("/");
+    }
+  }, [loggedIn, typeStudent]);
+
+  /**************Restricting Students Route************************* */
+
   return (
     <div
       className=""
@@ -69,7 +101,7 @@ const index = () => {
               </Button>
             </Link>
           </div>
-         \
+          \
         </div>
       </div>
     </div>

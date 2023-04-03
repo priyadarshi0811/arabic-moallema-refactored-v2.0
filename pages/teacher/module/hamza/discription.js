@@ -7,8 +7,38 @@ import Link from "next/link";
 import { Button } from "@mui/material";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import TypeInDiscCard from "@/components/Modules/models/TypeInDiscCard";
+import { useContext } from "react";
+import AuthContext from "@/components/Context/store/auth-context";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 const positioning = () => {
+  const authCtx = useContext(AuthContext);
+  const router = useRouter();
+
+  /**************Restricting Teachers Route************************* */
+  const loggedIn = authCtx.isLoggedIn;
+  const typeTeacher = authCtx.userType === "instructor" ? true : false;
+  if (!typeTeacher && loggedIn) {
+    router.replace("/");
+  }
+
+  useEffect(() => {
+    console.log("in");
+    if (typeTeacher && loggedIn) {
+      if (!typeTeacher && !loggedIn) {
+        console.log("second in");
+        router.replace("/");
+      }
+    }
+    const localType = localStorage.getItem("type");
+    if (localType !== "instructor") {
+      console.log("second in");
+      router.replace("/");
+    }
+  }, [loggedIn, typeTeacher]);
+  /**************Restricting Teachers Route************************* */
+
   return (
     <div
       className=""
