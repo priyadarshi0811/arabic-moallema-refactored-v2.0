@@ -5,13 +5,40 @@ import React from "react";
 import colorBgImg from "@/components/src/img/colorBgImg.png";
 import AlphabetSlider from "@/components/Modules/models/AlphabetSlider";
 import logo from "@/components/src/img/AMLogo.png";
+import { useContext } from "react";
+import AuthContext from "@/components/Context/store/auth-context";
+import { useEffect } from "react";
 
 const index = () => {
   const router = useRouter();
   const id = router.query.alphabateDetail;
 
-  //accessing id
-  // console.log(id);
+  const authCtx = useContext(AuthContext);
+
+  /**************Restricting Students Route************************* */
+  const loggedIn = authCtx.isLoggedIn;
+  const typeStudent = authCtx.userType === "student" ? true : false;
+  if (!typeStudent && loggedIn) {
+    router.replace("/");
+  }
+
+  useEffect(() => {
+    console.log("in");
+    if (typeStudent && loggedIn) {
+      if (!typeStudent && !loggedIn) {
+        console.log("second in");
+        router.replace("/");
+      }
+    }
+    const localType = localStorage.getItem("type");
+    if (localType !== "student") {
+      console.log("second in");
+      router.replace("/");
+    }
+  }, [loggedIn, typeStudent]);
+
+  /**************Restricting Students Route************************* */
+
   return (
     <>
       <div

@@ -9,7 +9,39 @@ import { Button } from "@mui/material";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import BigTitleCard from "@/components/Modules/models/BigTitleCard";
 
+
+import { useContext } from "react";
+import AuthContext from "@/components/Context/store/auth-context";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+
+
 const positioning = () => {
+  const authCtx = useContext(AuthContext);
+  const router = useRouter();
+
+  /**************Restricting Teachers Route************************* */
+  const loggedIn = authCtx.isLoggedIn;
+  const typeTeacher = authCtx.userType === "instructor" ? true : false;
+  if (!typeTeacher && loggedIn) {
+    router.replace("/");
+  }
+
+  useEffect(() => {
+    console.log("in");
+    if (typeTeacher && loggedIn) {
+      if (!typeTeacher && !loggedIn) {
+        console.log("second in");
+        router.replace("/");
+      }
+    }
+    const localType = localStorage.getItem("type");
+    if (localType !== "instructor") {
+      console.log("second in");
+      router.replace("/");
+    }
+  }, [loggedIn, typeTeacher]);
+  /**************Restricting Teachers Route************************* */
   return (
     <div
       className=""

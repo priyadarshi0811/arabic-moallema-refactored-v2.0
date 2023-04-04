@@ -57,7 +57,6 @@ const index = () => {
   if (!typeTeacher && loggedIn) {
     router.replace("/");
   }
-
   useEffect(() => {
     console.log("in");
     if (typeTeacher && loggedIn) {
