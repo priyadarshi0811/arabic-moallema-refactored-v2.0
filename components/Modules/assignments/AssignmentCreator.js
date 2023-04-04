@@ -22,6 +22,7 @@ import BatchContext from "@/components/Context/store/batch-context";
 import { useRouter } from "next/router";
 import { fetchSubModulesCreatedActivity } from "@/backend/Assignment/FetchAssignmentDB";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import SelectOption from "@/components/Layout/mui-comps/assignment_builder_selector/select_option_activity";
 
 const Modules_Option = {
   alphabets: [
@@ -70,9 +71,14 @@ const modules = [
 
 const ADD_ACTIVITY = "Add Activity";
 const ADD_TRACING = "Add Tracing";
+const ADD_SELECT = "Add Select";
+const ADD_Question = "Add Select";
+
 const ADD_DND_COLUMN = "Add DND Column";
 const ADD_DND_Task = "Add DND Task";
 const ADD_DATA = "Add DATA";
+
+//Reducer function to handle/create any type of activity
 
 const reducerFunction = (state, action) => {
   let newState = { ...state };
@@ -86,6 +92,12 @@ const reducerFunction = (state, action) => {
   } else if (action.type === ADD_DATA) {
     newState.letter[action.payload.index] = action.payload.data;
     return newState;
+  } else if (action.type === ADD_SELECT) {
+    console.log(newState.letter[action.payload.index]);
+    newState.letter[action.payload.index].select_data = action.payload.data;
+    newState.letter[action.payload.index].question = action.payload.question;
+
+    return newState;
   }
   return state;
 };
@@ -94,15 +106,19 @@ const AssignmentCreator = () => {
   // STATES FOR ALL ACTIVITIES
   const [assignmentState, DispatchSetAssignment] = useReducer(reducerFunction, {
     letter: [
-      {
-        activity_type: "trace",
-        trace_data: [],
-      },
+      // {
+      //   activity_type: "trace",
+      //   trace_data: [],
+      // },
     ],
   });
 
   // 1. Tracing
   const [tracingLetters, setTracingLetters] = useState({});
+  const [selectLetters, setSelectedLetters] = useState({});
+  const [questionForSelectActivity, setquestionForSelectActivity] = useState();
+
+  //trigger function for trace activity and dispatching the trace data to reducer
   const triggerTraceDataState = (tracing_letter_new) => {
     console.log("inside trigger: ", tracing_letter_new);
     const key = Object.keys(tracing_letter_new);
@@ -128,7 +144,47 @@ const AssignmentCreator = () => {
     console.log(tracingLetters);
   };
 
+  //3. select
+  //trigger function for select activity and dispatching the selected data to reducer
+
+  const triggerSelectData = (tracing_letter_new) => {
+    console.log(questionForSelectActivity);
+    console.log("inside select: ", tracing_letter_new);
+    const key = Object.keys(tracing_letter_new);
+    let index;
+    let values;
+
+    if (key[0]) {
+      const arr = key[0].split("_");
+      index = arr[0];
+      console.log("index: ", index);
+      values = Object.values(tracing_letter_new[key[0]]);
+      console.log("values: ", values);
+    }
+
+    console.log(questionForSelectActivity);
+    DispatchSetAssignment({
+      type: ADD_SELECT,
+      payload: {
+        index,
+        data: values,
+        question: questionForSelectActivity,
+      },
+    });
+    setSelectedLetters(tracing_letter_new);
+    console.log(tracingLetters);
+  };
+
+  //setting the question
+  const getQuestion = (question) => {
+    console.log(question);
+    setquestionForSelectActivity(question);
+  };
+
   // 2. DnD
+
+  //trigger function for DND activity and dispatching the DND data to reducer (dnd bucket letter)
+
   const [dndBucketLetters, setDndBucketLetters] = useState([]);
   const triggerDndBucketLetters = (dnd_bucket_letters) => {
     console.log("inside triggerDndBucketLetters: ", dnd_bucket_letters);
@@ -197,6 +253,9 @@ const AssignmentCreator = () => {
 
     console.log(dndBucketLetters);
   };
+
+  //trigger function for DND activity and dispatching the DND data to reducer (dnd option letter)
+
   const [dndOptionsLetters, setDndOptionsLetters] = useState([]);
   const triggerDndOptionLetters = (dnd_options_letters) => {
     console.log("tasks: ", dndOptionsLetters);
@@ -244,16 +303,16 @@ const AssignmentCreator = () => {
     console.log(dndOptionsLetters);
   };
 
-  // 3. IdentifyByAudio
-  const [audioFile, setAudioFile] = useState([]);
-  const [identifyOptions, setIdentifyOptions] = useState([]);
-
   const [incrementerVal, setIncrementerVal] = useState(0);
   const [selectedActivity, setSelectedActivity] = useState(0);
-  const assignment_cards = ["Tracing", "Drag and Drop", "Identify by audio"];
+  const assignment_cards = [
+    "Tracing",
+    "Drag and Drop",
+    "Select Option Activity",
+  ];
 
   // store the
-  const [activityCompList, setActivityCompList] = useState([0]);
+  const [activityCompList, setActivityCompList] = useState([]);
 
   const assignment_component_map = {
     0: (inc, trace_letter_state = triggerTraceDataState) => {
@@ -281,21 +340,20 @@ const AssignmentCreator = () => {
 
     2: (
       inc,
-      audio_file = audioFile,
-      audio_file_state = setAudioFile,
-      identify_options_letter = identifyOptions,
-      identify_options_letter_state = setIdentifyOptions
+      select_letter_state = triggerSelectData,
+      get_question = getQuestion
     ) => {
       return (
-        <IdentifyByAudioBuilder
-          incrementer={audio_file}
-          setAudioFile={audio_file_state}
-          identifyOptions={identify_options_letter}
-          setIdentifyOptions={identify_options_letter_state}
+        <SelectOption
+          incrementer={inc}
+          setSelectedLetters={select_letter_state}
+          setquestionForSelectActivity={get_question}
         />
       );
     },
   };
+
+  console.log(selectLetters);
 
   const handleChange = (event) => {
     setSelectedActivity(event.target.value);
@@ -303,6 +361,7 @@ const AssignmentCreator = () => {
     console.log("Selected activity index:" + selectedActivity);
   };
 
+  //new activity added dispatcher (setting the activity object )
   const newAddActivity = () => {
     if (selectedActivity === 0) {
       let traceActivity = {
@@ -329,6 +388,16 @@ const AssignmentCreator = () => {
         type: ADD_ACTIVITY,
         payload: dndActivity,
       });
+    } else if (selectedActivity === 2) {
+      let selectActivity = {
+        activity_type: "select",
+        question: "",
+        select_data: [],
+      };
+      DispatchSetAssignment({
+        type: ADD_ACTIVITY,
+        payload: selectActivity,
+      });
     }
   };
 
@@ -349,7 +418,6 @@ const AssignmentCreator = () => {
     fethSubModule();
   }, []);
 
-  
   useEffect(() => {
     if (submoduleArray && universalSubModule) {
       console.log("universalModule: ", universalSubModule);

@@ -147,7 +147,9 @@ const DrawingCanvas = (props) => {
       }
       setMyArray([]);
       router.replace("/student/module/alphabets");
-      window.location.href = "/student/module/alphabets";
+      router.replace("/student/module/alphabets");
+
+      // window.location.href = "/student/module/alphabets";
     }
   }, [currentIndex]);
 

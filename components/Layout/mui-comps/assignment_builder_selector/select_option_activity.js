@@ -6,30 +6,25 @@ import {
   IconButton,
   Grid,
 } from "@mui/material";
-import Box from "@mui/material/Box";
-import CardActions from "@mui/material/CardActions";
-import Button from "@mui/material/Button";
-import Divider from "@mui/material/Divider";
+
 import Stack from "@mui/material/Stack";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import React, { useState } from "react";
 
-import AddCircleIcon from "@mui/icons-material/AddCircle";
 import DeleteIcon from "@mui/icons-material/Delete";
-import TextFieldCard from "@/components/Layout/card/TextFieldCard";
 
-const TracingBuilder = (props) => {
-  const [traceLetter, setTraceLetter] = useState({});
+const SelectOption = (props) => {
+  const [selectLetters, setSelectedLetters] = useState({});
 
   const addTraceWords = (event, asg_index, iter_index) => {
-    let id = "a" + asg_index + "_tr" + iter_index;
+    let id = "a" + asg_index + "_sl" + iter_index;
 
-    let obj = traceLetter;
+    let obj = selectLetters;
     obj[id] = event.target.value;
     let parent_obj = {
-      [asg_index + "_trace"]: traceLetter,
+      [asg_index + "_select"]: selectLetters,
     };
-    props.setTracingLetters(parent_obj);
+    props.setSelectedLetters(parent_obj);
   };
 
   const [renderIter, setRenderIter] = useState([1]);
@@ -51,10 +46,21 @@ const TracingBuilder = (props) => {
 
   return (
     <>
-      <h1 className="mt-10 px-5 pb-3 border-b-2 text-xl">Task: Tracing </h1>
+      <h1 className="mt-10 px-5 pb-3 border-b-2 text-xl">
+        Task: Select Option{" "}
+      </h1>
       <div className=" p-5 rounded-md ">
         <h1 className="font-normal">
-          Enter the words that can be traced by the students
+          Enter the question for the word that can be selected by the students
+        </h1>
+        <input
+          onChange={(e) => props.setquestionForSelectActivity(e.target.value)}
+          type="text"
+          className=" mt-8 rounded-lg w-96"
+          placeholder="Enter the question"
+        />
+        <h1 className="font-normal mt-8">
+          Enter the words that can be selected by the students
         </h1>
         <div className="grid grid-cols-6 gap-8 p-5">
           {renderIter.map((val, key) => {
@@ -72,10 +78,6 @@ const TracingBuilder = (props) => {
               </>
             );
           })}
-
-          {/* <div className="col-span-2">
-            <TextFieldCard />
-          </div> */}
         </div>
       </div>
     </>
@@ -136,4 +138,4 @@ const MUICard = (props) => {
   );
 };
 
-export default TracingBuilder;
+export default SelectOption;
