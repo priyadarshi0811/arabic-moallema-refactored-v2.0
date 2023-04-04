@@ -7,12 +7,16 @@ import { Button } from "@mui/material";
 import logo from "@/components/src/img/AMLogo.png";
 import { addActivityStartStatus } from "@/backend/ActivityStartLog/SetActivityLogDB";
 import { fetchBatcheIdBasedOnBatchName } from "@/backend/Batches/BatchesDB";
+import { fetchAssignmentForLetter } from "@/backend/Assignment/FetchAssignmentDB";
 
 const LetterDetails = (props) => {
   console.log("user: ", props.user);
   const [showCanvas, setShowCanvas] = useState(false);
+  const [activityPath, setActivityPath] = useState();
+
   const [getColor, setColor] = useState("red");
   const [batchId, setBatchId] = useState();
+  const [assignment, setAssignment] = useState([]);
 
   const changeColorPri = (colorData) => {
     //console.log(getColor);
@@ -35,19 +39,53 @@ const LetterDetails = (props) => {
   console.log(batchId);
   console.log(props.module);
 
-  const setActivitySubmodule = () => {
+  //get the assignment for the selected activity
+  useEffect(() => {
+    const fetchAssignment = async () => {
+      if (props.name && props.module) {
+        const data = await fetchAssignmentForLetter(props.name, props.module);
+        if (data[0]) {
+          setAssignment(data[0].assignment_json.letter);
+          if (data[0].assignment_json.letter[0].activity_type === "trace") {
+            setActivityPath("tracing");
+          }
+          if (data[0].assignment_json.letter[0].activity_type === "dnd") {
+            setActivityPath("dnd");
+          }
+        }
+      }
+    };
+    fetchAssignment();
+  }, [props.module, props.name]);
+
+  console.log(assignment);
+  console.log(activityPath);
+
+  const setActivitySubmodule = async () => {
     if (props.user !== "student") {
+      let data;
       const subModule = props.name;
       if (subModule && batchId && props.module) {
-        let data = addActivityStartStatus(props.module, subModule, batchId);
+         data = await addActivityStartStatus(
+          props.module,
+          subModule,
+          batchId
+        );
         if (!data) {
           console.log("already added");
         }
       }
     }
-    window.location.href = `/${props.user}/activity/tracing/alphabets/${
-      props.name
-    }/${0}`;
+    if (activityPath) {
+      window.location.href = `/${
+        props.user
+      }/activity/${activityPath}/alphabets/${props.name}/${0}`;
+    }
+    if (activityPath === undefined) {
+      window.location.href = `/${props.user}/activity/tracing/alphabets/${
+        props.name
+      }/${0}`;
+    }
   };
 
   const canvasHandler = () => {

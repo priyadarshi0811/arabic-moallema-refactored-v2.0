@@ -56,7 +56,9 @@ const DragDropBuilder = (props) => {
 
   return (
     <div>
-      <h1 className="mt-10 px-5 pb-3 border-b-2 text-xl">Task: Drag and Drop </h1>
+      <h1 className="mt-10 px-5 pb-3 border-b-2 text-xl">
+        Task: Drag and Drop{" "}
+      </h1>
       <div className=" p-5 rounded-md ">
         <h1 className="font-normal">Enter the bucket list and below</h1>
         <div className="grid grid-cols-6 gap-8 p-5">
@@ -102,9 +104,7 @@ const DragDropBuilder = (props) => {
           </div> */}
         </div>
       </div>
-      <label>
-        {/* <b>Task {props.incrementer + 1}</b> */}
-      </label>
+      <label>{/* <b>Task {props.incrementer + 1}</b> */}</label>
       <br />
     </div>
   );
