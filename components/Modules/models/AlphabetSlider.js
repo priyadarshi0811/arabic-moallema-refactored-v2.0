@@ -44,6 +44,11 @@ const Alphabates = [
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
+  console.log("Harakat", props.type, "Type");
+  console.log("Harakat", props.user, "User");
+  console.log("Harakat", props.module, "module");
+  console.log("Harakat", props.title, "title");
+
   return (
     <div
       role="tabpanel"
@@ -99,6 +104,7 @@ export default function VerticalTabs(props) {
 
   return (
     <Box sx={{ display: "flex", height: "100vh" }}>
+      {/* Module: 1 */}
       {props.type == "tracing" ? (
         <Tabs
           orientation="vertical"
@@ -132,7 +138,7 @@ export default function VerticalTabs(props) {
           ))}
         </Tabs>
       ) : (
-        ""
+        null
       )}
       {props.type == "alphabets" ? (
         <Tabs
@@ -165,7 +171,7 @@ export default function VerticalTabs(props) {
           ))}
         </Tabs>
       ) : (
-        ""
+        null
       )}
       {props.type == "alphabets" ? (
         <TabPanel value={value} index={0}>
@@ -179,13 +185,109 @@ export default function VerticalTabs(props) {
           )}
         </TabPanel>
       ) : (
-        ""
+        null
       )}
       {props.type == "tracing" ? (
         <ActivityDetail symbol={symbol} id={props.id} type="LetterTracing" />
       ) : (
-        ""
+        null
       )}
+
+
+      {/* Module: 2 */}
+
+      {props.type == "harakat" ? (
+        <Tabs
+          orientation="vertical"
+          variant="scrollable"
+          value={value}
+          onChange={handleChange}
+          // aria-label="Vertical tabs example"
+          sx={{
+            borderRight: 1,
+            borderColor: "divider",
+            background: "rgb(0 79 112)",
+            color: "white",
+            width: "240px",
+          }}
+        >
+          {Alphabates.map((alphabate) => (
+            <Link
+              href={`/${props.user}/module/${props.type}/${alphabate.title}`}
+              className=" p-0 my-2 rounded-full text-center"
+            >
+              <Tab
+                className={`text-3xl  py-3 px-0 mx-0 text-white font-bold rounded-full font-sans  focus:bg-cyan-400 bg-black`} // ${styleBg}
+                label={alphabate.letter}
+                id={props.id}
+                sx={{ border: "2px solid white" }}
+                //  onClick={changeStyle}
+              />
+            </Link>
+          ))}
+        </Tabs>
+      ) : (
+        null
+      )}
+      {props.type == "harakat" ? (
+        <TabPanel value={value} index={0}>
+          {props.id && (
+            <ActivityDetail
+              id={props.id}
+              user={props.user}
+              type="harakat"
+              module={props.module}
+            />
+
+            // <h1 className="bg-white w-full h-full">Harakat</h1>
+          )}
+        </TabPanel>
+      ) : (
+        null
+      )}
+
+
+      {/* {props.type == "tracing" ? (
+        <Tabs
+          orientation="vertical"
+          variant="scrollable"
+          value={value}
+          onChange={handleChange}
+          // aria-label="Vertical tabs example"
+          sx={{
+            borderRight: 1,
+            borderColor: "divider",
+            background: "rgb(0 79 112)",
+            color: "white",
+            width: "240px",
+          }}
+        >
+          {Alphabates.map((alphabate) => (
+            <Link
+              href={`/${props.user}/activity/tracing/${alphabate.title}`}
+              className=" p-0 my-2 rounded-full text-center"
+            >
+              <Tab
+                value={alphabate.letter}
+                onChange={() => getSymbol(alphabate.letter)}
+                className={`text-3xl  py-3 px-0 mx-0 text-white font-bold rounded-full font-sans  focus:bg-cyan-400 bg-black`} // ${styleBg}
+                label={alphabate.letter}
+                id={props.id}
+                sx={{ border: "2px solid white" }}
+                //  onClick={changeStyle}
+              />
+            </Link>
+          ))}
+        </Tabs>
+      ) : (
+        null
+      )} */}
+      
+      {/* {props.type == "tracing" ? (
+        <ActivityDetail symbol={symbol} id={props.id} type="LetterTracing" />
+      ) : (
+        null
+      )} */}
     </Box>
   );
 }

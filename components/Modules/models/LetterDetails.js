@@ -6,6 +6,10 @@ import BackButton from "@/components/Layout/elements/BackButton";
 import { fetchActivtyStartStatus } from "@/backend/ActivityStartLog/ActivityStartStatusDB";
 import WarningCard from "@/components/Layout/card/WarningCard";
 import { fetchBatcheIdBasedOnBatchName } from "@/backend/Batches/BatchesDB";
+import Link from "next/link";
+import { Button } from "@mui/material";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+
 
 const LetterDetails = (props) => {
   const [activityStatus, setActivityStatus] = useState();
@@ -82,27 +86,25 @@ const LetterDetails = (props) => {
 
   return (
     <div className="p-5">
-      <div className="">
-        <h1 className=" my-auto p-5 text-3xl  text-white mx-3 ">
-          <span className="bg-white rounded-full p-0 h-fit">
-            <BackButton />
-          </span>{" "}
-          Assignmets
+      <div className=" w-full p-5 rounded-md  flex flex-row justify-between   pt-3">
+        <h1 className="mx-5 text-white text-lg">
+          Arabic Alphabets : How to Write "{props.name}"
+
         </h1>
+          <Link href={`/${props.user}/module/alphabets`} className="mx-5">
+            <Button variant="contained" className="bg-white text-dark-purple" startIcon={<ArrowBackIcon />}>
+              Back To Module 1
+            </Button>
+          </Link>
       </div>
       {props.user === "student" && activityStatus === false && (
         <WarningCard title={`Asssignment not started for ${props.name}`} />
       )}
       {props.user === "student" && activityStatus === true && (
         <div className="w-full  ">
-          <div className=" p-3 text-center  rounded-lg place-content-center bg-white mx-10 ">
-            <h2 className="text-2xl">How to Write "{props.name}"</h2>
+          <div className=" p-2 text-center  rounded-lg place-content-center  mx-10 ">
             <div>
-              <h2 className="my-10 pb-5 text-2xl font-extrabold border-b text-dark-purple pc-2 ">
-                Start Drawing
-              </h2>
-              <div className=" mx-0 mt-5 ">
-                <div className=" p-5 mt-15 "></div>
+             
                 <div className="w-full flex flex-col justify-center my-5   ">
                   <DrawingCanvas
                     style={style}
@@ -114,7 +116,7 @@ const LetterDetails = (props) => {
                     bgImg={props.name}
                   />
                 </div>
-              </div>
+             
             </div>
           </div>
         </div>

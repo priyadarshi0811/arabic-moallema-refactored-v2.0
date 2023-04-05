@@ -52,7 +52,7 @@ const index = ({ data }) => {
           minHeight: "100vh",
         }}
       >
-        <div className=" w-full p-2 rounded-md  flex flex-row justify-center content-center pt-5">
+        {/* <div className=" w-full p-2 rounded-md  flex flex-row justify-center content-center pt-5">
           <Link href="/student">
             <Button
               className="bg-white text-dark-purple"
@@ -63,6 +63,20 @@ const index = ({ data }) => {
             </Button>
           </Link>
           <h1 className="ml-10 pt-2 text-white">Activity 2: Drag and Drop</h1>
+        </div> */}
+        <div className=" w-full p-5 rounded-md  flex flex-row justify-between   pt-10">
+          <h1 className="mx-5 text-white text-lg">
+            Arabic Alphabets : How to Write
+          </h1>
+          <Link href={`/student/module/alphabets`} className="mx-5">
+            <Button
+              variant="contained"
+              className="bg-white text-dark-purple"
+              startIcon={<ArrowBackIcon />}
+            >
+              Back To Module 1
+            </Button>
+          </Link>
         </div>
         <div className="mx-10 rounded-md">
           {/* <DND /> */}

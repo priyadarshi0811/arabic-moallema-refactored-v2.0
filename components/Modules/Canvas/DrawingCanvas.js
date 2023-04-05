@@ -295,7 +295,11 @@ const DrawingCanvas = (props) => {
     <>
       {assignment && assignment.length > 0 && (
         <div>
-          <div className="w-full cursor-cell flex justify-center ">
+          <div className="bg-white py-10 rounded-xl">
+          <h2 className="my-5 pb-5 text-2xl font-extrabold border-b text-dark-purple ">
+                Start Drawing
+              </h2>
+          <div className="w-full cursor-cell flex justify-center pt-5 ">
             <canvas
               className="bg-white border-2 rounded-lg shadow-lg border-1"
               style={{
@@ -309,7 +313,7 @@ const DrawingCanvas = (props) => {
               onMouseLeave={stopDrawing}
             ></canvas>
           </div>
-          <div className="mt-8 mr-14">
+          <div className="mt-8">
             <h1>{props.bgImg} </h1>
 
             <ButtonGroup
@@ -338,26 +342,26 @@ const DrawingCanvas = (props) => {
                 Clear
               </Button>
             </ButtonGroup>
+          </div>
+          </div>
+          <div className="mt-5">
+            {userType !== "instructor" && (
+              <button
+                className="p-3 ml-4 text-white bg-red-500 rounded-md hover:bg-red-600 hover:shadow-lg"
+                onClick={saveImageToLocal}
+              >
+                Submit Activity
+              </button>
+            )}
 
-            <div className="mt-5">
-              {userType !== "instructor" && (
-                <button
-                  className="p-3 ml-4 text-white bg-red-500 rounded-md hover:bg-red-600 hover:shadow-lg"
-                  onClick={saveImageToLocal}
-                >
-                  Submit Activity
-                </button>
-              )}
-
-              {userType !== "student" && (
-                <Button
-                  onClick={handleNextButtonClick}
-                  className="p-3 ml-4 text-white bg-dark-purple rounded-md  hover:bg-blue-600 hover:shadow-lg"
-                >
-                  Next Activity
-                </Button>
-              )}
-            </div>
+            {userType !== "student" && (
+              <Button
+                onClick={handleNextButtonClick}
+                className="p-3 ml-4 bg-white text-dark-purple rounded-md  hover:bg-blue-600 hover:shadow-lg"
+              >
+                Next Activity
+              </Button>
+            )}
           </div>
         </div>
       )}

@@ -41,6 +41,7 @@
     "react-canvas-draw": "^1.2.1",
     "react-dnd": "^16.0.1",
     "react-dom": "18.2.0",
+    "react-player": "^2.12.0",
     "react-router": "^6.8.0",
     "react-router-dom": "^6.8.1",
     "react-touch-canvas": "^0.4.4",

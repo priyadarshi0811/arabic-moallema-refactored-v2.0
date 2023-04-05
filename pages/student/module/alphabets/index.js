@@ -45,6 +45,7 @@ const Alphabates = [
   { letter: "ك", title: "Kaaf" },
 ];
 
+
 const index = () => {
   const [letterName, setLetterName] = useState();
 
@@ -96,16 +97,20 @@ const index = () => {
     >
       <div className=" w-full p-2 rounded-md  flex flex-row justify-center content-center pt-5">
         <Link href="/student">
-          <Button className="bg-white text-dark-purple" variant="contained" startIcon={<ArrowBackIcon />}>
+          <Button className="bg-white text-dark-purple mx-2" variant="contained" startIcon={<ArrowBackIcon />}>
             Back to Dashboard
           </Button>
         </Link>
-        <Link href="https://heyzine.com/flip-book/3a9219391d.html">
-          <Button className="bg-white text-dark-purple mx-5" variant="contained" startIcon={<ArrowBackIcon />}>
-            Flip Book
+        <Link href="https://heyzine.com/flip-book/3a9219391d.html#page/3">
+          <Button className="bg-white text-dark-purple mx-2" variant="contained" startIcon={<ArrowBackIcon />}>
+            Flip Book pg:3
           </Button>
         </Link>
-        <h1 className="ml-10 pt-2 text-white">Activity 2: Drag and Drop</h1>
+        <Link href="https://heyzine.com/flip-book/3a9219391d.html#page/4">
+          <Button className="bg-white text-dark-purple mx-2" variant="contained" startIcon={<ArrowBackIcon />}>
+            Flip Book pg:4
+          </Button>
+        </Link>
       </div>
       <div className=" w-full p-2 rounded-md  flex flex-row justify-center content-center pt-5">
           <img src={logo.src} className="h-14" alt="" />{" "}
