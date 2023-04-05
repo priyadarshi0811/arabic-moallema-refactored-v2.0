@@ -314,6 +314,8 @@ const LetterActivity = () => {
             </center>
           );
         })}
+         <center className="mt-5">
+
       {userType === "instructor" && (
         <button
           onClick={handleNextButtonClick}
@@ -325,11 +327,12 @@ const LetterActivity = () => {
       {userType === "student" && (
         <button
           onClick={submitDND}
-          className="p-3 ml-4 text-white bg-dark-purple rounded-md justify-center items-center hover:bg-blue-600 hover:shadow-lg"
+          className="p-3 ml-4 bg-white text-dark-purple rounded-md justify-center items-center hover:bg-blue-600 hover:shadow-lg"
         >
           Submit Activity
         </button>
       )}
+         </center>
     </div>
   );
 };
