@@ -12,7 +12,7 @@ const VideoControlBtn = ({ onPlayPause, playing, onEnded }) => {
     <div>
       <div className="w-full flex justify-center">
         <div
-          className="bg-green-200 p-1  rounded-full flex justify-center my-3"
+          className="bg-green-300 p-1  rounded-full flex justify-center my-3"
           
         >
           <IconButton aria-label="delete" size="large" onClick={onPlayPause}>

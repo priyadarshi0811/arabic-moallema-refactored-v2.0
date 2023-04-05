@@ -122,15 +122,10 @@ const LetterDetails = (props) => {
         </div>
       )}
       {props.user === "teacher" && (
-        <div className="w-full  ">
-          <div className=" p-3 text-center  rounded-lg place-content-center bg-white mx-10 ">
-            <h2 className="text-2xl">How to Write "{props.name}"</h2>
-            <div>
-              <h2 className="my-10 pb-5 text-2xl font-extrabold border-b text-dark-purple pc-2 ">
-                Start Drawing
-              </h2>
-              <div className=" mx-0 mt-5 ">
-                <div className=" p-5 mt-15 "></div>
+         <div className="w-full  ">
+         <div className=" p-2 text-center  rounded-lg place-content-center  mx-10 ">
+           <div>
+
                 <div className="w-full flex flex-col justify-center my-5   ">
                   <DrawingCanvas
                     style={style}
@@ -142,9 +137,8 @@ const LetterDetails = (props) => {
                     bgImg={props.name}
                   />
                 </div>
-              </div>
-            </div>
           </div>
+        </div>
         </div>
       )}
     </div>

@@ -12,7 +12,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Link from "next/link";
 import { useRouter } from "next/router";
 import AuthContext from "@/components/Context/store/auth-context";
-
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 const Alphabates = [
   { letter: "خ", title: "Khaa" },
@@ -87,13 +87,23 @@ const index = () => {
         minHeight: "100vh",
       }}
     >
+      
       <div className=" w-full p-2 rounded-md  flex flex-row justify-center content-center pt-5">
         <Link href="/teacher">
-          <Button className="bg-white text-dark-purple" variant="contained" startIcon={<ArrowBackIcon />}>
+          <Button className="bg-white text-dark-purple mx-2" variant="contained" startIcon={<ArrowBackIcon />}>
             Back to Dashboard
           </Button>
         </Link>
-        <h1 className="ml-10 pt-2 text-white">Module 1: Alphabets</h1>
+        {/* <Link href="https://heyzine.com/flip-book/3a9219391d.html#page/3">
+          <Button className="bg-white text-dark-purple mx-2" variant="contained" startIcon={<ArrowBackIcon />}>
+            Flip Book pg:3
+          </Button>
+        </Link> */}
+        <Link href="/teacher/module/harakat/fatahah">
+          <Button className="bg-white text-dark-purple mx-2" variant="contained" endIcon={<ArrowForwardIcon />}>
+            Go to Module 2
+          </Button>
+        </Link>
       </div>
       {/* <div className=" w-full p-2 rounded-md  flex flex-row justify-center content-center pt-5">
           <img src={logo.src} className="h-14" alt="" />{" "}
