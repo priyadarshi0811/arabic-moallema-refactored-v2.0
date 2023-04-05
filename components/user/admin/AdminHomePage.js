@@ -48,10 +48,12 @@ const AdminHomePage = () => {
   }, [batchCtx.submitted]);
 
   const handleSelectedItem = (batchData) => {
-    let selectedBatch = auth.batchesList.filter(
-      (batch) => batch.batch_name === batchData
-    );
-    setFilteredBatch(selectedBatch);
+    if (auth.batchesList) {
+      let selectedBatch = auth.batchesList.filter(
+        (batch) => batch.batch_name === batchData
+      );
+      setFilteredBatch(selectedBatch);
+    }
   };
 
   const dataToDisplay =

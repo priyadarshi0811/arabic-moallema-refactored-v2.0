@@ -173,9 +173,10 @@ const LetterActivity = () => {
       activityType = assignment[currentIndex].activity_type;
       if (activityType === "trace" && currentIndex <= +assignment.length - 1) {
         console.log("first");
-        router.replace(
-          `/teacher/activity/tracing/${module}/${alphabate}/${currentIndex}`
-        );
+        // router.replace(
+        //   `/teacher/activity/tracing/${module}/${alphabate}/${currentIndex}`
+        // );
+        window.location.href = `/teacher/activity/tracing/${module}/${alphabate}/${currentIndex}`;
       } else if (
         activityType === "dnd" &&
         currentIndex <= +assignment.length - 1
@@ -190,29 +191,45 @@ const LetterActivity = () => {
     //student
     if (assignment[currentIndex] && userType === "student") {
       activityType = assignment[currentIndex].activity_type;
-      if (activityType === "trace" && currentIndex <= +assignment.length - 1) {
+      if (
+        activityType === "trace" &&
+        currentIndex <= +assignment.length - 1 &&
+        module &&
+        alphabate &&
+        currentIndex
+      ) {
         console.log("first");
-        router.replace(
+        router.push(
           `/student/activity/tracing/${module}/${alphabate}/${currentIndex}`
         );
+        router.push(
+          `/student/activity/tracing/${module}/${alphabate}/${currentIndex}`
+        );
+        // window.location.href = `/student/activity/tracing/${module}/${alphabate}/${currentIndex}`;
       } else if (
         activityType === "dnd" &&
         currentIndex <= +assignment.length - 1
       ) {
         console.log("second");
-        router.replace(
+        router.push(
           `/student/activity/dnd/${module}/${alphabate}/${currentIndex}`
         );
+        router.push(
+          `/student/activity/dnd/${module}/${alphabate}/${currentIndex}`
+        );
+        // window.location.href = `/student/activity/dnd/${module}/${alphabate}/${currentIndex}`;
       }
     }
-    if (currentIndex > assignment.length - 1 && userType === "student") {
-      console.log("third");
-      router.replace("/student/module/alphabets");
-    }
+    // if (currentIndex > assignment.length - 1 && userType === "student") {
+    //   console.log("third");
+    //   router.replace("/student/module/alphabets");
+    //   window.location.href = "/student/module/alphabets";
+    // }
 
     if (currentIndex > assignment.length - 1 && userType === "instructor") {
       console.log("third");
-      router.replace("/teacher/module/alphabets");
+      // router.replace("/teacher/module/alphabets");
+      window.location.href = "/teacher/module/alphabets";
     }
 
     if (currentIndex > assignment.length - 1 && userType === "student") {
@@ -233,7 +250,9 @@ const LetterActivity = () => {
       }
       setMyArray([]);
       router.replace("/student/module/alphabets");
-      window.location.href = "/student/module/alphabets";
+      router.replace("/student/module/alphabets");
+
+      // window.location.href = "/student/module/alphabets";
     }
   }, [activityIndex, currentIndex, assignment]);
 
