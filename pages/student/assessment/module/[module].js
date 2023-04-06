@@ -12,7 +12,10 @@ import CardList from "@/components/user/admin/CardList";
 import Link from "next/link";
 import MUIMiniCard from "@/components/Layout/card/MUIMiniCard";
 import AuthContext from "@/components/Context/store/auth-context";
-import { fetchSubmittedAssignmentBasedOnStudent } from "@/backend/Assignment/FetchAssignmentDB";
+import {
+  fetchSubmittedAssignmentBasedOnStudent,
+  fetchSubmittedAssignmentBasedOnStudentAndModule,
+} from "@/backend/Assignment/FetchAssignmentDB";
 import { useRouter } from "next/router";
 import { fetchStudentIdBasedOnEmail } from "@/backend/Students/StudentDB";
 import { fetchBatcheIdBasedOnBatchName } from "@/backend/Batches/BatchesDB";
@@ -70,6 +73,14 @@ const index = () => {
   const studentId = authCtx.userEmail;
 
   const router = useRouter();
+
+  let module;
+  if (router.query.module) {
+    module = router.query.module;
+  }
+
+  console.log(module);
+
   const type = authCtx.userType;
 
   const loggedIn = authCtx.isLoggedIn;
@@ -101,10 +112,11 @@ const index = () => {
 
   useEffect(() => {
     const fetchStudentBatch = async () => {
-      if (studentIdNew && batchId) {
-        const data = await fetchSubmittedAssignmentBasedOnStudent(
+      if (studentIdNew && batchId && module) {
+        const data = await fetchSubmittedAssignmentBasedOnStudentAndModule(
           studentIdNew,
-          batchId
+          batchId,
+          module
         );
         if (studentId) {
           data.length === 0 ? setError(true) : setError(false);
@@ -113,7 +125,7 @@ const index = () => {
       }
     };
     fetchStudentBatch();
-  }, [studentIdNew, batchId]);
+  }, [studentIdNew, batchId, module]);
 
   useEffect(() => {
     const getId = async () => {

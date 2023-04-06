@@ -11,6 +11,7 @@ import { useContext } from "react";
 import AuthContext from "@/components/Context/store/auth-context";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import HarkatHome from "@/components/Modules/models/harkat/HarkatHome";
 
 const positioning = () => {
   const authCtx = useContext(AuthContext);
@@ -56,10 +57,7 @@ const positioning = () => {
           <img src={logo.src} className="h-14" alt="" />{" "}
           <h1 className="ml-10 pt-5 text-white">Module 2 Harakat</h1>
         </div>
-
-        {/* <div className="mt-5 text-end">
-            <Link href ='/student/module/harakat/discription'><Button variant="contained" className="bg-dark-purple"  endIcon={<NavigateNextIcon />} >Next</Button></Link>
-        </div> */}
+        <HarkatHome />
       </div>
     </div>
   );

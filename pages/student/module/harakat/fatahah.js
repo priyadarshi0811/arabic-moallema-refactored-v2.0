@@ -11,6 +11,10 @@ import GeneralCard from "@/components/Layout/card/GeneralCard";
 import AudioButton from "@/components/Layout/elements/AudioBtn";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Fatahah from "@/components/src/img/arabic_fatha.png";
+import { fetchAssignmentForLetter } from "@/backend/Assignment/FetchAssignmentDB";
+import { useState, useEffect } from "react";
+import { useContext } from "react";
+import BatchContext from "@/components/Context/store/batch-context";
 
 const Alphabates = [
   {
@@ -419,6 +423,42 @@ const Card = ({
   middle,
   final,
 }) => {
+  const [assignment, setAssignment] = useState([]);
+  const [activityPath, setActivityPath] = useState();
+  const { myArray, setMyArray } = useContext(BatchContext);
+
+  console.log(myArray);
+  //get the assignment for the selected activity
+  useEffect(() => {
+    const fetchAssignment = async () => {
+      const data = await fetchAssignmentForLetter("Fatah", "harakat");
+      if (data[0]) {
+        setAssignment(data[0].assignment_json.letter);
+        if (data[0].assignment_json.letter[0].activity_type === "trace") {
+          setActivityPath("tracing");
+        }
+        if (data[0].assignment_json.letter[0].activity_type === "dnd") {
+          setActivityPath("dnd");
+        }
+        if (data[0].assignment_json.letter[0].activity_type === "select") {
+          setActivityPath("select");
+        }
+        if (data[0].assignment_json.letter[0].activity_type === "match") {
+          setActivityPath("match");
+        }
+      }
+    };
+    fetchAssignment();
+  }, []);
+
+  console.log(assignment);
+
+  const setActivitySubmodule = async () => {
+    if (activityPath) {
+      window.location.href = `/student/activity/${activityPath}/harakat/Fatah/${0}`;
+    }
+  };
+
   return (
     <div className="w-full  ">
       <div className=" w-full p-2 rounded-md  flex flex-row justify-between   pt-3">
@@ -450,14 +490,12 @@ const Card = ({
                   <LetterCardR label={labelR} name={nameR} audioUrl={audioR} />
                 </div>
                 <div className="col-span-2 lg:col-span-1">
-                <div className="grid grid-cols-3 lg:grid-cols-1 mx-0 mt-5 gap-4 lg:gap-2">
-                  <SmallCard disc="Final Form" title={initial} />
-                  <SmallCard disc="Medial Form" title={middle} />
-                  <SmallCard disc="Initial Form" title={final} />
+                  <div className="grid grid-cols-3 lg:grid-cols-1 mx-0 mt-5 gap-4 lg:gap-2">
+                    <SmallCard disc="Final Form" title={initial} />
+                    <SmallCard disc="Medial Form" title={middle} />
+                    <SmallCard disc="Initial Form" title={final} />
+                  </div>
                 </div>
-                </div>
-
-                
               </div>
             </div>
           </div>
@@ -470,6 +508,13 @@ const Card = ({
               Next Section
             </Button>
           </Link>
+          <Button
+            onClick={setActivitySubmodule}
+            variant="contained"
+            className="text-dark-purple bg-white ml-10"
+          >
+            Activity
+          </Button>
         </div>
       </div>
     </div>
@@ -497,7 +542,6 @@ export default function VerticalTabs() {
         backgroundPosition: "center top",
         widows: "100vw",
         minHeight: "100vh",
- 
       }}
     >
       <Tabs

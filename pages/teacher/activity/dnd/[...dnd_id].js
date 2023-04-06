@@ -56,8 +56,6 @@ const index = ({ data }) => {
             </span>{" "}
             Drag and Drop
           </h1>
-          {/* <img src={logo.src} className="h-14" alt="" />{" "}
-          <h1 className="ml-10 pt-5 text-white">Activity 2: Drag And Drops</h1>           */}
         </div>
         <div className="mx-10 rounded-md">
           {/* <DND /> */}
