@@ -1,38 +1,40 @@
+import React, { useEffect, useState } from "react";
+
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { Button, Container } from "@mui/material";
 import { fetchAssignmentForLetter } from "@/backend/Assignment/FetchAssignmentDB";
-import React from "react";
-import { useState } from "react";
-import { useEffect } from "react";
-import { Button, Card, CardContent, Grid, Typography } from "@mui/material";
+import { useRouter } from "next/router";
 import { useContext } from "react";
 import AuthContext from "@/components/Context/store/auth-context";
-import { useRouter } from "next/router";
 import BatchContext from "@/components/Context/store/batch-context";
-import { fetchStudentIdBasedOnEmail } from "@/backend/Students/StudentDB";
 import {
   fetchBatcheIdBasedOnBatchName,
   fetchTeacherIdBasedOnBatchId,
 } from "@/backend/Batches/BatchesDB";
+import { fetchStudentIdBasedOnEmail } from "@/backend/Students/StudentDB";
 import supabase from "@/supabaseClient";
 
-const SelectActivityHome = ({ subModule, module, activityIndex }) => {
+// const options = ["apple", "banana", "Gvava"];
+// const context = ["red", "yellow", "Green"];
+
+const MatchDndHome = ({ subModule, module, activityIndex }) => {
   const [assignment, setAssignment] = useState([]);
-
-  const [index, setIndex] = useState(0);
-  const [question, setQuestion] = useState("");
-  const [selectData, setSelectData] = useState([]);
-
+  const [items, setItems] = useState();
   const [batchId, setBatchId] = useState();
   const [teacher, setTeacher] = useState();
   const [studentId, setStudentId] = useState();
 
+  const [options, setOptions] = useState();
+  const [context, setContext] = useState();
+  const [index, setIndex] = useState(0);
   const [currentIndex, setCurrentIndex] = useState();
+
   const { myArray, setMyArray } = useContext(BatchContext);
+
+  console.log(myArray);
   const authCtx = useContext(AuthContext);
   const router = useRouter();
   const userType = authCtx.userType;
-
-  const [selectedOption, setSelectedOption] = useState(null);
-
   const id = authCtx.userEmail;
 
   useEffect(() => {
@@ -70,12 +72,16 @@ const SelectActivityHome = ({ subModule, module, activityIndex }) => {
     fetchTeacher();
   }, [batchId]);
 
-  const handleOptionClick = (option) => {
-    setSelectedOption(option);
+  const handleDragEnd = (result) => {
+    if (!result.destination) return;
+
+    const newItems = [...items];
+    const [reorderedItem] = newItems.splice(result.source.index, 1);
+    newItems.splice(result.destination.index, 0, reorderedItem);
+
+    setItems(newItems);
   };
 
-  console.log(selectedOption);
-  //get the assignment for the selected activity
   useEffect(() => {
     const fetchAssignment = async () => {
       if (subModule && module) {
@@ -89,30 +95,19 @@ const SelectActivityHome = ({ subModule, module, activityIndex }) => {
     fetchAssignment();
   }, [module, subModule]);
 
+  console.log(currentIndex);
   useEffect(() => {
     if (assignment.length > 0 && currentIndex <= assignment.length - 1) {
-      setQuestion(assignment[currentIndex].question);
-      setSelectData(assignment[currentIndex].select_data);
+      console.log("insdf");
+      setOptions(assignment[currentIndex].option_data);
+
+      setOptions(assignment[currentIndex].context_data);
+      setItems(assignment[currentIndex].option_data);
     }
-  }, [assignment, activityIndex, currentIndex]);
+  }, [assignment, currentIndex, activityIndex]);
 
-  const handleNext = () => {
-    setCurrentIndex(+currentIndex + 1);
-
-    const submissionObject = {
-      question: question,
-      selectData: selectData,
-      selectedOption: selectedOption,
-    };
-
-    const newObj = { submission: submissionObject, mark: 0, remark: "" };
-
-    setMyArray([...myArray, newObj]);
-  };
-
-  console.log(myArray);
   let activityType;
-
+  console.log(module);
   useEffect(() => {
     //teacher
     // if (assignment[currentIndex] && userType === "instructor") {
@@ -188,10 +183,10 @@ const SelectActivityHome = ({ subModule, module, activityIndex }) => {
         router.push(
           `/student/activity/select/${module}/${subModule}/${currentIndex}`
         );
-
-        // window.location.href = `/student/activity/dnd/${module}/${subModule}/${currentIndex}`;
       }
     }
+    console.log("ins");
+
     if (currentIndex > assignment.length - 1 && userType === "student") {
       if (studentId && batchId && teacher && module && subModule) {
         supabase
@@ -222,53 +217,88 @@ const SelectActivityHome = ({ subModule, module, activityIndex }) => {
     }
   }, [activityIndex, currentIndex, assignment]);
 
+  const nextActivityHandler = () => {
+    setCurrentIndex(+currentIndex + 1);
+
+    let submissionObject = {
+      context: items,
+      options: options,
+    };
+
+    console.log(submissionObject);
+    const newObj = { submission: submissionObject, mark: 0, remark: "" };
+    setMyArray([...myArray, newObj]);
+  };
+
   console.log(assignment);
-  console.log(selectData);
   return (
     <>
-      <div className="mx-auto max-w-lg mt-44">
-        <Card className="mb-4 shadow-lg" variant="outlined">
-          <CardContent>
-            <Typography
-              className=" text-xl font-semibold  mt-8  text-gray-600"
-              variant="h5"
-            >
-              Q.{index + 1} {question && question}
-            </Typography>
-            <Grid container spacing={1} mt={2} className=" mt-8">
-              {selectData &&
-                selectData.map((option, index) => (
-                  <Grid item key={index}>
+      {options && (
+        <div className="bg-gray-100 min-h-screen flex items-center justify-center">
+          <Container maxWidth="md" sx={{ display: "flex", boxShadow: 4 }}>
+            <div className="bg-gray-100 pt-10 flex items-center justify-center">
+              <h1>Match the following</h1>
+            </div>
+            <div className="w-1/2 bg-white">
+              <DragDropContext onDragEnd={handleDragEnd}>
+                <Droppable droppableId="droppable-context">
+                  {(provided) => (
                     <div
-                      className={`bg-orange-400 shadow-lg ml-20 rounded-lg px-4 py-2 ${
-                        selectedOption === option ? "bg-green-400" : ""
-                      }`}
-                      onClick={() => handleOptionClick(option)}
+                      {...provided.droppableProps}
+                      ref={provided.innerRef}
+                      className="p-4"
                     >
-                      <Typography
-                        className=" text-white font-extrabold "
-                        variant="h6"
-                      >
-                        {option}
-                      </Typography>
+                      <h1>Context</h1>
+                      {items.map((item, index) => (
+                        <Draggable
+                          key={item}
+                          draggableId={item}
+                          index={index}
+                          isDragDisabled={options.includes(item)}
+                        >
+                          {(provided) => (
+                            <div
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                            >
+                              <div className="shadow-md p-2 my-2 bg-gray-200">
+                                {item}
+                              </div>
+                            </div>
+                          )}
+                        </Draggable>
+                      ))}
+                      {provided.placeholder}
                     </div>
-                  </Grid>
-                ))}
-            </Grid>
-          </CardContent>
-        </Card>
+                  )}
+                </Droppable>
+              </DragDropContext>
+            </div>
+            <div className="w-1/2 bg-white">
+              <div className="p-4">
+                <h1>Options</h1>
 
-        <button
-          className="my-10 flex justify-around mr-10 px-4 py-2 bg-orange-500 text-white rounded-sm shadow-lg hover:bg-orange-700"
-          variant="contained"
-          color="primary"
-          onClick={handleNext}
-        >
-          Submit
-        </button>
-      </div>
+                {options.map((item, index) => (
+                  <div key={item} className="shadow-md p-2 my-2 bg-gray-200">
+                    {item}
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div>
+              <button
+                onClick={nextActivityHandler}
+                className="mt-24 ml-4 bg-blue-500 rounded-lg shadow-lg px-4 py-2 text-white hover:bg-blue-700 hover:shadow-2xl"
+              >
+                Submit
+              </button>
+            </div>
+          </Container>
+        </div>
+      )}
     </>
   );
 };
 
-export default SelectActivityHome;
+export default MatchDndHome;

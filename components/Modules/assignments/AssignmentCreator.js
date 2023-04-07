@@ -23,6 +23,7 @@ import { useRouter } from "next/router";
 import { fetchSubModulesCreatedActivity } from "@/backend/Assignment/FetchAssignmentDB";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import SelectOption from "@/components/Layout/mui-comps/assignment_builder_selector/select_option_activity";
+import MatchFollowing from "@/components/Layout/mui-comps/assignment_builder_selector/match_the_folowing";
 
 const Modules_Option = {
   alphabets: [
@@ -55,7 +56,7 @@ const Modules_Option = {
     { letter: "ل", title: "Laam" },
     { letter: "ك", title: "Kaaf" },
   ],
-  harkat: [
+  harakat: [
     { id: 1, title: "Fatah" },
     { id: 2, title: "Dumma" },
     { id: 3, title: "Kasra" },
@@ -63,7 +64,7 @@ const Modules_Option = {
 };
 
 const modules = [
-  { id: 1, title: "harkat" },
+  { id: 1, title: "harakat" },
   { id: 2, title: "alphabets" },
   { id: 3, title: "tanveen" },
   { id: 4, title: "hamza" },
@@ -72,6 +73,9 @@ const modules = [
 const ADD_ACTIVITY = "Add Activity";
 const ADD_TRACING = "Add Tracing";
 const ADD_SELECT = "Add Select";
+const ADD_MATCH_OPTION = "Add MATCH OPTION";
+const ADD_MATCH_CONTEXT = "Add MATCH CONTEXT";
+
 const ADD_Question = "Add Select";
 
 const ADD_DND_COLUMN = "Add DND Column";
@@ -86,17 +90,22 @@ const reducerFunction = (state, action) => {
     newState.letter.push(action.payload);
     return newState;
   } else if (action.type === ADD_TRACING) {
-    console.log(newState.letter[action.payload.index]);
     newState.letter[action.payload.index].trace_data = action.payload.data;
     return newState;
   } else if (action.type === ADD_DATA) {
     newState.letter[action.payload.index] = action.payload.data;
     return newState;
   } else if (action.type === ADD_SELECT) {
-    console.log(newState.letter[action.payload.index]);
     newState.letter[action.payload.index].select_data = action.payload.data;
     newState.letter[action.payload.index].question = action.payload.question;
-
+    return newState;
+  } else if (action.type === ADD_MATCH_OPTION) {
+    newState.letter[action.payload.index].option_data =
+      action.payload.option_data;
+    return newState;
+  } else if (action.type === ADD_MATCH_CONTEXT) {
+    newState.letter[action.payload.index].context_data =
+      action.payload.context_data;
     return newState;
   }
   return state;
@@ -112,6 +121,82 @@ const AssignmentCreator = () => {
       // },
     ],
   });
+
+  //match the following activity
+  const [matchOptionLetters, setMatchOptionLetters] = useState([]);
+  const [matchContextLetters, setMatchContextLetters] = useState([]);
+
+  const triggerMatchOption = (tracing_letter_new) => {
+    console.log("inside select: ", tracing_letter_new);
+    const key = Object.keys(tracing_letter_new);
+    let index;
+    let values;
+
+    if (key[0]) {
+      const arr = key[0].split("_");
+      index = arr[0];
+      console.log("index: ", index);
+
+      const tracingKeys = Object.keys(tracing_letter_new[key[0]]);
+      values = tracingKeys.reduce((acc, currentKey) => {
+        if (currentKey.includes("mto")) {
+          // check if the key contains "mto"
+          return [...acc, tracing_letter_new[key[0]][currentKey]];
+        }
+        return acc;
+      }, []);
+
+      console.log("values: ", values);
+
+      DispatchSetAssignment({
+        type: ADD_MATCH_OPTION,
+        payload: {
+          index,
+          option_data: values,
+        },
+      });
+    }
+
+    console.log(questionForSelectActivity);
+    setMatchOptionLetters(tracing_letter_new);
+    console.log(tracingLetters);
+  };
+
+  const triggerMatchContext = (tracing_letter_new) => {
+    console.log("inside select: ", tracing_letter_new);
+    const key = Object.keys(tracing_letter_new);
+    let index;
+    let values;
+
+    if (key[0]) {
+      const arr = key[0].split("_");
+      index = arr[0];
+      console.log("index: ", index);
+
+      const tracingKeys = Object.keys(tracing_letter_new[key[0]]);
+      values = tracingKeys.reduce((acc, currentKey) => {
+        if (currentKey.includes("mtc")) {
+          // check if the key contains "mtc"
+          return [...acc, tracing_letter_new[key[0]][currentKey]];
+        }
+        return acc;
+      }, []);
+
+      console.log("values: ", values);
+
+      DispatchSetAssignment({
+        type: ADD_MATCH_CONTEXT,
+        payload: {
+          index,
+          context_data: values,
+        },
+      });
+    }
+
+    console.log(questionForSelectActivity);
+    setMatchContextLetters(tracing_letter_new);
+    console.log(tracingLetters);
+  };
 
   // 1. Tracing
   const [tracingLetters, setTracingLetters] = useState({});
@@ -309,6 +394,7 @@ const AssignmentCreator = () => {
     "Tracing",
     "Drag and Drop",
     "Select Option Activity",
+    "Match the following",
   ];
 
   // store the
@@ -348,6 +434,19 @@ const AssignmentCreator = () => {
           incrementer={inc}
           setSelectedLetters={select_letter_state}
           setquestionForSelectActivity={get_question}
+        />
+      );
+    },
+    3: (
+      inc,
+      options_letter_state = triggerMatchOption,
+      context_letter_state = triggerMatchContext
+    ) => {
+      return (
+        <MatchFollowing
+          incrementer={inc}
+          setMatchOptionLetters={options_letter_state}
+          setMatchContextLetters={context_letter_state}
         />
       );
     },
@@ -397,6 +496,16 @@ const AssignmentCreator = () => {
       DispatchSetAssignment({
         type: ADD_ACTIVITY,
         payload: selectActivity,
+      });
+    } else if (selectedActivity === 3) {
+      let matchActivity = {
+        activity_type: "match",
+        option_data: [],
+        context_data: [],
+      };
+      DispatchSetAssignment({
+        type: ADD_ACTIVITY,
+        payload: matchActivity,
       });
     }
   };

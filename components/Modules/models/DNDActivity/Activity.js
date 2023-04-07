@@ -214,9 +214,33 @@ const LetterActivity = () => {
         router.push(
           `/student/activity/dnd/${module}/${alphabate}/${currentIndex}`
         );
+
+        // window.location.href = `/student/activity/dnd/${module}/${alphabate}/${currentIndex}`;
+      } else if (
+        activityType === "match" &&
+        currentIndex <= +assignment.length - 1
+      ) {
+        console.log("second");
         router.push(
-          `/student/activity/dnd/${module}/${alphabate}/${currentIndex}`
+          `/student/activity/match/${module}/${alphabate}/${currentIndex}`
         );
+        router.push(
+          `/student/activity/match/${module}/${alphabate}/${currentIndex}`
+        );
+
+        // window.location.href = `/student/activity/dnd/${module}/${alphabate}/${currentIndex}`;
+      } else if (
+        activityType === "select" &&
+        currentIndex <= +assignment.length - 1
+      ) {
+        console.log("second");
+        router.push(
+          `/student/activity/select/${module}/${alphabate}/${currentIndex}`
+        );
+        router.push(
+          `/student/activity/select/${module}/${alphabate}/${currentIndex}`
+        );
+
         // window.location.href = `/student/activity/dnd/${module}/${alphabate}/${currentIndex}`;
       }
     }
@@ -231,6 +255,22 @@ const LetterActivity = () => {
       // router.replace("/teacher/module/alphabets");
       window.location.href = "/teacher/module/alphabets";
     }
+    // if (
+    //   currentIndex > assignment.length - 1 &&
+    //   userType === "student" &&
+    //   module !== "harakat"
+    // ) {
+    //   router.replace("/student/module/alphabets");
+    //   router.replace("/student/module/alphabets");
+    // }
+    // if (
+    //   currentIndex > assignment.length - 1 &&
+    //   userType === "student" &&
+    //   module === "harakat"
+    // ) {
+    //   router.replace("/student/module/harakat/fatahah");
+    //   router.replace("/student/module/harakat/fatahah");
+    // }
 
     if (currentIndex > assignment.length - 1 && userType === "student") {
       if (studentId && batchId && teacher && module) {
@@ -249,9 +289,15 @@ const LetterActivity = () => {
           .catch((er) => console.log(er));
       }
       setMyArray([]);
-      router.replace("/student/module/alphabets");
-      router.replace("/student/module/alphabets");
 
+      if (module === "harakat") {
+        router.replace("/student/module/harakat/fatahah");
+        router.replace("/student/module/harakat/fatahah");
+      }
+      if (module === "alphabets") {
+        router.replace("/student/module/alphabets");
+        router.replace("/student/module/alphabets");
+      }
       // window.location.href = "/student/module/alphabets";
     }
   }, [activityIndex, currentIndex, assignment]);
@@ -283,7 +329,7 @@ const LetterActivity = () => {
     const newObj = { submission: finalDndData, mark: 0, remark: "" };
     setMyArray([...myArray, newObj]);
   };
-
+console.log(myArray);
   useEffect(() => {
     console.log("inside 1");
     if (assignment[activityIndex]) {
@@ -314,25 +360,24 @@ const LetterActivity = () => {
             </center>
           );
         })}
-         <center className="mt-5">
-
-      {userType === "instructor" && (
-        <button
-          onClick={handleNextButtonClick}
-          className="p-3 ml-4 text-white bg-dark-purple rounded-md justify-center items-center hover:bg-blue-600 hover:shadow-lg"
-        >
-          Next Activity
-        </button>
-      )}
-      {userType === "student" && (
-        <button
-          onClick={submitDND}
-          className="p-3 ml-4 bg-white text-dark-purple rounded-md justify-center items-center hover:bg-blue-600 hover:shadow-lg"
-        >
-          Submit Activity
-        </button>
-      )}
-         </center>
+      <center className="mt-5">
+        {userType === "instructor" && (
+          <button
+            onClick={handleNextButtonClick}
+            className="p-3 ml-4 text-white bg-dark-purple rounded-md justify-center items-center hover:bg-blue-600 hover:shadow-lg"
+          >
+            Next Activity
+          </button>
+        )}
+        {userType === "student" && (
+          <button
+            onClick={submitDND}
+            className="p-3 ml-4 bg-white text-dark-purple rounded-md justify-center items-center hover:bg-blue-600 hover:shadow-lg"
+          >
+            Submit Activity
+          </button>
+        )}
+      </center>
     </div>
   );
 };
@@ -428,7 +473,6 @@ class DragDropActivity extends React.Component {
                 });
                 console.log("Column:" + columnid);
                 console.log(tasks);
-
                 return (
                   <div className="grid grid-cols-auto">
                     <Droppable droppableId={columnid}>

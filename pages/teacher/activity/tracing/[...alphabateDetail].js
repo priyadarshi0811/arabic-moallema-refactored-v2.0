@@ -12,11 +12,14 @@ const index = () => {
   const authCtx = useContext(AuthContext);
 
   let id;
+  let module;
   if (router.query.alphabateDetail) {
     id = router.query.alphabateDetail[1];
+    module = router.query.alphabateDetail[0];
   }
 
   console.log(id);
+  console.log(module);
 
   /**************Restricting Teachers Route************************* */
   const loggedIn = authCtx.isLoggedIn;
@@ -54,12 +57,12 @@ const index = () => {
           minHeight: "100vh",
         }}
       >
-        {id && (
+        {id && module && (
           <ActivityDetail
             user="teacher"
             id={id}
             type="LetterTracing"
-            module="alphabets"
+            module={module}
           />
         )}
       </div>

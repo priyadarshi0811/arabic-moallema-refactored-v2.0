@@ -76,7 +76,7 @@ const DrawingCanvas = (props) => {
     };
     fetchTeacher();
   }, [batchId]);
-
+  console.log("aray: ", myArray);
   console.log("techer: ", teacher);
   console.log("batch: ", batchId);
   console.log("student: ", studentId);
@@ -123,12 +123,78 @@ const DrawingCanvas = (props) => {
   console.log(props.id);
   //if no avtivities then navigate to modules
   useEffect(() => {
-    if (currentIndex > assignment.length - 1 && userType === "instructor") {
+    if (
+      currentIndex > assignment.length - 1 &&
+      userType === "instructor" &&
+      props.module === "alphabets"
+    ) {
       router.replace("/teacher/module/alphabets");
     }
-    if (currentIndex > assignment.length - 1 && userType === "student") {
-      router.replace("/student/module/alphabets");
+    if (
+      currentIndex > assignment.length - 1 &&
+      userType === "instructor" &&
+      props.module === "harakat"
+    ) {
+      router.replace("/teacher/module/alphabets");
     }
+
+    if (assignment[currentIndex] && userType === "student") {
+      activityType = assignment[currentIndex].activity_type;
+      if (
+        activityType === "trace" &&
+        currentIndex <= +assignment.length - 1 &&
+        props.module &&
+        props.id &&
+        currentIndex
+      ) {
+        console.log("first");
+        router.push(
+          `/student/activity/tracing/${props.module}/${props.id}/${currentIndex}`
+        );
+        router.push(
+          `/student/activity/tracing/${props.module}/${props.id}/${currentIndex}`
+        );
+        // window.location.href = `/student/activity/tracing/${module}/${subModule}/${currentIndex}`;
+      } else if (
+        activityType === "dnd" &&
+        currentIndex <= +assignment.length - 1
+      ) {
+        console.log("second");
+        router.push(
+          `/student/activity/dnd/${props.module}/${props.id}/${currentIndex}`
+        );
+        router.push(
+          `/student/activity/dnd/${props.module}/${props.id}/${currentIndex}`
+        );
+        // window.location.href = `/student/activity/dnd/${module}/${subModule}/${currentIndex}`;
+      } else if (
+        activityType === "match" &&
+        currentIndex <= +assignment.length - 1
+      ) {
+        console.log("second");
+        router.push(
+          `/student/activity/match/${props.module}/${props.id}/${currentIndex}`
+        );
+        router.push(
+          `/student/activity/match/${props.module}/${props.id}/${currentIndex}`
+        );
+
+        // window.location.href = `/student/activity/dnd/${module}/${subModule}/${currentIndex}`;
+      } else if (
+        activityType === "select" &&
+        currentIndex <= +assignment.length - 1
+      ) {
+        console.log("second");
+        router.push(
+          `/student/activity/select/${props.module}/${props.id}/${currentIndex}`
+        );
+        router.push(
+          `/student/activity/select/${props.module}/${props.id}/${currentIndex}`
+        );
+        // window.location.href = `/student/activity/dnd/${module}/${subModule}/${currentIndex}`;
+      }
+    }
+
     if (currentIndex > assignment.length - 1 && userType === "student") {
       if (studentId && batchId && teacher && props.module) {
         supabase
@@ -146,8 +212,15 @@ const DrawingCanvas = (props) => {
           .catch((er) => console.log(er));
       }
       setMyArray([]);
-      router.replace("/student/module/alphabets");
-      router.replace("/student/module/alphabets");
+
+      if (props.module === "harakat") {
+        router.replace("/student/module/harakat/fatahah");
+        router.replace("/student/module/harakat/fatahah");
+      }
+      if (props.module === "alphabets") {
+        router.replace("/student/module/alphabets");
+        router.replace("/student/module/alphabets");
+      }
 
       // window.location.href = "/student/module/alphabets";
     }
@@ -214,9 +287,10 @@ const DrawingCanvas = (props) => {
 
       if (assignment[currentIndex] && activityType !== "dnd") {
         const traceData = assignment[currentIndex].trace_data;
-        traceData.map((value, index) =>
-          context.fillText(value, 200 * index + 400, 180)
-        );
+        traceData &&
+          traceData.map((value, index) =>
+            context.fillText(value, 200 * index + 400, 180)
+          );
       } else if (activityType === "dnd" && userType === "instructor") {
         router.replace(
           `/teacher/activity/dnd/${props.module}/${props.id}/${currentIndex}`
@@ -225,12 +299,20 @@ const DrawingCanvas = (props) => {
         router.replace(
           `/student/activity/dnd/${props.module}/${props.id}/${currentIndex}`
         );
+      } else if (activityType === "match" && userType === "student") {
+        router.replace(
+          `/student/activity/match/${props.module}/${props.id}/${currentIndex}`
+        );
+      } else if (activityType === "select" && userType === "student") {
+        router.replace(
+          `/student/activity/select/${props.module}/${props.id}/${currentIndex}`
+        );
       }
 
       context.lineWidth = 5;
       contextRef.current = context;
     }
-  }, [id, props.symbol, assignment, currentIndex, props.style, update]);
+  }, [id, assignment, currentIndex, props.style, update]);
 
   if (context) {
     context.strokeStyle = "black";
@@ -288,6 +370,7 @@ const DrawingCanvas = (props) => {
     setMyArray([...myArray, newObj]);
   };
 
+  console.log(myArray);
   const canvasBg = props.bgImg;
   console.log("CanVas", canvasBg);
 
@@ -296,53 +379,53 @@ const DrawingCanvas = (props) => {
       {assignment && assignment.length > 0 && (
         <div>
           <div className="bg-white py-10 rounded-xl">
-          <h2 className="my-5 pb-5 text-2xl font-extrabold border-b text-dark-purple ">
-                Start Drawing
-              </h2>
-          <div className="w-full cursor-cell flex justify-center pt-5 ">
-            <canvas
-              className="bg-white border-2 rounded-lg shadow-lg border-1"
-              style={{
-                // backgroundImage: `url(${alifV.src})`,
-                backgroundRepeat: "repeat-x",
-              }}
-              ref={canvasRef}
-              onMouseDown={startDrawing}
-              onMouseMove={draw}
-              onMouseUp={stopDrawing}
-              onMouseLeave={stopDrawing}
-            ></canvas>
-          </div>
-          <div className="mt-8">
-            <h1>{props.bgImg} </h1>
+            <h2 className="my-5 pb-5 text-2xl font-extrabold border-b text-dark-purple ">
+              Start Drawing
+            </h2>
+            <div className="w-full cursor-cell flex justify-center pt-5 ">
+              <canvas
+                className="bg-white border-2 rounded-lg shadow-lg border-1"
+                style={{
+                  // backgroundImage: `url(${alifV.src})`,
+                  backgroundRepeat: "repeat-x",
+                }}
+                ref={canvasRef}
+                onMouseDown={startDrawing}
+                onMouseMove={draw}
+                onMouseUp={stopDrawing}
+                onMouseLeave={stopDrawing}
+              ></canvas>
+            </div>
+            <div className="mt-8">
+              <h1>{props.bgImg} </h1>
 
-            <ButtonGroup
-              variant="contained"
-              aria-label="outlined primary button group"
-            >
-              <Button
-                onClick={setToDraw}
-                className="bg-dark-purple"
-                startIcon={<EditIcon />}
+              <ButtonGroup
+                variant="contained"
+                aria-label="outlined primary button group"
               >
-                Draw
-              </Button>
-              <Button
-                onClick={setToErase}
-                className="bg-dark-purple"
-                startIcon={<CleaningServicesIcon />}
-              >
-                Erase
-              </Button>
-              <Button
-                onClick={setToClear}
-                className="bg-dark-purple"
-                startIcon={<DeleteForeverIcon />}
-              >
-                Clear
-              </Button>
-            </ButtonGroup>
-          </div>
+                <Button
+                  onClick={setToDraw}
+                  className="bg-dark-purple"
+                  startIcon={<EditIcon />}
+                >
+                  Draw
+                </Button>
+                <Button
+                  onClick={setToErase}
+                  className="bg-dark-purple"
+                  startIcon={<CleaningServicesIcon />}
+                >
+                  Erase
+                </Button>
+                <Button
+                  onClick={setToClear}
+                  className="bg-dark-purple"
+                  startIcon={<DeleteForeverIcon />}
+                >
+                  Clear
+                </Button>
+              </ButtonGroup>
+            </div>
           </div>
           <div className="mt-5">
             {userType !== "instructor" && (

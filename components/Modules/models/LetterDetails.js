@@ -111,7 +111,7 @@ const LetterDetails = (props) => {
                     user={props.user}
                     id={props.id}
                     module={props.module}
-                    symbol={props.symbol}
+                    // symbol={props.symbol}
                     newSymbol={props.newSymbol}
                     bgImg={props.name}
                   />
@@ -137,7 +137,7 @@ const LetterDetails = (props) => {
                     user={props.user}
                     id={props.id}
                     module={props.module}
-                    symbol={props.symbol}
+                    // symbol={props.symbol}
                     newSymbol={props.newSymbol}
                     bgImg={props.name}
                   />

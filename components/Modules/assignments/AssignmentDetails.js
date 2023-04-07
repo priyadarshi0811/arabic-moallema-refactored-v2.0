@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import SelectDropdown from "@/components/Layout/elements/SelectDropdown";
 import { Button, IconButton, TextField } from "@mui/material";
+import { Card, CardContent, Grid, Typography } from "@mui/material";
 
 import CardLayout from "@/components/Layout/card/CardLayout";
 import MarkRemarkSec from "@/components/Layout/elements/MarkRemarkSec";
@@ -70,6 +71,7 @@ const AssignmentDetails = ({ studentId, subModule, type }) => {
   };
 
   console.log(marks);
+  console.log(remark);
 
   useEffect(() => {
     const assignmentDetail = async () => {
@@ -116,20 +118,102 @@ const AssignmentDetails = ({ studentId, subModule, type }) => {
       {assignmentDetail &&
         assignmentDetail.map((assignment, index) => (
           <div>
-            {!assignment.submission.tasks && (
-              <div>
-                <h1 className="mt-10 px-5 pb-3 border-b-2">Task 1: Tracing </h1>
-                <div className="bg-gray-50 mt-5 lg:p-5 p-2 rounded-md shadow-md">
-                  <h1 className="lg:px-5 p-2">
-                    Queston: Enter the words that can be traced by the students
-                  </h1>
-                  <div className="border-2 rounded-md min-h-40 p-5 m-5">
-                    {/* <h1 className="p-5 text-6xl text-gray-400"> يـ ـيـ ـي</h1> */}
-                    <img
-                      src={assignment.submission}
-                      alt=""
-                      className="mx-auto"
+            {!assignment.submission.tasks &&
+              !assignment.submission.question &&
+              !assignment.submission.context && (
+                <div>
+                  <h1 className="mt-10 text-lg">Task: Tracing </h1>
+
+                  <div className="bg-gray-50 mt-5 lg:p-5 p-2 rounded-md shadow-md">
+                    <h1 className="lg:px-5 p-2">
+                      Queston: Enter the words that can be traced by the
+                      students
+                    </h1>
+                    <div className="border-2 rounded-md min-h-40 p-5 m-5">
+                      {/* <h1 className="p-5 text-6xl text-gray-400"> يـ ـيـ ـي</h1> */}
+                      <img
+                        src={assignment.submission}
+                        alt=""
+                        className="mx-auto"
+                      />
+                    </div>
+                    {assignment.mark === 0 && (
+                      <div className="my-10 mx-5">
+                        <CardLayout
+                          isFull="true"
+                          fullComp=<MarkRemarkSec
+                            key={index}
+                            index={index}
+                            handleMarksChange={handleMarksChange}
+                            handleReMarksChange={handleReMarksChange}
+                          />
+                        />
+                      </div>
+                    )}
+                  </div>
+                  {assignment.mark !== 0 && (
+                    <CardLayout
+                      isFull="true"
+                      fullComp=<div className="grid grid-cols-2 w-full">
+                        <div className="col-span-1 text-center">
+                          <label>Marks</label>
+
+                          <span className="text-2xl"> {assignment.mark}/5</span>
+                        </div>
+                        <div className="col-span-1  w-full">
+                          <label className="text-center">Remark</label>
+                          <p>{assignment.remark}</p>
+                        </div>
+                      </div>
                     />
+                  )}
+                </div>
+              )}
+            {assignment.submission.question && (
+              <div>
+                <h1 className="mt-10 text-lg">
+                  Task: Select the correct option{" "}
+                </h1>
+
+                <div className="bg-gray-50 mt-5 lg:p-5 p-2 rounded-md shadow-md">
+                  <div className="border-2 rounded-md min-h-40 p-5 m-5">
+                    <CardContent>
+                      <Typography
+                        className=" text-xl font-semibold  mt-8  text-gray-600"
+                        variant="h5"
+                      >
+                        Q. {assignment.submission.question}
+                      </Typography>
+                      <Grid container spacing={1} mt={2} className=" mt-8">
+                        {assignment.submission.selectData &&
+                          assignment.submission.selectData.map(
+                            (option, index) => (
+                              <Grid item key={index}>
+                                <div
+                                  className={`bg-orange-400 shadow-lg ml-20 rounded-lg px-4 py-2 `}
+                                >
+                                  <Typography
+                                    className=" text-black font-extrabold "
+                                    variant="h6"
+                                  >
+                                    {option}
+                                  </Typography>
+                                </div>
+                              </Grid>
+                            )
+                          )}
+                      </Grid>
+                      <div className=" mt-10">
+                        <label className=" text-black font-semibold ">
+                          Answer:{" "}
+                        </label>
+                        <label
+                          className={`bg-green-400 shadow-lg ml-4 text-black font-extrabold rounded-lg px-4 py-2 `}
+                        >
+                          {assignment.submission.selectedOption}
+                        </label>
+                      </div>
+                    </CardContent>
                   </div>
                   {assignment.mark === 0 && (
                     <div className="my-10 mx-5">
@@ -161,6 +245,77 @@ const AssignmentDetails = ({ studentId, subModule, type }) => {
                     </div>
                   />
                 )}
+              </div>
+            )}
+            {assignment.submission.context && (
+              <div>
+                <h1 className="mt-10 text-lg">Task: Match the following </h1>
+
+                <div className="bg-gray-50 mt-5 lg:p-5 p-2 rounded-md shadow-md">
+                  <div className="bg-gray-100  flex items-center justify-center">
+                    <h1 className=" ml-4">Match the following</h1>
+
+                    <div className="w-1/2 bg-white">
+                      <div className="p-4">
+                        <h1>Options</h1>
+
+                        {assignment.submission.options &&
+                          assignment.submission.options.map((item, index) => (
+                            <div
+                              key={item}
+                              className="shadow-md p-2 my-2 bg-gray-200"
+                            >
+                              {item}
+                            </div>
+                          ))}
+                      </div>
+                    </div>
+                    <div className="w-1/2 bg-white">
+                      <div className="p-4">
+                        <h1>Options</h1>
+
+                        {assignment.submission.context &&
+                          assignment.submission.context.map((item, index) => (
+                            <div
+                              key={item}
+                              className="shadow-md p-2 my-2 bg-gray-200"
+                            >
+                              {item}
+                            </div>
+                          ))}
+                      </div>
+                    </div>
+                  </div>
+                  {assignment.mark === 0 && (
+                    <div className="my-10 mx-5">
+                      <CardLayout
+                        isFull="true"
+                        fullComp=<MarkRemarkSec
+                          key={index}
+                          index={index}
+                          handleMarksChange={handleMarksChange}
+                          handleReMarksChange={handleReMarksChange}
+                        />
+                      />
+                    </div>
+                  )}
+                  {assignment.mark !== 0 && (
+                    <CardLayout
+                      isFull="true"
+                      fullComp=<div className="grid grid-cols-2 w-full">
+                        <div className="col-span-1 text-center">
+                          <label>Marks</label>
+
+                          <span className="text-2xl"> {assignment.mark}/5</span>
+                        </div>
+                        <div className="col-span-1  w-full">
+                          <label className="text-center">Remark</label>
+                          <p>{assignment.remark}</p>
+                        </div>
+                      </div>
+                    />
+                  )}
+                </div>
               </div>
             )}
             {assignment.submission.tasks && (
