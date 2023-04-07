@@ -13,6 +13,7 @@ import {
 } from "@/backend/Batches/BatchesDB";
 import { fetchStudentIdBasedOnEmail } from "@/backend/Students/StudentDB";
 import supabase from "@/supabaseClient";
+import Link from "next/link";
 
 // const options = ["apple", "banana", "Gvava"];
 // const context = ["red", "yellow", "Green"];
@@ -234,12 +235,23 @@ const MatchDndHome = ({ subModule, module, activityIndex }) => {
   return (
     <>
       {options && (
-        <div className="bg-gray-100 min-h-screen flex items-center justify-center">
-          <Container maxWidth="md" sx={{ display: "flex", boxShadow: 4 }}>
-            <div className="bg-gray-100 pt-10 flex items-center justify-center">
-              <h1>Match the following</h1>
-            </div>
-            <div className="w-1/2 bg-white">
+        <div className=" ">
+          <div className=" flex items-center justify-center">
+            <h1 className="text-2xl text-dark-purple">
+              Drag the left card to match the following..
+            </h1>
+          </div>
+          <Container
+            maxWidth="md"
+            sx={{
+              display: "flex",
+              boxShadow: 4,
+              marginTop: 5,
+              borderRadius: 5,
+              paddingY: 5,
+            }}
+          >
+            <div className="w-1/2 ">
               <DragDropContext onDragEnd={handleDragEnd}>
                 <Droppable droppableId="droppable-context">
                   {(provided) => (
@@ -262,7 +274,7 @@ const MatchDndHome = ({ subModule, module, activityIndex }) => {
                               {...provided.draggableProps}
                               {...provided.dragHandleProps}
                             >
-                              <div className="shadow-md p-2 my-2 bg-gray-200">
+                              <div className="shadow-md py-5 rounded-xl my-2 font-sans bg-dark-purple text-white text-2xl ">
                                 {item}
                               </div>
                             </div>
@@ -280,21 +292,34 @@ const MatchDndHome = ({ subModule, module, activityIndex }) => {
                 <h1>Options</h1>
 
                 {options.map((item, index) => (
-                  <div key={item} className="shadow-md p-2 my-2 bg-gray-200">
+                  <div
+                    key={item}
+                    className="shadow-md py-5 rounded-xl my-2 text-2xl font-sans bg-gray-200"
+                  >
                     {item}
                   </div>
                 ))}
               </div>
             </div>
-            <div>
-              <button
-                onClick={nextActivityHandler}
-                className="mt-24 ml-4 bg-blue-500 rounded-lg shadow-lg px-4 py-2 text-white hover:bg-blue-700 hover:shadow-2xl"
-              >
-                Submit
-              </button>
-            </div>
           </Container>
+          <div>
+            <Button
+              variant="contained"
+              className="text-dark-purple bg-white mt-10"
+              onClick={nextActivityHandler}
+            >
+              Next Section
+            </Button>
+            <Link href={`/student/activity/select/harakat/Fatah/2`}>
+              <Button
+                variant="contained"
+                className="text-dark-purple bg-white mt-10 mx-3"
+                style={{ marginRight: 10 }}
+              >
+                Next Activity
+              </Button>
+            </Link>
+          </div>  
         </div>
       )}
     </>

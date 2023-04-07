@@ -8,7 +8,10 @@ import DND from "@/components/Modules/models/DND";
 import Activity from "@/components/Modules/models/DNDActivity/Activity";
 import BackButton from "@/components/Layout/elements/BackButton";
 import AuthContext from "@/components/Context/store/auth-context";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useRouter } from "next/router";
+import Link from "next/link";
+import { Button } from "@mui/material";
 
 const index = ({ data }) => {
   const authCtx = useContext(AuthContext);
@@ -49,13 +52,20 @@ const index = ({ data }) => {
           minHeight: "100vh",
         }}
       >
-        <div className=" w-full p-5 ">
-          <h1 className=" my-auto  pt-10 text-3xl  text-white mx-3 ml-5 ">
-            <span className="bg-white rounded-full p-0 h-fit">
-              <BackButton />
-            </span>{" "}
-            Drag and Drop
+        
+        <div className=" w-full p-5 rounded-md  flex flex-row justify-between   pt-10">
+          <h1 className="mx-5 text-white text-lg">
+            Arabic Alphabets : Drag and Drop
           </h1>
+          <Link href={`/teacher/module/alphabets`} className="mx-5">
+            <Button
+              variant="contained"
+              className="bg-white text-dark-purple"
+              startIcon={<ArrowBackIcon />}
+            >
+              Back To Module 1
+            </Button>
+          </Link>
         </div>
         <div className="mx-10 rounded-md">
           {/* <DND /> */}

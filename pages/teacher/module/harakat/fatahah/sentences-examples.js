@@ -13,11 +13,11 @@ const HowToRead = () => {
   const [videoIndex, setVideoIndex] = useState(1);
 
   const VIDEO_PATH_1 =
-    "https://res.cloudinary.com/daftxtnxw/video/upload/v1680674726/3%20letters/animation_1_ez3s0m.mp4";
+    "https://res.cloudinary.com/daftxtnxw/video/upload/v1680674723/2%20letter%20joint/animation_1_revuyu.mp4";
   const VIDEO_PATH_2 =
-    "https://res.cloudinary.com/daftxtnxw/video/upload/v1680674722/3%20letters/animation_2_hw9njl.mp4";
+    "https://res.cloudinary.com/daftxtnxw/video/upload/v1680674723/2%20letter%20joint/animation_2_risa7e.mp4";
   const VIDEO_PATH_3 =
-    "https://res.cloudinary.com/daftxtnxw/video/upload/v1680674722/3%20letters/animation_3_vthrl1.mp4";
+    "https://res.cloudinary.com/daftxtnxw/video/upload/v1680674722/2%20letter%20joint/animation_3_kx6dz7.mp4";
 
   const [videoState, setVideoState] = useState({
     playing: true,
@@ -68,9 +68,9 @@ const HowToRead = () => {
       {" "}
       <div className=" w-full p-5 rounded-md  flex flex-row justify-between   pt-10">
         <h1 className="mx-5 text-white text-lg">
-          Arabic Alphabets : How to Read
+          Arabic Alphabets : Sentences Examples
         </h1>
-        <Link href={`/student/module/harakat/fatahah`} className="mx-5">
+        <Link href={`/teacher/module/harakat/fatahah`} className="mx-5">
           <Button
             variant="contained"
             className="bg-white text-dark-purple"
@@ -188,7 +188,7 @@ const HowToRead = () => {
                 Pre
               </Button>
 
-              <Link href="/student/module/harakat/word-making-1">
+              <Link href="/teacher/module/harakat/fatahah/">
                 <Button
                   variant="contained"
                   className="bg-white text-dark-purple"

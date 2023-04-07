@@ -10,6 +10,7 @@ import HomeActivityCard from "@/components/Layout/card/HomeActivityCard";
 import logo from "@/components/src/img/AMLogo.png";
 import { Button } from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useRouter } from "next/router";
 import AuthContext from "@/components/Context/store/auth-context";
 
@@ -101,14 +102,14 @@ const index = () => {
             Back to Dashboard
           </Button>
         </Link>
-        <Link href="https://heyzine.com/flip-book/3a9219391d.html#page/3">
+        {/* <Link href="https://heyzine.com/flip-book/3a9219391d.html#page/3">
           <Button className="bg-white text-dark-purple mx-2" variant="contained" startIcon={<ArrowBackIcon />}>
             Flip Book pg:3
           </Button>
-        </Link>
-        <Link href="https://heyzine.com/flip-book/3a9219391d.html#page/4">
-          <Button className="bg-white text-dark-purple mx-2" variant="contained" startIcon={<ArrowBackIcon />}>
-            Flip Book pg:4
+        </Link> */}
+        <Link href="/student/module/harakat/fatahah">
+          <Button className="bg-white text-dark-purple mx-2" variant="contained" endIcon={<ArrowForwardIcon />}>
+            Go to Module 2
           </Button>
         </Link>
       </div>
@@ -118,7 +119,7 @@ const index = () => {
         </div>
       <div className="grid grid-cols-4 gap-5 ">
         <div className="col-span-1 pl-16 w-full h-fit">
-          <img src={teacherImg.src} className="w-72" alt="" />
+          <img src={teacherImg.src} className="w-64" alt="" />
         </div>
         <div className="col-span-3 pt-10">
           <div className="p-5  grid grid-cols-7 m-4 justify-center ">

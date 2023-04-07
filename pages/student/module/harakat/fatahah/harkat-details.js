@@ -9,7 +9,6 @@ import { Button } from "@mui/material";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import BigTitleCard from "@/components/Modules/models/BigTitleCard";
 
-
 import { useContext } from "react";
 import AuthContext from "@/components/Context/store/auth-context";
 import { useRouter } from "next/router";
@@ -17,31 +16,32 @@ import { useEffect } from "react";
 
 
 const positioning = () => {
-  const authCtx = useContext(AuthContext);
   const router = useRouter();
+  const authCtx = useContext(AuthContext);
 
-  /**************Restricting Teachers Route************************* */
+  /**************Restricting Students Route************************* */
   const loggedIn = authCtx.isLoggedIn;
-  const typeTeacher = authCtx.userType === "instructor" ? true : false;
-  if (!typeTeacher && loggedIn) {
+  const typeStudent = authCtx.userType === "student" ? true : false;
+  if (!typeStudent && loggedIn) {
     router.replace("/");
   }
 
   useEffect(() => {
     console.log("in");
-    if (typeTeacher && loggedIn) {
-      if (!typeTeacher && !loggedIn) {
+    if (typeStudent && loggedIn) {
+      if (!typeStudent && !loggedIn) {
         console.log("second in");
         router.replace("/");
       }
     }
     const localType = localStorage.getItem("type");
-    if (localType !== "instructor") {
+    if (localType !== "student") {
       console.log("second in");
       router.replace("/");
     }
-  }, [loggedIn, typeTeacher]);
-  /**************Restricting Teachers Route************************* */
+  }, [loggedIn, typeStudent]);
+
+  /**************Restricting Students Route************************* */
   return (
     <div
       className=""
@@ -79,7 +79,7 @@ const positioning = () => {
         </div>
 
         {/* <div className="mt-5 text-end">
-            <Link href ='/student/module/harakat/discription'><Button variant="contained" className="bg-dark-purple"  endIcon={<NavigateNextIcon />} >Next</Button></Link>
+            <Link href ='/student/module/harakat/fatahahdiscription'><Button variant="contained" className="bg-dark-purple"  endIcon={<NavigateNextIcon />} >Next</Button></Link>
         </div> */}
       </div>
     </div>

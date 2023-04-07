@@ -440,7 +440,8 @@ const DrawingCanvas = (props) => {
             {userType !== "student" && (
               <Button
                 onClick={handleNextButtonClick}
-                className="p-3 ml-4 bg-white text-dark-purple rounded-md  hover:bg-blue-600 hover:shadow-lg"
+                className="p-3 ml-4 bg-white text-dark-purple rounded-md  hover:bg-blue-600 hover:shadow-lg border-2 border-slate-100  "
+                style={{backgroundColor:"white "}}
               >
                 Next Activity
               </Button>

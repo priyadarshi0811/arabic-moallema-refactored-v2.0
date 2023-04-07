@@ -13,6 +13,7 @@ import {
   fetchTeacherIdBasedOnBatchId,
 } from "@/backend/Batches/BatchesDB";
 import supabase from "@/supabaseClient";
+import Link from "next/link";
 
 const SelectActivityHome = ({ subModule, module, activityIndex }) => {
   const [assignment, setAssignment] = useState([]);
@@ -226,46 +227,62 @@ const SelectActivityHome = ({ subModule, module, activityIndex }) => {
   console.log(selectData);
   return (
     <>
-      <div className="mx-auto max-w-lg mt-44">
-        <Card className="mb-4 shadow-lg" variant="outlined">
-          <CardContent>
-            <Typography
-              className=" text-xl font-semibold  mt-8  text-gray-600"
-              variant="h5"
-            >
-              Q.{index + 1} {question && question}
-            </Typography>
-            <Grid container spacing={1} mt={2} className=" mt-8">
+      <div className="mx-auto mt-8">
+        <Card className="mb-4 shadow-lg w-full">
+          <CardContent className="">
+            <div className=" flex items-center justify-center mb-5">
+              <h1 className="text-2xl text-dark-purple">
+                Q.{index + 1} {question && question}
+              </h1>
+            </div>
+
+            {/* <Grid container spacing={1} mt={2} className=" mt-8"> */}
+            <div className=" mt-8 flex flex-wrap justify-stretch justify-center ">
               {selectData &&
                 selectData.map((option, index) => (
-                  <Grid item key={index}>
+                  <div className=" " key={index}>
                     <div
-                      className={`bg-orange-400 shadow-lg ml-20 rounded-lg px-4 py-2 ${
-                        selectedOption === option ? "bg-green-400" : ""
+                      className={` shadow-lg w-64   cursor-pointer  m-5 rounded-lg px-4 py-2 ${
+                        selectedOption === option ? "bg-dark-purple text-white" : "bg-white text-dark-purple"
                       }`}
                       onClick={() => handleOptionClick(option)}
                     >
-                      <Typography
-                        className=" text-white font-extrabold "
-                        variant="h6"
-                      >
+                      <h1 className="  text-3xl font-sans m-3 py-2">
                         {option}
-                      </Typography>
+                      </h1>
                     </div>
-                  </Grid>
+                  </div>
                 ))}
-            </Grid>
+              
+              {/* <div className="">
+                <div
+                  className={`bg-orange-400 shadow-lg w-64  m-5 rounded-lg px-4 py-2`}
+                >
+                  <h1 className=" text-white font-extrabold m-3">test</h1>
+                </div>
+              </div> */}
+            </div>
           </CardContent>
         </Card>
 
-        <button
+        {/* <button
           className="my-10 flex justify-around mr-10 px-4 py-2 bg-orange-500 text-white rounded-sm shadow-lg hover:bg-orange-700"
           variant="contained"
           color="primary"
           onClick={handleNext}
         >
           Submit
-        </button>
+        </button> */}
+        {/* <Link href={`/student/activity/select/harakat/Fatah/2`}> */}
+        <Button
+          onClick={handleNext}
+          variant="contained"
+          className="text-dark-purple bg-white mt-10 mx-3"
+          style={{ marginRight: 10 }}
+        >
+          Next Activity
+        </Button>
+        {/* </Link> */}
       </div>
     </>
   );
