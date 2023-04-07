@@ -10,9 +10,14 @@ import AuthContext from "@/components/Context/store/auth-context";
 const index = () => {
   const router = useRouter();
   let id;
+  let module;
   if (router.query.alphabateDetail) {
     id = router.query.alphabateDetail[1];
+    module = router.query.alphabateDetail[0];
   }
+
+  console.log(id);
+  console.log(module);
 
   const authCtx = useContext(AuthContext);
 
@@ -54,13 +59,14 @@ const index = () => {
           minHeight: "100vh",
         }}
       >
-        {/* <AlphabetSlider id={id} type='tracing' /> */}
-        <ActivityDetail
-          user="student"
-          id={id}
-          type="LetterTracing"
-          module="alphabets"
-        />
+        {id && module && (
+          <ActivityDetail
+            user="student"
+            id={id}
+            type="LetterTracing"
+            module={module}
+          />
+        )}
       </div>
     </>
   );

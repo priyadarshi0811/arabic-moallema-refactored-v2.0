@@ -41,7 +41,22 @@ export const fetchSubmittedAssignmentBasedOnStudent = async (
   }
   return data;
 };
+export const fetchSubmittedAssignmentBasedOnStudentAndModule = async (
+  studentId,
+  batchId,
+  module
+) => {
+  const { data, error } = await supabase
+    .from("assignments_exp_duplicate")
+    .select("*")
+    .match({ student_id: studentId, batch_id: batchId, module_name: module });
 
+  if (error) {
+    console.log("Error fetching batches data: ", error);
+    return null;
+  }
+  return data;
+};
 export const fetchSubmittedAssignmentBasedOnStudentBatchSubModule = async (
   student,
   batch,

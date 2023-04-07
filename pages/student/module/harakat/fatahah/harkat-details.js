@@ -79,7 +79,7 @@ const positioning = () => {
         </div>
 
         {/* <div className="mt-5 text-end">
-            <Link href ='/student/module/harakat/discription'><Button variant="contained" className="bg-dark-purple"  endIcon={<NavigateNextIcon />} >Next</Button></Link>
+            <Link href ='/student/module/harakat/fatahahdiscription'><Button variant="contained" className="bg-dark-purple"  endIcon={<NavigateNextIcon />} >Next</Button></Link>
         </div> */}
       </div>
     </div>

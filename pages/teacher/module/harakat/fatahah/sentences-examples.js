@@ -68,7 +68,7 @@ const HowToRead = () => {
       {" "}
       <div className=" w-full p-5 rounded-md  flex flex-row justify-between   pt-10">
         <h1 className="mx-5 text-white text-lg">
-          Arabic Alphabets : How to Read
+          Arabic Alphabets : Sentences Examples
         </h1>
         <Link href={`/teacher/module/harakat/fatahah`} className="mx-5">
           <Button
@@ -188,7 +188,7 @@ const HowToRead = () => {
                 Pre
               </Button>
 
-              <Link href="/teacher/module/harakat/word-making-1">
+              <Link href="/teacher/module/harakat/fatahah/">
                 <Button
                   variant="contained"
                   className="bg-white text-dark-purple"

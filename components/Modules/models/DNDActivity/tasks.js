@@ -27,7 +27,7 @@ class Person extends React.Component {
             {/* {this.props.task_content} */}
             <div className=" ">
               {/* <MUIMiniCard title={this.props.task_content} /> */}
-              <h1 className="py-5 text-dark-purple">{this.props.task_content}</h1>
+              <h1 className="py-5 text-dark-purple text-3xl">{this.props.task_content}</h1>
             </div>
           </Paper>
         </div>

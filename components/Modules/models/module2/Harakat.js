@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -11,7 +11,7 @@ import GeneralCard from "@/components/Layout/card/GeneralCard";
 import AudioButton from "@/components/Layout/elements/AudioBtn";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Fatahah from "@/components/src/img/arabic_fatha.png";
-
+import BatchContext from "@/components/Context/store/batch-context";
 const Alphabates = [
   {
     index: 0,
@@ -283,6 +283,10 @@ const Alphabates = [
   },
 ];
 
+/* -------------------------------------------------------------------------- */
+/*                                  Function                                  */
+/* -------------------------------------------------------------------------- */
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -418,7 +422,47 @@ const Card = ({
   initial,
   middle,
   final,
+  user,
+  nextUrl
 }) => {
+
+  const [assignment, setAssignment] = useState([]);
+  const [activityPath, setActivityPath] = useState();
+  const { myArray, setMyArray } = useContext(BatchContext);
+
+  console.log(myArray);
+  //get the assignment for the selected activity
+  useEffect(() => {
+    const fetchAssignment = async () => {
+      const data = await fetchAssignmentForLetter("Fatah", "harakat");
+      if (data[0]) {
+        setAssignment(data[0].assignment_json.letter);
+        if (data[0].assignment_json.letter[0].activity_type === "trace") {
+          setActivityPath("tracing");
+        }
+        if (data[0].assignment_json.letter[0].activity_type === "dnd") {
+          setActivityPath("dnd");
+        }
+        if (data[0].assignment_json.letter[0].activity_type === "select") {
+          setActivityPath("select");
+        }
+        if (data[0].assignment_json.letter[0].activity_type === "match") {
+          setActivityPath("match");
+        }
+      }
+    };
+    fetchAssignment();
+  }, []);
+
+  console.log(assignment);
+
+  const setActivitySubmodule = async () => {
+    if (activityPath) {
+      window.location.href = `/${user}/activity/${activityPath}/harakat/Fatah/${0}`;
+    }
+  }
+
+
   return (
     <div className="w-full  ">
       <div className=" w-full p-2 rounded-md  flex flex-row justify-between   pt-3">
@@ -426,7 +470,7 @@ const Card = ({
         <h1 className="mx-2 text-white text-lg">
           Module 2: Fatahah of Harakat
         </h1>
-        <Link href="/student/module" className="mx-5">
+        <Link href={`/${user}/module`} className="mx-5">
           <Button
             variant="contained"
             className="bg-white text-dark-purple"
@@ -450,14 +494,12 @@ const Card = ({
                   <LetterCardR label={labelR} name={nameR} audioUrl={audioR} />
                 </div>
                 <div className="col-span-2 lg:col-span-1">
-                <div className="grid grid-cols-3 lg:grid-cols-1 mx-0 mt-5 gap-4 lg:gap-2">
-                  <SmallCard disc="Final Form" title={initial} />
-                  <SmallCard disc="Medial Form" title={middle} />
-                  <SmallCard disc="Initial Form" title={final} />
+                  <div className="grid grid-cols-3 lg:grid-cols-1 mx-0 mt-5 gap-4 lg:gap-2">
+                    <SmallCard disc="Initial Form" title={initial} />
+                    <SmallCard disc="Medial Form" title={middle} />
+                    <SmallCard disc="Final Form" title={final} />
+                  </div>
                 </div>
-                </div>
-
-                
               </div>
             </div>
           </div>
@@ -465,7 +507,27 @@ const Card = ({
       </div>
       <div className=" w-full p-2 rounded-md  flex flex-row justify-center   pt-3">
         <div className="mx-5">
-          <Link href="/student/module/harakat/how-to-read-1">
+          <Link href={`/${user}/activity/match/harakat/Fatah/4`}>
+            <Button
+              variant="contained"
+              className="text-dark-purple bg-white "
+              style={{ marginRight: 10 }}
+            >
+              Activity
+            </Button>
+          </Link>
+
+
+            {/* <Button
+              variant="contained"
+              onClick={setActivitySubmodule}
+              className="text-dark-purple bg-white "
+              style={{ marginRight: 10 }}
+            >
+              Activity
+            </Button> */}
+
+          <Link href={`/${user}/module/harakat/fatah/${nextUrl}`}>
             <Button variant="contained" className="text-dark-purple bg-white">
               Next Section
             </Button>
@@ -476,7 +538,7 @@ const Card = ({
   );
 };
 
-export default function VerticalTabs() {
+export default function VerticalTabs(props) {
   const [value, setValue] = React.useState(0);
 
   React.useEffect(() => {
@@ -497,7 +559,6 @@ export default function VerticalTabs() {
         backgroundPosition: "center top",
         widows: "100vw",
         minHeight: "100vh",
- 
       }}
     >
       <Tabs
@@ -534,159 +595,11 @@ export default function VerticalTabs() {
             initial={alphabate.description.initial}
             middle={alphabate.description.middle}
             final={alphabate.description.final}
+            user= {props.user}
+            nextUrl={props.nextUrl}
           />
         </TabPanel>
       ))}
-      {/* <TabPanel style={{ width: "100%" }} value={value} index={1}>
-        <Card
-          labelR="ز"
-          labelL="ذ"
-          nameR="Zai"
-          nameL="Dhaal"
-          audioR="https://www.arabicreadingcourse.com/audio/isolated-letters/thaal.mp3"
-          audioL="https://www.arabicreadingcourse.com/audio/isolated-letters/zay.mp3"
-        />
-      </TabPanel>
-      <TabPanel style={{ width: "100%" }} value={value} index={2}>
-        <Card
-          labelL="ثــ"
-          labelR="س"
-          nameL="Tha"
-          nameR="Seen"
-          audioL="https://www.arabicreadingcourse.com/audio/isolated-letters/tha.mp3"
-          audioR="https://www.arabicreadingcourse.com/audio/isolated-letters/siin.mp3"
-        />
-      </TabPanel>
-      <TabPanel style={{ width: "100%" }} value={value} index={3}>
-      <Card
-          labelL="ظ"
-          labelR="ذ"
-          nameL="Dhaa"
-          nameR="Dhaal"
-          audioL="https://www.arabicreadingcourse.com/audio/isolated-letters/thaa.mp3"
-          audioR="https://www.arabicreadingcourse.com/audio/isolated-letters/thaal.mp3"
-        />
-      </TabPanel>
-      <TabPanel style={{ width: "100%" }} value={value} index={4}>
-      <Card
-          labelL="ة"
-          labelR="د"
-          nameL="Ta"
-          nameR="Daal"
-          audioL="https://www.arabicreadingcourse.com/audio/isolated-letters/ta.mp3"
-          audioR="https://www.arabicreadingcourse.com/audio/isolated-letters/daal.mp3"
-        />
-      </TabPanel>
-      <TabPanel style={{ width: "100%" }} value={value} index={5}>
-        <Card
-          labelR="ض"
-          labelL="د"
-          nameR="daad"
-          nameL="Daal"
-          audioR="https://www.arabicreadingcourse.com/audio/isolated-letters/daad.mp3"
-          audioL="https://www.arabicreadingcourse.com/audio/isolated-letters/daal.mp3"
-        />
-      </TabPanel>
-      <TabPanel style={{ width: "100%" }} value={value} index={6}>
-        <Card
-          labelL="س"
-          labelR="ص"
-          nameL="Seen"
-          nameR="Saad"
-          audioL="https://www.arabicreadingcourse.com/audio/isolated-letters/siin.mp3"
-          audioR="https://www.arabicreadingcourse.com/audio/isolated-letters/saad.mp3"
-        />
-      </TabPanel>
-      <TabPanel style={{ width: "100%" }} value={value} index={7}>
-        <Card
-          labelL="ف"
-          labelR="ث"
-          nameL="Faa"
-          nameR="Thaa"
-          audioL="https://www.arabicreadingcourse.com/audio/isolated-letters/fa.mp3"
-          audioR="https://www.arabicreadingcourse.com/audio/isolated-letters/tha.mp3"
-        />
-      </TabPanel>
-      <TabPanel style={{ width: "100%" }} value={value} index={8}>
-        <Card
-          labelL="ة"
-          labelR=" ط"
-          nameL="Ta"
-          nameR="Taa"
-          audioL="https://www.arabicreadingcourse.com/audio/isolated-letters/ta.mp3"
-          audioR="https://www.arabicreadingcourse.com/audio/isolated-letters/taa.mp3"
-        />
-      </TabPanel>
-      <TabPanel style={{ width: "100%" }} value={value} index={9}>
-        <Card
-          labelL="ل"
-          labelR="ر"
-          nameL="Laam"
-          nameR="Raa"
-          audioL="https://www.arabicreadingcourse.com/audio/isolated-letters/lam.mp3"
-          audioR="https://www.arabicreadingcourse.com/audio/isolated-letters/ra.mp3"
-        />
-      </TabPanel>
-      <TabPanel style={{ width: "100%" }} value={value} index={10}>
-        <Card
-          labelL="ظ"
-          labelR="ز"
-          nameL="Dhaa"
-          nameR="Zay"
-          audioL="https://www.arabicreadingcourse.com/audio/isolated-letters/thaa.mp3"
-          audioR="https://www.arabicreadingcourse.com/audio/isolated-letters/zay.mp3"
-        />
-      </TabPanel> 
-      <TabPanel style={{ width: "100%" }} value={value} index={11}>
-        <Card
-          labelL=" غ"
-          labelR="خ"
-          nameL="Ghayn"
-          nameR="Khaa"
-          audioL="https://www.arabicreadingcourse.com/audio/isolated-letters/ghayn.mp3"
-          audioR="https://www.arabicreadingcourse.com/audio/isolated-letters/kha.mp3"
-        />
-      </TabPanel> 
-      <TabPanel style={{ width: "100%" }} value={value} index={12}>
-        <Card
-          nameL="Alif"
-          nameR="Ha"
-          labelL=" أ"
-          labelR="هـ"
-          audioL="https://www.arabicreadingcourse.com/audio/isolated-letters/alif.mp3"
-          audioR="https://www.arabicreadingcourse.com/audio/isolated-letters/ha.mp3"
-        />
-      </TabPanel> 
-      <TabPanel style={{ width: "100%" }} value={value} index={13}>
-        <Card
-          nameL="Thaa"
-          nameR="Daal"
-          labelL="ث "
-          labelR="ذ"
-          audioL="https://www.arabicreadingcourse.com/audio/isolated-letters/tha.mp3"
-          audioR="https://www.arabicreadingcourse.com/audio/isolated-letters/daal.mp3"
-        />
-      </TabPanel> 
-      <TabPanel style={{ width: "100%" }} value={value} index={14}>
-        <Card
-          nameL="Haa"
-          nameR="Ha"
-          labelL=" ح"
-          labelR="هـ"
-          audioL="https://www.arabicreadingcourse.com/audio/isolated-letters/hha.mp3"
-          audioR="https://www.arabicreadingcourse.com/audio/isolated-letters/ha.mp3"
-        />
-      </TabPanel> 
-      <TabPanel style={{ width: "100%" }} value={value} index={15}>
-        <Card
-          nameL="Haa"
-          nameR="Ayn"
-          labelL=" ح"
-          labelR="ع"
-          audioL="https://www.arabicreadingcourse.com/audio/isolated-letters/hha.mp3"
-          audioR="https://www.arabicreadingcourse.com/audio/isolated-letters/ayn.mp3"
-        />
-      </TabPanel>  */}
     </Box>
   );
 }

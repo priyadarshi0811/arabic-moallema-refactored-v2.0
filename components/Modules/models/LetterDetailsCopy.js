@@ -8,13 +8,13 @@ import logo from "@/components/src/img/AMLogo.png";
 import { addActivityStartStatus } from "@/backend/ActivityStartLog/SetActivityLogDB";
 import { fetchBatcheIdBasedOnBatchName } from "@/backend/Batches/BatchesDB";
 import { fetchAssignmentForLetter } from "@/backend/Assignment/FetchAssignmentDB";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ReactPlayer from "react-player";
 import VideoControlBtn from "@/components/Layout/elements/VideoControlBtn";
 import GeneralCard from "@/components/Layout/card/GeneralCard";
 
-const LetterDetails = (props) => {  
+const LetterDetails = (props) => {
   console.log("user: ", props.user);
   const [showCanvas, setShowCanvas] = useState(false);
   const [activityPath, setActivityPath] = useState();
@@ -43,6 +43,7 @@ const LetterDetails = (props) => {
 
   console.log(batchId);
   console.log(props.module);
+  console.log(props.name);
 
   //get the assignment for the selected activity
   useEffect(() => {
@@ -71,11 +72,7 @@ const LetterDetails = (props) => {
       let data;
       const subModule = props.name;
       if (subModule && batchId && props.module) {
-         data = await addActivityStartStatus(
-          props.module,
-          subModule,
-          batchId
-        );
+        data = await addActivityStartStatus(props.module, subModule, batchId);
         if (!data) {
           console.log("already added");
         }
@@ -132,7 +129,7 @@ const LetterDetails = (props) => {
     });
   };
 
-console.log("mp4",props.mp4);
+  console.log("mp4", props.mp4);
 
   return (
     <>
@@ -144,11 +141,15 @@ console.log("mp4",props.mp4);
             {props.name} " {props.symbol} "
           </span> */}
         </h1>
-          <Link href={`/${props.user}/module/alphabets`} className="mx-5">
-            <Button variant="contained" className="bg-white text-dark-purple" startIcon={<ArrowBackIcon />}>
-              Back
-            </Button>
-          </Link>
+        <Link href={`/${props.user}/module/alphabets`} className="mx-5">
+          <Button
+            variant="contained"
+            className="bg-white text-dark-purple"
+            startIcon={<ArrowBackIcon />}
+          >
+            Back
+          </Button>
+        </Link>
       </div>
       <div className=" bg-white rounded-md w-full mt-5">
         <div className="grid grid-cols-2  p-5 md:grid-cols-4 lg:ml-5">
@@ -174,7 +175,6 @@ console.log("mp4",props.mp4);
                 {props.name} "{props.symbol}"{" "}
                 <AudioButton url={props.audioUrl} />
               </button> */}
-            
             </div>
           </div>
           <div className="col-span-2 bg-white rounded-md  sm:col-span-3 md:px-5 lg:px-14">
@@ -194,39 +194,6 @@ console.log("mp4",props.mp4);
               </div>
 
               <div className="grid grid-cols-1 gap-5 ">
-                {/* <div className="grid grid-cols-3 py-5 mx-0 mt-5 text-white rounded-md   bg-cyan-900">
-                  <div className="m-3 span-cols-2 ">
-                    <span>Initial Form</span>
-                    <h1
-                      className="mt-5 text-5xl text-gray-300 font-sans"
-                      dir="rtl"
-                      lang="ar"
-                    >
-                      {props.initial || مـ}
-                    </h1>
-                  </div>
-                  <div className="m-3 span-cols-2 ">
-                    <span>Medial Form</span>
-                    <h1
-                      className="mt-5 text-5xl text-gray-300 font-sans "
-                      dir="rtl"
-                      lang="ar"
-                    >
-                      {props.middle || ـمـ}
-                    </h1>
-                  </div>
-                  <div className="m-3 span-cols-2  h-fit">
-                    <span>Final Form</span>
-                    <h1
-                      className="mt-5 text-5xl text-gray-300 font-sans "
-                      dir="rtl"
-                      lang="ar"
-                    >
-                      {props.final || ـم}
-                    </h1>
-                  </div>
-                </div> */}
-
                 <div className="grid grid-cols-3 mx-0 mt-5 gap-4">
                   <GeneralCard disc="Final Form" title={props.final} />
                   <GeneralCard disc="Medial Form" title={props.middle} />
@@ -238,17 +205,15 @@ console.log("mp4",props.mp4);
         </div>
       </div>
       <div className=" w-full p-2 rounded-md  flex flex-row justify-center   pt-3">
-      <div className="mx-5">
-               
-
-                <Button
-                  onClick={setActivitySubmodule}
-                  variant="contained"
-                  className="text-dark-purple bg-white"
-                >
-                  Activity
-                </Button>
-              </div>
+        <div className="mx-5">
+          <Button
+            onClick={setActivitySubmodule}
+            variant="contained"
+            className="text-dark-purple bg-white"
+          >
+            Activity
+          </Button>
+        </div>
       </div>
     </>
   );

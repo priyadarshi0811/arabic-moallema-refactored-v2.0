@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 import AuthContext from "@/components/Context/store/auth-context";
 
 const AssignmentDetails = () => {
-
   const authCtx = useContext(AuthContext);
   const router = useRouter();
   /**************Restricting Teachers Route************************* */
@@ -31,11 +30,11 @@ const AssignmentDetails = () => {
 
   /**************Restricting Teachers Route************************* */
 
-
-  return <>
-  <StudentAssignmentDetail/>
-   </>
-  
+  return (
+    <>
+      <StudentAssignmentDetail />
+    </>
+  );
 };
 
 export default AssignmentDetails;

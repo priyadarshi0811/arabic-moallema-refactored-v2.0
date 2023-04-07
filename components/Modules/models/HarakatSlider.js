@@ -44,7 +44,7 @@ const Alphabates = [
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
-console.log(props.title,'title');
+  console.log(props.title, "title");
   return (
     <div
       role="tabpanel"
@@ -100,59 +100,46 @@ export default function VerticalTabs(props) {
 
   return (
     <Box sx={{ display: "flex", height: "100vh" }}>
-     
-
-
       {/* Module: 2 */}
 
-    
-        <Tabs
-          orientation="vertical"
-          variant="scrollable"
-          value={value}
-          onChange={handleChange}
-          // aria-label="Vertical tabs example"
-          sx={{
-            borderRight: 1,
-            borderColor: "divider",
-            background: "rgb(0 79 112)",
-            color: "white",
-            width: "240px",
-          }}
-        >
-          {Alphabates.map((alphabate) => (
-            <Link
-              href={`/student/module/harakat/${alphabate.title}`}
-              className=" p-0 my-2 rounded-full text-center"
-            >
-              <Tab
-                className={`text-3xl  py-3 px-0 mx-0 text-white font-bold rounded-full font-sans  focus:bg-cyan-400 bg-black`} // ${styleBg}
-                label={alphabate.letter}
-                id={props.id}
-                sx={{ border: "2px solid white" }}
-                //  onClick={changeStyle}
-              />
-            </Link>
-          ))}
-        </Tabs>
-   
-     
-        <TabPanel value={value} index={0} style={{width:"100%"}}>
-
-
-
-
-            <ActivityDetail
+      <Tabs
+        orientation="vertical"
+        variant="scrollable"
+        value={value}
+        onChange={handleChange}
+        // aria-label="Vertical tabs example"
+        sx={{
+          borderRight: 1,
+          borderColor: "divider",
+          background: "rgb(0 79 112)",
+          color: "white",
+          width: "240px",
+        }}
+      >
+        {Alphabates.map((alphabate) => (
+          <Link
+            href={`/student/module/harakat/${alphabate.title}`}
+            className=" p-0 my-2 rounded-full text-center"
+          >
+            <Tab
+              className={`text-3xl  py-3 px-0 mx-0 text-white font-bold rounded-full font-sans  focus:bg-cyan-400 bg-black`} // ${styleBg}
+              label={alphabate.letter}
               id={props.id}
-              user={props.user}
-              type="harakat"
-              module={props.module}
+              sx={{ border: "2px solid white" }}
+              //  onClick={changeStyle}
             />
+          </Link>
+        ))}
+      </Tabs>
 
-
-        </TabPanel>
-   
-
+      <TabPanel value={value} index={0} style={{ width: "100%" }}>
+        <ActivityDetail
+          id={props.id}
+          user={props.user}
+          type="harakat"
+          module={props.module}
+        />
+      </TabPanel>
 
       {/* {props.type == "tracing" ? (
         <Tabs
@@ -189,7 +176,7 @@ export default function VerticalTabs(props) {
       ) : (
         null
       )} */}
-      
+
       {/* {props.type == "tracing" ? (
         <ActivityDetail symbol={symbol} id={props.id} type="LetterTracing" />
       ) : (

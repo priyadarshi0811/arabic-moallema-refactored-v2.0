@@ -9,15 +9,22 @@ import ReactPlayer from "react-player";
 import VideoControlBtn from "@/components/Layout/elements/VideoControlBtn";
 import { useState } from "react";
 
-const HowToRead = () => {
+const HowToRead = ({user, screenNo, nextUrl}) => {
   const [videoIndex, setVideoIndex] = useState(1);
 
-  const VIDEO_PATH_1 =
+  const HTRF_V1 =
     "https://res.cloudinary.com/daftxtnxw/video/upload/v1680674726/3%20letters/animation_1_ez3s0m.mp4";
-  const VIDEO_PATH_2 =
+  const HTRF_V2 =
     "https://res.cloudinary.com/daftxtnxw/video/upload/v1680674722/3%20letters/animation_2_hw9njl.mp4";
-  const VIDEO_PATH_3 =
+  const HTRF_V3 =
     "https://res.cloudinary.com/daftxtnxw/video/upload/v1680674722/3%20letters/animation_3_vthrl1.mp4";
+    const HTRS_V1 =
+    "https://res.cloudinary.com/daftxtnxw/video/upload/v1680674723/2%20letter%20joint/animation_1_revuyu.mp4";
+  const HTRS_V2 =
+    "https://res.cloudinary.com/daftxtnxw/video/upload/v1680674723/2%20letter%20joint/animation_2_risa7e.mp4";
+  const HTRS_V3 =
+    "https://res.cloudinary.com/daftxtnxw/video/upload/v1680674722/2%20letter%20joint/animation_3_kx6dz7.mp4";
+    
 
   const [videoState, setVideoState] = useState({
     playing: true,
@@ -70,7 +77,7 @@ const HowToRead = () => {
         <h1 className="mx-5 text-white text-lg">
           Arabic Alphabets : How to Read
         </h1>
-        <Link href={`/student/module/harakat/fatahah`} className="mx-5">
+        <Link href={`/${user}/module/harakat/fatahah`} className="mx-5">
           <Button
             variant="contained"
             className="bg-white text-dark-purple"
@@ -88,7 +95,7 @@ const HowToRead = () => {
                 {/* <VideoWithBtn /> */}
                 <ReactPlayer
                   className="player"
-                  url={VIDEO_PATH_1}
+                  url={screenNo == 'fst' ?HTRF_V1 : HTRS_V1}
                   width="100%"
                   height={360}
                   playing={playing}
@@ -107,7 +114,7 @@ const HowToRead = () => {
                 {/* <VideoWithBtn /> */}
                 <ReactPlayer
                   className="player"
-                  url={VIDEO_PATH_2}
+                  url={screenNo == 'fst' ?HTRF_V2 : HTRS_V2}
                   width="100%"
                   height={360}
                   playing={playing}
@@ -126,7 +133,7 @@ const HowToRead = () => {
                 {/* <VideoWithBtn /> */}
                 <ReactPlayer
                   className="player"
-                  url={VIDEO_PATH_3}
+                  url={screenNo == 'fst' ?HTRF_V3 : HTRS_V3}
                   width="100%"
                   height={360}
                   playing={playing}
@@ -188,7 +195,7 @@ const HowToRead = () => {
                 Pre
               </Button>
 
-              <Link href="/student/module/harakat/word-making-1">
+              <Link href={`/${user}/module/harakat/fatahah/${nextUrl}`}>
                 <Button
                   variant="contained"
                   className="bg-white text-dark-purple"

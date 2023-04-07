@@ -346,6 +346,9 @@ const ActivityDetail = ({ id, type, symbol, user, module }) => {
   console.log("type: ", type);
   console.log(module);
   console.log(id);
+  console.log("module: ", module);
+  console.log("subModule: ", id);
+  console.log("type: ", type);
   console.log(symbol);
   const filteredData = AlphabatesDescription.filter((item) => item.name === id);
   // console.log(filteredData[0].description);
@@ -371,13 +374,13 @@ const ActivityDetail = ({ id, type, symbol, user, module }) => {
       ) : (
         ""
       )}
-      {type == "LetterTracing" && filteredData[0] && (
+      {type == "LetterTracing" && id && (
         <LetterDetails
           user={user}
           id={id}
           module={module}
-          name={filteredData[0].name}
-          symbol={filteredData[0].symbol}
+          name={id}
+          // symbol={filteredData[0].symbol}
           newSymbol={symbol}
         />
       )}
