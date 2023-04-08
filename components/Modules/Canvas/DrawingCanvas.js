@@ -123,21 +123,61 @@ const DrawingCanvas = (props) => {
   console.log(props.id);
   //if no avtivities then navigate to modules
   useEffect(() => {
-    if (
-      currentIndex > assignment.length - 1 &&
-      userType === "instructor" &&
-      props.module === "alphabets"
-    ) {
-      router.replace("/teacher/module/alphabets");
+    //teacher
+    if (assignment[currentIndex] && userType === "instructor") {
+      activityType = assignment[currentIndex].activity_type;
+      if (activityType === "trace" && currentIndex <= +assignment.length - 1) {
+        console.log("first");
+
+        router.replace(
+          `/teacher/activity/tracing/${props.module}/${props.id}/${currentIndex}`
+        );
+      } else if (
+        activityType === "dnd" &&
+        currentIndex <= +assignment.length - 1
+      ) {
+        console.log("second");
+        router.replace(
+          `/teacher/activity/dnd/${props.module}/${props.id}/${currentIndex}`
+        );
+      } else if (
+        activityType === "match" &&
+        currentIndex <= +assignment.length - 1
+      ) {
+        console.log("second");
+        router.replace(
+          `/teacher/activity/match/${props.module}/${props.id}/${currentIndex}`
+        );
+      } else if (
+        activityType === "select" &&
+        currentIndex <= +assignment.length - 1
+      ) {
+        console.log("second");
+        router.replace(
+          `/teacher/activity/select/${props.module}/${props.id}/${currentIndex}`
+        );
+      }
     }
+
     if (
       currentIndex > assignment.length - 1 &&
       userType === "instructor" &&
       props.module === "harakat"
     ) {
-      router.replace("/teacher/module/alphabets");
+      console.log("third");
+      window.location.href = "/teacher/module/harakat/fatahah";
     }
 
+    if (
+      currentIndex > assignment.length - 1 &&
+      userType === "instructor" &&
+      props.module === "alphabets"
+    ) {
+      console.log("third");
+      window.location.href = "/teacher/module/alphabets";
+    }
+
+    //student
     if (assignment[currentIndex] && userType === "student") {
       activityType = assignment[currentIndex].activity_type;
       if (
@@ -231,12 +271,12 @@ const DrawingCanvas = (props) => {
   //navigating to DND Activity
   const handleNextButtonClick = () => {
     setCurrentIndex(+currentIndex + 1);
-    if (activityType === "dnd" && userType === "instructor") {
-      console.log("teacher");
-      router.replace(
-        `/teacher/activity/dnd/${props.module}/${props.id}/${currentIndex}`
-      );
-    }
+    // if (activityType === "dnd" && userType === "instructor") {
+    //   console.log("teacher");
+    //   router.replace(
+    //     `/teacher/activity/dnd/${props.module}/${props.id}/${currentIndex}`
+    //   );
+    // }
   };
 
   console.log("current Index: ", currentIndex);
@@ -441,7 +481,7 @@ const DrawingCanvas = (props) => {
               <Button
                 onClick={handleNextButtonClick}
                 className="p-3 ml-4 bg-white text-dark-purple rounded-md  hover:bg-blue-600 hover:shadow-lg border-2 border-slate-100  "
-                style={{backgroundColor:"white "}}
+                style={{ backgroundColor: "white " }}
               >
                 Next Activity
               </Button>

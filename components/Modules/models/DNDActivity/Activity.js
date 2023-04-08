@@ -173,10 +173,12 @@ const LetterActivity = () => {
       activityType = assignment[currentIndex].activity_type;
       if (activityType === "trace" && currentIndex <= +assignment.length - 1) {
         console.log("first");
-        // router.replace(
-        //   `/teacher/activity/tracing/${module}/${alphabate}/${currentIndex}`
-        // );
-        window.location.href = `/teacher/activity/tracing/${module}/${alphabate}/${currentIndex}`;
+        router.replace(
+          `/teacher/activity/tracing/${module}/${alphabate}/${currentIndex}`
+        );
+        router.replace(
+          `/teacher/activity/tracing/${module}/${alphabate}/${currentIndex}`
+        );
       } else if (
         activityType === "dnd" &&
         currentIndex <= +assignment.length - 1
@@ -185,12 +187,56 @@ const LetterActivity = () => {
         router.replace(
           `/teacher/activity/dnd/${module}/${alphabate}/${currentIndex}`
         );
+        router.replace(
+          `/teacher/activity/dnd/${module}/${alphabate}/${currentIndex}`
+        );
+      } else if (
+        activityType === "match" &&
+        currentIndex <= +assignment.length - 1
+      ) {
+        console.log("second");
+        router.replace(
+          `/teacher/activity/match/${module}/${alphabate}/${currentIndex}`
+        );
+        router.replace(
+          `/teacher/activity/match/${module}/${alphabate}/${currentIndex}`
+        );
+      } else if (
+        activityType === "select" &&
+        currentIndex <= +assignment.length - 1
+      ) {
+        console.log("second");
+        router.replace(
+          `/teacher/activity/select/${module}/${alphabate}/${currentIndex}`
+        );
+        router.replace(
+          `/teacher/activity/select/${module}/${alphabate}/${currentIndex}`
+        );
       }
+    }
+
+    if (
+      currentIndex > assignment.length - 1 &&
+      userType === "instructor" &&
+      module === "harakat"
+    ) {
+      console.log("third");
+      window.location.href = "/teacher/module/harakat/fatahah";
+    }
+
+    if (
+      currentIndex > assignment.length - 1 &&
+      userType === "instructor" &&
+      module === "alphabets"
+    ) {
+      console.log("third");
+      window.location.href = "/teacher/module/alphabets";
     }
 
     //student
     if (assignment[currentIndex] && userType === "student") {
       activityType = assignment[currentIndex].activity_type;
+      console.log(activity);
       if (
         activityType === "trace" &&
         currentIndex <= +assignment.length - 1 &&
@@ -244,33 +290,6 @@ const LetterActivity = () => {
         // window.location.href = `/student/activity/dnd/${module}/${alphabate}/${currentIndex}`;
       }
     }
-    // if (currentIndex > assignment.length - 1 && userType === "student") {
-    //   console.log("third");
-    //   router.replace("/student/module/alphabets");
-    //   window.location.href = "/student/module/alphabets";
-    // }
-
-    if (currentIndex > assignment.length - 1 && userType === "instructor") {
-      console.log("third");
-      // router.replace("/teacher/module/alphabets");
-      window.location.href = "/teacher/module/alphabets";
-    }
-    // if (
-    //   currentIndex > assignment.length - 1 &&
-    //   userType === "student" &&
-    //   module !== "harakat"
-    // ) {
-    //   router.replace("/student/module/alphabets");
-    //   router.replace("/student/module/alphabets");
-    // }
-    // if (
-    //   currentIndex > assignment.length - 1 &&
-    //   userType === "student" &&
-    //   module === "harakat"
-    // ) {
-    //   router.replace("/student/module/harakat/fatahah");
-    //   router.replace("/student/module/harakat/fatahah");
-    // }
 
     if (currentIndex > assignment.length - 1 && userType === "student") {
       if (studentId && batchId && teacher && module) {
@@ -329,7 +348,7 @@ const LetterActivity = () => {
     const newObj = { submission: finalDndData, mark: 0, remark: "" };
     setMyArray([...myArray, newObj]);
   };
-console.log(myArray);
+  console.log(myArray);
   useEffect(() => {
     console.log("inside 1");
     if (assignment[activityIndex]) {

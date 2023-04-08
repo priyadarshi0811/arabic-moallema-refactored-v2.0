@@ -5,11 +5,12 @@ import {
   TextField,
   IconButton,
   Grid,
+  Button,
 } from "@mui/material";
 
 import Stack from "@mui/material/Stack";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import DeleteIcon from "@mui/icons-material/Delete";
 
@@ -44,12 +45,47 @@ const SelectOption = (props) => {
     setRenderIter(updated_iterator);
   }
 
+  //audio upload
+  const [audioUrl, setAudioUrl] = useState("");
+  const handleAudioUpload = (event) => {
+    const file = event.target.files[0];
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "my_uploads");
+    formData.append("cloud_name", "dbqeq2yxq");
+    formData.append("resource_type", "auto");
+
+    fetch("https://api.cloudinary.com/v1_1/dbqeq2yxq/upload", {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setAudioUrl(data.secure_url);
+        props.setAudioForSelectActivity(data.secure_url);
+        console.log(data.secure_url);
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
   return (
     <>
       <h1 className="mt-10 px-5 pb-3 border-b-2 text-xl">
         Task: Select Option{" "}
       </h1>
       <div className=" p-5 rounded-md ">
+        <div>
+          <h1 className="font-normal">Uplod the audio file</h1>
+          <input
+            className=" my-8 px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            type="file"
+            accept="audio/*"
+            onChange={handleAudioUpload}
+          />
+          {audioUrl && <audio className="mb-4" src={audioUrl} controls />}
+        </div>
         <h1 className="font-normal">
           Enter the question for the word that can be selected by the students
         </h1>

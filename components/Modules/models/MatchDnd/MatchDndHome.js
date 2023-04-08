@@ -111,24 +111,57 @@ const MatchDndHome = ({ subModule, module, activityIndex }) => {
   console.log(module);
   useEffect(() => {
     //teacher
-    // if (assignment[currentIndex] && userType === "instructor") {
-    //   activityType = assignment[currentIndex].activity_type;
-    //   if (activityType === "trace" && currentIndex <= +assignment.length - 1) {
-    //     console.log("first");
-    //     // router.replace(
-    //     //   `/teacher/activity/tracing/${module}/${subModule}/${currentIndex}`
-    //     // );
-    //     window.location.href = `/teacher/activity/tracing/${module}/${subModule}/${currentIndex}`;
-    //   } else if (
-    //     activityType === "dnd" &&
-    //     currentIndex <= +assignment.length - 1
-    //   ) {
-    //     console.log("second");
-    //     router.replace(
-    //       `/teacher/activity/dnd/${module}/${subModule}/${currentIndex}`
-    //     );
-    //   }
-    // }
+    if (assignment[currentIndex] && userType === "instructor") {
+      activityType = assignment[currentIndex].activity_type;
+      if (activityType === "trace" && currentIndex <= +assignment.length - 1) {
+        console.log("first");
+        router.replace(
+          `/teacher/activity/tracing/${module}/${subModule}/${currentIndex}`
+        );
+      } else if (
+        activityType === "dnd" &&
+        currentIndex <= +assignment.length - 1
+      ) {
+        console.log("second");
+        router.replace(
+          `/teacher/activity/dnd/${module}/${subModule}/${currentIndex}`
+        );
+      } else if (
+        activityType === "match" &&
+        currentIndex <= +assignment.length - 1
+      ) {
+        console.log("second");
+        router.replace(
+          `/teacher/activity/match/${module}/${subModule}/${currentIndex}`
+        );
+      } else if (
+        activityType === "select" &&
+        currentIndex <= +assignment.length - 1
+      ) {
+        console.log("second");
+        router.replace(
+          `/teacher/activity/select/${module}/${subModule}/${currentIndex}`
+        );
+      }
+    }
+
+    if (
+      currentIndex > assignment.length - 1 &&
+      userType === "instructor" &&
+      module === "harakat"
+    ) {
+      console.log("third");
+      window.location.href = "/teacher/module/harakat/fatahah";
+    }
+
+    if (
+      currentIndex > assignment.length - 1 &&
+      userType === "instructor" &&
+      module === "alphabets"
+    ) {
+      console.log("third");
+      window.location.href = "/teacher/module/alphabets";
+    }
 
     //student
     if (assignment[currentIndex] && userType === "student") {
@@ -214,7 +247,6 @@ const MatchDndHome = ({ subModule, module, activityIndex }) => {
         router.replace("/student/module/alphabets");
         router.replace("/student/module/alphabets");
       }
-      // window.location.href = "/student/module/alphabets";
     }
   }, [activityIndex, currentIndex, assignment]);
 
@@ -231,6 +263,10 @@ const MatchDndHome = ({ subModule, module, activityIndex }) => {
     setMyArray([...myArray, newObj]);
   };
 
+  // when click on the next activity
+  const handleNextButtonClick = () => {
+    setCurrentIndex(+currentIndex + 1);
+  };
   console.log(assignment);
   return (
     <>
@@ -303,23 +339,26 @@ const MatchDndHome = ({ subModule, module, activityIndex }) => {
             </div>
           </Container>
           <div>
-            <Button
-              variant="contained"
-              className="text-dark-purple bg-white mt-10"
-              onClick={nextActivityHandler}
-            >
-              Next Section
-            </Button>
-            <Link href={`/student/activity/select/harakat/Fatah/2`}>
+            {userType === "student" && (
               <Button
                 variant="contained"
-                className="text-dark-purple bg-white mt-10 mx-3"
-                style={{ marginRight: 10 }}
+                className="text-dark-purple bg-white mt-10"
+                onClick={nextActivityHandler}
+              >
+                Submit Activity
+              </Button>
+            )}
+            {userType !== "student" && (
+              <Button
+                onClick={handleNextButtonClick}
+                className=" mt-4 p-3 ml-4 bg-white text-dark-purple rounded-md  hover:bg-blue-600 hover:shadow-lg border-2 border-slate-100  "
+                style={{ backgroundColor: "white " }}
               >
                 Next Activity
               </Button>
-            </Link>
-          </div>  
+            )}
+       
+          </div>
         </div>
       )}
     </>
