@@ -3,8 +3,7 @@ import WordMakingCard from "@/components/Modules/models/module2/WordMaking";
 
 const WordMaking = () => {
   return (
-    <WordMakingCard wordType="single" user="teacher" type="fatahah" nextUrl="fatahah/how-to-read-2" />
-    
+    <WordMakingCard wordType="double" user="teacher" type='kasara' nextUrl="kasara/words-examples" />
   )
 }
 

@@ -64,7 +64,7 @@ const index = () => {
                 Module 1
               </Button>
             </Link>
-            <Link href="/teacher/module/harakat/discription">
+            <Link href="/teacher/module/harakat/fatahah">
               <Button
                 className="border-2 m-5 border-white bg-dark-purple"
                 variant="contained"
@@ -72,7 +72,7 @@ const index = () => {
                 Module 2
               </Button>
             </Link>
-            <Link href="/teacher/module/tanveen/discription">
+            <Link href="/teacher/module/harakat/kasara">
               <Button
                 className="border-2 m-5 border-white bg-dark-purple"
                 variant="contained"

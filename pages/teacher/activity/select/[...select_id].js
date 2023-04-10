@@ -37,7 +37,7 @@ const index = () => {
       {" "}
       <div className=" w-full p-5 rounded-md  flex flex-row justify-between   pt-10">
         <h1 className="mx-5 text-white text-lg">
-          Arabic Alphabets : Select The Right one
+           Select The Right one
         </h1>
         <Link href={`/student/module/harakat/fatahah`} className="mx-5">
           <Button

@@ -342,7 +342,7 @@ const MatchDndHome = ({ subModule, module, activityIndex }) => {
             {userType === "student" && (
               <Button
                 variant="contained"
-                className="text-dark-purple bg-white mt-10"
+                className="text-white bg-dark-purple mt-10"
                 onClick={nextActivityHandler}
               >
                 Submit Activity
@@ -351,8 +351,8 @@ const MatchDndHome = ({ subModule, module, activityIndex }) => {
             {userType !== "student" && (
               <Button
                 onClick={handleNextButtonClick}
-                className=" mt-4 p-3 ml-4 bg-white text-dark-purple rounded-md  hover:bg-blue-600 hover:shadow-lg border-2 border-slate-100  "
-                style={{ backgroundColor: "white " }}
+                className=" mt-4 p-3 ml-4 text-white bg-dark-purple rounded-md  hover:bg-blue-600 hover:shadow-lg border-2 border-slate-100  "
+                // style={{ backgroundColor: "white " }}
               >
                 Next Activity
               </Button>

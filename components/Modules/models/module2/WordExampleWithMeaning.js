@@ -169,7 +169,7 @@ const wordExapmle = [
 ];
 
 
-const HowToRead = () => {
+const HowToRead = ({type, nextUrl, user}) => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -192,13 +192,13 @@ const HowToRead = () => {
         <h1 className="mx-5 text-white text-lg">
           Arabic Alphabets : Word Examples
         </h1>
-        <Link href={`/teacher/module/harakat/fatahah`} className="mx-5">
+        <Link href={`/teacher/module/harakat/${type}`} className="mx-5">
           <Button
             variant="contained"
             className="bg-white text-dark-purple"
             startIcon={<ArrowBackIcon />}
           >
-            Back To Module 2
+            Back To Main Module
           </Button>
         </Link>
       </div>
@@ -221,7 +221,7 @@ const HowToRead = () => {
                 <div className="" style={{ width: "20vw" }}>
                   <div className="items-center w-full  overflow-hidden rounded-xl  shadow-lg min:h-fit  min:w-fit">
                     <div className=" font-bold text-center bg-slate-50 h-62 flex justify-center">
-                    <img src={ex.image || "https://img.freepik.com/free-icon/browser_318-792763.jpg?size=626&ext=jpg&ga=GA1.2.1391325598.1678967841&semt=ais"} alt="" className="w-fit min-w-72 " />
+                    <img src={ex.image || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEaXaItHR4BIfzC3jGoYxHBEje9KVIyHmzYA&usqp=CAU"} alt="" className="  w-full " />
                      
                     </div>
                     <div className="bg-slate-50 h-fit">
@@ -244,11 +244,11 @@ const HowToRead = () => {
         </div>
       </div>
       <div className=" w-full p-5 rounded-md  flex flex-row justify-center items-center ">
-        {/* <Link href={`/${user}/module/harakat/fatahah/${nextUrl}`}> */}
+        <Link href={`/${user}/module/harakat/${nextUrl}`}>
         <Button variant="contained" className="text-dark-purple bg-white">
           Next Section
         </Button>
-        {/* </Link> */}
+        </Link>
       </div>
     </div>
   );

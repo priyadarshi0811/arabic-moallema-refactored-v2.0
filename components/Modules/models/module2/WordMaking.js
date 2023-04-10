@@ -15,286 +15,448 @@ import Fatahah from "@/components/src/img/arabic_fatha.png";
 const singleLattersExamples = [
   {
     index: 0,
-    initial: "أَ",
-    middle: "مَـ",
-    final: "ـرَ",
-    word: "أَمَرَ",
+    fatahahInitial: "أَ",
+    fatahahMiddle: "مَـ",
+    fatahahFinal: "ـرَ",
+    fatahahWord: "أَمَرَ",
+
+    kasaraFinal: "ــسَ",
+    kasaraMiddle: "ئِـ",
+    kasaraInitial: "يَـ",
+    kasaraWord: "يَئِسَ",
   },
   {
     index: 1,
-    initial: "سَـ",
-    middle: "ـأَ",
-    final: "لَ",
-    word: "سَأَلَ",
+    fatahahInitial: "سَـ",
+    fatahahMiddle: "ـأَ",
+    fatahahFinal: "لَ",
+    fatahahWord: "سَأَلَ",
+
+    kasaraFinal: "طَ",
+    kasaraMiddle: "ـبِـ",
+    kasaraInitial: "حَـ",
+    kasaraWord: "حَبِطَ",
   },
   {
     index: 2,
-    initial: " لَـ ",
-    middle: "ـجـَ",
-    final: "أَ",
-    word: "لـَـجَـأ",
+    fatahahInitial: " لَـ ",
+    fatahahMiddle: "ـجـَ",
+    fatahahFinal: "أَ",
+    fatahahWord: "لـَـجَـأ",
+
+    kasaraFinal: "ـهَ",
+    kasaraMiddle: "ـتِـ",
+    kasaraInitial: "عَـ",
+    kasaraWord: "عَتِهَ",
   },
   {
     index: 3,
-    final: "ـشَ",
-    middle: "ـطَـ",
-    initial: "بَـ",
-    word: "بَطَشَ",
+    fatahahFinal: "ـشَ",
+    fatahahMiddle: "ـطَـ",
+    fatahahInitial: "بَـ",
+    fatahahWord: "بَطَشَ",
+
+    kasaraFinal: "ـقَ",
+    kasaraMiddle: "ثِـ",
+    kasaraInitial: "وَ",
+    kasaraWord: "وَثِقَ",
   },
   {
     index: 4,
-    final: "ـذَ",
-    middle: "ـبَـ",
-    initial: "نَـ",
-    word: "نَبَذَ",
+    fatahahFinal: "ـذَ",
+    fatahahMiddle: "ـبَـ",
+    fatahahInitial: "نَـ",
+    fatahahWord: "نَبَذَ",
+
+    kasaraFinal: "ـلَ",
+    kasaraMiddle: "جِـ",
+    kasaraInitial: "وَ",
+    kasaraWord: "وَجِلَ",
   },
   {
     index: 5,
-    final: "ـبَ",
-    middle: "ـقَـ",
-    initial: "ثَـ",
-    word: "ثَقَبَ",
+    fatahahFinal: "ـبَ",
+    fatahahMiddle: "ـقَـ",
+    fatahahInitial: "ثَـ",
+    fatahahWord: "ثَقَبَ",
+
+    kasaraFinal: "ــمَلَ",
+    kasaraMiddle: "حِـ",
+    kasaraInitial: "رَ",
+    kasaraWord: "رَحِمَ",
   },
   {
     index: 6,
-    final: "ـرَ",
-    middle: "ـجَـ",
-    initial: "تَـ",
-    word: "تَجَرَ",
+    fatahahFinal: "ـرَ",
+    fatahahMiddle: "ـجَـ",
+    fatahahInitial: "تَـ",
+    fatahahWord: "تَجَرَ",
+
+    kasaraFinal: "ـلَ",
+    kasaraMiddle: "ـخِـ",
+    kasaraInitial: "بَـ",
+    kasaraWord: "بَخِلَ",
   },
   {
     index: 7,
-    final: "ـبَ",
-    middle: "ـتَـ",
-    initial: "كَـ",
-    word: "كَتَبَ",
+    fatahahFinal: "ـبَ",
+    fatahahMiddle: "ـتَـ",
+    fatahahInitial: "كَـ",
+    fatahahWord: "كَتَبَ",
+
+    kasaraFinal: "مَ",
+    kasaraMiddle: "ـدِ",
+    kasaraInitial: "قَـ",
+    kasaraWord: "قَدِمَ",
   },
   {
     index: 8,
-    final: "ـتَ",
-    middle: "ـبَـ",
-    initial: "ثَـ",
-    word: "ثَبَتَ",
+    fatahahFinal: "ـتَ",
+    fatahahMiddle: "ـبَـ",
+    fatahahInitial: "ثَـ",
+    fatahahWord: "ثَبَتَ",
+
+    kasaraFinal: "ـظَ",
+    kasaraMiddle: "ـفِـ",
+    kasaraInitial: "حَـ",
+    kasaraWord: "حَفِظَ",
   },
   {
     index: 9,
-    final: "ـبَ",
-    middle: "ـتَـ",
-    initial: "كَـ",
-    word: "كَتَدَ",
+    fatahahFinal: "ـبَ",
+    fatahahMiddle: "ـتَـ",
+    fatahahInitial: "كَـ",
+    fatahahWord: "كَتَدَ",
+
+    kasaraFinal: "ـيَ",
+    kasaraMiddle: "ـظِـ",
+    kasaraInitial: "حَـ",
+    kasaraWord: "حَظِيَ",
   },
   {
     index: 10,
-    final: "ـرَ",
-    middle: "ـثَـ",
-    initial: "نَـ",
-    word: "نَـثَرَ",
+    fatahahFinal: "ـرَ",
+    fatahahMiddle: "ـثَـ",
+    fatahahInitial: "نَـ",
+    fatahahWord: "نَـثَرَ",
+
+    kasaraFinal: "ـرَ",
+    kasaraMiddle: "ـفِـ",
+    kasaraInitial: "ظَـ",
+    kasaraWord: "ظَفِرَ",
   },
   {
     index: 11,
-    final: "ـثَ",
-    middle: "ـعَـ",
-    initial: "بَـ",
-    word: "بَعَثَ",
+    fatahahFinal: "ـثَ",
+    fatahahMiddle: "ـعَـ",
+    fatahahInitial: "بَـ",
+    fatahahWord: "بَعَثَ",
+
+    kasaraFinal: "ـيَ",
+    kasaraMiddle: "ـقِـ",
+    kasaraInitial: "بـَ",
+    kasaraWord: "بَقِيَ",
   },
   {
     index: 12,
-    final: "ـدَ",
-    middle: "ـجَـ",
-    initial: "سَـ",
-    word: "سَجَدَ",
+    fatahahFinal: "ـدَ",
+    fatahahMiddle: "ـجَـ",
+    fatahahInitial: "سَـ",
+    fatahahWord: "سَجَدَ",
+
+    kasaraFinal: "بَ",
+    kasaraMiddle: "ـرِ",
+    kasaraInitial: "شَـ",
+    kasaraWord: "شَرِبَ",
   },
   {
     index: 13,
-    final: "ـجَ",
-    middle: "ـسَـ",
-    initial: "نَـ",
-    word: "نَسَجَ",
+    fatahahFinal: "ـجَ",
+    fatahahMiddle: "ـسَـ",
+    fatahahInitial: "نَـ",
+    fatahahWord: "نَسَجَ",
+
+    kasaraFinal: "ـدَ",
+    kasaraMiddle: "ـعِـ",
+    kasaraInitial: "سَـ",
+    kasaraWord: "سَعِدَ",
   },
   {
     index: 14,
-    final: "ـسَ",
-    middle: "ـبـَ",
-    initial: "حَـ",
-    word: "حَبَسَ",
+    fatahahFinal: "ـسَ",
+    fatahahMiddle: "ـبـَ",
+    fatahahInitial: "حَـ",
+    fatahahWord: "حَبَسَ",
+
+    kasaraFinal: "ـبَ",
+    kasaraMiddle: "كِـ",
+    kasaraInitial: "رَ",
+    kasaraWord: "رَكِبَ",
   },
   {
     index: 15,
-    final: "ـنَ",
-    middle: "ـحَـ",
-    initial: "طَـ",
-    word: "طَحَنَ",
+    fatahahFinal: "ـنَ",
+    fatahahMiddle: "ـحَـ",
+    fatahahInitial: "طَـ",
+    fatahahWord: "طَحَنَ",
+
+    kasaraFinal: "رَ",
+    kasaraMiddle: "ـوِ",
+    kasaraInitial: "عَـ",
+    kasaraWord: "عَوِرَ",
   },
   {
     index: 16,
-    final: "ـحَ",
-    middle: "ـسَـ",
-    initial: "مَـ",
-    word: "مَسَحَ",
+    fatahahFinal: "ـحَ",
+    fatahahMiddle: "ـسَـ",
+    fatahahInitial: "مَـ",
+    fatahahWord: "مَسَحَ",
+
+    kasaraFinal: "ـدَ",
+    kasaraMiddle: "ـهِـ",
+    kasaraInitial: "عَـ",
+    kasaraWord: "عَهِدَ",
   },
   {
     index: 17,
-    final: "ـعَ",
-    middle: "ـضَـ",
-    initial: "خَـ",
-    word: "خَضَعَ",
+    fatahahFinal: "ـعَ",
+    fatahahMiddle: "ـضَـ",
+    fatahahInitial: "خَـ",
+    fatahahWord: "خَضَعَ",
+
+    kasaraFinal: "ـقَ",
+    kasaraMiddle: "ـنِـ",
+    kasaraInitial: "حَـ",
+    kasaraWord: "حَنِقَ",
   },
   {
     index: 18,
-    final: "ـرَ",
-    middle: "ـخَـ",
-    initial: "نَـ",
-    word: "نَـخَـرَ",
+    fatahahFinal: "ـرَ",
+    fatahahMiddle: "ـخَـ",
+    fatahahInitial: "نَـ",
+    fatahahWord: "نَـخَـرَ",
+
+    kasaraFinal: "ـعَ",
+    kasaraMiddle: "ـمِـ",
+    kasaraInitial: "سَـ",
+    kasaraWord: "سَمِعَ",
   },
   {
     index: 19,
-    final: "دَ",
-    middle: "ـرَ",
-    initial: "ثَـ",
-    word: "ثَرَدَ",
+    fatahahFinal: "دَ",
+    fatahahMiddle: "ـرَ",
+    fatahahInitial: "ثَـ",
+    fatahahWord: "ثَرَدَ",
+
+    kasaraFinal: "ـمَ",
+    kasaraMiddle: "ـلِـ",
+    kasaraInitial: "عَـ",
+    kasaraWord: "عَلِمَ",
   },
 ];
 
 const doubleLattersExamples = [
-
   {
     index: 0,
-    final: "ـدَ",
-    initial: "صَعَـ",
-    word: "صَعَدَ",
+    fatahahFinal: "ـدَ",
+    fatahahInitial: "صَعَـ",
+    fatahahWord: "صَعَدَ",
+
+    kasaraFinal: "ـكَ",
+    kasaraInitial: "ضَحِـ",
+    kasaraWord: "ضَحِكَ",
   },
   {
     index: 1,
-    final: " ـهَ  ",
-    initial: " وَلَـ ",
-    word: "وَ لَـهَ ",
+    fatahahFinal: " ـهَ  ",
+    fatahahInitial: " وَلَـ ",
+    fatahahWord: "وَ لَـهَ ",
+
+    kasaraFinal: "حَ",
+    kasaraInitial: "مَرِ",
+    kasaraWord: "مَرِحَ",
   },
   {
     index: 2,
-    
-    final: "ـمَ",
-    initial: " فَطَـ ",
-    word: "فَطَمَ",
+
+    fatahahFinal: "ـمَ",
+    fatahahInitial: " فَطَـ ",
+    fatahahWord: "فَطَمَ",
+
+    kasaraFinal: "ـلَ",
+    kasaraInitial: "عَمِـ",
+    kasaraWord: "عَمِلَ",
   },
   {
     index: 3,
-    final: "ـفَ",
-    
-    initial: "شَغَـ",
-    word: "شَغَفَ",
+    fatahahFinal: "ـفَ",
+    fatahahInitial: "شَغَـ",
+    fatahahWord: "شَغَفَ",
+
+    kasaraFinal: "ـلَ",
+    kasaraInitial: "عَقِـ",
+    kasaraWord: "عَقِلَ",
   },
   {
     index: 4,
-    final: "ـغَ",
-    
-    initial: "مَضَـ",
-    word: "مَضَغَ",
+    fatahahFinal: "ـغَ",
+    fatahahInitial: "مَضَـ",
+    fatahahWord: "مَضَغَ",
+
+    kasaraFinal: "ـلَ",
+    kasaraInitial: "جَهِـ",
+    kasaraWord: "جَهِلَ",
   },
   {
     index: 5,
-    final: "ـخَ",
-    
-    initial: "نَفَـ",
-    word: "نَفَخَ",
+    fatahahFinal: "ـخَ",
+    fatahahInitial: "نَفَـ",
+    fatahahWord: "نَفَخَ",
+
+    kasaraFinal: "ـلَ",
+    kasaraInitial: "خَجِـ",
+    kasaraWord: "خَجِلَ",
   },
   {
     index: 6,
-    final: "ـعَ",
-    
-    initial: "شَفَـ",
-    word: "شَفَعَ",
+    fatahahFinal: "ـعَ",
+    fatahahInitial: "شَفَـ",
+    fatahahWord: "شَفَعَ",
+
+    kasaraFinal: "ـبَ",
+    kasaraInitial: "غَضِـ",
+    kasaraWord: "غَضِبَ",
   },
   {
     index: 7,
-    final: "حَ",
-    
-    initial: "شَرَ",
-    word: "شَرَحَ",
+    fatahahFinal: "حَ",
+    fatahahInitial: "شَرَ",
+    fatahahWord: "شَرَحَ",
+
+    kasaraFinal: "نَ",
+    kasaraInitial: "أذِ",
+    kasaraWord: "أذِنَ",
   },
   {
     index: 8,
-    final: "ـتَ",
-    
-    initial: "قَنَـ",
-    word: "قَنَتَ",
+    fatahahFinal: "ـتَ",
+    fatahahInitial: "قَنَـ",
+    fatahahWord: "قَنَتَ",
+
+    kasaraFinal: "ـفَ",
+    kasaraInitial: "ألِـ",
+    kasaraWord: "ألِفَ",
   },
   {
     index: 9,
-    final: "ـطَ",
-    
-    initial: "سَقَـ",
-    word: "سَقَطَ",
+    fatahahFinal: "ـطَ",
+    fatahahInitial: "سَقَـ",
+    fatahahWord: "سَقَطَ",
+
+    kasaraFinal: "ـبَ",
+    kasaraInitial: "صَـحِـ",
+    kasaraWord: "صَحِبَ",
   },
   {
     index: 10,
-    final: "قَ",
-    
-    initial: "خَلَـ",
-    word: "خَلَقَ",
+    fatahahFinal: "قَ",
+    fatahahInitial: "خَلَـ",
+    fatahahWord: "خَلَقَ",
+
+    kasaraFinal: "ـتَ",
+    kasaraInitial: "عَنِـ",
+    kasaraWord: "عَنِتَ",
   },
   {
     index: 11,
-    final: "ـرَ",
-    
-    initial: "كَسَـ",
-    word: "كَسَرَ",
+    fatahahFinal: "ـرَ",
+    fatahahInitial: "كَسَـ",
+    fatahahWord: "كَسَرَ",
+
+    kasaraFinal: "ـثَ",
+    kasaraInitial: "شَـعِـ",
+    kasaraWord: "شَعِثَ",
   },
   {
     index: 12,
-    final: "ـرَ",
-    
-    initial: "شَكَـ",
-    word: "شَكَرَ",
+    fatahahFinal: "ـرَ",
+    fatahahInitial: "شَكَـ",
+    fatahahWord: "شَكَرَ",
+
+    kasaraFinal: "ـبَ",
+    kasaraInitial: "رَقِـ",
+    kasaraWord: "رَقِبَ",
   },
   {
     index: 13,
-    final: "ـكَ",
-    
-    initial: "مَلَـ",
-    word: "مَلَكَ",
+    fatahahFinal: "ـكَ",
+    fatahahInitial: "مَلَـ",
+    fatahahWord: "مَلَكَ",
+
+    kasaraFinal: "ـبَ",
+    kasaraInitial: "صَئِـ",
+    kasaraWord: "صَئِبَ",
   },
   {
     index: 14,
-    final: "ـمَ",
-    
-    initial: "لَطَـ",
-    word: "لَطَمَ",
+    fatahahFinal: "ـمَ",
+    fatahahInitial: "لَطَـ",
+    fatahahWord: "لَطَمَ",
+
+    kasaraFinal: "ـبَ",
+    kasaraInitial: "كَئِـ",
+    kasaraWord: "كَئِبَ",
   },
   {
     index: 15,
-    final: "أَ",
-    
-    initial: "مَلَـ",
-    word: "مَلأَ",
+    fatahahFinal: "أَ",
+    fatahahInitial: "مَلَـ",
+    fatahahWord: "مَلأَ",
+
+    kasaraFinal: "ئَ",
+    kasaraInitial: "صَدِ",
+    kasaraWord: "صَدِئَ",
   },
   {
     index: 16,
-    final: "ـسَ",
-    
-    initial: "ھَمَـ",
-    word: "ھَمَسَ",
+    fatahahFinal: "ـسَ",
+    fatahahInitial: "ھَمَـ",
+    fatahahWord: "ھَمَسَ",
+
+    kasaraFinal: "ـصَ",
+    kasaraInitial: "نَغِـ",
+    kasaraWord: "نَغِصَ",
   },
   {
     index: 17,
-    final: "ـعَ",
-    
-    initial: "یَفَ",
-    word: "یَفَعَ",
+    fatahahFinal: "ـعَ",
+    fatahahInitial: "یَفَ",
+    fatahahWord: "یَفَعَ",
+
+    kasaraFinal: "ـجَ",
+    kasaraInitial: "نَضِـ",
+    kasaraWord: "نَضِجَ",
   },
   {
     index: 18,
-    final: "ـزَ",
-    
-    initial: "وَ عَـ",
-    word: "وَ عَزَ",
+    fatahahFinal: "ـزَ",
+    fatahahInitial: "وَ عَـ",
+    fatahahWord: "وَ عَزَ",
+
+    kasaraFinal: "ـبَ",
+    kasaraInitial: "لَغِـ",
+    kasaraWord: "لَغِبَ",
   },
   {
     index: 19,
-    final: "ـعَ",
-        initial: "یَنَـ",
-    word: "یَنَعَ",
+    fatahahFinal: "ـعَ",
+    fatahahInitial: "یَنَـ",  
+    fatahahWord: "یَنَعَ",
+
+    kasaraFinal: " ـئَ",
+    kasaraInitial: "دَفِـ",
+    kasaraWord: "دَفِئَ",
   },
-  
 ];
 
 function TabPanel(props) {
@@ -330,7 +492,16 @@ function a11yProps(index) {
   };
 }
 
-const Card = ({ word, initial, middle, final, user, screen,nextUrl}) => {
+const Card = ({
+  word,
+  initial,
+  middle,
+  final,
+  user,
+  screen,
+  nextUrl,
+  type,
+}) => {
   console.log("Card", word, initial, middle, final);
   return (
     <div className="w-full  ">
@@ -339,13 +510,13 @@ const Card = ({ word, initial, middle, final, user, screen,nextUrl}) => {
         <h1 className="mx-2 text-white text-lg">
           Module 2: How to Make words is Arabic
         </h1>
-        <Link href={`/${user}/module/harakat/fatahah`} className="mx-5">
+        <Link href={`/${user}/module/harakat/${type}`} className="mx-5">
           <Button
             variant="contained"
             className="bg-white text-dark-purple"
             startIcon={<ArrowBackIcon />}
           >
-            Back to Module 2
+            Back To Main Module
           </Button>
         </Link>
       </div>
@@ -359,14 +530,15 @@ const Card = ({ word, initial, middle, final, user, screen,nextUrl}) => {
                 <div className="">
                   <div className="items-center w-full  overflow-hidden rounded border-2 shadow-lg min:h-fit  min:w-fit  my-16">
                     <div className=" font-bold text-center bg-dark-purple text-white h-fit  ">
-                    {middle ? ( <h2 className="text-7xl font-sans flex justify-center content-center pb-12 pt-10">
-                        
-                        {initial} + {middle} + {final}
-                      </h2>): ( <h2 className="text-7xl font-sans flex justify-center content-center pb-12 pt-10">
-                        
-                        {initial} + {final}
-                      </h2>)}
-                     
+                      {middle ? (
+                        <h2 className="text-7xl font-sans flex justify-center content-center pb-12 pt-10">
+                          {initial} + {middle} + {final}
+                        </h2>
+                      ) : (
+                        <h2 className="text-7xl font-sans flex justify-center content-center pb-12 pt-10">
+                          {initial} + {final}
+                        </h2>
+                      )}
                     </div>
                     <div className="bg-slate-50 h-fit">
                       <h2 className="text-8xl font-sans text-dark-purple flex justify-center pb-12 pt-10">
@@ -382,8 +554,7 @@ const Card = ({ word, initial, middle, final, user, screen,nextUrl}) => {
       </div>
       <div className=" w-full p-2 rounded-md  flex flex-row justify-center   pt-3">
         <div className="mx-5">
-            
-          <Link href={`/${user}/module/harakat/fatahah/${nextUrl}`}>
+          <Link href={`/${user}/module/harakat/${nextUrl}`}>
             <Button variant="contained" className="text-dark-purple bg-white">
               Next Section
             </Button>
@@ -394,7 +565,7 @@ const Card = ({ word, initial, middle, final, user, screen,nextUrl}) => {
   );
 };
 
-export default function VerticalTabs({wordType, user, nextUrl}) {
+export default function VerticalTabs({ wordType, user, type, nextUrl }) {
   const [value, setValue] = React.useState(0);
 
   React.useEffect(() => {
@@ -407,105 +578,160 @@ export default function VerticalTabs({wordType, user, nextUrl}) {
 
   return (
     <>
-    
-    {wordType == "single" ? (
+      {wordType == "single" ? (
         <Box
-        sx={{ flexGrow: 1, display: "flex", height: "100vh" }}
-        style={{
-          backgroundImage: `url(${colorBgImg.src})`,
-          backgroundAttachment: "fixed",
-          backgroundSize: "100%",
-          backgroundPosition: "center top",
-          widows: "100vw",
-          minHeight: "100vh",
-        }}
-      >
-        <Tabs
-          orientation="vertical"
-          variant="scrollable"
-          value={value}
-          onChange={handleChange}
-          aria-label="Vertical tabs example"
-          sx={{ borderRight: 1, borderColor: "divider" }}
-          className="bg-dark-purple text-white"
+          sx={{ flexGrow: 1, display: "flex", height: "100vh" }}
+          style={{
+            backgroundImage: `url(${colorBgImg.src})`,
+            backgroundAttachment: "fixed",
+            backgroundSize: "100%",
+            backgroundPosition: "center top",
+            widows: "100vw",
+            minHeight: "100vh",
+          }}
         >
-          {singleLattersExamples.map((alphabate) => (
-            <Tab
-              label={alphabate.word}
-              className={`lg:text-4xl text-3xl  py-3 px-0 m-3  w-60  text-white font-bold rounded-lg font-sans  focus:bg-cyan-400 border-2 border-emerald-200`}
-              {...a11yProps(alphabate.index)}
-            />
-          ))}
-          <p className={`w-80`} />
-        </Tabs>
-        {singleLattersExamples.map((alphabate) => (
-          <TabPanel
-            style={{ width: "100%" }}
+          <Tabs
+            orientation="vertical"
+            variant="scrollable"
             value={value}
-            index={alphabate.index}
+            onChange={handleChange}
+            aria-label="Vertical tabs example"
+            sx={{ borderRight: 1, borderColor: "divider" }}
+            className="bg-dark-purple text-white"
           >
-            <Card
-              initial={alphabate.initial}
-              middle={alphabate.middle}
-              final={alphabate.final}
-              word={alphabate.word}
-              user={user}
-              screen="single"
-              nextUrl={nextUrl}
-            />
-          </TabPanel>
-        ))}
-      </Box>
-    ) : (
+            {singleLattersExamples.map((alphabate) => (
+              <Tab
+                label={
+                  type === "fatahah"
+                    ? alphabate.fatahahWord
+                    : type === "kasara"
+                    ? alphabate.kasaraWord
+                    : null
+                }
+                className={`lg:text-4xl text-3xl  py-3 px-0 m-3  w-60  text-white font-bold rounded-lg font-sans  focus:bg-cyan-400 border-2 border-emerald-200`}
+                {...a11yProps(alphabate.index)}
+              />
+            ))}
+            {/* {singleLattersExamples.map((alphabate) => (
+           <>
+           {type == "fatahah" ? (<Tab
+             label={alphabate.fatahahWord}
+             className={`lg:text-4xl text-3xl  py-3 px-0 m-3  w-60  text-white font-bold rounded-lg font-sans  focus:bg-cyan-400 border-2 border-emerald-200`}
+             {...a11yProps(alphabate.index)}
+           />): null }
+           {type == "kasara" ? (<Tab
+             label={alphabate.kasaraWord}
+             className={`lg:text-4xl text-3xl  py-3 px-0 m-3  w-60  text-white font-bold rounded-lg font-sans  focus:bg-cyan-400 border-2 border-emerald-200`}
+             {...a11yProps(alphabate.index)}
+           />): null }
+           
+           </>
+          ))} */}
+            <p className={`w-80`} />
+          </Tabs>
+          {singleLattersExamples.map((alphabate) => (
+            <TabPanel
+              style={{ width: "100%" }}
+              value={value}
+              index={alphabate.index}
+            >
+              {type == "fatahah" ? (
+                <Card
+                  initial={alphabate.fatahahInitial}
+                  middle={alphabate.fatahahMiddle}
+                  final={alphabate.fatahahFinal}
+                  word={alphabate.fatahahWord}
+                  user={user}
+                  screen="double"
+                  nextUrl={nextUrl}
+                  type={type}
+                />
+              ) : null}
+              {type == "kasara" ? (
+                <Card
+                  initial={alphabate.kasaraInitial}
+                  middle={alphabate.kasaraMiddle}
+                  final={alphabate.kasaraFinal}
+                  word={alphabate.kasaraWord}
+                  user={user}
+                  screen="double"
+                  nextUrl={nextUrl}
+                  type={type}
+                />
+              ) : null}
+            </TabPanel>
+          ))}
+        </Box>
+      ) : (
         <Box
-      sx={{ flexGrow: 1, display: "flex", height: "100vh" }}
-      style={{
-        backgroundImage: `url(${colorBgImg.src})`,
-        backgroundAttachment: "fixed",
-        backgroundSize: "100%",
-        backgroundPosition: "center top",
-        widows: "100vw",
-        minHeight: "100vh",
-      }}
-    >
-      <Tabs
-        orientation="vertical"
-        variant="scrollable"
-        value={value}
-        onChange={handleChange}
-        aria-label="Vertical tabs example"
-        sx={{ borderRight: 1, borderColor: "divider" }}
-        className="bg-dark-purple text-white"
-      >
-        {doubleLattersExamples.map((alphabate) => (
-          <Tab
-            label={alphabate.word}
-            className={`lg:text-4xl text-3xl  py-3 px-0 m-3  w-60  text-white font-bold rounded-lg font-sans  focus:bg-cyan-400 border-2 border-emerald-200`}
-            {...a11yProps(alphabate.index)}
-          />
-        ))}
-        <p className={`w-80`} />
-      </Tabs>
-      {doubleLattersExamples.map((alphabate) => (
-        <TabPanel
-          style={{ width: "100%" }}
-          value={value}
-          index={alphabate.index}
+          sx={{ flexGrow: 1, display: "flex", height: "100vh" }}
+          style={{
+            backgroundImage: `url(${colorBgImg.src})`,
+            backgroundAttachment: "fixed",
+            backgroundSize: "100%",
+            backgroundPosition: "center top",
+            widows: "100vw",
+            minHeight: "100vh",
+          }}
         >
-          <Card
-            initial={alphabate.initial}
-            middle={alphabate.middle}
-            final={alphabate.final}
-            word={alphabate.word}
-            user={user}
-            screen="double"
-            nextUrl={nextUrl}
-          />
-        </TabPanel>
-      ))}
-    </Box>
-    )}
-    
+          <Tabs
+            orientation="vertical"
+            variant="scrollable"
+            value={value}
+            onChange={handleChange}
+            aria-label="Vertical tabs example"
+            sx={{ borderRight: 1, borderColor: "divider" }}
+            className="bg-dark-purple text-white"
+          >
+            {doubleLattersExamples.map((alphabate) => (
+              <Tab
+                label={
+                  type === "fatahah"
+                    ? alphabate.fatahahWord
+                    : type === "kasara"
+                    ? alphabate.kasaraWord
+                    : null
+                }
+                className={`lg:text-4xl text-3xl  py-3 px-0 m-3  w-60  text-white font-bold rounded-lg font-sans  focus:bg-cyan-400 border-2 border-emerald-200`}
+                {...a11yProps(alphabate.index)}
+              />
+            ))}
+            <p className={`w-80`} />
+          </Tabs>
+          {doubleLattersExamples.map((alphabate) => (
+            <TabPanel
+              style={{ width: "100%" }}
+              value={value}
+              index={alphabate.index}
+            >
+              {type == "fatahah" ? (
+                <Card
+                  initial={alphabate.fatahahInitial}
+                  middle={alphabate.fatahahMiddle}
+                  final={alphabate.fatahahFinal}
+                  word={alphabate.fatahahWord}
+                  user={user}
+                  screen="double"
+                  nextUrl={nextUrl}
+                  type={type}
+                />
+              ) : null}
+              {type == "kasara" ? (
+                <Card
+                  initial={alphabate.kasaraInitial}
+                  middle={alphabate.kasaraMiddle}
+                  final={alphabate.kasaraFinal}
+                  word={alphabate.kasaraWord}
+                  user={user}
+                  screen="double"
+                  nextUrl={nextUrl}
+                  type={type}
+                />
+              ) : null}
+            </TabPanel>
+          ))}
+        </Box>
+      )}
     </>
   );
 }

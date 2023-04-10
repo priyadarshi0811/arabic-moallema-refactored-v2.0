@@ -88,7 +88,7 @@ const LetterDetails = (props) => {
     <div className="p-5">
       <div className=" w-full p-5 rounded-md  flex flex-row justify-between   pt-3">
         <h1 className="mx-5 text-white text-lg">
-          Arabic Alphabets : How to Write "{props.name}"
+          How to Write "{props.name}"
 
         </h1>
           <Link href={`/${props.user}/module/alphabets`} className="mx-5">
