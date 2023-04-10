@@ -113,61 +113,24 @@ const MatchDndHome = ({ subModule, module, activityIndex }) => {
     //teacher
     if (assignment[currentIndex] && userType === "instructor") {
       activityType = assignment[currentIndex].activity_type;
-      if (activityType === "trace" && currentIndex <= +assignment.length - 1) {
+      if (activityType && currentIndex <= +assignment.length - 1) {
         console.log("first");
         router.replace(
-          `/teacher/activity/tracing/${module}/${subModule}/${currentIndex}`
-        );
-      } else if (
-        activityType === "dnd" &&
-        currentIndex <= +assignment.length - 1
-      ) {
-        console.log("second");
-        router.replace(
-          `/teacher/activity/dnd/${module}/${subModule}/${currentIndex}`
-        );
-      } else if (
-        activityType === "match" &&
-        currentIndex <= +assignment.length - 1
-      ) {
-        console.log("second");
-        router.replace(
-          `/teacher/activity/match/${module}/${subModule}/${currentIndex}`
-        );
-      } else if (
-        activityType === "select" &&
-        currentIndex <= +assignment.length - 1
-      ) {
-        console.log("second");
-        router.replace(
-          `/teacher/activity/select/${module}/${subModule}/${currentIndex}`
+          `/teacher/activity/${activityType}/${module}/${subModule}/${currentIndex}`
         );
       }
     }
 
-    if (
-      currentIndex > assignment.length - 1 &&
-      userType === "instructor" &&
-      module === "harakat"
-    ) {
+    if (currentIndex > assignment.length - 1 && userType === "instructor") {
       console.log("third");
-      window.location.href = "/teacher/module/harakat/fatahah";
-    }
-
-    if (
-      currentIndex > assignment.length - 1 &&
-      userType === "instructor" &&
-      module === "alphabets"
-    ) {
-      console.log("third");
-      window.location.href = "/teacher/module/alphabets";
+      window.location.href = `/teacher/module/${module}/${subModule}`;
     }
 
     //student
     if (assignment[currentIndex] && userType === "student") {
       activityType = assignment[currentIndex].activity_type;
       if (
-        activityType === "trace" &&
+        activityType &&
         currentIndex <= +assignment.length - 1 &&
         module &&
         subModule &&
@@ -175,47 +138,10 @@ const MatchDndHome = ({ subModule, module, activityIndex }) => {
       ) {
         console.log("first");
         router.push(
-          `/student/activity/tracing/${module}/${subModule}/${currentIndex}`
+          `/student/activity/${activityType}/${module}/${subModule}/${currentIndex}`
         );
         router.push(
-          `/student/activity/tracing/${module}/${subModule}/${currentIndex}`
-        );
-        // window.location.href = `/student/activity/tracing/${module}/${subModule}/${currentIndex}`;
-      } else if (
-        activityType === "dnd" &&
-        currentIndex <= +assignment.length - 1
-      ) {
-        console.log("second");
-        router.push(
-          `/student/activity/dnd/${module}/${subModule}/${currentIndex}`
-        );
-        router.push(
-          `/student/activity/dnd/${module}/${subModule}/${currentIndex}`
-        );
-        // window.location.href = `/student/activity/dnd/${module}/${subModule}/${currentIndex}`;
-      } else if (
-        activityType === "match" &&
-        currentIndex <= +assignment.length - 1
-      ) {
-        console.log("second");
-        router.push(
-          `/student/activity/match/${module}/${subModule}/${currentIndex}`
-        );
-        router.push(
-          `/student/activity/match/${module}/${subModule}/${currentIndex}`
-        );
-
-        // window.location.href = `/student/activity/dnd/${module}/${subModule}/${currentIndex}`;
-      } else if (
-        activityType === "select" &&
-        currentIndex <= +assignment.length - 1
-      ) {
-        console.log("second");
-        router.push(
-          `/student/activity/select/${module}/${subModule}/${currentIndex}`
-        );
-        router.push(
-          `/student/activity/select/${module}/${subModule}/${currentIndex}`
+          `/student/activity/${activityType}/${module}/${subModule}/${currentIndex}`
         );
       }
     }
@@ -239,14 +165,8 @@ const MatchDndHome = ({ subModule, module, activityIndex }) => {
       }
       setMyArray([]);
 
-      if (module === "harakat") {
-        router.replace("/student/module/harakat/fatahah");
-        router.replace("/student/module/harakat/fatahah");
-      }
-      if (module === "alphabets") {
-        router.replace("/student/module/alphabets");
-        router.replace("/student/module/alphabets");
-      }
+      router.replace(`/student/module/${module}/${subModule}`);
+      router.replace(`/student/module/${module}/${subModule}`);
     }
   }, [activityIndex, currentIndex, assignment]);
 
@@ -357,7 +277,6 @@ const MatchDndHome = ({ subModule, module, activityIndex }) => {
                 Next Activity
               </Button>
             )}
-       
           </div>
         </div>
       )}

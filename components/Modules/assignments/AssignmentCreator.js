@@ -24,6 +24,7 @@ import { fetchSubModulesCreatedActivity } from "@/backend/Assignment/FetchAssign
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import SelectOption from "@/components/Layout/mui-comps/assignment_builder_selector/select_option_activity";
 import MatchFollowing from "@/components/Layout/mui-comps/assignment_builder_selector/match_the_folowing";
+import ColorHurufTracing from "@/components/Layout/mui-comps/assignment_builder_selector/color_huruf_tracing";
 
 const Modules_Option = {
   alphabets: [
@@ -57,9 +58,9 @@ const Modules_Option = {
     { letter: "ك", title: "Kaaf" },
   ],
   harakat: [
-    { id: 1, title: "Fatah" },
+    { id: 1, title: "fatahah" },
     { id: 2, title: "Dumma" },
-    { id: 3, title: "Kasra" },
+    { id: 3, title: "kasara" },
   ],
 };
 
@@ -72,9 +73,12 @@ const modules = [
 
 const ADD_ACTIVITY = "Add Activity";
 const ADD_TRACING = "Add Tracing";
+
 const ADD_SELECT = "Add Select";
 const ADD_MATCH_OPTION = "Add MATCH OPTION";
 const ADD_MATCH_CONTEXT = "Add MATCH CONTEXT";
+
+const ADD_TRACING_COLOR_HURF = "Add Hurf";
 
 const ADD_Question = "Add Select";
 
@@ -100,7 +104,6 @@ const reducerFunction = (state, action) => {
     newState.letter[action.payload.index].question = action.payload.question;
     newState.letter[action.payload.index].recorded_audio =
       action.payload.recorded_audio;
-
     return newState;
   } else if (action.type === ADD_MATCH_OPTION) {
     newState.letter[action.payload.index].option_data =
@@ -109,6 +112,9 @@ const reducerFunction = (state, action) => {
   } else if (action.type === ADD_MATCH_CONTEXT) {
     newState.letter[action.payload.index].context_data =
       action.payload.context_data;
+    return newState;
+  } else if (action.type === ADD_TRACING_COLOR_HURF) {
+    newState.letter[action.payload.index].trace_data = action.payload.data;
     return newState;
   }
   return state;
@@ -203,6 +209,8 @@ const AssignmentCreator = () => {
 
   // 1. Tracing
   const [tracingLetters, setTracingLetters] = useState({});
+  const [tracingWords, setTracingWords] = useState({});
+
   const [selectLetters, setSelectedLetters] = useState({});
   const [questionForSelectActivity, setquestionForSelectActivity] = useState();
   const [audioForSelectActivity, setAudioForSelectActivity] = useState();
@@ -230,6 +238,33 @@ const AssignmentCreator = () => {
       },
     });
     setTracingLetters(tracing_letter_new);
+    console.log(tracingLetters);
+  };
+
+  //2. color hurf/alfaaz
+
+  const triggerTraceColorHurfDataState = (tracing_letter_new) => {
+    console.log("inside trigger: ", tracing_letter_new);
+    const key = Object.keys(tracing_letter_new);
+    let index;
+    let values;
+
+    if (key[0]) {
+      const arr = key[0].split("_");
+      index = arr[0];
+      console.log("index: ", index);
+      values = Object.values(tracing_letter_new[key[0]]);
+      console.log("values: ", values);
+    }
+
+    DispatchSetAssignment({
+      type: ADD_TRACING_COLOR_HURF,
+      payload: {
+        index,
+        data: values,
+      },
+    });
+    setTracingWords(tracing_letter_new);
     console.log(tracingLetters);
   };
 
@@ -407,6 +442,7 @@ const AssignmentCreator = () => {
     "Drag and Drop",
     "Select Option Activity",
     "Match the following",
+    "Color the Hurf/Alfaaz",
   ];
 
   // store the
@@ -464,6 +500,14 @@ const AssignmentCreator = () => {
         />
       );
     },
+    4: (inc, trace_letter_state = triggerTraceColorHurfDataState) => {
+      return (
+        <ColorHurufTracing
+          incrementer={inc}
+          setTracingWords={trace_letter_state}
+        />
+      );
+    },
   };
 
   console.log(selectLetters);
@@ -478,7 +522,7 @@ const AssignmentCreator = () => {
   const newAddActivity = () => {
     if (selectedActivity === 0) {
       let traceActivity = {
-        activity_type: "trace",
+        activity_type: "tracing",
         trace_data: [],
       };
       DispatchSetAssignment({
@@ -521,6 +565,15 @@ const AssignmentCreator = () => {
       DispatchSetAssignment({
         type: ADD_ACTIVITY,
         payload: matchActivity,
+      });
+    } else if (selectedActivity === 4) {
+      let traceActivityColor = {
+        activity_type: "color_huruf",
+        trace_data: [],
+      };
+      DispatchSetAssignment({
+        type: ADD_ACTIVITY,
+        payload: traceActivityColor,
       });
     }
   };

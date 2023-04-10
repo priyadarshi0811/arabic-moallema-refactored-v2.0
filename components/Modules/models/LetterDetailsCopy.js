@@ -52,12 +52,7 @@ const LetterDetails = (props) => {
         const data = await fetchAssignmentForLetter(props.name, props.module);
         if (data[0]) {
           setAssignment(data[0].assignment_json.letter);
-          if (data[0].assignment_json.letter[0].activity_type === "trace") {
-            setActivityPath("tracing");
-          }
-          if (data[0].assignment_json.letter[0].activity_type === "dnd") {
-            setActivityPath("dnd");
-          }
+          setActivityPath(`${data[0].assignment_json.letter[0].activity_type}`);
         }
       }
     };

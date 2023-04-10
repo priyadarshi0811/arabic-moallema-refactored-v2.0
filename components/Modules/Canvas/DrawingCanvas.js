@@ -126,62 +126,22 @@ const DrawingCanvas = (props) => {
     //teacher
     if (assignment[currentIndex] && userType === "instructor") {
       activityType = assignment[currentIndex].activity_type;
-      if (activityType === "trace" && currentIndex <= +assignment.length - 1) {
-        console.log("first");
-
+      if (activityType && currentIndex <= +assignment.length - 1) {
         router.replace(
-          `/teacher/activity/tracing/${props.module}/${props.id}/${currentIndex}`
-        );
-      } else if (
-        activityType === "dnd" &&
-        currentIndex <= +assignment.length - 1
-      ) {
-        console.log("second");
-        router.replace(
-          `/teacher/activity/dnd/${props.module}/${props.id}/${currentIndex}`
-        );
-      } else if (
-        activityType === "match" &&
-        currentIndex <= +assignment.length - 1
-      ) {
-        console.log("second");
-        router.replace(
-          `/teacher/activity/match/${props.module}/${props.id}/${currentIndex}`
-        );
-      } else if (
-        activityType === "select" &&
-        currentIndex <= +assignment.length - 1
-      ) {
-        console.log("second");
-        router.replace(
-          `/teacher/activity/select/${props.module}/${props.id}/${currentIndex}`
+          `/teacher/activity/${activityType}/${props.module}/${props.id}/${currentIndex}`
         );
       }
     }
 
-    if (
-      currentIndex > assignment.length - 1 &&
-      userType === "instructor" &&
-      props.module === "harakat"
-    ) {
-      console.log("third");
-      window.location.href = "/teacher/module/harakat/fatahah";
-    }
-
-    if (
-      currentIndex > assignment.length - 1 &&
-      userType === "instructor" &&
-      props.module === "alphabets"
-    ) {
-      console.log("third");
-      window.location.href = "/teacher/module/alphabets";
+    if (currentIndex > assignment.length - 1 && userType === "instructor") {
+      window.location.href = `/teacher/module/${props.module}/${props.id}`;
     }
 
     //student
     if (assignment[currentIndex] && userType === "student") {
       activityType = assignment[currentIndex].activity_type;
       if (
-        activityType === "trace" &&
+        activityType &&
         currentIndex <= +assignment.length - 1 &&
         props.module &&
         props.id &&
@@ -189,49 +149,11 @@ const DrawingCanvas = (props) => {
       ) {
         console.log("first");
         router.push(
-          `/student/activity/tracing/${props.module}/${props.id}/${currentIndex}`
+          `/student/activity/${activityType}/${props.module}/${props.id}/${currentIndex}`
         );
         router.push(
-          `/student/activity/tracing/${props.module}/${props.id}/${currentIndex}`
+          `/student/activity/${activityType}/${props.module}/${props.id}/${currentIndex}`
         );
-        // window.location.href = `/student/activity/tracing/${module}/${subModule}/${currentIndex}`;
-      } else if (
-        activityType === "dnd" &&
-        currentIndex <= +assignment.length - 1
-      ) {
-        console.log("second");
-        router.push(
-          `/student/activity/dnd/${props.module}/${props.id}/${currentIndex}`
-        );
-        router.push(
-          `/student/activity/dnd/${props.module}/${props.id}/${currentIndex}`
-        );
-        // window.location.href = `/student/activity/dnd/${module}/${subModule}/${currentIndex}`;
-      } else if (
-        activityType === "match" &&
-        currentIndex <= +assignment.length - 1
-      ) {
-        console.log("second");
-        router.push(
-          `/student/activity/match/${props.module}/${props.id}/${currentIndex}`
-        );
-        router.push(
-          `/student/activity/match/${props.module}/${props.id}/${currentIndex}`
-        );
-
-        // window.location.href = `/student/activity/dnd/${module}/${subModule}/${currentIndex}`;
-      } else if (
-        activityType === "select" &&
-        currentIndex <= +assignment.length - 1
-      ) {
-        console.log("second");
-        router.push(
-          `/student/activity/select/${props.module}/${props.id}/${currentIndex}`
-        );
-        router.push(
-          `/student/activity/select/${props.module}/${props.id}/${currentIndex}`
-        );
-        // window.location.href = `/student/activity/dnd/${module}/${subModule}/${currentIndex}`;
       }
     }
 
@@ -253,16 +175,8 @@ const DrawingCanvas = (props) => {
       }
       setMyArray([]);
 
-      if (props.module === "harakat") {
-        router.replace("/student/module/harakat/fatahah");
-        router.replace("/student/module/harakat/fatahah");
-      }
-      if (props.module === "alphabets") {
-        router.replace("/student/module/alphabets");
-        router.replace("/student/module/alphabets");
-      }
-
-      // window.location.href = "/student/module/alphabets";
+      router.replace(`/student/module/${props.module}/${props.id}`);
+      router.replace(`/student/module/${props.module}/${props.id}`);
     }
   }, [currentIndex]);
 
@@ -284,8 +198,6 @@ const DrawingCanvas = (props) => {
   //****************canvas Logic******************* */
 
   let canvas = canvasRef.current;
-  // var width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
-  // var width = (window.innerWidth * 3) / 5;
 
   let context;
   if (canvas) {

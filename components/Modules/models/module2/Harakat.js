@@ -322,24 +322,32 @@ function a11yProps(index) {
 }
 
 const LetterCardL = ({ label, name, audioUrl, harakatType }) => {
-  console.log("Harkat",harakatType);
+  console.log("Harkat", harakatType);
   console.log("Harakat Details", label, "label");
   return (
     <div className="items-center w-full  overflow-hidden rounded border-2 shadow-lg min:h-fit justify-cente min:w-fit  my-16">
       {harakatType != "kasara" ? (
-      <div className=" font-bold text-center bg-dark-purple text-white h-72   content-center ">
-        <img src={Fatahah.src} className="w-0 mx-auto mb-0 flex pt-10" alt="" />
-        <h2 className="text-9xl font-sans flex justify-center content-center pb-5 pt-10">
-          {label}
-        </h2>
-      </div>
-      ): (
         <div className=" font-bold text-center bg-dark-purple text-white h-72   content-center ">
-        <h2 className="text-9xl font-sans flex justify-center content-center pb-5 pt-10">
-          {label}
-        </h2>
-        <img src={Fatahah.src} className="w-0 mx-auto mb-0 flex pt-10" alt="" />
-      </div>
+          <img
+            src={Fatahah.src}
+            className="w-0 mx-auto mb-0 flex pt-10"
+            alt=""
+          />
+          <h2 className="text-9xl font-sans flex justify-center content-center pb-5 pt-10">
+            {label}
+          </h2>
+        </div>
+      ) : (
+        <div className=" font-bold text-center bg-dark-purple text-white h-72   content-center ">
+          <h2 className="text-9xl font-sans flex justify-center content-center pb-5 pt-10">
+            {label}
+          </h2>
+          <img
+            src={Fatahah.src}
+            className="w-0 mx-auto mb-0 flex pt-10"
+            alt=""
+          />
+        </div>
       )}
       <div className="bg-slate-50 h-fit">
         <div></div>
@@ -383,7 +391,7 @@ const LetterCardR = ({ label, name, audioUrl, harakatType }) => {
           />
         </div>
       )}
-      
+
       <div className="bg-slate-50 h-fit">
         <div>
           <Button className="bg-teal-300 my-3">
@@ -401,27 +409,27 @@ const SmallCard = ({ disc, title, btnText, link, btnProp, harakatType }) => {
   return (
     <div>
       <div className="items-center max-w-80 border-2 overflow-hidden rounded shadow-lg min:h-fit justify-cente min:w-fit h-full">
-      {harakatType != "kasara" ? (
-        <div className="grid content-between grid-cols-1  font-bold text-center bg-dark-purple text-white min-h-64  ">
-          <img
-            src={Fatahah.src}
-            className="w-8 mx-auto mb-0 pt-3 flex"
-            alt=""
-            style={{ filter: "invert(100%)" }}
-          />
-          <h2 className="text-5xl pb-5 font-sans">{title}</h2>
-        </div>
-        ): (
+        {harakatType != "kasara" ? (
           <div className="grid content-between grid-cols-1  font-bold text-center bg-dark-purple text-white min-h-64  ">
-          <h2 className="text-5xl pt-5 font-sans">{title}</h2>
-          <img
-            src={Fatahah.src}
-            className="w-8 mx-auto mb-0 pb-3 flex"
-            alt=""
-            style={{ filter: "invert(100%)" }}
-          />
-        </div>
-        )} 
+            <img
+              src={Fatahah.src}
+              className="w-8 mx-auto mb-0 pt-3 flex"
+              alt=""
+              style={{ filter: "invert(100%)" }}
+            />
+            <h2 className="text-5xl pb-5 font-sans">{title}</h2>
+          </div>
+        ) : (
+          <div className="grid content-between grid-cols-1  font-bold text-center bg-dark-purple text-white min-h-64  ">
+            <h2 className="text-5xl pt-5 font-sans">{title}</h2>
+            <img
+              src={Fatahah.src}
+              className="w-8 mx-auto mb-0 pb-3 flex"
+              alt=""
+              style={{ filter: "invert(100%)" }}
+            />
+          </div>
+        )}
         <div className="bg-slate-50 h-fit">
           <div>
             <h2 className="py-2 text-sm text-dark-purple">{disc}</h2>
@@ -468,37 +476,35 @@ const Card = ({
   const [assignment, setAssignment] = useState([]);
   const [activityPath, setActivityPath] = useState();
   const { myArray, setMyArray } = useContext(BatchContext);
-
   console.log(myArray);
+
   //get the assignment for the selected activity
   useEffect(() => {
     const fetchAssignment = async () => {
-      const data = await fetchAssignmentForLetter("Fatah", "harakat");
-      if (data[0]) {
-        setAssignment(data[0].assignment_json.letter);
-        if (data[0].assignment_json.letter[0].activity_type === "trace") {
-          setActivityPath("tracing");
-        }
-        if (data[0].assignment_json.letter[0].activity_type === "dnd") {
-          setActivityPath("dnd");
-        }
-        if (data[0].assignment_json.letter[0].activity_type === "select") {
-          setActivityPath("select");
-        }
-        if (data[0].assignment_json.letter[0].activity_type === "match") {
-          setActivityPath("match");
+      if (harakatType) {
+        console.log("inside");
+        console.log(harakatType);
+        const data = await fetchAssignmentForLetter(harakatType, "harakat");
+        if (data[0]) {
+          setAssignment(data[0].assignment_json.letter);
+          setActivityPath(`${data[0].assignment_json.letter[0].activity_type}`);
         }
       }
     };
     fetchAssignment();
-  }, []);
+  }, [harakatType]);
 
   console.log(assignment);
 
   const setActivitySubmodule = async () => {
-    if (activityPath) {
-      window.location.href = `/${user}/activity/${activityPath}/harakat/Fatah/${0}`;
+    if (activityPath && harakatType === "fatahah") {
+      window.location.href = `/${user}/activity/${activityPath}/harakat/fatahah/${0}`;
     }
+    if (activityPath && harakatType === "kasara") {
+      console.log("inside kasra");
+      window.location.href = `/${user}/activity/${activityPath}/harakat/kasara/${0}`;
+    }
+    console.log(activityPath);
   };
 
   return (
@@ -544,9 +550,21 @@ const Card = ({
                 </div>
                 <div className="col-span-2 lg:col-span-1">
                   <div className="grid grid-cols-3 lg:grid-cols-1 mx-0 mt-5 gap-4 lg:gap-2">
-                    <SmallCard disc="Initial Form" title={initial} harakatType={harakatType} />
-                    <SmallCard disc="Medial Form" title={middle} harakatType={harakatType} />
-                    <SmallCard disc="Final Form" title={final} harakatType={harakatType} />
+                    <SmallCard
+                      disc="Initial Form"
+                      title={initial}
+                      harakatType={harakatType}
+                    />
+                    <SmallCard
+                      disc="Medial Form"
+                      title={middle}
+                      harakatType={harakatType}
+                    />
+                    <SmallCard
+                      disc="Final Form"
+                      title={final}
+                      harakatType={harakatType}
+                    />
                   </div>
                 </div>
               </div>

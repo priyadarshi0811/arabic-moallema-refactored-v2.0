@@ -171,66 +171,20 @@ const LetterActivity = () => {
     //teacher
     if (assignment[currentIndex] && userType === "instructor") {
       activityType = assignment[currentIndex].activity_type;
-      if (activityType === "trace" && currentIndex <= +assignment.length - 1) {
+      if (activityType && currentIndex <= +assignment.length - 1) {
         console.log("first");
         router.replace(
-          `/teacher/activity/tracing/${module}/${alphabate}/${currentIndex}`
+          `/teacher/activity/${activityType}/${module}/${alphabate}/${currentIndex}`
         );
         router.replace(
-          `/teacher/activity/tracing/${module}/${alphabate}/${currentIndex}`
-        );
-      } else if (
-        activityType === "dnd" &&
-        currentIndex <= +assignment.length - 1
-      ) {
-        console.log("second");
-        router.replace(
-          `/teacher/activity/dnd/${module}/${alphabate}/${currentIndex}`
-        );
-        router.replace(
-          `/teacher/activity/dnd/${module}/${alphabate}/${currentIndex}`
-        );
-      } else if (
-        activityType === "match" &&
-        currentIndex <= +assignment.length - 1
-      ) {
-        console.log("second");
-        router.replace(
-          `/teacher/activity/match/${module}/${alphabate}/${currentIndex}`
-        );
-        router.replace(
-          `/teacher/activity/match/${module}/${alphabate}/${currentIndex}`
-        );
-      } else if (
-        activityType === "select" &&
-        currentIndex <= +assignment.length - 1
-      ) {
-        console.log("second");
-        router.replace(
-          `/teacher/activity/select/${module}/${alphabate}/${currentIndex}`
-        );
-        router.replace(
-          `/teacher/activity/select/${module}/${alphabate}/${currentIndex}`
+          `/teacher/activity/${activityType}/${module}/${alphabate}/${currentIndex}`
         );
       }
     }
 
-    if (
-      currentIndex > assignment.length - 1 &&
-      userType === "instructor" &&
-      module === "harakat"
-    ) {
+    if (currentIndex > assignment.length - 1 && userType === "instructor") {
       console.log("third");
-      window.location.href = "/teacher/module/harakat/fatahah";
-    }
-
-    if (
-      currentIndex > assignment.length - 1 &&
-      userType === "instructor" &&
-      module === "alphabets"
-    ) {
-      console.log("third");
-      window.location.href = "/teacher/module/alphabets";
+      window.location.href = `/teacher/module/${module}/${alphabate}`;
     }
 
     //student
@@ -238,7 +192,7 @@ const LetterActivity = () => {
       activityType = assignment[currentIndex].activity_type;
       console.log(activity);
       if (
-        activityType === "trace" &&
+        activityType &&
         currentIndex <= +assignment.length - 1 &&
         module &&
         alphabate &&
@@ -246,48 +200,11 @@ const LetterActivity = () => {
       ) {
         console.log("first");
         router.push(
-          `/student/activity/tracing/${module}/${alphabate}/${currentIndex}`
+          `/student/activity/${activityType}/${module}/${alphabate}/${currentIndex}`
         );
         router.push(
-          `/student/activity/tracing/${module}/${alphabate}/${currentIndex}`
+          `/student/activity/${activityType}/${module}/${alphabate}/${currentIndex}`
         );
-        // window.location.href = `/student/activity/tracing/${module}/${alphabate}/${currentIndex}`;
-      } else if (
-        activityType === "dnd" &&
-        currentIndex <= +assignment.length - 1
-      ) {
-        console.log("second");
-        router.push(
-          `/student/activity/dnd/${module}/${alphabate}/${currentIndex}`
-        );
-
-        // window.location.href = `/student/activity/dnd/${module}/${alphabate}/${currentIndex}`;
-      } else if (
-        activityType === "match" &&
-        currentIndex <= +assignment.length - 1
-      ) {
-        console.log("second");
-        router.push(
-          `/student/activity/match/${module}/${alphabate}/${currentIndex}`
-        );
-        router.push(
-          `/student/activity/match/${module}/${alphabate}/${currentIndex}`
-        );
-
-        // window.location.href = `/student/activity/dnd/${module}/${alphabate}/${currentIndex}`;
-      } else if (
-        activityType === "select" &&
-        currentIndex <= +assignment.length - 1
-      ) {
-        console.log("second");
-        router.push(
-          `/student/activity/select/${module}/${alphabate}/${currentIndex}`
-        );
-        router.push(
-          `/student/activity/select/${module}/${alphabate}/${currentIndex}`
-        );
-
-        // window.location.href = `/student/activity/dnd/${module}/${alphabate}/${currentIndex}`;
       }
     }
 
@@ -309,15 +226,8 @@ const LetterActivity = () => {
       }
       setMyArray([]);
 
-      if (module === "harakat") {
-        router.replace("/student/module/harakat/fatahah");
-        router.replace("/student/module/harakat/fatahah");
-      }
-      if (module === "alphabets") {
-        router.replace("/student/module/alphabets");
-        router.replace("/student/module/alphabets");
-      }
-      // window.location.href = "/student/module/alphabets";
+      router.replace(`/student/module/${module}/${alphabate}`);
+      router.replace(`/student/module/${module}/${alphabate}`);
     }
   }, [activityIndex, currentIndex, assignment]);
 
