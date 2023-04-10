@@ -12,6 +12,7 @@ import AudioButton from "@/components/Layout/elements/AudioBtn";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Fatahah from "@/components/src/img/arabic_fatha.png";
 import BatchContext from "@/components/Context/store/batch-context";
+import { fetchAssignmentForLetter } from "@/backend/Assignment/FetchAssignmentDB";
 const Alphabates = [
   {
     index: 0,
@@ -423,9 +424,8 @@ const Card = ({
   middle,
   final,
   user,
-  nextUrl
+  nextUrl,
 }) => {
-
   const [assignment, setAssignment] = useState([]);
   const [activityPath, setActivityPath] = useState();
   const { myArray, setMyArray } = useContext(BatchContext);
@@ -460,8 +460,7 @@ const Card = ({
     if (activityPath) {
       window.location.href = `/${user}/activity/${activityPath}/harakat/Fatah/${0}`;
     }
-  }
-
+  };
 
   return (
     <div className="w-full  ">
@@ -507,7 +506,7 @@ const Card = ({
       </div>
       <div className=" w-full p-2 rounded-md  flex flex-row justify-center   pt-3">
         <div className="mx-5">
-          <Link href={`/${user}/activity/match/harakat/Fatah/4`}>
+          {/* <Link href={`/${user}/activity/match/harakat/Fatah/4`}>
             <Button
               variant="contained"
               className="text-dark-purple bg-white "
@@ -515,19 +514,18 @@ const Card = ({
             >
               Activity
             </Button>
-          </Link>
+          </Link> */}
 
+          <Button
+            variant="contained"
+            onClick={setActivitySubmodule}
+            className="text-dark-purple bg-white "
+            style={{ marginRight: 10 }}
+          >
+            Activity
+          </Button>
 
-            {/* <Button
-              variant="contained"
-              onClick={setActivitySubmodule}
-              className="text-dark-purple bg-white "
-              style={{ marginRight: 10 }}
-            >
-              Activity
-            </Button> */}
-
-          <Link href={`/${user}/module/harakat/fatah/${nextUrl}`}>
+          <Link href={`/${user}/module/harakat/fatahah/${nextUrl}`}>
             <Button variant="contained" className="text-dark-purple bg-white">
               Next Section
             </Button>
@@ -595,7 +593,7 @@ export default function VerticalTabs(props) {
             initial={alphabate.description.initial}
             middle={alphabate.description.middle}
             final={alphabate.description.final}
-            user= {props.user}
+            user={props.user}
             nextUrl={props.nextUrl}
           />
         </TabPanel>

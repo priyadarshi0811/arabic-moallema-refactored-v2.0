@@ -53,21 +53,21 @@ const index = () => {
           </Link>
         </div>
         <div className=" bg-white rounded-md  m-10">
-        <div className=" w-full p-5    ">
-          <div className="  rounded-md md:px-5 lg:px-14">
-            <div className=" p-3 text-center ">
-              {/* <h2 className="text-lg  "></h2> */}
-          {id && module && activityIndex && (
-            <MatchDndHome
-              subModule={id}
-              module={module}
-              activityIndex={activityIndex}
-            />
-          )}
+          <div className=" w-full p-5    ">
+            <div className="  rounded-md md:px-5 lg:px-14">
+              <div className=" p-3 text-center ">
+                {/* <h2 className="text-lg  "></h2> */}
+                {id && module && activityIndex && (
+                  <MatchDndHome
+                    subModule={id}
+                    module={module}
+                    activityIndex={activityIndex}
+                  />
+                )}
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-      </div>
-      </div>
       </div>
     </>
   );

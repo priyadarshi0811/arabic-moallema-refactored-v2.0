@@ -98,6 +98,9 @@ const reducerFunction = (state, action) => {
   } else if (action.type === ADD_SELECT) {
     newState.letter[action.payload.index].select_data = action.payload.data;
     newState.letter[action.payload.index].question = action.payload.question;
+    newState.letter[action.payload.index].recorded_audio =
+      action.payload.recorded_audio;
+
     return newState;
   } else if (action.type === ADD_MATCH_OPTION) {
     newState.letter[action.payload.index].option_data =
@@ -202,6 +205,7 @@ const AssignmentCreator = () => {
   const [tracingLetters, setTracingLetters] = useState({});
   const [selectLetters, setSelectedLetters] = useState({});
   const [questionForSelectActivity, setquestionForSelectActivity] = useState();
+  const [audioForSelectActivity, setAudioForSelectActivity] = useState();
 
   //trigger function for trace activity and dispatching the trace data to reducer
   const triggerTraceDataState = (tracing_letter_new) => {
@@ -253,6 +257,7 @@ const AssignmentCreator = () => {
       payload: {
         index,
         data: values,
+        recorded_audio: audioForSelectActivity,
         question: questionForSelectActivity,
       },
     });
@@ -266,6 +271,13 @@ const AssignmentCreator = () => {
     setquestionForSelectActivity(question);
   };
 
+  //setting the question
+  const getAudio = (audio) => {
+    console.log("audio in creator: ", audio);
+    setAudioForSelectActivity(audio);
+  };
+
+  console.log(audioForSelectActivity);
   // 2. DnD
 
   //trigger function for DND activity and dispatching the DND data to reducer (dnd bucket letter)
@@ -427,13 +439,15 @@ const AssignmentCreator = () => {
     2: (
       inc,
       select_letter_state = triggerSelectData,
-      get_question = getQuestion
+      get_question = getQuestion,
+      get_audio = getAudio
     ) => {
       return (
         <SelectOption
           incrementer={inc}
           setSelectedLetters={select_letter_state}
           setquestionForSelectActivity={get_question}
+          setAudioForSelectActivity={get_audio}
         />
       );
     },
@@ -491,6 +505,7 @@ const AssignmentCreator = () => {
       let selectActivity = {
         activity_type: "select",
         question: "",
+        recorded_audio: "",
         select_data: [],
       };
       DispatchSetAssignment({

@@ -21,6 +21,7 @@ const SelectActivityHome = ({ subModule, module, activityIndex }) => {
   const [index, setIndex] = useState(0);
   const [question, setQuestion] = useState("");
   const [selectData, setSelectData] = useState([]);
+  const [audioUrl, setAudioUrl] = useState();
 
   const [batchId, setBatchId] = useState();
   const [teacher, setTeacher] = useState();
@@ -92,10 +93,18 @@ const SelectActivityHome = ({ subModule, module, activityIndex }) => {
 
   useEffect(() => {
     if (assignment.length > 0 && currentIndex <= assignment.length - 1) {
+      console.log("inside useEffect");
       setQuestion(assignment[currentIndex].question);
       setSelectData(assignment[currentIndex].select_data);
+      setAudioUrl(assignment[currentIndex].recorded_audio);
     }
-  }, [assignment, activityIndex, currentIndex]);
+  }, [assignment, activityIndex, currentIndex, userType, module]);
+
+  console.log("options: ", selectData);
+  console.log("question: ", question);
+  console.log("assignment: ", assignment);
+  console.log("user type: ", userType);
+  console.log("currentIndex: ", currentIndex);
 
   const handleNext = () => {
     setCurrentIndex(+currentIndex + 1);
@@ -116,24 +125,57 @@ const SelectActivityHome = ({ subModule, module, activityIndex }) => {
 
   useEffect(() => {
     //teacher
-    // if (assignment[currentIndex] && userType === "instructor") {
-    //   activityType = assignment[currentIndex].activity_type;
-    //   if (activityType === "trace" && currentIndex <= +assignment.length - 1) {
-    //     console.log("first");
-    //     // router.replace(
-    //     //   `/teacher/activity/tracing/${module}/${subModule}/${currentIndex}`
-    //     // );
-    //     window.location.href = `/teacher/activity/tracing/${module}/${subModule}/${currentIndex}`;
-    //   } else if (
-    //     activityType === "dnd" &&
-    //     currentIndex <= +assignment.length - 1
-    //   ) {
-    //     console.log("second");
-    //     router.replace(
-    //       `/teacher/activity/dnd/${module}/${subModule}/${currentIndex}`
-    //     );
-    //   }
-    // }
+    if (assignment[currentIndex] && userType === "instructor") {
+      activityType = assignment[currentIndex].activity_type;
+      if (activityType === "trace" && currentIndex <= +assignment.length - 1) {
+        console.log("first");
+        router.replace(
+          `/teacher/activity/tracing/${module}/${subModule}/${currentIndex}`
+        );
+      } else if (
+        activityType === "dnd" &&
+        currentIndex <= +assignment.length - 1
+      ) {
+        console.log("second");
+        router.replace(
+          `/teacher/activity/dnd/${module}/${subModule}/${currentIndex}`
+        );
+      } else if (
+        activityType === "match" &&
+        currentIndex <= +assignment.length - 1
+      ) {
+        console.log("second");
+        router.replace(
+          `/teacher/activity/match/${module}/${subModule}/${currentIndex}`
+        );
+      } else if (
+        activityType === "select" &&
+        currentIndex <= +assignment.length - 1
+      ) {
+        console.log("second");
+        router.replace(
+          `/teacher/activity/select/${module}/${subModule}/${currentIndex}`
+        );
+      }
+    }
+
+    if (
+      currentIndex > assignment.length - 1 &&
+      userType === "instructor" &&
+      module === "harakat"
+    ) {
+      console.log("third");
+      window.location.href = "/teacher/module/harakat/fatahah";
+    }
+
+    if (
+      currentIndex > assignment.length - 1 &&
+      userType === "instructor" &&
+      module === "alphabets"
+    ) {
+      console.log("third");
+      window.location.href = "/teacher/module/alphabets";
+    }
 
     //student
     if (assignment[currentIndex] && userType === "student") {
@@ -152,7 +194,6 @@ const SelectActivityHome = ({ subModule, module, activityIndex }) => {
         router.push(
           `/student/activity/tracing/${module}/${subModule}/${currentIndex}`
         );
-        // window.location.href = `/student/activity/tracing/${module}/${subModule}/${currentIndex}`;
       } else if (
         activityType === "dnd" &&
         currentIndex <= +assignment.length - 1
@@ -164,7 +205,6 @@ const SelectActivityHome = ({ subModule, module, activityIndex }) => {
         router.push(
           `/student/activity/dnd/${module}/${subModule}/${currentIndex}`
         );
-        // window.location.href = `/student/activity/dnd/${module}/${subModule}/${currentIndex}`;
       } else if (
         activityType === "match" &&
         currentIndex <= +assignment.length - 1
@@ -176,8 +216,6 @@ const SelectActivityHome = ({ subModule, module, activityIndex }) => {
         router.push(
           `/student/activity/match/${module}/${subModule}/${currentIndex}`
         );
-
-        // window.location.href = `/student/activity/dnd/${module}/${subModule}/${currentIndex}`;
       } else if (
         activityType === "select" &&
         currentIndex <= +assignment.length - 1
@@ -189,8 +227,6 @@ const SelectActivityHome = ({ subModule, module, activityIndex }) => {
         router.push(
           `/student/activity/select/${module}/${subModule}/${currentIndex}`
         );
-
-        // window.location.href = `/student/activity/dnd/${module}/${subModule}/${currentIndex}`;
       }
     }
     if (currentIndex > assignment.length - 1 && userType === "student") {
@@ -219,12 +255,15 @@ const SelectActivityHome = ({ subModule, module, activityIndex }) => {
         router.replace("/student/module/alphabets");
         router.replace("/student/module/alphabets");
       }
-      // window.location.href = "/student/module/alphabets";
     }
   }, [activityIndex, currentIndex, assignment]);
 
-  console.log(assignment);
-  console.log(selectData);
+  // when click on the next activity
+  const handleNextButtonClick = () => {
+    setCurrentIndex(+currentIndex + 1);
+    console.log("clicked");
+  };
+
   return (
     <>
       <div className="mx-auto mt-8">
@@ -243,7 +282,9 @@ const SelectActivityHome = ({ subModule, module, activityIndex }) => {
                   <div className=" " key={index}>
                     <div
                       className={` shadow-lg w-64   cursor-pointer  m-5 rounded-lg px-4 py-2 ${
-                        selectedOption === option ? "bg-dark-purple text-white" : "bg-white text-dark-purple"
+                        selectedOption === option
+                          ? "bg-dark-purple text-white"
+                          : "bg-white text-dark-purple"
                       }`}
                       onClick={() => handleOptionClick(option)}
                     >
@@ -253,7 +294,7 @@ const SelectActivityHome = ({ subModule, module, activityIndex }) => {
                     </div>
                   </div>
                 ))}
-              
+
               {/* <div className="">
                 <div
                   className={`bg-orange-400 shadow-lg w-64  m-5 rounded-lg px-4 py-2`}
@@ -274,15 +315,26 @@ const SelectActivityHome = ({ subModule, module, activityIndex }) => {
           Submit
         </button> */}
         {/* <Link href={`/student/activity/select/harakat/Fatah/2`}> */}
-        <Button
-          onClick={handleNext}
-          variant="contained"
-          className="text-dark-purple bg-white mt-10 mx-3"
-          style={{ marginRight: 10 }}
-        >
-          Next Activity
-        </Button>
-        {/* </Link> */}
+        {userType === "student" && (
+          <Button
+            onClick={handleNext}
+            variant="contained"
+            className="text-dark-purple bg-white mt-10 mx-3"
+            style={{ marginRight: 10 }}
+          >
+            Submit Activity
+          </Button>
+        )}
+
+        {userType !== "student" && (
+          <Button
+            onClick={handleNextButtonClick}
+            className="p-3 ml-4 bg-white text-dark-purple rounded-md  hover:bg-blue-600 hover:shadow-lg border-2 border-slate-100  "
+            style={{ backgroundColor: "white " }}
+          >
+            Next Activity
+          </Button>
+        )}
       </div>
     </>
   );
