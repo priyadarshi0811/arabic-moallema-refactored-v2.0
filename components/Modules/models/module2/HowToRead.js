@@ -12,18 +12,21 @@ import { useState } from "react";
 const HowToRead = ({user, screenNo, nextUrl}) => {
   const [videoIndex, setVideoIndex] = useState(1);
 
-  const HTRF_V1 =
+  /* --------------------------------- fataha --------------------------------- */
+  const HFRFST_V1 =
     "https://res.cloudinary.com/daftxtnxw/video/upload/v1680674726/3%20letters/animation_1_ez3s0m.mp4";
-  const HTRF_V2 =
+  const HFRFST_V2 =
     "https://res.cloudinary.com/daftxtnxw/video/upload/v1680674722/3%20letters/animation_2_hw9njl.mp4";
-  const HTRF_V3 =
+  const HFRFST_V3 =
     "https://res.cloudinary.com/daftxtnxw/video/upload/v1680674722/3%20letters/animation_3_vthrl1.mp4";
-    const HTRS_V1 =
+    const HFRSND_V1 =
     "https://res.cloudinary.com/daftxtnxw/video/upload/v1680674723/2%20letter%20joint/animation_1_revuyu.mp4";
-  const HTRS_V2 =
+  const HFRSND_V2 =
     "https://res.cloudinary.com/daftxtnxw/video/upload/v1680674723/2%20letter%20joint/animation_2_risa7e.mp4";
-  const HTRS_V3 =
+  const HFRSND_V3 =
     "https://res.cloudinary.com/daftxtnxw/video/upload/v1680674722/2%20letter%20joint/animation_3_kx6dz7.mp4";
+
+    /* --------------------------------- kasara --------------------------------- */
     
 
   const [videoState, setVideoState] = useState({
@@ -83,7 +86,7 @@ const HowToRead = ({user, screenNo, nextUrl}) => {
             className="bg-white text-dark-purple"
             startIcon={<ArrowBackIcon />}
           >
-            Back To Module 2
+            Back To Main Module 
           </Button>
         </Link>
       </div>
@@ -95,7 +98,7 @@ const HowToRead = ({user, screenNo, nextUrl}) => {
                 {/* <VideoWithBtn /> */}
                 <ReactPlayer
                   className="player"
-                  url={screenNo == 'fst' ?HTRF_V1 : HTRS_V1}
+                  url={screenNo == 'fst' ?HFRFST_V1 : HFRSND_V1}
                   width="100%"
                   height={360}
                   playing={playing}
@@ -114,7 +117,7 @@ const HowToRead = ({user, screenNo, nextUrl}) => {
                 {/* <VideoWithBtn /> */}
                 <ReactPlayer
                   className="player"
-                  url={screenNo == 'fst' ?HTRF_V2 : HTRS_V2}
+                  url={screenNo == 'fst' ?HFRFST_V2 : HFRSND_V2}
                   width="100%"
                   height={360}
                   playing={playing}
@@ -133,7 +136,7 @@ const HowToRead = ({user, screenNo, nextUrl}) => {
                 {/* <VideoWithBtn /> */}
                 <ReactPlayer
                   className="player"
-                  url={screenNo == 'fst' ?HTRF_V3 : HTRS_V3}
+                  url={screenNo == 'fst' ?HFRFST_V3 : HFRSND_V3}
                   width="100%"
                   height={360}
                   playing={playing}
@@ -195,7 +198,7 @@ const HowToRead = ({user, screenNo, nextUrl}) => {
                 Pre
               </Button>
 
-              <Link href={`/${user}/module/harakat/fatahah/${nextUrl}`}>
+              <Link href={`/${user}/module/harakat/${nextUrl}`}>
                 <Button
                   variant="contained"
                   className="bg-white text-dark-purple"

@@ -329,8 +329,8 @@ const SelectActivityHome = ({ subModule, module, activityIndex }) => {
         {userType !== "student" && (
           <Button
             onClick={handleNextButtonClick}
-            className="p-3 ml-4 bg-white text-dark-purple rounded-md  hover:bg-blue-600 hover:shadow-lg border-2 border-slate-100  "
-            style={{ backgroundColor: "white " }}
+            className=" mt-4 p-3 ml-4 text-white bg-dark-purple rounded-md  hover:bg-blue-600 hover:shadow-lg border-2 border-slate-100  "
+            // style={{ backgroundColor: "white " }}
           >
             Next Activity
           </Button>

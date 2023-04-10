@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import SelectDropdown from "@/components/Layout/elements/SelectDropdown";
-import { Button, IconButton, TextField } from "@mui/material";
+import { Button, Container, IconButton, TextField } from "@mui/material";
 import { Card, CardContent, Grid, Typography } from "@mui/material";
 
 import CardLayout from "@/components/Layout/card/CardLayout";
@@ -14,6 +14,7 @@ import BatchContext from "@/components/Context/store/batch-context";
 import { useRouter } from "next/router";
 import { fetchBatcheIdBasedOnBatchName } from "@/backend/Batches/BatchesDB";
 import { fetchStudentIdBasedOnEmail } from "@/backend/Students/StudentDB";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
 const AssignmentDetails = ({ studentId, subModule, type }) => {
   const [assignmentDetail, setAssignmentDetail] = useState();
@@ -248,75 +249,81 @@ const AssignmentDetails = ({ studentId, subModule, type }) => {
               </div>
             )}
             {assignment.submission.context && (
-              <div>
-                <h1 className="mt-10 text-lg">Task: Match the following </h1>
+              <>
+                 <div className="bg-gray-50 mt-5 lg:p-5 p-2 rounded-md shadow-md">
+                        <h1 className="text-2xl text-dark-purple text-center">
+                          Drag the left card to match the following..
+                        </h1>
+                    <div className="bg-gray-100  flex items-center justify-center">
+                      <div className=" flex items-center justify-center">
+                      </div>
 
-                <div className="bg-gray-50 mt-5 lg:p-5 p-2 rounded-md shadow-md">
-                  <div className="bg-gray-100  flex items-center justify-center">
-                    <h1 className=" ml-4">Match the following</h1>
+                      <div className="w-1/2 bg-white">
+                        <div className="p-4">
+                          <h1>Options</h1>
 
-                    <div className="w-1/2 bg-white">
-                      <div className="p-4">
-                        <h1>Options</h1>
+                          {assignment.submission.options &&
+                            assignment.submission.context.options.map((item, index) => (
+                              <div
+                                key={item}
+                                className="shadow-md p-5 text-2xl text-white bg-dark-purple my-2  "
+                              >
+                                {item}
+                              </div>
+                            ))}
+                        </div>
+                      </div>
+                      <div className="w-1/2 bg-white">
+                        <div className="p-4">
+                          <h1>Options</h1>
 
-                        {assignment.submission.options &&
-                          assignment.submission.options.map((item, index) => (
-                            <div
-                              key={item}
-                              className="shadow-md p-2 my-2 bg-gray-200"
-                            >
-                              {item}
-                            </div>
-                          ))}
+                          {assignment.submission.context &&
+                            assignment.submission.context.map((item, index) => (
+                              <div
+                                key={item}
+                                className="shadow-md p-5 text-2xl bg-white text-dark-purple my-2"
+                              >
+                                {item}
+                              </div>
+                            ))}
+                        </div>
                       </div>
                     </div>
-                    <div className="w-1/2 bg-white">
-                      <div className="p-4">
-                        <h1>Options</h1>
-
-                        {assignment.submission.context &&
-                          assignment.submission.context.map((item, index) => (
-                            <div
-                              key={item}
-                              className="shadow-md p-2 my-2 bg-gray-200"
-                            >
-                              {item}
-                            </div>
-                          ))}
+                    {assignment.mark === 0 && (
+                      <div className="my-10 mx-5">
+                        <CardLayout
+                          isFull="true"
+                          fullComp=<MarkRemarkSec
+                            key={index}
+                            index={index}
+                            handleMarksChange={handleMarksChange}
+                            handleReMarksChange={handleReMarksChange}
+                          />
+                        />
                       </div>
-                    </div>
-                  </div>
-                  {assignment.mark === 0 && (
-                    <div className="my-10 mx-5">
+                    )}
+                    {assignment.mark !== 0 && (
                       <CardLayout
                         isFull="true"
-                        fullComp=<MarkRemarkSec
-                          key={index}
-                          index={index}
-                          handleMarksChange={handleMarksChange}
-                          handleReMarksChange={handleReMarksChange}
-                        />
-                      />
-                    </div>
-                  )}
-                  {assignment.mark !== 0 && (
-                    <CardLayout
-                      isFull="true"
-                      fullComp=<div className="grid grid-cols-2 w-full">
-                        <div className="col-span-1 text-center">
-                          <label>Marks</label>
+                        fullComp=<div className="grid grid-cols-2 w-full">
+                          <div className="col-span-1 text-center">
+                            <label>Marks</label>
 
-                          <span className="text-2xl"> {assignment.mark}/5</span>
+                            <span className="text-2xl">
+                              {" "}
+                              {assignment.mark}/5
+                            </span>
+                          </div>
+                          <div className="col-span-1  w-full">
+                            <label className="text-center">Remark</label>
+                            <p>{assignment.remark}</p>
+                          </div>
                         </div>
-                        <div className="col-span-1  w-full">
-                          <label className="text-center">Remark</label>
-                          <p>{assignment.remark}</p>
-                        </div>
-                      </div>
-                    />
-                  )}
-                </div>
-              </div>
+                      />
+                    )}
+                  </div>
+              
+              </>
             )}
             {assignment.submission.tasks && (
               <div>

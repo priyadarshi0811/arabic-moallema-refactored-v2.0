@@ -321,16 +321,26 @@ function a11yProps(index) {
   };
 }
 
-const LetterCardL = ({ label, name, audioUrl }) => {
+const LetterCardL = ({ label, name, audioUrl, harakatType }) => {
+  console.log("Harkat",harakatType);
   console.log("Harakat Details", label, "label");
   return (
     <div className="items-center w-full  overflow-hidden rounded border-2 shadow-lg min:h-fit justify-cente min:w-fit  my-16">
+      {harakatType != "kasara" ? (
       <div className=" font-bold text-center bg-dark-purple text-white h-72   content-center ">
         <img src={Fatahah.src} className="w-0 mx-auto mb-0 flex pt-10" alt="" />
         <h2 className="text-9xl font-sans flex justify-center content-center pb-5 pt-10">
           {label}
         </h2>
       </div>
+      ): (
+        <div className=" font-bold text-center bg-dark-purple text-white h-72   content-center ">
+        <h2 className="text-9xl font-sans flex justify-center content-center pb-5 pt-10">
+          {label}
+        </h2>
+        <img src={Fatahah.src} className="w-0 mx-auto mb-0 flex pt-10" alt="" />
+      </div>
+      )}
       <div className="bg-slate-50 h-fit">
         <div></div>
 
@@ -344,21 +354,36 @@ const LetterCardL = ({ label, name, audioUrl }) => {
     </div>
   );
 };
-const LetterCardR = ({ label, name, audioUrl }) => {
+const LetterCardR = ({ label, name, audioUrl, harakatType }) => {
   console.log(label, "label");
   return (
     <div className="items-center w-full  overflow-hidden border-2 rounded shadow-lg min:h-fit justify-cente min:w-fit  my-16">
-      <div className=" font-bold text-center text-dark-purple  h-72  justify-center content-center w-full">
-        <img
-          src={Fatahah.src}
-          className="w-20 mx-auto mb-0 flex pt-10"
-          alt=""
-          style={{ filter: "opacity(50%)", color: "purple" }}
-        />
-        <h2 className="text-9xl font-sans flex justify-center content-center pb-5 ">
-          {label}
-        </h2>
-      </div>
+      {harakatType != "kasara" ? (
+        <div className=" font-bold text-center text-dark-purple  h-72  justify-center content-center w-full">
+          <img
+            src={Fatahah.src}
+            className="w-20 mx-auto mb-0 flex pt-10"
+            alt=""
+            style={{ filter: "opacity(50%)", color: "purple" }}
+          />
+          <h2 className="text-9xl font-sans flex justify-center content-center pb-5 ">
+            {label}
+          </h2>
+        </div>
+      ) : (
+        <div className=" font-bold text-center text-dark-purple  h-72  justify-center content-center w-full">
+          <h2 className="text-9xl font-sans flex justify-center content-center pt-10 ">
+            {label}
+          </h2>
+          <img
+            src={Fatahah.src}
+            className="w-20 mx-auto mb-0 flex pb-3"
+            alt=""
+            style={{ filter: "opacity(50%)", color: "purple" }}
+          />
+        </div>
+      )}
+      
       <div className="bg-slate-50 h-fit">
         <div>
           <Button className="bg-teal-300 my-3">
@@ -371,10 +396,12 @@ const LetterCardR = ({ label, name, audioUrl }) => {
   );
 };
 
-const SmallCard = ({ disc, title, btnText, link, btnProp }) => {
+const SmallCard = ({ disc, title, btnText, link, btnProp, harakatType }) => {
+  console.log("small Harakat ", harakatType);
   return (
     <div>
       <div className="items-center max-w-80 border-2 overflow-hidden rounded shadow-lg min:h-fit justify-cente min:w-fit h-full">
+      {harakatType != "kasara" ? (
         <div className="grid content-between grid-cols-1  font-bold text-center bg-dark-purple text-white min-h-64  ">
           <img
             src={Fatahah.src}
@@ -384,6 +411,17 @@ const SmallCard = ({ disc, title, btnText, link, btnProp }) => {
           />
           <h2 className="text-5xl pb-5 font-sans">{title}</h2>
         </div>
+        ): (
+          <div className="grid content-between grid-cols-1  font-bold text-center bg-dark-purple text-white min-h-64  ">
+          <h2 className="text-5xl pt-5 font-sans">{title}</h2>
+          <img
+            src={Fatahah.src}
+            className="w-8 mx-auto mb-0 pb-3 flex"
+            alt=""
+            style={{ filter: "invert(100%)" }}
+          />
+        </div>
+        )} 
         <div className="bg-slate-50 h-fit">
           <div>
             <h2 className="py-2 text-sm text-dark-purple">{disc}</h2>
@@ -425,6 +463,7 @@ const Card = ({
   final,
   user,
   nextUrl,
+  harakatType,
 }) => {
   const [assignment, setAssignment] = useState([]);
   const [activityPath, setActivityPath] = useState();
@@ -467,7 +506,8 @@ const Card = ({
       <div className=" w-full p-2 rounded-md  flex flex-row justify-between   pt-3">
         {/* <img src={logo.src} className="h-14" alt="" />{" "} */}
         <h1 className="mx-2 text-white text-lg">
-          Module 2: Fatahah of Harakat
+          Module 2: {harakatType} of Harakat
+          {/* Module 2: {harakatType.charAt(0).toUpperCase() + harakatType.slice(1)} of Harakat */}
         </h1>
         <Link href={`/${user}/module`} className="mx-5">
           <Button
@@ -487,16 +527,26 @@ const Card = ({
 
               <div className="grid grid-cols-2 lg:grid-cols-3 mx-0 mt-5 lg:gap-12 gap-5 xl:gap-20 ">
                 <div className="col-span-1">
-                  <LetterCardL label={labelL} name={nameL} audioUrl={audioR} />
+                  <LetterCardL
+                    label={labelL}
+                    name={nameL}
+                    audioUrl={audioR}
+                    harakatType={harakatType}
+                  />
                 </div>
                 <div className="col-span-1">
-                  <LetterCardR label={labelR} name={nameR} audioUrl={audioR} />
+                  <LetterCardR
+                    label={labelR}
+                    name={nameR}
+                    audioUrl={audioR}
+                    harakatType={harakatType}
+                  />
                 </div>
                 <div className="col-span-2 lg:col-span-1">
                   <div className="grid grid-cols-3 lg:grid-cols-1 mx-0 mt-5 gap-4 lg:gap-2">
-                    <SmallCard disc="Initial Form" title={initial} />
-                    <SmallCard disc="Medial Form" title={middle} />
-                    <SmallCard disc="Final Form" title={final} />
+                    <SmallCard disc="Initial Form" title={initial} harakatType={harakatType} />
+                    <SmallCard disc="Medial Form" title={middle} harakatType={harakatType} />
+                    <SmallCard disc="Final Form" title={final} harakatType={harakatType} />
                   </div>
                 </div>
               </div>
@@ -525,7 +575,16 @@ const Card = ({
             Activity
           </Button>
 
-          <Link href={`/${user}/module/harakat/fatahah/${nextUrl}`}>
+          {/* <Button
+              variant="contained"
+              onClick={setActivitySubmodule}
+              className="text-dark-purple bg-white "
+              style={{ marginRight: 10 }}
+            >
+              Activity
+            </Button> */}
+
+          <Link href={`/${user}/module/harakat/${nextUrl}`}>
             <Button variant="contained" className="text-dark-purple bg-white">
               Next Section
             </Button>
@@ -595,6 +654,7 @@ export default function VerticalTabs(props) {
             final={alphabate.description.final}
             user={props.user}
             nextUrl={props.nextUrl}
+            harakatType={props.harakatType}
           />
         </TabPanel>
       ))}

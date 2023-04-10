@@ -4,9 +4,9 @@ import React from 'react'
 const SentencesExamples = () => {
   return (
     <div>
-      <SentenceMaking user="teacher" type="fatahah" />
+      <SentenceMaking user="student" type="kasara" />
     </div>
   )
 }
 
-export default SentencesExamples  
+export default SentencesExamples
