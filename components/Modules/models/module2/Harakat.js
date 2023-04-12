@@ -583,7 +583,7 @@ const Card = ({
               Activity
             </Button>
           </Link> */}
-
+          {/* 
           <Button
             variant="contained"
             onClick={setActivitySubmodule}
@@ -591,7 +591,7 @@ const Card = ({
             style={{ marginRight: 10 }}
           >
             Activity
-          </Button>
+          </Button> */}
 
           {/* <Button
               variant="contained"
