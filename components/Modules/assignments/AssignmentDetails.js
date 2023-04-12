@@ -263,7 +263,7 @@ const AssignmentDetails = ({ studentId, subModule, type }) => {
                           <h1>Options</h1>
 
                           {assignment.submission.options &&
-                            assignment.submission.context.options.map((item, index) => (
+                            assignment.submission.context.map((item, index) => (
                               <div
                                 key={item}
                                 className="shadow-md p-5 text-2xl text-white bg-dark-purple my-2  "

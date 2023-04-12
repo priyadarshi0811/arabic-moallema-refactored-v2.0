@@ -7,13 +7,93 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import CleaningServicesIcon from "@mui/icons-material/CleaningServices";
 import { useState } from "react";
 import ColorOptions from "./ColorOptions";
-const CanvasForWords = () => {
+import { fetchAssignmentForLetter } from "@/backend/Assignment/FetchAssignmentDB";
+import { useRouter } from "next/router";
+import { useContext } from "react";
+import AuthContext from "@/components/Context/store/auth-context";
+import BatchContext from "@/components/Context/store/batch-context";
+import { fetchStudentIdBasedOnEmail } from "@/backend/Students/StudentDB";
+import {
+  fetchBatcheIdBasedOnBatchName,
+  fetchTeacherIdBasedOnBatchId,
+} from "@/backend/Batches/BatchesDB";
+import { fetchTeacherEmailBasedonId } from "@/backend/UserProfile/StudentTeacherProfileDB";
+import supabase from "@/supabaseClient";
+
+const CanvasForWords = ({ subModule, module, activityIndex }) => {
   const canvasRef = useRef(null);
   const contextRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [update, setUpdate] = useState();
-
+  const [assignment, setAssignment] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState();
   const [getColor, setColor] = useState("red");
+
+  const [batchId, setBatchId] = useState();
+  const [teacher, setTeacher] = useState();
+  const [studentId, setStudentId] = useState();
+
+  const router = useRouter();
+  const authCtx = useContext(AuthContext);
+  const userType = authCtx.userType;
+  const id = authCtx.userEmail;
+  const { myArray, setMyArray } = useContext(BatchContext);
+
+  useEffect(() => {
+    const getId = async () => {
+      if (id) {
+        const data = await fetchStudentIdBasedOnEmail(id);
+        if (data[0]) {
+          setStudentId(data[0].student_id);
+        }
+      }
+    };
+    getId();
+  }, [id]);
+
+  useEffect(() => {
+    const getId = async () => {
+      const batch = localStorage.getItem("batchName");
+      const data = await fetchBatcheIdBasedOnBatchName(batch);
+      if (data[0]) {
+        setBatchId(data[0].batch_id);
+      }
+    };
+    getId();
+  }, []);
+
+  useEffect(() => {
+    const fetchTeacher = async () => {
+      if (batchId) {
+        const data = await fetchTeacherIdBasedOnBatchId(batchId);
+        if (data[0]) {
+          setTeacher(data[0].teacher_id);
+        }
+      }
+    };
+    fetchTeacher();
+  }, [batchId]);
+
+  //get the assignment for the selected activity
+  useEffect(() => {
+    const fetchAssignment = async () => {
+      if (subModule && module && activityIndex) {
+        const data = await fetchAssignmentForLetter(subModule, module);
+        if (data[0]) {
+          setAssignment(data[0].assignment_json.letter);
+          setCurrentIndex(activityIndex);
+        }
+      }
+    };
+    fetchAssignment();
+  }, [module, subModule, activityIndex]);
+
+  console.log(assignment);
+
+  let activityType;
+  if (assignment[currentIndex]) {
+    activityType = assignment[currentIndex].activity_type;
+  }
 
   const changeColorPri = (colorData) => {
     //console.log(getColor);
@@ -46,16 +126,15 @@ const CanvasForWords = () => {
 
   console.log(style);
   let canvas = canvasRef.current;
-
   let context;
- 
+
   useEffect(() => {
     if (context) {
       console.log("in");
       setUpdate((prev) => !prev);
       context.font = "100px Noto Sans Arabic";
     }
-  }, [canvas, context]);
+  }, [canvas, context, style]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -66,32 +145,48 @@ const CanvasForWords = () => {
     context.lineCap = "round";
     context.fillStyle = "lightgray";
     context.font = "100px Noto Sans Arabic";
-
-    // Align the text horizontally and vertically
-    context.textAlign = "center";
-    context.lineWidth = 8;
-    context.strokeText("بجد تب بر", 320, 120);
-    context.strokeText("ذر سش نم", 550, 280);
-    context.strokeText("صص طع غف", 770, 120);
-
     context.fillStyle = "white";
-    context.fillText("بجد تب بر", 320, 120);
-    context.fillText("ذر سش نم", 550, 280);
+    context.textAlign = "center";
 
-    context.fillText("صص طع غف", 770, 120);
+    context.lineWidth = 8;
+    if (assignment[currentIndex] && activityType === "color_huruf") {
+      const traceData = assignment[currentIndex].trace_data;
+      traceData &&
+        traceData.forEach((value, index) => {
+          // set the position of each letter based on its index in the traceData array
+          let x, y;
+          if (index === 0) {
+            y = 120;
+            x = 320;
+          } else if (index === 1) {
+            y = 280;
+            x = 550;
+          } else {
+            y = 120;
+            x = 770;
+          }
+
+          // stroke the text
+          context.strokeText(value, x, y);
+          // fill the text
+          context.fillText(value, x, y);
+        });
+    }
 
     contextRef.current = context;
-  }, [update]);
+  }, [update, activityType, assignment, style]);
 
   useEffect(() => {
     if (contextRef.current) {
+      console.log("ini");
       contextRef.current.strokeStyle = getColor;
     }
-  }, [getColor]);
+  }, [getColor, contextRef, activityType, update, assignment]);
 
   console.log(getColor);
   const startDrawing = ({ nativeEvent }) => {
     const { offsetX, offsetY } = nativeEvent;
+    console.log("new");
     canvasRef.current.strokeStyle = getColor;
     contextRef.current.beginPath();
     contextRef.current.moveTo(offsetX, offsetY);
@@ -133,6 +228,81 @@ const CanvasForWords = () => {
     canvas.width = w;
     context.lineWidth = 5;
   };
+
+  const handleNextButtonClick = () => {
+    setCurrentIndex(+currentIndex + 1);
+  };
+  const saveImageToLocal = () => {
+    setCurrentIndex(+currentIndex + 1);
+
+    let image = canvasRef.current.toDataURL("image/png");
+    // setImage(image);
+
+    const newObj = { submission: image, mark: 0, remark: "" };
+    setMyArray([...myArray, newObj]);
+  };
+
+  let activityTypeNew;
+  useEffect(() => {
+    //teacher
+    if (assignment[currentIndex] && userType === "instructor") {
+      activityTypeNew = assignment[currentIndex].activity_type;
+      if (activityTypeNew && currentIndex <= +assignment.length - 1) {
+        console.log("first");
+        router.replace(
+          `/teacher/activity/${activityTypeNew}/${module}/${subModule}/${currentIndex}`
+        );
+      }
+    }
+
+    if (currentIndex > assignment.length - 1 && userType === "instructor") {
+      console.log("third");
+      window.location.href = `/teacher/module/${module}/${subModule}`;
+    }
+
+    //student
+    if (assignment[currentIndex] && userType === "student") {
+      activityTypeNew = assignment[currentIndex].activity_type;
+      if (
+        activityTypeNew &&
+        currentIndex <= +assignment.length - 1 &&
+        module &&
+        subModule &&
+        currentIndex
+      ) {
+        console.log("first");
+        router.push(
+          `/student/activity/${activityTypeNew}/${module}/${subModule}/${currentIndex}`
+        );
+        router.push(
+          `/student/activity/${activityTypeNew}/${module}/${subModule}/${currentIndex}`
+        );
+      }
+    }
+    console.log("ins");
+
+    if (currentIndex > assignment.length - 1 && userType === "student") {
+      if (studentId && batchId && teacher && module && subModule) {
+        supabase
+          .from("assignments_exp_duplicate")
+          .insert({
+            assignment_name: "letterPractice",
+            student_id: studentId,
+            batch_id: batchId,
+            submission: myArray,
+            module_name: module,
+            sub_module: subModule,
+            teacher_id: teacher,
+          })
+          .then((data) => console.log(data))
+          .catch((er) => console.log(er));
+      }
+      setMyArray([]);
+
+      router.replace(`/student/module/${module}/${subModule}`);
+      router.replace(`/student/module/${module}/${subModule}`);
+    }
+  }, [activityIndex, currentIndex, assignment]);
 
   return (
     <>
@@ -184,6 +354,24 @@ const CanvasForWords = () => {
             </ButtonGroup>
           </div>
           <ColorOptions finalColor={changeColorPri} />
+          {userType !== "instructor" && (
+            <button
+              className="p-3 ml-4 text-white bg-red-500 rounded-md hover:bg-red-600 hover:shadow-lg"
+              onClick={saveImageToLocal}
+            >
+              Submit Activity
+            </button>
+          )}
+
+          {userType !== "student" && (
+            <Button
+              onClick={handleNextButtonClick}
+              className="p-3 ml-4 bg-white text-dark-purple rounded-md  hover:bg-blue-600 hover:shadow-lg border-2 border-slate-100  "
+              style={{ backgroundColor: "white " }}
+            >
+              Next Activity
+            </Button>
+          )}
         </div>
       </div>
     </>
