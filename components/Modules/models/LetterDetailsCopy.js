@@ -5,7 +5,10 @@ import AudioButton from "@/components/Layout/elements/AudioBtn";
 import Link from "next/link";
 import { Button } from "@mui/material";
 import logo from "@/components/src/img/AMLogo.png";
-import { addActivityStartStatus } from "@/backend/ActivityStartLog/SetActivityLogDB";
+import {
+  addActivityStartStatus,
+  checkActivityStartStatus,
+} from "@/backend/ActivityStartLog/SetActivityLogDB";
 import { fetchBatcheIdBasedOnBatchName } from "@/backend/Batches/BatchesDB";
 import { fetchAssignmentForLetter } from "@/backend/Assignment/FetchAssignmentDB";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -22,6 +25,7 @@ const LetterDetails = (props) => {
   const [getColor, setColor] = useState("red");
   const [batchId, setBatchId] = useState();
   const [assignment, setAssignment] = useState([]);
+  const [isStarted, setIsStarted] = useState();
 
   const changeColorPri = (colorData) => {
     //console.log(getColor);
@@ -50,9 +54,13 @@ const LetterDetails = (props) => {
     const fetchAssignment = async () => {
       if (props.name && props.module) {
         const data = await fetchAssignmentForLetter(props.name, props.module);
-        if (data[0]) {
-          setAssignment(data[0].assignment_json.letter);
-          setActivityPath(`${data[0].assignment_json.letter[0].activity_type}`);
+        if (data) {
+          if (data[0]) {
+            setAssignment(data[0].assignment_json.letter);
+            setActivityPath(
+              `${data[0].assignment_json.letter[0].activity_type}`
+            );
+          }
         }
       }
     };
@@ -62,8 +70,31 @@ const LetterDetails = (props) => {
   console.log(assignment);
   console.log(activityPath);
 
+  useEffect(() => {
+    const getStarted = async () => {
+      let data;
+      if (props.name && batchId && props.module) {
+        console.log("in");
+        data = await checkActivityStartStatus(
+          props.module,
+          props.name,
+          batchId
+        );
+        console.log(data[0]);
+        if (data) {
+          if (data[0]) {
+            setIsStarted(true);
+          }
+        } else {
+          setIsStarted(false);
+        }
+      }
+    };
+    getStarted();
+  }, [props.name, batchId, props.module]);
+
   const setActivitySubmodule = async () => {
-    if (props.user !== "student") {
+    if (props.user !== "student" && isStarted === undefined) {
       let data;
       const subModule = props.name;
       if (subModule && batchId && props.module) {
@@ -78,7 +109,7 @@ const LetterDetails = (props) => {
         props.user
       }/activity/${activityPath}/alphabets/${props.name}/${0}`;
     }
-    if (activityPath === undefined) {
+    if (isStarted === undefined) {
       window.location.href = `/${props.user}/activity/tracing/alphabets/${
         props.name
       }/${0}`;
