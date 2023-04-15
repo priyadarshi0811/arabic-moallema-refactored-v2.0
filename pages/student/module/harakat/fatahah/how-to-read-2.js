@@ -3,7 +3,7 @@ import React from "react";
 import HowToReadCard from "@/components/Modules/models/module2/HowToRead";
 
 const HowToRead = () => {
-  return <HowToReadCard user="student" screenNo="snd" nextUrl="fatahah/word-making-2" />;
+  return <HowToReadCard user="student" screenNo="snd" type="fatahah" nextUrl="fatahah/word-making-2" />;
 };
 
 export default HowToRead;

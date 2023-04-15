@@ -11,7 +11,6 @@ const CardLayout = ({
   isBtn,
   btn,
   path,
-  onClick,
   sheduleData,
 }) => {
   const [isDisabled, setIsDisabled] = React.useState(false);

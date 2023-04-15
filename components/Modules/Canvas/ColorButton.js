@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styles from "./ColorOption.module.css";
+import { Button } from "@mui/material";
 
 const ColorButton = (props) => {
   // const [viewImg, setViewImg] = useState(false)
@@ -10,13 +11,13 @@ const ColorButton = (props) => {
   };
   return (
     <>
-      <button
-        style={{ backgroundColor: `${props.color}` }}
-        className={styles.mainBtn}
+      
+      <Button
+        style={{ backgroundColor: `${props.color}`, color:`${props.color}`, margin:2, borderWidth:2, borderColor:"gray", boxShadow:5}}
         onClick={changeColor}
       >
-        <img src={props.img} width={'20px'} alt="" />
-      </button>
+        p
+      </Button>
     </>
   );
 };

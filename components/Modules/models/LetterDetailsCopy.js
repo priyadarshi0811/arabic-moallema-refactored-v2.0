@@ -16,6 +16,8 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ReactPlayer from "react-player";
 import VideoControlBtn from "@/components/Layout/elements/VideoControlBtn";
 import GeneralCard from "@/components/Layout/card/GeneralCard";
+import { IconButton } from "@mui/joy";
+import FilterFramesIcon from "@mui/icons-material/FilterFrames";
 
 const LetterDetails = (props) => {
   console.log("user: ", props.user);
@@ -167,15 +169,27 @@ const LetterDetails = (props) => {
             {props.name} " {props.symbol} "
           </span> */}
         </h1>
-        <Link href={`/${props.user}/module/alphabets`} className="mx-5">
-          <Button
-            variant="contained"
-            className="bg-white text-dark-purple"
-            startIcon={<ArrowBackIcon />}
-          >
-            Back
-          </Button>
-        </Link>
+        <div className="flex content-center">
+          <Link href={`/teacher/whiteboard`} className="mx-5 ">
+            <IconButton
+              aria-label="delete"
+              size="large"
+              className="bg-white text-dark-purple rounded-full hover:bg-gray-200 p-1.5 "
+            >
+              <FilterFramesIcon />
+            </IconButton>
+          </Link>
+
+          <Link href={`/${props.user}/module/alphabets`} className="mx-5 ">
+            <Button
+              variant="contained"
+              className="bg-white text-dark-purple"
+              startIcon={<ArrowBackIcon />}
+            >
+              Back
+            </Button>
+          </Link>
+        </div>
       </div>
       <div className=" bg-white rounded-md w-full mt-5">
         <div className="grid grid-cols-2  p-5 md:grid-cols-4 lg:ml-5">

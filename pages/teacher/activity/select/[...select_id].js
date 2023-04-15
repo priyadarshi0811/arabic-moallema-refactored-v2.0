@@ -39,13 +39,13 @@ const index = () => {
         <h1 className="mx-5 text-white text-lg">
            Select The Right one
         </h1>
-        <Link href={`/student/module/harakat/fatahah`} className="mx-5">
+        <Link href={`/teacher/module/harakat/fatahah`} className="mx-5">
           <Button
             variant="contained"
             className="bg-white text-dark-purple"
             startIcon={<ArrowBackIcon />}
           >
-            Back To Module 2
+            Back To Main Module
           </Button>
         </Link>
       </div>

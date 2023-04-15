@@ -13,7 +13,7 @@ export default function BackButton(props) {
         {props.btn} 
       </Button>) : (
       <IconButton
-        className="mb-2 pb-2"
+        className=" "
         aria-label="back"
         size="small"
         onClick={() => back()}

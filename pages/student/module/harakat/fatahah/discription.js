@@ -52,23 +52,39 @@ const positioning = () => {
         minHeight: "100vh",
       }}
     >
-      <div className="p-10">
-        <div className=" min-h-20 w-full p-2 rounded-md  flex flex-row justify-center content-center mb-10">
-          <img src={logo.src} className="h-14" alt="" />{" "}
-          <h1 className="ml-10 pt-5 text-white">Module 2 Harakat</h1>
-        </div>
-        <FullCard
-          disc="The kasra in phonics is the short /i/ sound. It looks exactly like the fatha but is under the consonant. The word “sit” represents this vowel perfectly. The Arabic kasra is كسرة and is it presented like this under its consonant: ِ
-                The word kasra refers to something being broken or has broken. Similarly, this short Arabic vowel does the same for a word in the sense that it takes it down, or almost breaks it. For example, the letter فis pronounced /fa’/, however, with the kasra it becomes فِ pronounced /fi/. It took the letter down.
-                The kasra is taken from the long vowel ي pronounced /ya/, such as the case in the word “sleep.” Let’s look at an example:
+       <div className=" w-full p-5 rounded-md  flex flex-row justify-between   pt-10">
+        <h1 className="mx-5 text-white text-lg">
+          Fatha : Discription
+        </h1>
+        <div>
+         
 
-                WordWith HarakatTransliterationMeaningفيفِي/fi/in"
-          title="َ"
-          title2="Kasra"
-          btn=<AudioButton url="https://assets.mixkit.co/active_storage/sfx/212/212-preview.mp3" />
+          <Link href="" className="mx-5">
+            <Button
+              variant="contained" 
+              className="bg-white text-dark-purple"
+              // startIcon={<ArrowBackIcon />}
+            >
+              Back To Main Module
+            </Button>
+          </Link>
+        </div>
+      </div>
+      <div className="p-10">
+       
+        <FullCard
+          disc="The fatha in phonics is the short /a/ sound. It is a short line reaching to the sky. It is the same sound as in the word “cut”. In Arabic, you would write it as فتحة and it looks like this َ
+          The word fatha meanings opening and this is what it literally does. It opens up the word, elevating it. For example, the letter س is pronounced /seen/. With the addition of the fatha, it becomes سَ pronounced /sa/. It is as if the sound went up.
+          Originally, each short vowel originates, if you wish, from an original long vowel. The Arabic fatha comes from the alif long vowel آ pronounced /ā/ as in “cat.” Let’s look at an example:
+          
+          WordWith HarakatTransliterationMeaningسكنسَكَنَ/sakana/(he) lived
+          "
+          title="ــَـ"
+          title2="Fatha"
+          
         />
-        <div className="mt-5 text-end">
-            <Link href ='/student/module/harakat/harkat-details'><Button variant="contained" className="bg-dark-purple"  endIcon={<NavigateNextIcon />} >Next</Button></Link>
+        <div className="mt-5 w-full flex justify-center">
+            <Link href ='/student/module/harakat/fatahah'><Button variant="contained" className="bg-white text-dark-purple"  endIcon={<NavigateNextIcon />} >Start</Button></Link>
         </div>
       </div>
     </div>
