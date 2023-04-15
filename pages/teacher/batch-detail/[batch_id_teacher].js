@@ -1,11 +1,11 @@
 import AuthContext from "@/components/Context/store/auth-context";
-import BatchDetailTeacher from "@/components/user/teacher/batchesTeacher/batchDetailTeacher";
+import BatchDetailTeacher from "@/components/user/teacher/batchesTeacher/BatchDetailTeacher";
+
 import { useRouter } from "next/router";
 import React, { useContext, useEffect } from "react";
 
 const index = () => {
   const authCtx = useContext(AuthContext);
-
   const router = useRouter();
   let batchName;
   if (router.query.batch_id_teacher) {
