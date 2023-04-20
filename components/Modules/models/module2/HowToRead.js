@@ -1,15 +1,16 @@
 import React from "react";
 import colorBgImg from "@/components/src/img/colorBgImg.png";
 import Link from "next/link";
-import { Button } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import VideoWithBtn from "@/components/Layout/elements/VideoWithBtn";
 import ReactPlayer from "react-player";
 import VideoControlBtn from "@/components/Layout/elements/VideoControlBtn";
 import { useState } from "react";
+import FilterFramesIcon from '@mui/icons-material/FilterFrames';
 
-const HowToRead = ({user, screenNo, nextUrl}) => {
+const HowToRead = ({ user, screenNo, nextUrl, type }) => {
   const [videoIndex, setVideoIndex] = useState(1);
 
   /* --------------------------------- fataha --------------------------------- */
@@ -19,15 +20,14 @@ const HowToRead = ({user, screenNo, nextUrl}) => {
     "https://res.cloudinary.com/daftxtnxw/video/upload/v1680674722/3%20letters/animation_2_hw9njl.mp4";
   const HFRFST_V3 =
     "https://res.cloudinary.com/daftxtnxw/video/upload/v1680674722/3%20letters/animation_3_vthrl1.mp4";
-    const HFRSND_V1 =
+  const HFRSND_V1 =
     "https://res.cloudinary.com/daftxtnxw/video/upload/v1680674723/2%20letter%20joint/animation_1_revuyu.mp4";
   const HFRSND_V2 =
     "https://res.cloudinary.com/daftxtnxw/video/upload/v1680674723/2%20letter%20joint/animation_2_risa7e.mp4";
   const HFRSND_V3 =
     "https://res.cloudinary.com/daftxtnxw/video/upload/v1680674722/2%20letter%20joint/animation_3_kx6dz7.mp4";
 
-    /* --------------------------------- kasara --------------------------------- */
-    
+  /* --------------------------------- kasara --------------------------------- */
 
   const [videoState, setVideoState] = useState({
     playing: true,
@@ -80,31 +80,53 @@ const HowToRead = ({user, screenNo, nextUrl}) => {
         <h1 className="mx-5 text-white text-lg">
           Arabic Alphabets : How to Read
         </h1>
-        <Link href={`/${user}/module/harakat/fatahah`} className="mx-5">
-          <Button
-            variant="contained"
-            className="bg-white text-dark-purple"
-            startIcon={<ArrowBackIcon />}
-          >
-            Back To Main Module 
-          </Button>
-        </Link>
+        <div>
+          {user == "teacher" ? (
+            <Link href={`/teacher/whiteboard`} className="">
+              <IconButton
+                aria-label="delete"
+                size="large"
+                className="bg-white text-dark-purple hover:bg-gray-200"
+              >
+                <FilterFramesIcon />
+              </IconButton>
+            </Link>
+          ) : null}
+
+          <Link href={`/${user}/module/harakat/${type}`} className="mx-5">
+            <Button
+              variant="contained"
+              className="bg-white text-dark-purple"
+              startIcon={<ArrowBackIcon />}
+            >
+              Back To Main Module
+            </Button>
+          </Link>
+        </div>
       </div>
       <div className="mx-10 rounded-md bg-white">
         <div className="w-full  ">
           <div className=" bg-white rounded-md w-full mt-5">
             {videoIndex == 1 ? (
-              <div className=" w-full p-5 md:grid-cols-4 mx-auto  ">
+              <div className="  p-5 md:grid-cols-4 mx-auto flex flex-wrap flex-col justify-center content-center	 ">
                 {/* <VideoWithBtn /> */}
                 <ReactPlayer
                   className="player"
-                  url={screenNo == 'fst' ?HFRFST_V1 : HFRSND_V1}
-                  width="100%"
+                  url={screenNo == "fst" ? HFRFST_V1 : HFRSND_V1}
+                  // width="100%"
                   height={360}
                   playing={playing}
                   muted={muted}
                   onEnded={cFunction}
                   //    onEnded={onEnded}
+                  style={{
+                    borderColor: "#AEAEAE",
+                    borderWidth: 10,
+                    borderRadius: 15,
+                    borderClip: "padding-box",
+                    boxShadow:
+                      "-50px -50px 0 -40px var(--red), 50px 50px 0 -40px var(--red)",
+                  }}
                 />
                 <VideoControlBtn
                   onPlayPause={playPauseHandler}
@@ -113,17 +135,22 @@ const HowToRead = ({user, screenNo, nextUrl}) => {
               </div>
             ) : null}
             {videoIndex == 2 ? (
-              <div className=" w-full p-5 md:grid-cols-4 mx-auto  ">
+              <div className="  p-5 md:grid-cols-4 mx-auto flex flex-wrap flex-col justify-center content-center    ">
                 {/* <VideoWithBtn /> */}
                 <ReactPlayer
                   className="player"
-                  url={screenNo == 'fst' ?HFRFST_V2 : HFRSND_V2}
-                  width="100%"
+                  url={screenNo == "fst" ? HFRFST_V2 : HFRSND_V2}
+                  // width="100%"
                   height={360}
                   playing={playing}
                   muted={muted}
                   onEnded={cFunction}
                   //    onEnded={onEnded}
+                  style={{
+                    borderColor: "#AEAEAE",
+                    borderWidth: 10,
+                    borderRadius: 15,
+                  }}
                 />
                 <VideoControlBtn
                   onPlayPause={playPauseHandler}
@@ -132,17 +159,22 @@ const HowToRead = ({user, screenNo, nextUrl}) => {
               </div>
             ) : null}
             {videoIndex == 3 ? (
-              <div className=" w-full p-5 md:grid-cols-4 mx-auto  ">
+              <div className="  p-5 md:grid-cols-4 mx-auto flex flex-wrap flex-col justify-center content-center  ">
                 {/* <VideoWithBtn /> */}
                 <ReactPlayer
                   className="player"
-                  url={screenNo == 'fst' ?HFRFST_V3 : HFRSND_V3}
-                  width="100%"
+                  url={screenNo == "fst" ? HFRFST_V3 : HFRSND_V3}
+                  // width="100%"
                   height={360}
                   playing={playing}
                   muted={muted}
                   onEnded={cFunction}
                   //    onEnded={onEnded}
+                  style={{
+                    borderColor: "#AEAEAE",
+                    borderWidth: 10,
+                    borderRadius: 15,
+                  }}
                 />
                 <VideoControlBtn
                   onPlayPause={playPauseHandler}

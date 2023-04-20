@@ -19,8 +19,12 @@ import {
 } from "@/backend/Batches/BatchesDB";
 import { fetchTeacherEmailBasedonId } from "@/backend/UserProfile/StudentTeacherProfileDB";
 import supabase from "@/supabaseClient";
+import BackButton from "@/components/Layout/elements/BackButton";
+import Link from "next/link";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
-const CanvasForWords = ({ subModule, module, activityIndex }) => {
+const CanvasForWords = ({ subModule, module, activityIndex, user }) => {
   const canvasRef = useRef(null);
   const contextRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
@@ -306,11 +310,26 @@ const CanvasForWords = ({ subModule, module, activityIndex }) => {
 
   return (
     <>
-      <div>
-        <div className="bg-white py-10 rounded-xl">
-          <h2 className="my-5 pb-5 text-2xl font-extrabold border-b text-dark-purple flex justify-center items-center ">
-            Start Drawing
-          </h2>
+      <div className="pt-5">
+        <div className=" w-full p-5 rounded-md  flex flex-row justify-between   pt-5">
+        <h1 className="mx-5 text-white text-lg">
+          Arabic Alphabets : How to Read
+        </h1>
+        <div>
+          
+
+          <Link href={`/${user}/module/${module}/${subModule}`} className="mx-5">
+            <Button
+              variant="contained"
+              className="bg-white text-dark-purple"
+              startIcon={<ArrowBackIcon />}
+            >
+              Back To Main Module
+            </Button>
+          </Link>
+        </div>
+        </div>
+        <div className="bg-white py-10 mx-10 rounded-xl ">
           <div className="w-full cursor-cell flex justify-center pt-5 ">
             <canvas
               className="bg-white border-2 rounded-lg shadow-lg border-1"
@@ -325,7 +344,7 @@ const CanvasForWords = ({ subModule, module, activityIndex }) => {
               onMouseLeave={stopDrawing}
             ></canvas>
           </div>
-          <div className="mt-8 flex justify-center items-center mb-10">
+          <div className="mt-2 flex justify-center items-center ">
             <ButtonGroup
               variant="contained"
               aria-label="outlined primary button group"
@@ -352,8 +371,10 @@ const CanvasForWords = ({ subModule, module, activityIndex }) => {
                 Clear
               </Button>
             </ButtonGroup>
+            <ColorOptions finalColor={changeColorPri} />
           </div>
-          <ColorOptions finalColor={changeColorPri} />
+        </div>
+        <div className="my-5 w-full flex justify-center ">
           {userType !== "instructor" && (
             <button
               className="p-3 ml-4 text-white bg-red-500 rounded-md hover:bg-red-600 hover:shadow-lg"

@@ -1,7 +1,7 @@
 import React from "react";
 import colorBgImg from "@/components/src/img/colorBgImg.png";
 import Link from "next/link";
-import { Button } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import VideoWithBtn from "@/components/Layout/elements/VideoWithBtn";
@@ -17,159 +17,420 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import MUIMiniCard from "@/components/Layout/card/MUIMiniCard";
+import wordExampleForHarakat from "@/components/Modules/data/wordExampleForHarakat";
+import FilterFramesIcon from '@mui/icons-material/FilterFrames';
 
-
-const wordExapmle = [
+const fatahahWordExapmle = [
   {
     index: 0,
-    image:'https://img.freepik.com/free-photo/blue-approval-good-signal-accord_1172-538.jpg?size=626&ext=jpg&ga=GA1.1.1391325598.1678967841&semt=sph',
+    image:
+      "https://img.freepik.com/free-photo/blue-approval-good-signal-accord_1172-538.jpg?size=626&ext=jpg&ga=GA1.1.1391325598.1678967841&semt=sph",
     word: "سَمَحَ",
-    meaning: "Allowed"
+    meaning: "Allowed",
   },
   {
     index: 1,
-    image:'https://img.freepik.com/free-photo/long-shot-water-stream-grassland_23-2148214226.jpg?size=626&ext=jpg&ga=GA1.1.1391325598.1678967841&semt=sph',
+    image:
+      "https://img.freepik.com/free-photo/long-shot-water-stream-grassland_23-2148214226.jpg?size=626&ext=jpg&ga=GA1.1.1391325598.1678967841&semt=sph",
     word: "نَھَرَ",
-    meaning: "River"
+    meaning: "River",
   },
   {
     index: 2,
-    image:'https://img.freepik.com/free-photo/businessman-locking-door_23-2147876768.jpg?size=626&ext=jpg&ga=GA1.1.1391325598.1678967841&semt=ais',
+    image:
+      "https://img.freepik.com/free-photo/businessman-locking-door_23-2147876768.jpg?size=626&ext=jpg&ga=GA1.1.1391325598.1678967841&semt=ais",
     word: "وَ لَجَ",
-    meaning: "And he entered"
+    meaning: "And he entered",
   },
   {
     index: 3,
-    image:'https://img.freepik.com/free-photo/coins-banknotes-with-growth-arrow_23-2148780593.jpg?size=626&ext=jpg&ga=GA1.1.1391325598.1678967841&semt=ais',
+    image:
+      "https://img.freepik.com/free-photo/coins-banknotes-with-growth-arrow_23-2148780593.jpg?size=626&ext=jpg&ga=GA1.1.1391325598.1678967841&semt=ais",
     word: "رَبَأَ",
-    meaning: "usury"
+    meaning: "usury",
   },
   {
     index: 4,
-    image:'https://img.freepik.com/free-photo/3d-render-hand-holding-open-gift-box-with-ribbon_107791-16374.jpg?size=626&ext=jpg&ga=GA1.1.1391325598.1678967841&semt=sph',
+    image:
+      "https://img.freepik.com/free-photo/3d-render-hand-holding-open-gift-box-with-ribbon_107791-16374.jpg?size=626&ext=jpg&ga=GA1.1.1391325598.1678967841&semt=sph",
     word: "عَرَضَ",
-    meaning: "an offer"
+    meaning: "an offer",
   },
   {
     index: 5,
-    image:'',
+    image: "",
     word: "خَلَدَ",
-    meaning: "immortalize"
+    meaning: "immortalize",
   },
   {
     index: 6,
-    image:'https://as1.ftcdn.net/v2/jpg/00/64/07/16/1000_F_64071640_5uTO7cvPD0MiMLLmPrCaIPIXVAw61u9x.jpg',
+    image:
+      "https://as1.ftcdn.net/v2/jpg/00/64/07/16/1000_F_64071640_5uTO7cvPD0MiMLLmPrCaIPIXVAw61u9x.jpg",
     word: "قَنَصَ",
-    meaning: "snipe"
+    meaning: "snipe",
   },
   {
     index: 7,
-    image:'https://as2.ftcdn.net/v2/jpg/03/19/72/59/1000_F_319725929_WwtUaB8o5iFu9CGQRTLTrTiw2KUpB8iX.jpg',
+    image:
+      "https://as2.ftcdn.net/v2/jpg/03/19/72/59/1000_F_319725929_WwtUaB8o5iFu9CGQRTLTrTiw2KUpB8iX.jpg",
     word: "صَھَرَ",
-    meaning: "he melted"
+    meaning: "he melted",
   },
   {
     index: 8,
-    image:'',
+    image: "",
     word: "صَدَرَ",
-    meaning: "released"
+    meaning: "released",
   },
   {
     index: 9,
-    image:'',
+    image: "",
     word: "مَقَتَ",
-    meaning: "abhor"
+    meaning: "abhor",
   },
   {
     index: 10,
-    image:'',
+    image: "",
     word: "نَبَضَ",
-    meaning: "to throb"
+    meaning: "to throb",
   },
   {
     index: 11,
-    image:'',
+    image: "",
     word: "طَلَقَ",
-    meaning: "divorced"
+    meaning: "divorced",
   },
   {
     index: 12,
-    image:'',
+    image: "",
     word: "أَثَرَ",
-    meaning: "Effect"
+    meaning: "Effect",
   },
   {
     index: 13,
-    image:'',
+    image: "",
     word: "قَنَعَ",
-    meaning: "disguised"
+    meaning: "disguised",
   },
   {
     index: 14,
-    image:'',
+    image: "",
     word: "لَقَطَ",
-    meaning: "clamped"
+    meaning: "clamped",
   },
   {
     index: 15,
-    image:'',
+    image: "",
     word: "نَسَفَ",
-    meaning: "blow up"
+    meaning: "blow up",
   },
   {
     index: 16,
-    image:'',
+    image: "",
     word: "نَصَفَ",
-    meaning: "half"
+    meaning: "half",
   },
   {
     index: 17,
-    image:'',
+    image: "",
     word: "فَتَنَ",
-    meaning: "fascinate"
+    meaning: "fascinate",
   },
-  
+
   {
     index: 18,
-    image:'',
+    image: "",
     word: "فَطَنَ",
-    meaning: "Clever"
+    meaning: "Clever",
   },
   {
     index: 19,
-    image:'',
+    image: "",
     word: "شَمَخَ",
-    meaning: "sniffed"
+    meaning: "sniffed",
   },
   {
     index: 20,
-    image:'',
+    image: "",
     word: "طَرَقَ",
-    meaning: "Methods"
+    meaning: "Methods",
   },
   {
     index: 21,
-    image:'',
+    image: "",
     word: "تَرَكَ",
-    meaning: "to leave"
+    meaning: "to leave",
   },
   {
     index: 22,
-    image:'',
+    image: "",
     word: "وَ لَدَ",
-    meaning: "child"
+    meaning: "child",
   },
   {
     index: 23,
-    image:'',
+    image: "",
     word: "وَ رَدَ",
-    meaning: "rose"
+    meaning: "rose",
   },
-  
+];
+const kasaraWordExapmle = [
+  {
+    index: 0,
+    image:
+      "https://t4.ftcdn.net/jpg/03/36/98/49/240_F_336984953_OLUkwitRZXtd4rxYIprCxLIclGKYLGhZ.jpg",
+    word: "مِئَةَ",
+    meaning: "one hundred",
+  },
+  {
+    index: 1,
+    image: "",
+    word: "هِبَةَ",
+    meaning: "A gift",
+  },
+  {
+    index: 2,
+    image: "",
+    word: "وَذَرِ",
+    meaning: "and leave",
+  },
+  {
+    index: 3,
+    image: "",
+    word: "إِرَمَ",
+    meaning: "toss",
+  },
+  {
+    index: 4,
+    image: "",
+    word: "فِئَةَ",
+    meaning: "category",
+  },
+  {
+    index: 5,
+    image: "",
+    word: "صِفَةَ",
+    meaning: "characteristic",
+  },
+  {
+    index: 6,
+    image: "",
+    word: "وَهِمَ",
+    meaning: "delusion",
+  },
+  {
+    index: 7,
+    image: "",
+    word: "هَلِعَ",
+    meaning: "panic",
+  },
+  {
+    index: 8,
+    image: "",
+    word: "دَلِةَ",
+    meaning: "coffee pot",
+  },
+  {
+    index: 9,
+    image: "",
+    word: "بَرِقَ",
+    meaning: "Lightning",
+  },
+  {
+    index: 10,
+    image: "",
+    word: "حَمِدَ",
+    meaning: "He praised",
+  },
+  {
+    index: 11,
+    image: "",
+    word: "نَشِطَ",
+    meaning: "active",
+  },
+  {
+    index: 12,
+    image: "",
+    word: "صَحِبَكَ",
+    meaning: "your company",
+  },
+  {
+    index: 13,
+    image: "",
+    word: "بِيَدِهِ",
+    meaning: "with his hand",
+  },
+  {
+    index: 14,
+    image: "",
+    word: "قِبَلَكَ",
+    meaning: "before you",
+  },
+  {
+    index: 15,
+    image: "",
+    word: "فَطَفِقَ",
+    meaning: "So he did",
+  },
+  {
+    index: 16,
+    image: "",
+    word: "وَقَعَتِ",
+    meaning: "Occurred",
+  },
+  {
+    index: 17,
+    image: "",
+    word: "فَفَزِعَ",
+    meaning: "So he panicked",
+  },
+
+  {
+    index: 18,
+    image: "",
+    word: "تَبِعَكَ",
+    meaning: "follow you",
+  },
+  {
+    index: 19,
+    image: "",
+    word: "وَوَرِثَ",
+    meaning: "and inherited",
+  },
+  {
+    index: 20,
+    image: "",
+    word: "عَقِبِهِ",
+    meaning: "obstacle",
+  },
+  {
+    index: 21,
+    image: "",
+    word: "لَحَبِطَ",
+    meaning: "to frustrate",
+  },
+  {
+    index: 22,
+    image: "",
+    word: "قَدَمِكَ",
+    meaning: "your foot",
+  },
+  {
+    index: 23,
+    image: "",
+    word: "وَعَنَتِ",
+    meaning: "And you meant",
+  },
+];
+const dammaWordExapmle = [
+  {
+    index: 0,
+    image:
+      "https://t3.ftcdn.net/jpg/04/82/31/48/240_F_482314886_gpFeuRzpaFLMMgVfJfLDGIkmvQ5sFnlx.jpg",
+    word: "قَرَأَ كُتُبَهُ",
+    meaning: "He read his books",
+  },
+  {
+    index: 1,
+    image: "",
+    word: "تُلِيَ فَفَهِمَ",
+    meaning: "Follow them",
+  },
+  {
+    index: 2,
+    image: "",
+    word: "قُرِئَ و كُتِبَ",
+    meaning: "He read and wrote",
+  },
+  {
+    index: 3,
+    image: "",
+    word: "وَقَفَ و يَقِفُ",
+    meaning: "He stood and stood",
+  },
+  {
+    index: 4,
+    image: "",
+    word: "لُبِسَ و خُلِعَ",
+    meaning: "He put on and took off",
+  },
+  {
+    index: 5,
+    image: "",
+    word: "جُرِحَ و شُفِيَ",
+    meaning: "He was wounded and healed",
+  },
+  {
+    index: 6,
+    image: "",
+    word: "جُمِعَ و قُسِمَ",
+    meaning: "collected and divided",
+  },
+  {
+    index: 7,
+    image: "",
+    word: "بُعِثَ و حُشِرَ",
+    meaning: "He was resurrected",
+  },
+  {
+    index: 8,
+    image: "",
+    word: "قُطِعَ فَوَصَلَ",
+    meaning: "cut off",
+  },
+  {
+    index: 9,
+    image: "",
+    word: "رُزِقَ فَحَمِدَ",
+    meaning: "Rizq Fahamed",
+  },
+  {
+    index: 10,
+    image: "",
+    word: "رَضِيَ و فَرَحَ",
+    meaning: "Satisfied and happy",
+  },
+  {
+    index: 11,
+    image: "",
+    word: "كُتِبَ وَرَقُكَ",
+    meaning: "write your paper",
+  },
+  {
+    index: 12,
+    image: "",
+    word: "حَسُنَ عَمَلُكَ",
+    meaning: "do well",
+  },
+  {
+    index: 13,
+    image: "",
+    word: "خَلُصَ عَسَلُكَ",
+    meaning: "save your honey",
+  },
+  {
+    index: 14,
+    image: "",
+    word: "أُكِلَ بَلَحُكَ",
+    meaning: "I eat dates",
+  },
+  {
+    index: 15,
+    image: "",
+    word: "فُقِدَ وَوُجِدَ",
+    meaning: "Lost and found",
+  },
+  {
+    index: 16,
+    image: "",
+    word: "شَكَرَ و شُكِرَ",
+    meaning: "Thanks and thanks",
+  },
 ];
 
+console.log("wordExampleForHarakat", wordExampleForHarakat);
 
-const HowToRead = ({type, nextUrl, user}) => {
+const HowToRead = ({ type, nextUrl, user }) => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -192,21 +453,37 @@ const HowToRead = ({type, nextUrl, user}) => {
         <h1 className="mx-5 text-white text-lg">
           Arabic Alphabets : Word Examples
         </h1>
-        <Link href={`/teacher/module/harakat/${type}`} className="mx-5">
-          <Button
-            variant="contained"
-            className="bg-white text-dark-purple"
-            startIcon={<ArrowBackIcon />}
-          >
-            Back To Main Module
-          </Button>
-        </Link>
+        <div>
+          {user == "teacher" ? (
+            <Link href={`/teacher/whiteboard`} className="">
+              <IconButton
+                aria-label="delete"
+                size="large"
+                className="bg-white text-dark-purple hover:bg-gray-200"
+              >
+                <FilterFramesIcon />
+              </IconButton>
+            </Link>
+          ) : null}
+
+          <Link href={`/${user}/module/harakat/${type}`} className="mx-5">
+            <Button
+              variant="contained"
+              className="bg-white text-dark-purple"
+              startIcon={<ArrowBackIcon />}
+            >
+              Back To Main Module
+            </Button>
+          </Link>
+        </div>
       </div>
       <div className="mx-10 rounded-md bg-white">
         <div className="w-full  ">
           <div className=" bg-white rounded-md w-full mt-5 ">
-          <h1 className="text-3xl text-center pt-6 py-2 text-dark-purple">Read with Meaning</h1>
-            <Box sx={{ minWidth: "560", height:"100%" }} className="w-full  ">
+            <h1 className="text-3xl text-center pt-6 py-2 text-dark-purple">
+              Read with Meaning
+            </h1>
+            <Box sx={{ minWidth: "560", height: "100%" }} className="w-full  ">
               <Tabs
                 // value={value}
                 onChange={handleChange}
@@ -215,28 +492,97 @@ const HowToRead = ({type, nextUrl, user}) => {
                 aria-label="scrollable auto tabs example"
               >
                 {/* Custome Cards  */}
-                {wordExapmle.map((ex)=>(
 
-                <div className=" flex my-5 mx-20" style={{ width: "20vw" }}>
-                <div className="" style={{ width: "20vw" }}>
-                  <div className="items-center w-full  overflow-hidden rounded-xl  shadow-lg min:h-fit  min:w-fit">
-                    <div className=" font-bold text-center bg-slate-50 h-62 flex justify-center">
-                    <img src={ex.image || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEaXaItHR4BIfzC3jGoYxHBEje9KVIyHmzYA&usqp=CAU"} alt="" className="  w-full " />
-                     
-                    </div>
-                    <div className="bg-slate-50 h-fit">
-                      <h2 className="text-3xl font-sans text-dark-purple flex justify-center pb-8 pt-8">
-                       {ex.word}
-                      </h2>
-                      <h2 className="text-2xl font-sans text-dark-purple flex justify-center pb-8">
-                      {ex.meaning}
-                      </h2>
-                    </div>
-                  </div>
-                </div>
-                </div>
-                ))}
-              
+                {console.log(type)}
+                {type === "fatahah"
+                  ? fatahahWordExapmle.map((ex) => (
+                      <div
+                        className=" flex my-5 mx-20"
+                        style={{ width: "20vw" }}
+                      >
+                        <div className="" style={{ width: "20vw" }}>
+                          <div className="items-center w-full  overflow-hidden rounded-xl  shadow-lg min:h-fit  min:w-fit">
+                            <div className=" font-bold text-center bg-slate-50 h-62 flex justify-center">
+                              <img
+                                src={
+                                  ex.image ||
+                                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEaXaItHR4BIfzC3jGoYxHBEje9KVIyHmzYA&usqp=CAU"
+                                }
+                                alt=""
+                                className="  w-full "
+                              />
+                            </div>
+                            <div className="bg-slate-50 h-fit">
+                              <h2 className="text-3xl font-sans text-dark-purple flex justify-center pb-8 pt-8">
+                                {ex.word}
+                              </h2>
+                              <h2 className="text-2xl font-sans text-dark-purple flex justify-center pb-8">
+                                {ex.meaning}
+                              </h2>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  : type === "damma"
+                  ? dammaWordExapmle.map((ex) => (
+                      <div
+                        className=" flex my-5 mx-20"
+                        style={{ width: "20vw" }}
+                      >
+                        <div className="" style={{ width: "20vw" }}>
+                          <div className="items-center w-full  overflow-hidden rounded-xl  shadow-lg min:h-fit  min:w-fit">
+                            <div className=" font-bold text-center bg-slate-50 h-62 flex justify-center">
+                              <img
+                                src={
+                                  ex.image ||
+                                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEaXaItHR4BIfzC3jGoYxHBEje9KVIyHmzYA&usqp=CAU"
+                                }
+                                alt=""
+                                className="  w-full "
+                              />
+                            </div>
+                            <div className="bg-slate-50 h-fit">
+                              <h2 className="text-3xl font-sans text-dark-purple flex justify-center pb-8 pt-8">
+                                {ex.word}
+                              </h2>
+                              <h2 className="text-2xl font-sans text-dark-purple flex justify-center pb-8">
+                                {ex.meaning}
+                              </h2>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  : kasaraWordExapmle.map((ex) => (
+                      <div
+                        className=" flex my-5 mx-20"
+                        style={{ width: "20vw" }}
+                      >
+                        <div className="" style={{ width: "20vw" }}>
+                          <div className="items-center w-full  overflow-hidden rounded-xl  shadow-lg min:h-fit  min:w-fit">
+                            <div className=" font-bold text-center bg-slate-50 h-62 flex justify-center">
+                              <img
+                                src={
+                                  ex.image ||
+                                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEaXaItHR4BIfzC3jGoYxHBEje9KVIyHmzYA&usqp=CAU"
+                                }
+                                alt=""
+                                className="  w-full "
+                              />
+                            </div>
+                            <div className="bg-slate-50 h-fit">
+                              <h2 className="text-3xl font-sans text-dark-purple flex justify-center pb-8 pt-8">
+                                {ex.word}
+                              </h2>
+                              <h2 className="text-2xl font-sans text-dark-purple flex justify-center pb-8">
+                                {ex.meaning}
+                              </h2>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
               </Tabs>
             </Box>
           </div>
@@ -245,9 +591,9 @@ const HowToRead = ({type, nextUrl, user}) => {
       </div>
       <div className=" w-full p-5 rounded-md  flex flex-row justify-center items-center ">
         <Link href={`/${user}/module/harakat/${nextUrl}`}>
-        <Button variant="contained" className="text-dark-purple bg-white">
-          Next Section
-        </Button>
+          <Button variant="contained" className="text-dark-purple bg-white">
+            Next Section
+          </Button>
         </Link>
       </div>
     </div>

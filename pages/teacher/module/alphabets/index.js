@@ -7,10 +7,11 @@ import AddUser from "@/components/user/admin/AddStudent";
 import TopTitleWithImg from "@/components/Layout/section/TopTitleWithImg";
 import HomeActivityCard from "@/components/Layout/card/HomeActivityCard";
 import logo from "@/components/src/img/AMLogo.png";
-import { Button } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Link from "next/link";
 import { useRouter } from "next/router";
+import FilterFramesIcon from '@mui/icons-material/FilterFrames';
 import AuthContext from "@/components/Context/store/auth-context";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
@@ -89,6 +90,7 @@ const index = () => {
     >
       
       <div className=" w-full p-2 rounded-md  flex flex-row justify-center content-center pt-5">
+    
         <Link href="/teacher">
           <Button className="bg-white text-dark-purple mx-2" variant="contained" startIcon={<ArrowBackIcon />}>
             Back to Dashboard
@@ -104,6 +106,15 @@ const index = () => {
             Go to Module 2
           </Button>
         </Link>
+        <Link href={`/teacher/whiteboard`} className="mx-5 ">
+            <IconButton
+              aria-label=""
+              size="large"
+              className="bg-white text-dark-purple rounded-full hover:bg-gray-200 p-1.5 "
+            >
+              <FilterFramesIcon />
+            </IconButton>
+          </Link>
       </div>
       {/* <div className=" w-full p-2 rounded-md  flex flex-row justify-center content-center pt-5">
           <img src={logo.src} className="h-14" alt="" />{" "}

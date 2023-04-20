@@ -6,13 +6,15 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import colorBgImg from "@/components/src/img/colorBgImg.png";
 import Link from "next/link";
-import { Button } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import GeneralCard from "@/components/Layout/card/GeneralCard";
 import AudioButton from "@/components/Layout/elements/AudioBtn";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import FilterFramesIcon from "@mui/icons-material/FilterFrames";
 import Fatahah from "@/components/src/img/arabic_fatha.png";
 import BatchContext from "@/components/Context/store/batch-context";
 import { fetchAssignmentForLetter } from "@/backend/Assignment/FetchAssignmentDB";
+
 const Alphabates = [
   {
     index: 0,
@@ -366,11 +368,23 @@ const LetterCardR = ({ label, name, audioUrl, harakatType }) => {
   console.log(label, "label");
   return (
     <div className="items-center w-full  overflow-hidden border-2 rounded shadow-lg min:h-fit justify-cente min:w-fit  my-16">
-      {harakatType != "kasara" ? (
+      {harakatType == "fatahah" ? (
         <div className=" font-bold text-center text-dark-purple  h-72  justify-center content-center w-full">
           <img
             src={Fatahah.src}
             className="w-20 mx-auto mb-0 flex pt-10"
+            alt=""
+            style={{ filter: "opacity(50%)", color: "purple" }}
+          />
+          <h2 className="text-9xl font-sans flex justify-center content-center pb-5 ">
+            {label}
+          </h2>
+        </div>
+      ) : harakatType == "damma" ? (
+        <div className=" font-bold text-center text-dark-purple  h-72  justify-center content-center w-full">
+          <img
+            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAeFBMVEX///8AAAAKCgq9vb0fHx/4+Pi1tbUmJibZ2dn7+/tTU1M7Ozvy8vL19fXj4+OHh4cuLi6Tk5N2dnZZWVm4uLhpaWnd3d1NTU3IyMjn5+fBwcEZGRk0NDRvb2+dnZ2jo6M/Pz+Xl5dlZWXR0dFGRkZ9fX0TExOLi4vxcMwpAAACW0lEQVR4nO3a2bKiMBSFYSKCICqIIzi2irz/G7ZDGwewr3JqV+/+vztztVYRSCB6HgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD8I+I4uIhj6Rw/ZDjy00mSZft+Ph0NpNP8gGPaMU+zUl3HMDHv8rl0JLfCs/nUj6RDuVT2GgWNORXSsdwpFi0FL1dROpc7aWtBY7bSwVxZfj5lrKF0NEe23wqaWjqaG8Xs5dZLx+np+XOvY3tzXNtGaRR4QVTbpaO3lA7nRGkLLu7rQ5A/Bjq/hLO54duG4Z+Rwo5Uoslcmdo+dhfTfYxsJIM54zcb7h8jM8lgzjwb2rsu0dVwaTelvcdFXOmapaOJvYiT421kaAdy4WyOjF+W+PG1Y2hXi7F0NjeWzyXfmOSwG9qL2p1KZ3Pk/d2i83xZTLR8yxhMTLt+PLiSzudAdPpS8U46ngvHv1XsSKdzItpob+gV27avUZoaenGUK2947dg+VfU0fNnMKG0Y7L5MU+lgrgzq17OZc5Jkve7VKpNO5sjHTZgvl/40vPGlo7kRvn/Z74+kAzk2yN9Xw0zVwdPFdG/eKTs8jBqvFqqm6LC5lVkoOjj0imNjG9OtNLwP3o3K3aGxui9CHUdqg3m5qw/dRj+TKniIzquqyg+LdbPdZRU8apihflu1+x0Yauj3veF5rKPft4brVEu/1oadRaVpjW80PB+2mvo1Gia1r2kLc/XacLWZRjoW+Fe24boqVf6P9HZsnx3qchjo+LMMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgP/Pb9k/FqiL9x8sAAAAAElFTkSuQmCC"
+            className="w-20 mx-auto mb-0 flex pt-2"
             alt=""
             style={{ filter: "opacity(50%)", color: "purple" }}
           />
@@ -409,10 +423,20 @@ const SmallCard = ({ disc, title, btnText, link, btnProp, harakatType }) => {
   return (
     <div>
       <div className="items-center max-w-80 border-2 overflow-hidden rounded shadow-lg min:h-fit justify-cente min:w-fit h-full">
-        {harakatType != "kasara" ? (
+        {harakatType == "fatahah" ? (
           <div className="grid content-between grid-cols-1  font-bold text-center bg-dark-purple text-white min-h-64  ">
             <img
               src={Fatahah.src}
+              className="w-8 mx-auto mb-0 pt-3 flex"
+              alt=""
+              style={{ filter: "invert(100%)" }}
+            />
+            <h2 className="text-5xl pb-5 font-sans">{title}</h2>
+          </div>
+        ) : harakatType == "damma" ? (
+          <div className="grid content-between grid-cols-1  font-bold text-center bg-dark-purple text-white min-h-64  ">
+            <img
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAeFBMVEX///8AAAAKCgq9vb0fHx/4+Pi1tbUmJibZ2dn7+/tTU1M7Ozvy8vL19fXj4+OHh4cuLi6Tk5N2dnZZWVm4uLhpaWnd3d1NTU3IyMjn5+fBwcEZGRk0NDRvb2+dnZ2jo6M/Pz+Xl5dlZWXR0dFGRkZ9fX0TExOLi4vxcMwpAAACW0lEQVR4nO3a2bKiMBSFYSKCICqIIzi2irz/G7ZDGwewr3JqV+/+vztztVYRSCB6HgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD8I+I4uIhj6Rw/ZDjy00mSZft+Ph0NpNP8gGPaMU+zUl3HMDHv8rl0JLfCs/nUj6RDuVT2GgWNORXSsdwpFi0FL1dROpc7aWtBY7bSwVxZfj5lrKF0NEe23wqaWjqaG8Xs5dZLx+np+XOvY3tzXNtGaRR4QVTbpaO3lA7nRGkLLu7rQ5A/Bjq/hLO54duG4Z+Rwo5Uoslcmdo+dhfTfYxsJIM54zcb7h8jM8lgzjwb2rsu0dVwaTelvcdFXOmapaOJvYiT421kaAdy4WyOjF+W+PG1Y2hXi7F0NjeWzyXfmOSwG9qL2p1KZ3Pk/d2i83xZTLR8yxhMTLt+PLiSzudAdPpS8U46ngvHv1XsSKdzItpob+gV27avUZoaenGUK2947dg+VfU0fNnMKG0Y7L5MU+lgrgzq17OZc5Jkve7VKpNO5sjHTZgvl/40vPGlo7kRvn/Z74+kAzk2yN9Xw0zVwdPFdG/eKTs8jBqvFqqm6LC5lVkoOjj0imNjG9OtNLwP3o3K3aGxui9CHUdqg3m5qw/dRj+TKniIzquqyg+LdbPdZRU8apihflu1+x0Yauj3veF5rKPft4brVEu/1oadRaVpjW80PB+2mvo1Gia1r2kLc/XacLWZRjoW+Fe24boqVf6P9HZsnx3qchjo+LMMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgP/Pb9k/FqiL9x8sAAAAAElFTkSuQmCC"
               className="w-8 mx-auto mb-0 pt-3 flex"
               alt=""
               style={{ filter: "invert(100%)" }}
@@ -481,15 +505,23 @@ const Card = ({
   //get the assignment for the selected activity
   useEffect(() => {
     const fetchAssignment = async () => {
-      if (harakatType) {
-        console.log("inside");
-        console.log(harakatType);
-        const data = await fetchAssignmentForLetter(harakatType, "harakat");
-        if (data[0]) {
-          setAssignment(data[0].assignment_json.letter);
-          setActivityPath(`${data[0].assignment_json.letter[0].activity_type}`);
+      const data = await fetchAssignmentForLetter("Fatah", "harakat");
+      if (data[0]) {
+        setAssignment(data[0].assignment_json.letter);
+        if (data[0].assignment_json.letter[0].activity_type === "trace") {
+          setActivityPath("tracing");
+        }
+        if (data[0].assignment_json.letter[0].activity_type === "dnd") {
+          setActivityPath("dnd");
+        }
+        if (data[0].assignment_json.letter[0].activity_type === "select") {
+          setActivityPath("select");
+        }
+        if (data[0].assignment_json.letter[0].activity_type === "match") {
+          setActivityPath("match");
         }
       }
+      
     };
     fetchAssignment();
   }, [harakatType]);
@@ -515,15 +547,26 @@ const Card = ({
           Module 2: {harakatType} of Harakat
           {/* Module 2: {harakatType.charAt(0).toUpperCase() + harakatType.slice(1)} of Harakat */}
         </h1>
-        <Link href={`/${user}/module`} className="mx-5">
-          <Button
-            variant="contained"
-            className="bg-white text-dark-purple"
-            startIcon={<ArrowBackIcon />}
-          >
-            Back
-          </Button>
-        </Link>
+        <div>
+          {user == "teacher" ? (
+            <Link href={`/teacher/whiteboard`} className="">
+              
+              <IconButton aria-label="delete" size="large" className="bg-white text-dark-purple hover:bg-gray-200">
+                <FilterFramesIcon  />
+              </IconButton>
+            </Link>
+          ) : null}
+
+          <Link href={`/${user}/module`} className="mx-5">
+            <Button
+              variant="contained"
+              className="bg-white text-dark-purple"
+              startIcon={<ArrowBackIcon />}
+            >
+              Back
+            </Button>
+          </Link>
+        </div>
       </div>
       <div className=" bg-white rounded-md w-full mt-5">
         <div className=" w-full p-5 md:grid-cols-4   ">

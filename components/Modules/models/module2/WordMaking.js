@@ -6,12 +6,12 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import colorBgImg from "@/components/src/img/colorBgImg.png";
 import Link from "next/link";
-import { Button } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import GeneralCard from "@/components/Layout/card/GeneralCard";
 import AudioButton from "@/components/Layout/elements/AudioBtn";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Fatahah from "@/components/src/img/arabic_fatha.png";
-
+import FilterFramesIcon from "@mui/icons-material/FilterFrames";
 const singleLattersExamples = [
   {
     index: 0,
@@ -24,6 +24,11 @@ const singleLattersExamples = [
     kasaraMiddle: "ئِـ",
     kasaraInitial: "يَـ",
     kasaraWord: "يَئِسَ",
+
+    dammaFinal: "  نَ",
+    dammaMiddle: "ذِ",
+    dammaInitial: "أُ",
+    dammaWord: "أُذِنَ",
   },
   {
     index: 1,
@@ -36,6 +41,11 @@ const singleLattersExamples = [
     kasaraMiddle: "ـبِـ",
     kasaraInitial: "حَـ",
     kasaraWord: "حَبِطَ",
+
+    dammaFinal: "  تَ",
+    dammaMiddle: "هِ",
+    dammaInitial: "بُ",
+    dammaWord: "بُهِتَ",
   },
   {
     index: 2,
@@ -48,6 +58,11 @@ const singleLattersExamples = [
     kasaraMiddle: "ـتِـ",
     kasaraInitial: "عَـ",
     kasaraWord: "عَتِهَ",
+
+    dammaInitial: "تُ",
+    dammaMiddle: "لِ",
+    dammaFinal: "  يَ",
+    dammaWord: "تُلِيَ",
   },
   {
     index: 3,
@@ -60,6 +75,11 @@ const singleLattersExamples = [
     kasaraMiddle: "ثِـ",
     kasaraInitial: "وَ",
     kasaraWord: "وَثِقَ",
+
+    dammaInitial: "ثُ",
+    dammaMiddle: "قِ",
+    dammaFinal: "بَ",
+    dammaWord: "ثُقِبَ",
   },
   {
     index: 4,
@@ -72,6 +92,11 @@ const singleLattersExamples = [
     kasaraMiddle: "جِـ",
     kasaraInitial: "وَ",
     kasaraWord: "وَجِلَ",
+
+    dammaInitial: "جُ",
+    dammaMiddle: "مِ",
+    dammaFinal: "عَ",
+    dammaWord: "جُمِعَ",
   },
   {
     index: 5,
@@ -84,6 +109,11 @@ const singleLattersExamples = [
     kasaraMiddle: "حِـ",
     kasaraInitial: "رَ",
     kasaraWord: "رَحِمَ",
+
+    dammaInitial: "حُ",
+    dammaMiddle: "مِ",
+    dammaFinal: "دَ",
+    dammaWord: "حُمِدَ",
   },
   {
     index: 6,
@@ -96,6 +126,11 @@ const singleLattersExamples = [
     kasaraMiddle: "ـخِـ",
     kasaraInitial: "بَـ",
     kasaraWord: "بَخِلَ",
+
+    dammaInitial: "خُ",
+    dammaMiddle: "لِ",
+    dammaFinal: "قَ",
+    dammaWord: "خُلِقَ",
   },
   {
     index: 7,
@@ -108,6 +143,11 @@ const singleLattersExamples = [
     kasaraMiddle: "ـدِ",
     kasaraInitial: "قَـ",
     kasaraWord: "قَدِمَ",
+
+    dammaInitial: "دُ",
+    dammaMiddle: "عِ",
+    dammaFinal: "يَ",
+    dammaWord: "دُعِيَ",
   },
   {
     index: 8,
@@ -120,6 +160,11 @@ const singleLattersExamples = [
     kasaraMiddle: "ـفِـ",
     kasaraInitial: "حَـ",
     kasaraWord: "حَفِظَ",
+
+    dammaInitial: "ذُ",
+    dammaMiddle: "بِ",
+    dammaFinal: "حَ",
+    dammaWord: "ذُبِحَ",
   },
   {
     index: 9,
@@ -132,6 +177,11 @@ const singleLattersExamples = [
     kasaraMiddle: "ـظِـ",
     kasaraInitial: "حَـ",
     kasaraWord: "حَظِيَ",
+
+    dammaInitial: "رُ",
+    dammaMiddle: "حِ",
+    dammaFinal: "مَ",
+    dammaWord: "رُحِمَ",
   },
   {
     index: 10,
@@ -144,6 +194,11 @@ const singleLattersExamples = [
     kasaraMiddle: "ـفِـ",
     kasaraInitial: "ظَـ",
     kasaraWord: "ظَفِرَ",
+
+    dammaInitial: "زُ",
+    dammaMiddle: "رِ",
+    dammaFinal: "عَ",
+    dammaWord: "زُرِعَ",
   },
   {
     index: 11,
@@ -156,6 +211,11 @@ const singleLattersExamples = [
     kasaraMiddle: "ـقِـ",
     kasaraInitial: "بـَ",
     kasaraWord: "بَقِيَ",
+
+    dammaInitial: "سُ",
+    dammaMiddle: "ئِ",
+    dammaFinal: "لَ",
+    dammaWord: "سُئِلَ",
   },
   {
     index: 12,
@@ -168,6 +228,11 @@ const singleLattersExamples = [
     kasaraMiddle: "ـرِ",
     kasaraInitial: "شَـ",
     kasaraWord: "شَرِبَ",
+
+    dammaInitial: "شُ",
+    dammaMiddle: "كِ",
+    dammaFinal: "رَ",
+    dammaWord: "شُكِرَ",
   },
   {
     index: 13,
@@ -180,6 +245,11 @@ const singleLattersExamples = [
     kasaraMiddle: "ـعِـ",
     kasaraInitial: "سَـ",
     kasaraWord: "سَعِدَ",
+
+    dammaInitial: "صُ",
+    dammaMiddle: "عِ",
+    dammaFinal: "قَ",
+    dammaWord: "صُعِقَ",
   },
   {
     index: 14,
@@ -192,6 +262,11 @@ const singleLattersExamples = [
     kasaraMiddle: "كِـ",
     kasaraInitial: "رَ",
     kasaraWord: "رَكِبَ",
+
+    dammaInitial: "ضُ",
+    dammaMiddle: "رِ",
+    dammaFinal: "بَ",
+    dammaWord: "ضُرِبَ",
   },
   {
     index: 15,
@@ -204,6 +279,11 @@ const singleLattersExamples = [
     kasaraMiddle: "ـوِ",
     kasaraInitial: "عَـ",
     kasaraWord: "عَوِرَ",
+
+    dammaInitial: "طُ",
+    dammaMiddle: "رِ",
+    dammaFinal: "حَ",
+    dammaWord: "طُرِحَ",
   },
   {
     index: 16,
@@ -216,6 +296,11 @@ const singleLattersExamples = [
     kasaraMiddle: "ـهِـ",
     kasaraInitial: "عَـ",
     kasaraWord: "عَهِدَ",
+
+    dammaInitial: "ظُ",
+    dammaMiddle: "لِ",
+    dammaFinal: "مَ",
+    dammaWord: "ظُلِمَ",
   },
   {
     index: 17,
@@ -228,6 +313,11 @@ const singleLattersExamples = [
     kasaraMiddle: "ـنِـ",
     kasaraInitial: "حَـ",
     kasaraWord: "حَنِقَ",
+
+    dammaInitial: "قُ",
+    dammaMiddle: "تِ",
+    dammaFinal: "لَ",
+    dammaWord: "قُتِلَ",
   },
   {
     index: 18,
@@ -240,6 +330,11 @@ const singleLattersExamples = [
     kasaraMiddle: "ـمِـ",
     kasaraInitial: "سَـ",
     kasaraWord: "سَمِعَ",
+
+    dammaInitial: "كُ",
+    dammaMiddle: "تِ",
+    dammaFinal: "بَ",
+    dammaWord: "كُتِبَ",
   },
   {
     index: 19,
@@ -252,6 +347,11 @@ const singleLattersExamples = [
     kasaraMiddle: "ـلِـ",
     kasaraInitial: "عَـ",
     kasaraWord: "عَلِمَ",
+
+    dammaInitial: "مُ",
+    dammaMiddle: "نِ",
+    dammaFinal: "عَ",
+    dammaWord: "مُنِعَ",
   },
 ];
 
@@ -265,6 +365,10 @@ const doubleLattersExamples = [
     kasaraFinal: "ـكَ",
     kasaraInitial: "ضَحِـ",
     kasaraWord: "ضَحِكَ",
+
+    dammaInitial: "نُسِ",
+    dammaFinal: "  يَ",
+    dammaWord: "نُسِيَ",
   },
   {
     index: 1,
@@ -275,6 +379,10 @@ const doubleLattersExamples = [
     kasaraFinal: "حَ",
     kasaraInitial: "مَرِ",
     kasaraWord: "مَرِحَ",
+
+    dammaInitial: "هُدِ",
+    dammaFinal: "  يَ",
+    dammaWord: "هُدِيَ",
   },
   {
     index: 2,
@@ -286,6 +394,10 @@ const doubleLattersExamples = [
     kasaraFinal: "ـلَ",
     kasaraInitial: "عَمِـ",
     kasaraWord: "عَمِلَ",
+
+    dammaInitial: "وُجِ",
+    dammaFinal: "  دَ",
+    dammaWord: "وُجِدَ",
   },
   {
     index: 3,
@@ -296,6 +408,10 @@ const doubleLattersExamples = [
     kasaraFinal: "ـلَ",
     kasaraInitial: "عَقِـ",
     kasaraWord: "عَقِلَ",
+
+    dammaInitial: "وُضِ",
+    dammaFinal: "عَ",
+    dammaWord: "وُضِعَ",
   },
   {
     index: 4,
@@ -306,6 +422,10 @@ const doubleLattersExamples = [
     kasaraFinal: "ـلَ",
     kasaraInitial: "جَهِـ",
     kasaraWord: "جَهِلَ",
+
+    dammaInitial: "شُرِ",
+    dammaFinal: "بَ",
+    dammaWord: "شُرِبَ",
   },
   {
     index: 5,
@@ -316,6 +436,10 @@ const doubleLattersExamples = [
     kasaraFinal: "ـلَ",
     kasaraInitial: "خَجِـ",
     kasaraWord: "خَجِلَ",
+
+    dammaInitial: "رُسِ",
+    dammaFinal: "مَ",
+    dammaWord: "رُسِمَ",
   },
   {
     index: 6,
@@ -326,6 +450,10 @@ const doubleLattersExamples = [
     kasaraFinal: "ـبَ",
     kasaraInitial: "غَضِـ",
     kasaraWord: "غَضِبَ",
+
+    dammaInitial: "فُتِ",
+    dammaFinal: "حَ",
+    dammaWord: "فُتِحَ",
   },
   {
     index: 7,
@@ -336,6 +464,10 @@ const doubleLattersExamples = [
     kasaraFinal: "نَ",
     kasaraInitial: "أذِ",
     kasaraWord: "أذِنَ",
+
+    dammaInitial: "دُبِ",
+    dammaFinal: "غَ",
+    dammaWord: "دُبِغَ",
   },
   {
     index: 8,
@@ -346,6 +478,10 @@ const doubleLattersExamples = [
     kasaraFinal: "ـفَ",
     kasaraInitial: "ألِـ",
     kasaraWord: "ألِفَ",
+
+    dammaInitial: "سُبُ",
+    dammaFinal: "لُ",
+    dammaWord: "سُبُلُ",
   },
   {
     index: 9,
@@ -356,6 +492,10 @@ const doubleLattersExamples = [
     kasaraFinal: "ـبَ",
     kasaraInitial: "صَـحِـ",
     kasaraWord: "صَحِبَ",
+
+    dammaInitial: "رُسُ",
+    dammaFinal: "لُ",
+    dammaWord: "رُسُلُ",
   },
   {
     index: 10,
@@ -366,6 +506,10 @@ const doubleLattersExamples = [
     kasaraFinal: "ـتَ",
     kasaraInitial: "عَنِـ",
     kasaraWord: "عَنِتَ",
+
+    dammaInitial: "أُفُ",
+    dammaFinal: "قُ",
+    dammaWord: "أُفُقُ",
   },
   {
     index: 11,
@@ -376,6 +520,10 @@ const doubleLattersExamples = [
     kasaraFinal: "ـثَ",
     kasaraInitial: "شَـعِـ",
     kasaraWord: "شَعِثَ",
+
+    dammaInitial: "نُظُ",
+    dammaFinal: "مُ",
+    dammaWord: "نُظُمُ",
   },
   {
     index: 12,
@@ -386,6 +534,10 @@ const doubleLattersExamples = [
     kasaraFinal: "ـبَ",
     kasaraInitial: "رَقِـ",
     kasaraWord: "رَقِبَ",
+
+    dammaInitial: "مَثَ",
+    dammaFinal: "لُ",
+    dammaWord: "مَثَلُ",
   },
   {
     index: 13,
@@ -396,6 +548,10 @@ const doubleLattersExamples = [
     kasaraFinal: "ـبَ",
     kasaraInitial: "صَئِـ",
     kasaraWord: "صَئِبَ",
+
+    dammaInitial: "لَطُ",
+    dammaFinal: "فَ",
+    dammaWord: "لَطُفَ",
   },
   {
     index: 14,
@@ -406,6 +562,10 @@ const doubleLattersExamples = [
     kasaraFinal: "ـبَ",
     kasaraInitial: "كَئِـ",
     kasaraWord: "كَئِبَ",
+
+    dammaInitial: "ثُلِ",
+    dammaFinal: "بَ",
+    dammaWord: "ثُلِبَ",
   },
   {
     index: 15,
@@ -416,6 +576,10 @@ const doubleLattersExamples = [
     kasaraFinal: "ئَ",
     kasaraInitial: "صَدِ",
     kasaraWord: "صَدِئَ",
+
+    dammaInitial: "عُقَ",
+    dammaFinal: "دُ",
+    dammaWord: "عُقَدُ",
   },
   {
     index: 16,
@@ -426,6 +590,10 @@ const doubleLattersExamples = [
     kasaraFinal: "ـصَ",
     kasaraInitial: "نَغِـ",
     kasaraWord: "نَغِصَ",
+
+    dammaInitial: "حُجَ",
+    dammaFinal: "رُ",
+    dammaWord: "حُجَرُ",
   },
   {
     index: 17,
@@ -436,6 +604,10 @@ const doubleLattersExamples = [
     kasaraFinal: "ـجَ",
     kasaraInitial: "نَضِـ",
     kasaraWord: "نَضِجَ",
+
+    dammaInitial: "حُشِ",
+    dammaFinal: "رَ",
+    dammaWord: "حُشِرَ",
   },
   {
     index: 18,
@@ -446,16 +618,24 @@ const doubleLattersExamples = [
     kasaraFinal: "ـبَ",
     kasaraInitial: "لَغِـ",
     kasaraWord: "لَغِبَ",
+
+    dammaInitial: "فُرَ",
+    dammaFinal: "صُ",
+    dammaWord: "فُرَصُ",
   },
   {
     index: 19,
     fatahahFinal: "ـعَ",
-    fatahahInitial: "یَنَـ",  
+    fatahahInitial: "یَنَـ",
     fatahahWord: "یَنَعَ",
 
     kasaraFinal: " ـئَ",
     kasaraInitial: "دَفِـ",
     kasaraWord: "دَفِئَ",
+
+    dammaInitial: "شُحِ",
+    dammaFinal: "ذَ",
+    dammaWord: "شُحِذَ",
   },
 ];
 
@@ -510,15 +690,29 @@ const Card = ({
         <h1 className="mx-2 text-white text-lg">
           Module 2: How to Make words is Arabic
         </h1>
-        <Link href={`/${user}/module/harakat/${type}`} className="mx-5">
-          <Button
-            variant="contained"
-            className="bg-white text-dark-purple"
-            startIcon={<ArrowBackIcon />}
-          >
-            Back To Main Module
-          </Button>
-        </Link>
+        <div>
+          {user == "teacher" ? (
+            <Link href={`/teacher/whiteboard`} className="">
+              <IconButton
+                aria-label="delete"
+                size="large"
+                className="bg-white text-dark-purple hover:bg-gray-200"
+              >
+                <FilterFramesIcon />
+              </IconButton>
+            </Link>
+          ) : null}
+
+          <Link href={`/${user}/module/harakat/${type}`} className="mx-5">
+            <Button
+              variant="contained"
+              className="bg-white text-dark-purple"
+              startIcon={<ArrowBackIcon />}
+            >
+              Back To Main Module
+            </Button>
+          </Link>
+        </div>
       </div>
       <div className=" bg-white rounded-md w-full mt-5">
         <div className=" w-full p-5 md:grid-cols-4   ">
@@ -532,11 +726,14 @@ const Card = ({
                     <div className=" font-bold text-center bg-dark-purple text-white h-fit  ">
                       {middle ? (
                         <h2 className="text-7xl font-sans flex justify-center content-center pb-12 pt-10">
-                          {initial} + {middle} + {final}
+                          <span className="mx-10">{final}</span>
+                          <span className="mx-10">{middle}</span>
+                          <span className="mx-10">{initial}</span>
                         </h2>
                       ) : (
                         <h2 className="text-7xl font-sans flex justify-center content-center pb-12 pt-10">
-                          {initial} + {final}
+                          <span className="mx-10">{final}</span>
+                          <span className="mx-10">{initial}</span>
                         </h2>
                       )}
                     </div>
@@ -576,6 +773,8 @@ export default function VerticalTabs({ wordType, user, type, nextUrl }) {
     setValue(newValue);
   };
 
+  console.log(type, "type");
+
   return (
     <>
       {wordType == "single" ? (
@@ -606,7 +805,7 @@ export default function VerticalTabs({ wordType, user, type, nextUrl }) {
                     ? alphabate.fatahahWord
                     : type === "kasara"
                     ? alphabate.kasaraWord
-                    : null
+                    : alphabate.dammaWord
                 }
                 className={`lg:text-4xl text-3xl  py-3 px-0 m-3  w-60  text-white font-bold rounded-lg font-sans  focus:bg-cyan-400 border-2 border-emerald-200`}
                 {...a11yProps(alphabate.index)}
@@ -659,6 +858,18 @@ export default function VerticalTabs({ wordType, user, type, nextUrl }) {
                   type={type}
                 />
               ) : null}
+              {type == "damma" ? (
+                <Card
+                  initial={alphabate.dammaInitial}
+                  middle={alphabate.dammaMiddle}
+                  final={alphabate.dammaFinal}
+                  word={alphabate.dammaWord}
+                  user={user}
+                  screen="double"
+                  nextUrl={nextUrl}
+                  type={type}
+                />
+              ) : null}
             </TabPanel>
           ))}
         </Box>
@@ -690,7 +901,7 @@ export default function VerticalTabs({ wordType, user, type, nextUrl }) {
                     ? alphabate.fatahahWord
                     : type === "kasara"
                     ? alphabate.kasaraWord
-                    : null
+                    : alphabate.dammaWord
                 }
                 className={`lg:text-4xl text-3xl  py-3 px-0 m-3  w-60  text-white font-bold rounded-lg font-sans  focus:bg-cyan-400 border-2 border-emerald-200`}
                 {...a11yProps(alphabate.index)}
@@ -722,6 +933,18 @@ export default function VerticalTabs({ wordType, user, type, nextUrl }) {
                   middle={alphabate.kasaraMiddle}
                   final={alphabate.kasaraFinal}
                   word={alphabate.kasaraWord}
+                  user={user}
+                  screen="double"
+                  nextUrl={nextUrl}
+                  type={type}
+                />
+              ) : null}
+              {type == "damma" ? (
+                <Card
+                  initial={alphabate.dammaInitial}
+                  middle={alphabate.dammaMiddle}
+                  final={alphabate.dammaFinal}
+                  word={alphabate.dammaWord}
                   user={user}
                   screen="double"
                   nextUrl={nextUrl}
