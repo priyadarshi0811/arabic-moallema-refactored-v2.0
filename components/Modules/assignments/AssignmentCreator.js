@@ -25,6 +25,7 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import SelectOption from "@/components/Layout/mui-comps/assignment_builder_selector/select_option_activity";
 import MatchFollowing from "@/components/Layout/mui-comps/assignment_builder_selector/match_the_folowing";
 import ColorHurufTracing from "@/components/Layout/mui-comps/assignment_builder_selector/color_huruf_tracing";
+import SelectCorrectWords from "@/components/Layout/mui-comps/assignment_builder_selector/select_correct_words";
 
 const Modules_Option = {
   alphabets: [
@@ -80,6 +81,12 @@ const ADD_MATCH_CONTEXT = "Add MATCH CONTEXT";
 
 const ADD_TRACING_COLOR_HURF = "Add Hurf";
 
+const ADD_STUDENT_ONE = "STUDENT ONE";
+const ADD_STUDENT_TWO = "STUDENT TWO";
+const ADD_STUDENT_THREE = "STUDENT THREE";
+const ADD_STUDENT_FOUR = "STUDENT FOUR";
+const ADD_STUDENT_FIVE = "STUDENT FIVE";
+
 const ADD_Question = "Add Select";
 
 const ADD_DND_COLUMN = "Add DND Column";
@@ -116,6 +123,26 @@ const reducerFunction = (state, action) => {
   } else if (action.type === ADD_TRACING_COLOR_HURF) {
     newState.letter[action.payload.index].trace_data = action.payload.data;
     return newState;
+  } else if (action.type === ADD_STUDENT_ONE) {
+    newState.letter[action.payload.index].student1.words_data =
+      action.payload.student1.words_data;
+    return newState;
+  } else if (action.type === ADD_STUDENT_TWO) {
+    newState.letter[action.payload.index].student2.words_data =
+      action.payload.student2.words_data;
+    return newState;
+  } else if (action.type === ADD_STUDENT_THREE) {
+    newState.letter[action.payload.index].student3.words_data =
+      action.payload.student3.words_data;
+    return newState;
+  } else if (action.type === ADD_STUDENT_FOUR) {
+    newState.letter[action.payload.index].student4.words_data =
+      action.payload.student4.words_data;
+    return newState;
+  } else if (action.type === ADD_STUDENT_FIVE) {
+    newState.letter[action.payload.index].student5.words_data =
+      action.payload.student5.words_data;
+    return newState;
   }
   return state;
 };
@@ -130,6 +157,184 @@ const AssignmentCreator = () => {
       // },
     ],
   });
+
+  /////////////////////////starting the logic of test the knowledge activity///////////////////////////////////////////
+
+  // 5. test the knowledge
+  const [letterStudentOne, setLetterStudentOne] = useState();
+  const [letterStudentTwo, setLetterStudentTwo] = useState();
+  const [letterStudentThree, setLetterStudentThree] = useState();
+  const [letterStudentFour, setLetterStudentFour] = useState();
+  const [letterStudentFive, setLetterStudentFive] = useState();
+
+  const triggerStudentOne = (tracing_letter_new) => {
+    console.log("inside select: ", tracing_letter_new);
+    const key = Object.keys(tracing_letter_new);
+    let index;
+    let values;
+
+    if (key[0]) {
+      const arr = key[0].split("_");
+      index = arr[0];
+      console.log("index: ", index);
+
+      const tracingKeys = Object.keys(tracing_letter_new[key[0]]);
+      values = tracingKeys.reduce((acc, currentKey) => {
+        if (currentKey.includes("stu1")) {
+          // check if the key contains "mto"
+          return [...acc, tracing_letter_new[key[0]][currentKey]];
+        }
+        return acc;
+      }, []);
+
+      console.log("values: ", values);
+      DispatchSetAssignment({
+        type: ADD_STUDENT_ONE,
+        payload: {
+          index,
+          student1: {
+            words_data: values,
+          },
+        },
+      });
+    }
+    setLetterStudentOne(tracing_letter_new);
+  };
+  const triggerStudentTwo = (tracing_letter_new) => {
+    console.log("inside select: ", tracing_letter_new);
+    const key = Object.keys(tracing_letter_new);
+    let index;
+    let values;
+
+    if (key[0]) {
+      const arr = key[0].split("_");
+      index = arr[0];
+      console.log("index: ", index);
+
+      const tracingKeys = Object.keys(tracing_letter_new[key[0]]);
+      values = tracingKeys.reduce((acc, currentKey) => {
+        if (currentKey.includes("stu2")) {
+          // check if the key contains "mto"
+          return [...acc, tracing_letter_new[key[0]][currentKey]];
+        }
+        return acc;
+      }, []);
+
+      console.log("values: ", values);
+      DispatchSetAssignment({
+        type: ADD_STUDENT_TWO,
+        payload: {
+          index,
+          student2: {
+            words_data: values,
+          },
+        },
+      });
+    }
+    setLetterStudentTwo(tracing_letter_new);
+  };
+  const triggerStudentThree = (tracing_letter_new) => {
+    console.log("inside select: ", tracing_letter_new);
+    const key = Object.keys(tracing_letter_new);
+    let index;
+    let values;
+
+    if (key[0]) {
+      const arr = key[0].split("_");
+      index = arr[0];
+      console.log("index: ", index);
+
+      const tracingKeys = Object.keys(tracing_letter_new[key[0]]);
+      values = tracingKeys.reduce((acc, currentKey) => {
+        if (currentKey.includes("stu3")) {
+          // check if the key contains "mto"
+          return [...acc, tracing_letter_new[key[0]][currentKey]];
+        }
+        return acc;
+      }, []);
+
+      console.log("values: ", values);
+      DispatchSetAssignment({
+        type: ADD_STUDENT_THREE,
+        payload: {
+          index,
+          student3: {
+            words_data: values,
+          },
+        },
+      });
+    }
+    setLetterStudentThree(tracing_letter_new);
+  };
+  const triggerStudentFour = (tracing_letter_new) => {
+    console.log("inside select: ", tracing_letter_new);
+    const key = Object.keys(tracing_letter_new);
+    let index;
+    let values;
+
+    if (key[0]) {
+      const arr = key[0].split("_");
+      index = arr[0];
+      console.log("index: ", index);
+
+      const tracingKeys = Object.keys(tracing_letter_new[key[0]]);
+      values = tracingKeys.reduce((acc, currentKey) => {
+        if (currentKey.includes("stu4")) {
+          // check if the key contains "mto"
+          return [...acc, tracing_letter_new[key[0]][currentKey]];
+        }
+        return acc;
+      }, []);
+
+      console.log("values: ", values);
+      DispatchSetAssignment({
+        type: ADD_STUDENT_FOUR,
+        payload: {
+          index,
+          student4: {
+            words_data: values,
+          },
+        },
+      });
+    }
+    setLetterStudentFour(tracing_letter_new);
+  };
+  const triggerStudentFive = (tracing_letter_new) => {
+    console.log("inside select: ", tracing_letter_new);
+    const key = Object.keys(tracing_letter_new);
+    let index;
+    let values;
+
+    if (key[0]) {
+      const arr = key[0].split("_");
+      index = arr[0];
+      console.log("index: ", index);
+
+      const tracingKeys = Object.keys(tracing_letter_new[key[0]]);
+      values = tracingKeys.reduce((acc, currentKey) => {
+        if (currentKey.includes("stu5")) {
+          // check if the key contains "mto"
+          return [...acc, tracing_letter_new[key[0]][currentKey]];
+        }
+        return acc;
+      }, []);
+
+      console.log("values: ", values);
+      DispatchSetAssignment({
+        type: ADD_STUDENT_FIVE,
+        payload: {
+          index,
+          student5: {
+            words_data: values,
+          },
+        },
+      });
+    }
+    setLetterStudentFive(tracing_letter_new);
+  };
+  /////////////////////////ending the logic of test the knowledge activity///////////////////////////////////////////
+
+  /////////////////////////starting the logic of match the following activity///////////////////////////////////////////
 
   //match the following activity
   const [matchOptionLetters, setMatchOptionLetters] = useState([]);
@@ -206,6 +411,7 @@ const AssignmentCreator = () => {
     setMatchContextLetters(tracing_letter_new);
     console.log(tracingLetters);
   };
+  /////////////////////////ending the logic of match the following activity///////////////////////////////////////////
 
   // 1. Tracing
   const [tracingLetters, setTracingLetters] = useState({});
@@ -443,6 +649,7 @@ const AssignmentCreator = () => {
     "Select Option Activity",
     "Match the following",
     "Color the Hurf/Alfaaz",
+    "Test the knowledge",
   ];
 
   // store the
@@ -505,6 +712,25 @@ const AssignmentCreator = () => {
         <ColorHurufTracing
           incrementer={inc}
           setTracingWords={trace_letter_state}
+        />
+      );
+    },
+    5: (
+      inc,
+      student1 = triggerStudentOne,
+      student2 = triggerStudentTwo,
+      student3 = triggerStudentThree,
+      student4 = triggerStudentFour,
+      student5 = triggerStudentFive
+    ) => {
+      return (
+        <SelectCorrectWords
+          incrementer={inc}
+          setLetterStudentOne={student1}
+          setLetterStudentTwo={student2}
+          setLetterStudentThree={student3}
+          setLetterStudentFour={student4}
+          setLetterStudentFive={student5}
         />
       );
     },
@@ -574,6 +800,39 @@ const AssignmentCreator = () => {
       DispatchSetAssignment({
         type: ADD_ACTIVITY,
         payload: traceActivityColor,
+      });
+    } else if (selectedActivity === 5) {
+      let testKnowledge = {
+        activity_type: "test_knowledge",
+        student1: {
+          name: "",
+          marks: "",
+          words_data: [],
+        },
+        student2: {
+          name: "",
+          marks: "",
+          words_data: [],
+        },
+        student3: {
+          name: "",
+          marks: "",
+          words_data: [],
+        },
+        student4: {
+          name: "",
+          marks: "",
+          words_data: [],
+        },
+        student5: {
+          name: "",
+          marks: "",
+          words_data: [],
+        },
+      };
+      DispatchSetAssignment({
+        type: ADD_ACTIVITY,
+        payload: testKnowledge,
       });
     }
   };
