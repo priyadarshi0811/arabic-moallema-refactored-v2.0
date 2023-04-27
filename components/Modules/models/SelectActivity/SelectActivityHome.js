@@ -137,7 +137,7 @@ const SelectActivityHome = ({ subModule, module, activityIndex }) => {
 
     if (currentIndex > assignment.length - 1 && userType === "instructor") {
       console.log("third");
-      window.location.href = `/teacher/${module}/${subModule}/fatahah`;
+      window.location.href = `/teacher/module/${module}/${subModule}`;
     }
 
     //student
@@ -182,6 +182,7 @@ const SelectActivityHome = ({ subModule, module, activityIndex }) => {
     }
   }, [activityIndex, currentIndex, assignment]);
 
+  console.log(myArray);
   // when click on the next activity
   const handleNextButtonClick = () => {
     setCurrentIndex(+currentIndex + 1);
