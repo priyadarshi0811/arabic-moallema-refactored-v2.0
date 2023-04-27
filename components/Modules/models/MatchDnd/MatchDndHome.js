@@ -109,6 +109,8 @@ const MatchDndHome = ({ subModule, module, activityIndex }) => {
 
   let activityType;
   console.log(module);
+  console.log(myArray);
+
   useEffect(() => {
     //teacher
     if (assignment[currentIndex] && userType === "instructor") {
