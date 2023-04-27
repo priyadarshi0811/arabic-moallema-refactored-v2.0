@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
+import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import PauseIcon from '@mui/icons-material/PauseCircleOutline';
 
 class AudioButton extends Component {
@@ -43,9 +43,9 @@ class AudioButton extends Component {
     return (
       <>
         {!playing && (
-          <PlayCircleOutlineIcon className="cursor-pointer" onClick={this.startAudio}/>
+          <PlayCircleIcon className={`cursor-pointer text-5xl ` } onClick={this.startAudio}/>
         )}
-        {playing && <PauseIcon className="  cursor-pointer" onClick={this.pauseAudio}/>}
+        {playing && <PauseIcon className="cursor-pointer text-5xl " onClick={this.pauseAudio}/>}
 
          
         <audio

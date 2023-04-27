@@ -19,6 +19,8 @@ import GeneralCard from "@/components/Layout/card/GeneralCard";
 import { IconButton } from "@mui/joy";
 import FilterFramesIcon from "@mui/icons-material/FilterFrames";
 
+import Ractangle from "@/components/src/img/Rectangle.png"
+
 const LetterDetails = (props) => {
   console.log("user: ", props.user);
   const [showCanvas, setShowCanvas] = useState(false);
@@ -159,52 +161,59 @@ const LetterDetails = (props) => {
 
   console.log("mp4", props.mp4);
 
+
+
   return (
     <>
-      <div className=" w-full p-2 rounded-md  flex flex-row justify-between pt-3">
-        {/* <img src={logo.src} className="h-14" alt="" />{" "} */}
-        <h1 className="mx-2 text-white text-lg">
-          Arabic Alphabets : {props.name}
-          {/* <span className="p-2 bg-green-200 text-dark-purple rounded-md">
+      <div className=" bg-white rounded-3xl w-full mt-5 ml-5">
+        <div className=" w-full p-2 rounded-3xl  flex flex-row justify-between pt-6">
+          {/* <img src={logo.src} className="h-14" alt="" />{" "} */}
+          <h1
+            className="p-3 text-white  rounded-lg text-lg  border-2 border-white bg-dark-purple"
+            style={{ marginLeft: -40, width: 600, backgroundImage: `url(${Ractangle})`,  }}
+          >
+            Arabic Alphabets : {props.name}
+            {/* <span className="p-2 bg-green-200 text-dark-purple rounded-md">
             {props.name} " {props.symbol} "
           </span> */}
-        </h1>
-        <div className="flex content-center">
-          <Link href={`/teacher/whiteboard`} className="mx-5 ">
-            <IconButton
-              aria-label="delete"
-              size="large"
-              className="bg-white text-dark-purple rounded-full hover:bg-gray-200 p-1.5 "
-            >
-              <FilterFramesIcon />
-            </IconButton>
-          </Link>
+          </h1>
+          <div className="flex content-center">
+            <Link href={`/teacher/whiteboard`} className="mx-5 ">
+              <IconButton
+                aria-label="delete"
+                size="large"
+                className="bg-cyan-200 text-dark-purple rounded-full hover:bg-gray-200 p-1.5 "
+              >
+                <FilterFramesIcon />
+              </IconButton>
+            </Link>
 
-          <Link href={`/${props.user}/module/alphabets`} className="mx-5 ">
-            <Button
-              variant="contained"
-              className="bg-white text-dark-purple"
-              startIcon={<ArrowBackIcon />}
-            >
-              Back
-            </Button>
-          </Link>
+            <Link href={`/${props.user}/module/alphabets`} className="mx-5 ">
+              <Button
+                variant="contained"
+                className="bg-cyan-200 text-dark-purple"
+                startIcon={<ArrowBackIcon />}
+              >
+                Back
+              </Button>
+            </Link>
+          </div>
         </div>
-      </div>
-      <div className=" bg-white rounded-md w-full mt-5">
-        <div className="grid grid-cols-2  p-5 md:grid-cols-4 lg:ml-5">
-          <div className="col-span-2 sm:col-span-1">
-            <div className="h-full gap-3 p-5 text-center text-dark-purple rounded-md  place-content-center ">
-              <h2 className="text-xl w-full">How to speak: "{props.symbol}"</h2>
+        <div className="grid grid-cols-2  p-5 md:grid-cols-4 lg:ml-5 gap-4">
+          <div className="col-span-2 sm:col-span-1 shadow-md rounded-3xl">
+            <div className="h-full gap-3 p-5 text-center text-dark-purple rounded-lg  place-content-center ">
+              <h2 className="text-xl w-full text-white bg-dark-purple p-2 rounded-lg">
+                How to speak: "{props.symbol}"
+              </h2>
               <ReactPlayer
                 className="player"
                 url={props.mp4}
                 width={240}
-                height={360}
+                height={320}
                 playing={playing}
                 muted={muted}
                 onEnded={cFunction}
-                //    onEnded={onEnded}
+                  //  onEnded={onEnded}
               />
               <VideoControlBtn
                 onPlayPause={playPauseHandler}
@@ -217,27 +226,39 @@ const LetterDetails = (props) => {
               </button> */}
             </div>
           </div>
-          <div className="col-span-2 bg-white rounded-md  sm:col-span-3 md:px-5 lg:px-14">
+          <div className="col-span-2 bg-white rounded-3xl shadow-md  sm:col-span-3 md:px-2 lg:px-8">
             <div className="h-full p-3 text-center">
-              <h2 className="text-xl  ">
+              {/* <h2 className="text-xl  ">
                 How to Write: {props.name} "{props.symbol}"
-              </h2>
-              <div className=" p-4 w-full border-2   mt-2 flex  items-center font-sans">
+              </h2> */}
+              <div className=" p-4 w-full border-2 rounded-3xl    mt-2 flex  items-center font-sans">
                 <img
                   src={
                     props.gif ||
                     "https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExZjA2ZWUyMGYxNWMwODZlZTJiYWE3YTk5MTUxMWQwMzRmM2U4NGU2MyZjdD1z/Qhg5vbmLB0iszYoktc/giphy.gif"
                   }
                   alt="Example GIF"
-                  className="h-80 object-cover mx-auto"
+                  className="h-72 object-cover mx-auto "
                 />
               </div>
 
               <div className="grid grid-cols-1 gap-5 ">
                 <div className="grid grid-cols-3 mx-0 mt-5 gap-4">
-                  <GeneralCard disc="Final Form" title={props.final} />
-                  <GeneralCard disc="Medial Form" title={props.middle} />
-                  <GeneralCard disc="Initial Form" title={props.initial} />
+                  <GeneralCard
+                    disc="Final Form"
+                    title={props.final}
+                    color="#09DBDB"
+                  />
+                  <GeneralCard
+                    disc="Medial Form"
+                    title={props.middle}
+                    color="#FD5678"
+                  />
+                  <GeneralCard
+                    disc="Initial Form"
+                    title={props.initial}
+                    color="#ECABE1"
+                  />
                 </div>
               </div>
             </div>
@@ -245,6 +266,15 @@ const LetterDetails = (props) => {
         </div>
       </div>
       <div className=" w-full p-2 rounded-md  flex flex-row justify-center   pt-3">
+        <div className="mx-5">
+          <Link
+            href={`/${props.user}/module/alphabets/similar-sounding-letters`}
+          >
+            <Button variant="contained" className="text-dark-purple bg-white">
+              Next Seciton
+            </Button>
+          </Link>
+        </div>
         <div className="mx-5">
           <Button
             onClick={setActivitySubmodule}

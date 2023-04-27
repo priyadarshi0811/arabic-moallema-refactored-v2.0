@@ -68,7 +68,7 @@ const index = () => {
                 Module 1
               </Button>
             </Link>
-            <Link href="/student/module/harakat/fatahah">
+            <Link href="/student/module/harakat/fatahah/discription">
               <Button
                 className="border-2 m-5 border-white bg-dark-purple"
                 variant="contained"
@@ -76,7 +76,7 @@ const index = () => {
                 Module 2
               </Button>
             </Link>
-            <Link href="/student/module/tanveen/discription">
+            <Link href="/student/module/harakat/kasara/discription">
               <Button
                 className="border-2 m-5 border-white bg-dark-purple"
                 variant="contained"
@@ -84,7 +84,7 @@ const index = () => {
                 Module 3
               </Button>
             </Link>
-            <Link href="/student/module/hamza/hamza-details">
+            <Link href="/student/module/harakat/damma/discription">
               <Button
                 className="border-2 m-5 border-white bg-dark-purple"
                 variant="contained"

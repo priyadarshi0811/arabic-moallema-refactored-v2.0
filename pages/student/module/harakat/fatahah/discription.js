@@ -42,7 +42,7 @@ const positioning = () => {
   
   return (
     <div
-      className=""
+      className="p-10 "
       style={{
         backgroundImage: `url(${colorBgImg.src})`,
         backgroundAttachment: "fixed",
@@ -52,17 +52,24 @@ const positioning = () => {
         minHeight: "100vh",
       }}
     >
-       <div className=" w-full p-5 rounded-md  flex flex-row justify-between   pt-10">
-        <h1 className="mx-5 text-white text-lg">
-          Fatha : Discription
-        </h1>
+      <div className="bg-white rounded-3xl">
+      <div className=" w-full p-5 rounded-md  flex flex-row justify-between    pt-10">
+      <h1
+            className="p-3 text-white bg-dark-purple rounded-lg text-lg  border-2 border-white"
+            style={{ marginLeft: -40, width: 600 }}
+          >
+            Fatahah: Discription
+            {/* <span className="p-2 bg-green-200 text-dark-purple rounded-md">
+            {props.name} " {props.symbol} "
+          </span> */}
+          </h1>
         <div>
          
 
           <Link href="" className="mx-5">
             <Button
               variant="contained" 
-              className="bg-white text-dark-purple"
+              className="bg-cyan-200 text-dark-purple"
               // startIcon={<ArrowBackIcon />}
             >
               Back To Main Module
@@ -71,22 +78,30 @@ const positioning = () => {
         </div>
       </div>
       <div className="p-10">
-       
-        <FullCard
-          disc="The fatha in phonics is the short /a/ sound. It is a short line reaching to the sky. It is the same sound as in the word “cut”. In Arabic, you would write it as فتحة and it looks like this َ
+      <div className="mx-10  bg-dark-purple   text-center text-dark-purple h-full rounded-3xl  ">
+          <div className="bg-dark-purple rounded-3xl">
+            <h1 className="text-9xl pb-5 text-white ">ــَـ</h1>
+            {/* <h1 className="text-3xl pt-2 my-2">Fatha</h1> */}
+          </div>
+          <div className="bg-white rounded-3xl border-b-8 border-cyan-400">
+            {" "}
+            <p className="py-5 text-lg font-medium">
+            The fatha in phonics is the short /a/ sound. It is a short line reaching to the sky. It is the same sound as in the word “cut”. In Arabic, you would write it as فتحة and it looks like this َ
           The word fatha meanings opening and this is what it literally does. It opens up the word, elevating it. For example, the letter س is pronounced /seen/. With the addition of the fatha, it becomes سَ pronounced /sa/. It is as if the sound went up.
           Originally, each short vowel originates, if you wish, from an original long vowel. The Arabic fatha comes from the alif long vowel آ pronounced /ā/ as in “cat.” Let’s look at an example:
           
           WordWith HarakatTransliterationMeaningسكنسَكَنَ/sakana/(he) lived
-          "
-          title="ــَـ"
-          title2="Fatha"
-          
-        />
+            </p>
+          </div>
+        </div>
+       
+        
         <div className="mt-5 w-full flex justify-center">
             <Link href ='/student/module/harakat/fatahah'><Button variant="contained" className="bg-white text-dark-purple"  endIcon={<NavigateNextIcon />} >Start</Button></Link>
         </div>
       </div>
+      </div>
+       
     </div>
   );
 };

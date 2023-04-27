@@ -18,7 +18,7 @@ import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import MUIMiniCard from "@/components/Layout/card/MUIMiniCard";
 import wordExampleForHarakat from "@/components/Modules/data/wordExampleForHarakat";
-import FilterFramesIcon from '@mui/icons-material/FilterFrames';
+import FilterFramesIcon from "@mui/icons-material/FilterFrames";
 
 const fatahahWordExapmle = [
   {
@@ -437,9 +437,31 @@ const HowToRead = ({ type, nextUrl, user }) => {
     setValue(newValue);
   };
 
+  const [randomColor, setRandomColor] = useState("#ECABE1");
+
+  const GenerateColor = () => {
+    var colors = [
+      "#09DBDB",
+      "#FD5678",
+      "#ECABE1",
+      "#56C3F1",
+      "#05DBB4",
+      "#F56C40",
+      "#865658",
+      "#7fc254",
+      "#B780FE",
+      "#BD5DBF",
+      "#FF7C60",
+    ];
+
+    // selecting random color
+    setRandomColor(colors[Math.floor(Math.random() * colors.length)]),
+      console.log("random_color", randomColor);
+  };
+
   return (
     <div
-      className=""
+      className="pt-8"
       style={{
         backgroundImage: `url(${colorBgImg.src})`,
         backgroundAttachment: "fixed",
@@ -449,38 +471,44 @@ const HowToRead = ({ type, nextUrl, user }) => {
         minHeight: "100vh",
       }}
     >
-      <div className=" w-full p-5 rounded-md  flex flex-row justify-between   pt-8">
-        <h1 className="mx-5 text-white text-lg">
-          Arabic Alphabets : Word Examples
-        </h1>
-        <div>
-          {user == "teacher" ? (
-            <Link href={`/teacher/whiteboard`} className="">
-              <IconButton
-                aria-label="delete"
-                size="large"
-                className="bg-white text-dark-purple hover:bg-gray-200"
-              >
-                <FilterFramesIcon />
-              </IconButton>
-            </Link>
-          ) : null}
+      <div className="mx-10 rounded-3xl bg-white">
+        <div className=" w-full p-5 rounded-md  flex flex-row justify-between   pt-8">
+          <h1
+            className="p-3 text-white bg-dark-purple rounded-lg text-lg  border-2 border-white"
+            style={{ marginLeft: -40, width: 600 }}
+          >
+            Arabic Alphabets : Word Examples
+            {/* <span className="p-2 bg-green-200 text-dark-purple rounded-md">
+            {props.name} " {props.symbol} "
+          </span> */}
+          </h1>
+          <div>
+            {user == "teacher" ? (
+              <Link href={`/teacher/whiteboard`} className="">
+                <IconButton
+                  aria-label="delete"
+                  size="large"
+                  className="bg-cyan-200 text-dark-purple hover:bg-gray-200" 
+                >
+                  <FilterFramesIcon />
+                </IconButton>
+              </Link>
+            ) : null}
 
-          <Link href={`/${user}/module/harakat/${type}`} className="mx-5">
-            <Button
-              variant="contained"
-              className="bg-white text-dark-purple"
-              startIcon={<ArrowBackIcon />}
-            >
-              Back To Main Module
-            </Button>
-          </Link>
+            <Link href={`/${user}/module/harakat/${type}`} className="mx-5">
+              <Button
+                variant="contained"
+                className="bg-cyan-200 text-dark-purple"
+                startIcon={<ArrowBackIcon />}
+              >
+                Back To Main Module
+              </Button>
+            </Link>
+          </div>
         </div>
-      </div>
-      <div className="mx-10 rounded-md bg-white">
         <div className="w-full  ">
-          <div className=" bg-white rounded-md w-full mt-5 ">
-            <h1 className="text-3xl text-center pt-6 py-2 text-dark-purple">
+          <div className=" bg-white rounded-md w-full mt-2 ">
+            <h1 className="text-3xl text-center pt-3 py-2 text-dark-purple">
               Read with Meaning
             </h1>
             <Box sx={{ minWidth: "560", height: "100%" }} className="w-full  ">
@@ -501,22 +529,22 @@ const HowToRead = ({ type, nextUrl, user }) => {
                         style={{ width: "20vw" }}
                       >
                         <div className="" style={{ width: "20vw" }}>
-                          <div className="items-center w-full  overflow-hidden rounded-xl  shadow-lg min:h-fit  min:w-fit">
-                            <div className=" font-bold text-center bg-slate-50 h-62 flex justify-center">
+                          <div className="items-center w-full  overflow-hidden rounded-2xl  shadow-lg min:h-fit  min:w-fit">
+                            <div className=" font-bold text-center bg-purple-400 h-62 flex justify-center p-3 ">
                               <img
                                 src={
                                   ex.image ||
                                   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEaXaItHR4BIfzC3jGoYxHBEje9KVIyHmzYA&usqp=CAU"
                                 }
                                 alt=""
-                                className="  w-full "
+                                className="  w-full border-8 border-white rounded-3xl "
                               />
                             </div>
-                            <div className="bg-slate-50 h-fit">
-                              <h2 className="text-3xl font-sans text-dark-purple flex justify-center pb-8 pt-8">
+                            <div className="bg-purple-400 h-fit">
+                              <h2 className="text-3xl font-sans text-white flex justify-center pb-5 pt-5">
                                 {ex.word}
                               </h2>
-                              <h2 className="text-2xl font-sans text-dark-purple flex justify-center pb-8">
+                              <h2 className="text-2xl font-sans text-white flex justify-center pb-8">
                                 {ex.meaning}
                               </h2>
                             </div>
@@ -531,22 +559,22 @@ const HowToRead = ({ type, nextUrl, user }) => {
                         style={{ width: "20vw" }}
                       >
                         <div className="" style={{ width: "20vw" }}>
-                          <div className="items-center w-full  overflow-hidden rounded-xl  shadow-lg min:h-fit  min:w-fit">
-                            <div className=" font-bold text-center bg-slate-50 h-62 flex justify-center">
+                          <div className="items-center w-full  overflow-hidden rounded-2xl  shadow-lg min:h-fit  min:w-fit">
+                            <div className=" font-bold text-center bg-purple-400 h-62 flex justify-center p-3 ">
                               <img
                                 src={
                                   ex.image ||
                                   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEaXaItHR4BIfzC3jGoYxHBEje9KVIyHmzYA&usqp=CAU"
                                 }
                                 alt=""
-                                className="  w-full "
+                                className="  w-full border-8 border-white rounded-3xl "
                               />
                             </div>
-                            <div className="bg-slate-50 h-fit">
-                              <h2 className="text-3xl font-sans text-dark-purple flex justify-center pb-8 pt-8">
+                            <div className="bg-purple-400 h-fit">
+                              <h2 className="text-3xl font-sans text-white flex justify-center pb-5 pt-5">
                                 {ex.word}
                               </h2>
-                              <h2 className="text-2xl font-sans text-dark-purple flex justify-center pb-8">
+                              <h2 className="text-2xl font-sans text-white flex justify-center pb-8">
                                 {ex.meaning}
                               </h2>
                             </div>
@@ -560,22 +588,22 @@ const HowToRead = ({ type, nextUrl, user }) => {
                         style={{ width: "20vw" }}
                       >
                         <div className="" style={{ width: "20vw" }}>
-                          <div className="items-center w-full  overflow-hidden rounded-xl  shadow-lg min:h-fit  min:w-fit">
-                            <div className=" font-bold text-center bg-slate-50 h-62 flex justify-center">
+                          <div className="items-center w-full  overflow-hidden rounded-2xl  shadow-lg min:h-fit  min:w-fit">
+                            <div className=" font-bold text-center bg-purple-400 h-62 flex justify-center p-3 ">
                               <img
                                 src={
                                   ex.image ||
                                   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEaXaItHR4BIfzC3jGoYxHBEje9KVIyHmzYA&usqp=CAU"
                                 }
                                 alt=""
-                                className="  w-full "
+                                className="  w-full border-8 border-white rounded-3xl "
                               />
                             </div>
-                            <div className="bg-slate-50 h-fit">
-                              <h2 className="text-3xl font-sans text-dark-purple flex justify-center pb-8 pt-8">
+                            <div className="bg-purple-400 h-fit">
+                              <h2 className="text-3xl font-sans text-white flex justify-center pb-5 pt-5">
                                 {ex.word}
                               </h2>
-                              <h2 className="text-2xl font-sans text-dark-purple flex justify-center pb-8">
+                              <h2 className="text-2xl font-sans text-white flex justify-center pb-8">
                                 {ex.meaning}
                               </h2>
                             </div>
