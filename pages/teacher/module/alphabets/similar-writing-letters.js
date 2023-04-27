@@ -4,7 +4,7 @@ import SimilerWriting from '@/components/Modules/models/SimilerWriting'
 const SimilarWritingLetters = () => {
   return (
     <div>
-      <SimilerWriting user='student' />
+      <SimilerWriting user='teacher' />
     </div>
   )
 }

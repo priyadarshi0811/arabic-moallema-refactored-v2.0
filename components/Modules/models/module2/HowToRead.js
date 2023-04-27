@@ -1,5 +1,6 @@
 import React from "react";
 import colorBgImg from "@/components/src/img/colorBgImg.png";
+import WhiteBG from "@/components/src/img/WhiteBG.png";
 import Link from "next/link";
 import { Button, IconButton } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
@@ -63,9 +64,20 @@ const HowToRead = ({ user, screenNo, nextUrl, type }) => {
     });
   };
 
+  const cardBg = {
+    // background: 'rgba(225, 225, 225, 0.9)',
+    background: `url(${WhiteBG.src})`,
+    // opacity: '0.95',
+    filter: 'drop-shadow(0px 4px 53px rgba(0, 52, 73, 0.25))',
+    borderRadius: '70px',
+    backgroundColor: '#F5F5F5',
+    backgroundRepeat: 'repeat',
+    
+  }
+
   return (
     <div
-      className=""
+      className="pt-8"
       style={{
         backgroundImage: `url(${colorBgImg.src})`,
         backgroundAttachment: "fixed",
@@ -76,17 +88,25 @@ const HowToRead = ({ user, screenNo, nextUrl, type }) => {
       }}
     >
       {" "}
-      <div className=" w-full p-5 rounded-md  flex flex-row justify-between   pt-10">
-        <h1 className="mx-5 text-white text-lg">
-          Arabic Alphabets : How to Read
-        </h1>
+      <div className="mx-10 pt-2 rounded-3xl bg-white " style={cardBg}>
+      <div className=" w-full p-5 rounded-md  flex flex-row justify-between   pt-10" >
+       
+        <h1
+            className="p-3 text-white bg-dark-purple rounded-lg text-lg  border-2 border-white"
+            style={{ marginLeft: -40, width: 600 }}
+          >
+             Arabic Alphabets : How to Read
+            {/* <span className="p-2 bg-green-200 text-dark-purple rounded-md">
+            {props.name} " {props.symbol} "
+          </span> */}
+          </h1>
         <div>
           {user == "teacher" ? (
-            <Link href={`/teacher/whiteboard`} className="">
+            <Link href={`/teacher/whiteboard`} className="" >
               <IconButton
                 aria-label="delete"
                 size="large"
-                className="bg-white text-dark-purple hover:bg-gray-200"
+                className="bg-cyan-200 text-dark-purple hover:bg-gray-200"
               >
                 <FilterFramesIcon />
               </IconButton>
@@ -96,17 +116,16 @@ const HowToRead = ({ user, screenNo, nextUrl, type }) => {
           <Link href={`/${user}/module/harakat/${type}`} className="mx-5">
             <Button
               variant="contained"
-              className="bg-white text-dark-purple"
+              className="bg-cyan-200 text-dark-purple"
               startIcon={<ArrowBackIcon />}
             >
               Back To Main Module
             </Button>
           </Link>
-        </div>
+        </div>  
       </div>
-      <div className="mx-10 rounded-md bg-white">
         <div className="w-full  ">
-          <div className=" bg-white rounded-md w-full mt-5">
+          <div className="  rounded-md w-full mt-5 " >
             {videoIndex == 1 ? (
               <div className="  p-5 md:grid-cols-4 mx-auto flex flex-wrap flex-col justify-center content-center	 ">
                 {/* <VideoWithBtn /> */}
@@ -126,6 +145,7 @@ const HowToRead = ({ user, screenNo, nextUrl, type }) => {
                     borderClip: "padding-box",
                     boxShadow:
                       "-50px -50px 0 -40px var(--red), 50px 50px 0 -40px var(--red)",
+                      backgroundColor:'white'
                   }}
                 />
                 <VideoControlBtn
@@ -150,6 +170,10 @@ const HowToRead = ({ user, screenNo, nextUrl, type }) => {
                     borderColor: "#AEAEAE",
                     borderWidth: 10,
                     borderRadius: 15,
+                    borderClip: "padding-box",
+                    boxShadow:
+                      "-50px -50px 0 -40px var(--red), 50px 50px 0 -40px var(--red)",
+                      backgroundColor:'white'
                   }}
                 />
                 <VideoControlBtn
@@ -174,6 +198,10 @@ const HowToRead = ({ user, screenNo, nextUrl, type }) => {
                     borderColor: "#AEAEAE",
                     borderWidth: 10,
                     borderRadius: 15,
+                    borderClip: "padding-box",
+                    boxShadow:
+                      "-50px -50px 0 -40px var(--red), 50px 50px 0 -40px var(--red)",
+                      backgroundColor:'white'
                   }}
                 />
                 <VideoControlBtn

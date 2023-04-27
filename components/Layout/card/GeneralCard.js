@@ -2,12 +2,26 @@ import React from "react";
 import Link from "next/link";
 import { Button } from "@mui/material";
 
-const GeneralCard = ({ disc, title, btnText, link, btnProp }) => {
-  
+const GeneralCard = ({ disc, title, btnText, link, btnProp, color }) => {
+
+    // const [randomColor, setRandomColor] = useState("#035124")
+    
+    // var colors = [
+    //   "#000",
+    //   "#004042",
+    //   "#035124",
+    //   "#043f38",
+    //   "#865658",
+    //   "#7fc254",
+    // ];
+
+    // // selecting random color
+    // setRandomColor( colors[Math.floor(Math.random() * colors.length)])
+
   return (
     <div>
-      <div className="items-center w-full  overflow-hidden rounded shadow-lg min:h-fit justify-cente min:w-fit h-full">
-        <div className="grid content-between grid-cols-1  font-bold text-center bg-dark-purple text-white min-h-64  ">
+      <div className="items-center w-full  overflow-hidden rounded-3xl shadow-lg min:h-fit justify-cente min:w-fit h-full">
+        <div className="grid content-between grid-cols-1  font-bold text-center  text-white min-h-64  " style={{backgroundColor: color}} >
          
             <h2 className="text-5xl py-5 font-sans">{title}</h2>
             </div>

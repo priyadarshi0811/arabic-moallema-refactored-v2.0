@@ -4,7 +4,7 @@ import SimilerSound from '@/components/Modules/models/SimilerSound'
 const similerSoundingLetters = () => {
   return (
     <div>
-      <SimilerSound user='student' />
+      <SimilerSound user='teacher' />
     </div>
   )
 }

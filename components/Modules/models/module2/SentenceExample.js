@@ -16,7 +16,7 @@ import {
   checkActivityStartStatus,
 } from "@/backend/ActivityStartLog/SetActivityLogDB";
 
-const SentenceMaking = ({ user, screenNo, nextUrl, type, module }) => {
+const SentenceMaking = ({ user, screenNo, nextUrl, type, module, nextM }) => {
   const [cardIndex, setCardIndex] = useState(0);
 
   const [assignment, setAssignment] = useState([]);
@@ -374,9 +374,36 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module }) => {
   const maxIndexKasara = 14;
   const maxIndexDamma = 10;
 
+  const [randomColor, setRandomColor] = useState("#ECABE1");
+
+  const GenerateColor = () => {
+    var colors = [
+      "#09DBDB",
+      "#FD5678",
+      "#ECABE1",
+      "#56C3F1",
+      "#05DBB4",
+      "#F56C40",
+      "#865658",
+      "#7fc254",
+      "#B780FE",
+      "#BD5DBF",
+      "#FF7C60",
+    ];
+
+    // selecting random color
+    setRandomColor(colors[Math.floor(Math.random() * colors.length)]),
+      console.log("random_color", randomColor);
+  };
+
+  const divStyles = {
+    boxShadow: 'inset 0 0 10px rgba(0,2,1,0.4)',
+    backgroundColor: randomColor,
+  };
+
   return (
     <div
-      className=""
+      className="pt-10"
       style={{
         backgroundImage: `url(${colorBgImg.src})`,
         backgroundAttachment: "fixed",
@@ -387,10 +414,18 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module }) => {
       }}
     >
       {" "}
+      <div className="mx-16 rounded-3xl bg-white ">
       <div className=" w-full p-5 rounded-md  flex flex-row justify-between   pt-10">
-        <h1 className="mx-5 text-white text-lg">
-          Arabic Alphabets : How to Read
-        </h1>
+      
+      <h1
+            className="p-3 text-white bg-dark-purple rounded-lg text-lg  border-2 border-white"
+            style={{ marginLeft: -60, width: 600 }}
+          >
+            Arabic Alphabets : How to Read
+            {/* <span className="p-2 bg-green-200 text-dark-purple rounded-md">
+            {props.name} " {props.symbol} "
+          </span> */}
+          </h1>
         <div>
           {user == "teacher" ? (
             <Link href={`/teacher/whiteboard`} className="">
@@ -415,7 +450,6 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module }) => {
           </Link>
         </div>
       </div>
-      <div className="mx-10 rounded-md ">
         <div className="w-full  ">
           <div className="  rounded-md w-full mt-5 ">
             <h1 className="text-3xl text-center pt-6 py-2 text-white">
@@ -429,16 +463,16 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module }) => {
                       <>
                         {cardIndex == ex.index ? (
                           <div className=" " style={{ width: "100%" }}>
-                            <div className="grid grid-cols-3   py-10 lg:px-20 border-2 bg-white border-gray-400 shadow-lg rounded-lg mb-5">
-                              <div className="col-span-1 border-r-2 border-gray-400 ">
-                                <div className=" font-bold text-center lg:mx-10 py-10 lg:py-0  h-62 ">
+                            <div className="grid grid-cols-3   py-10 lg:px-20  shadow-lg rounded-lg mb-5" style={divStyles}>
+                              <div className="col-span-1 border-r-2 border-white ">
+                                <div className=" font-bold text-center lg:mx-10 py-5 lg:py-0  h-62 border-8 border-gray-100 rounded-3xl bg-gray-100 ">
                                   <img
                                     src={
                                       ex.image ||
                                       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEaXaItHR4BIfzC3jGoYxHBEje9KVIyHmzYA&usqp=CAU  "
                                     }
                                     alt=""
-                                    className="w-full  "
+                                    className="w-full  rounded-3xl"
                                   />
                                 </div>
                               </div>
@@ -462,6 +496,7 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module }) => {
                                   startIcon={<ArrowBackIcon />}
                                   onClick={() => {
                                     setCardIndex(cardIndex - 1);
+                                     GenerateColor()
                                   }}
                                 >
                                   Pre
@@ -474,6 +509,7 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module }) => {
                                   endIcon={<ArrowForwardIcon />}
                                   onClick={() => {
                                     setCardIndex(cardIndex + 1);
+                                    GenerateColor()
                                   }}
                                 >
                                   Next
@@ -509,7 +545,7 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module }) => {
                       <>
                         {cardIndex == ex.index ? (
                           <div className=" " style={{ width: "100%" }}>
-                            <div className="grid grid-cols-3   py-10 lg:px-20 border-2 bg-white border-gray-400 shadow-lg rounded-lg mb-5">
+                            <div className="grid grid-cols-3   py-10 lg:px-20 border-2  border-gray-400 shadow-lg rounded-lg mb-5" style={{backgroundColor: randomColor}}>
                               <div className="col-span-1 border-r-2 border-gray-400 ">
                                 <div className=" font-bold text-center lg:mx-10 py-10 lg:py-0  h-62 ">
                                   <img
@@ -542,6 +578,7 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module }) => {
                                   startIcon={<ArrowBackIcon />}
                                   onClick={() => {
                                     setCardIndex(cardIndex - 1);
+                                    GenerateColor()
                                   }}
                                 >
                                   Pre
@@ -554,6 +591,7 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module }) => {
                                   endIcon={<ArrowForwardIcon />}
                                   onClick={() => {
                                     setCardIndex(cardIndex + 1);
+                                    GenerateColor()
                                   }}
                                 >
                                   Next
@@ -568,13 +606,13 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module }) => {
                                     Activity
                                   </Button>
                                   <Link
-                                    href={`/${user}/module/harakat/${type}`}
+                                    href={`/${user}/module/harakat/${nextM}`}
                                   >
                                     <Button
                                       variant="contained"
                                       className="text-dark-purple bg-white"
                                     >
-                                      Back To Main Module
+                                      Next Module
                                     </Button>
                                   </Link>
                                 </>
@@ -588,7 +626,7 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module }) => {
                       <>
                         {cardIndex == ex.index ? (
                           <div className=" " style={{ width: "100%" }}>
-                            <div className="grid grid-cols-3   py-10 lg:px-20 border-2 bg-white border-gray-400 shadow-lg rounded-lg mb-5">
+                            <div className="grid grid-cols-3   py-10 lg:px-20 border-2  border-gray-400 shadow-lg rounded-lg mb-5" style={{backgroundColor: randomColor}}>
                               <div className="col-span-1 border-r-2 border-gray-400 ">
                                 <div className=" font-bold text-center lg:mx-10 py-10 lg:py-0  h-62 ">
                                   <img
@@ -620,6 +658,7 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module }) => {
                                   startIcon={<ArrowBackIcon />}
                                   onClick={() => {
                                     setCardIndex(cardIndex - 1);
+                                    GenerateColor()
                                   }}
                                 >
                                   Pre
@@ -632,6 +671,7 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module }) => {
                                   endIcon={<ArrowForwardIcon />}
                                   onClick={() => {
                                     setCardIndex(cardIndex + 1);
+                                    GenerateColor()
                                   }}
                                 >
                                   Next
@@ -646,13 +686,13 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module }) => {
                                     Activity
                                   </Button>
                                   <Link
-                                    href={`/${user}/module/harakat/${type}`}
+                                    href={`/${user}/module/harakat/${nextM}`}
                                   >
                                     <Button
                                       variant="contained"
                                       className="text-dark-purple bg-white"
                                     >
-                                      Back To Main Module
+                                      Next Module
                                     </Button>
                                   </Link>
                                 </>

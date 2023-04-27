@@ -12,6 +12,7 @@ import AudioButton from "@/components/Layout/elements/AudioBtn";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Fatahah from "@/components/src/img/arabic_fatha.png";
 import FilterFramesIcon from "@mui/icons-material/FilterFrames";
+import { useState } from "react";
 const singleLattersExamples = [
   {
     index: 0,
@@ -681,22 +682,31 @@ const Card = ({
   screen,
   nextUrl,
   type,
+  bgColor
 }) => {
   console.log("Card", word, initial, middle, final);
   return (
     <div className="w-full  ">
-      <div className=" w-full p-2 rounded-md  flex flex-row justify-between   pt-3">
+      <div className=" bg-white rounded-3xl w-full mt-5">
+      <div className=" w-full p-2 rounded-md  flex flex-row justify-between   pt-8">
         {/* <img src={logo.src} className="h-14" alt="" />{" "} */}
-        <h1 className="mx-2 text-white text-lg">
-          Module 2: How to Make words is Arabic
-        </h1>
+        
+        <h1
+            className="p-3 text-white bg-dark-purple rounded-lg text-lg  border-2 border-white"
+            style={{ marginLeft: -30, width: 600 }}
+          >
+             Module 2: How to Make words is Arabic
+            {/* <span className="p-2 bg-green-200 text-dark-purple rounded-md">
+            {props.name} " {props.symbol} "
+          </span> */}
+          </h1>
         <div>
           {user == "teacher" ? (
             <Link href={`/teacher/whiteboard`} className="">
               <IconButton
                 aria-label="delete"
                 size="large"
-                className="bg-white text-dark-purple hover:bg-gray-200"
+                className="bg-cyan-200 text-dark-purple hover:bg-gray-200"
               >
                 <FilterFramesIcon />
               </IconButton>
@@ -706,24 +716,23 @@ const Card = ({
           <Link href={`/${user}/module/harakat/${type}`} className="mx-5">
             <Button
               variant="contained"
-              className="bg-white text-dark-purple"
-              startIcon={<ArrowBackIcon />}
+              className="bg-cyan-200 text-dark-purple"
+              startIcon={<ArrowBackIcon />} 
             >
               Back To Main Module
             </Button>
           </Link>
         </div>
       </div>
-      <div className=" bg-white rounded-md w-full mt-5">
         <div className=" w-full p-5 md:grid-cols-4   ">
           <div className=" w-full bg-white rounded-md  sm:col-span-3 md:px-5 lg:px-14">
             <div className=" p-3 text-center ">
               {/* <h2 className="text-lg  "></h2> */}
 
               <div className=" mx-0 mt-5 lg:gap-12 gap-5 xl:gap-20 ">
-                <div className="">
-                  <div className="items-center w-full  overflow-hidden rounded border-2 shadow-lg min:h-fit  min:w-fit  my-16">
-                    <div className=" font-bold text-center bg-dark-purple text-white h-fit  ">
+                <div className=" ">
+                  <div className="items-center w-full bg-dark-purple overflow-hidden rounded-3xl border-2 shadow-lg min:h-fit  min:w-fit  my-16">
+                    <div className=" font-bold text-center  text-white h-80  " style={{backgroundColor: bgColor}}>
                       {middle ? (
                         <h2 className="text-7xl font-sans flex justify-center content-center pb-12 pt-10">
                           <span className="mx-10">{final}</span>
@@ -737,12 +746,12 @@ const Card = ({
                         </h2>
                       )}
                     </div>
-                    <div className="bg-slate-50 h-fit">
-                      <h2 className="text-8xl font-sans text-dark-purple flex justify-center pb-12 pt-10">
+                  </div>
+                    <div className="bg-slate-50 h-64 w-80 p-5 mx-auto rounded-3xl border-4 " style={{marginTop: -200, borderColor: bgColor}} >
+                      <h2 className="text-8xl font-sans  flex justify-center pb-12 pt-10" style={{color: bgColor}}>
                         {word}
                       </h2>
                     </div>
-                  </div>
                 </div>
               </div>
             </div>
@@ -771,6 +780,28 @@ export default function VerticalTabs({ wordType, user, type, nextUrl }) {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+  };
+
+  const [randomColor, setRandomColor] = useState("#ECABE1");
+
+  const GenerateColor = () => {
+    var colors = [
+      "#09DBDB",
+      "#FD5678",
+      "#ECABE1",
+      "#56C3F1",
+      "#05DBB4",
+      "#F56C40",
+      "#865658",
+      "#7fc254",
+      "#B780FE",
+      "#BD5DBF",
+      "#FF7C60",
+    ];
+
+    // selecting random color
+    setRandomColor(colors[Math.floor(Math.random() * colors.length)]),
+      console.log("random_color", randomColor);
   };
 
   console.log(type, "type");
@@ -807,6 +838,7 @@ export default function VerticalTabs({ wordType, user, type, nextUrl }) {
                     ? alphabate.kasaraWord
                     : alphabate.dammaWord
                 }
+                onClick={()=>GenerateColor()}
                 className={`lg:text-4xl text-3xl  py-3 px-0 m-3  w-60  text-white font-bold rounded-lg font-sans  focus:bg-cyan-400 border-2 border-emerald-200`}
                 {...a11yProps(alphabate.index)}
               />
@@ -833,6 +865,7 @@ export default function VerticalTabs({ wordType, user, type, nextUrl }) {
               style={{ width: "100%" }}
               value={value}
               index={alphabate.index}
+              
             >
               {type == "fatahah" ? (
                 <Card
@@ -844,6 +877,7 @@ export default function VerticalTabs({ wordType, user, type, nextUrl }) {
                   screen="double"
                   nextUrl={nextUrl}
                   type={type}
+                  bgColor={randomColor}
                 />
               ) : null}
               {type == "kasara" ? (
@@ -856,6 +890,7 @@ export default function VerticalTabs({ wordType, user, type, nextUrl }) {
                   screen="double"
                   nextUrl={nextUrl}
                   type={type}
+                  bgColor={randomColor}
                 />
               ) : null}
               {type == "damma" ? (
@@ -868,6 +903,7 @@ export default function VerticalTabs({ wordType, user, type, nextUrl }) {
                   screen="double"
                   nextUrl={nextUrl}
                   type={type}
+                  bgColor={randomColor}
                 />
               ) : null}
             </TabPanel>
@@ -903,6 +939,9 @@ export default function VerticalTabs({ wordType, user, type, nextUrl }) {
                     ? alphabate.kasaraWord
                     : alphabate.dammaWord
                 }
+                onClick={() => {
+                   GenerateColor()
+                }}
                 className={`lg:text-4xl text-3xl  py-3 px-0 m-3  w-60  text-white font-bold rounded-lg font-sans  focus:bg-cyan-400 border-2 border-emerald-200`}
                 {...a11yProps(alphabate.index)}
               />
@@ -925,6 +964,7 @@ export default function VerticalTabs({ wordType, user, type, nextUrl }) {
                   screen="double"
                   nextUrl={nextUrl}
                   type={type}
+                  bgColor={randomColor}
                 />
               ) : null}
               {type == "kasara" ? (

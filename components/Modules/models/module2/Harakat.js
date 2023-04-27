@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -323,13 +323,27 @@ function a11yProps(index) {
   };
 }
 
-const LetterCardL = ({ label, name, audioUrl, harakatType }) => {
+// Array containing colors
+// var colors = ["#000", "#004042", "#035124", "#043f38", "#865658", "#7fc254"];
+
+// // selecting random color
+// var random_color = colors[Math.floor(Math.random() * colors.length)];
+
+// var x = document.getElementById('pick');
+// x.style.color = random_color;
+
+const LetterCardL = ({ label, name, audioUrl, harakatType, randomColor }) => {
   console.log("Harkat", harakatType);
   console.log("Harakat Details", label, "label");
+  console.log("randomColor", randomColor);
+
   return (
     <div className="items-center w-full  overflow-hidden rounded border-2 shadow-lg min:h-fit justify-cente min:w-fit  my-16">
       {harakatType != "kasara" ? (
-        <div className=" font-bold text-center bg-dark-purple text-white h-72   content-center ">
+        <div
+          className=" font-bold text-center  text-white h-72   content-center "
+          style={{ backgroundColor: randomColor }}
+        >
           <img
             src={Fatahah.src}
             className="w-0 mx-auto mb-0 flex pt-10"
@@ -364,17 +378,20 @@ const LetterCardL = ({ label, name, audioUrl, harakatType }) => {
     </div>
   );
 };
-const LetterCardR = ({ label, name, audioUrl, harakatType }) => {
+const LetterCardR = ({ label, name, audioUrl, harakatType, randomColor }) => {
   console.log(label, "label");
   return (
     <div className="items-center w-full  overflow-hidden border-2 rounded shadow-lg min:h-fit justify-cente min:w-fit  my-16">
       {harakatType == "fatahah" ? (
-        <div className=" font-bold text-center text-dark-purple  h-72  justify-center content-center w-full">
+        <div
+          className=" font-bold text-center  text-white h-72   content-center "
+          style={{ backgroundColor: randomColor }}
+        >
           <img
             src={Fatahah.src}
             className="w-20 mx-auto mb-0 flex pt-10"
             alt=""
-            style={{ filter: "opacity(50%)", color: "purple" }}
+            style={{ filter: "invert(100%)", color: "purple" }}
           />
           <h2 className="text-9xl font-sans flex justify-center content-center pb-5 ">
             {label}
@@ -496,6 +513,8 @@ const Card = ({
   user,
   nextUrl,
   harakatType,
+  randomColorL,
+  randomColorR,
 }) => {
   const [assignment, setAssignment] = useState([]);
   const [activityPath, setActivityPath] = useState();
@@ -521,7 +540,6 @@ const Card = ({
           setActivityPath("match");
         }
       }
-      
     };
     fetchAssignment();
   }, [harakatType]);
@@ -550,9 +568,12 @@ const Card = ({
         <div>
           {user == "teacher" ? (
             <Link href={`/teacher/whiteboard`} className="">
-              
-              <IconButton aria-label="delete" size="large" className="bg-white text-dark-purple hover:bg-gray-200">
-                <FilterFramesIcon  />
+              <IconButton
+                aria-label="delete"
+                size="large"
+                className="bg-white text-dark-purple hover:bg-gray-200"
+              >
+                <FilterFramesIcon />
               </IconButton>
             </Link>
           ) : null}
@@ -581,6 +602,7 @@ const Card = ({
                     name={nameL}
                     audioUrl={audioR}
                     harakatType={harakatType}
+                    randomColor={randomColorL}
                   />
                 </div>
                 <div className="col-span-1">
@@ -589,6 +611,7 @@ const Card = ({
                     name={nameR}
                     audioUrl={audioR}
                     harakatType={harakatType}
+                    randomColor={randomColorR}
                   />
                 </div>
                 <div className="col-span-2 lg:col-span-1">
@@ -657,14 +680,42 @@ const Card = ({
 };
 
 export default function VerticalTabs(props) {
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setValue(0);
   }, []);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+  };
+
+  // const colorGenerate =()=> {
+
+  //   var colors = [
+  //     "#000",
+  //     "#004042",
+  //     "#035124",
+  //     "#043f38",
+  //     "#865658",
+  //     "#7fc254",
+  //   ];
+
+  //   // selecting random color
+  //   var random_color = colors[Math.floor(Math.random() * colors.length)];
+
+  //   console.log("random_color",random_color)
+
+  // }
+
+  const [randomColorL, setRandomColorL] = useState("#035124");
+  const [randomColoR, setRandomColorR] = useState("#7fc254");
+
+  const bgStyle = {
+    color: "blue",
+    ":focus": {
+      backgroundColor: randomColorL,
+    },
   };
 
   return (
@@ -691,8 +742,29 @@ export default function VerticalTabs(props) {
         {Alphabates.map((alphabate) => (
           <Tab
             label={alphabate.letter}
+            onClick={() => {
+              var colors = [
+                "#000",
+                "#004042",
+                "#035124",
+                "#043f38",
+                "#865658",
+                "#7fc254",
+              ];
+
+              // selecting random color
+              setRandomColorL(
+                colors[Math.floor(Math.random() * colors.length)]
+              ),
+                setRandomColorR(
+                  colors[Math.floor(Math.random() * colors.length)]
+                ),
+                console.log("random_colorL", randomColorL);
+              console.log("random_colorR", randomColoR);
+            }}
             className={`lg:text-4xl text-3xl  py-3 px-0 m-3  w-60  text-white font-bold rounded-lg font-sans  focus:bg-cyan-400 border-2 border-emerald-200`}
             {...a11yProps(alphabate.index)}
+            // style={bgStyle}
           />
         ))}
         <p className={`w-80`} />
@@ -716,6 +788,8 @@ export default function VerticalTabs(props) {
             user={props.user}
             nextUrl={props.nextUrl}
             harakatType={props.harakatType}
+            randomColorL={randomColorL}
+            randomColorR={randomColoR}
           />
         </TabPanel>
       ))}
