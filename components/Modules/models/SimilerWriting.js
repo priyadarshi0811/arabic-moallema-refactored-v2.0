@@ -14,7 +14,6 @@ import { useState } from "react";
 import FilterFramesIcon from "@mui/icons-material/FilterFrames";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
-
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -50,7 +49,7 @@ function a11yProps(index) {
 
 const LetterCard = ({ label, name, audioUrl, bg }) => {
   const divStyles = {
-    boxShadow: 'inset 0 0 10px rgba(0,2,1,0.4)',
+    boxShadow: "inset 0 0 10px rgba(0,2,1,0.4)",
     backgroundColor: bg,
   };
   return (
@@ -60,13 +59,13 @@ const LetterCard = ({ label, name, audioUrl, bg }) => {
         style={divStyles}
       >
         <h2 className="text-9xl font-sans flex justify-center content-center py-8 ">
-          {label} 
+          {label}
         </h2>
         <div className="mt-10">
-        <AudioButton url={audioUrl} size='large' />
+          <AudioButton url={audioUrl} size="large" />
         </div>
       </div>
-      
+
       {/* <div className="bg-slate-50 h-fit">
         <div></div>
 
@@ -91,14 +90,14 @@ const Card = ({
   audioL,
   user,
   bgL,
-  bgR
+  bgR,
 }) => {
   return (
     <div className="w-full  ">
       <div className=" bg-white rounded-3xl w-full mt-5 ml-5">
         <div className=" w-full p-2 rounded-3xl  flex flex-row justify-between pt-6">
-        {/* <img src={logo.src} className="h-14" alt="" />{" "} */}
-        <h1
+          {/* <img src={logo.src} className="h-14" alt="" />{" "} */}
+          <h1
             className="p-3 text-white bg-dark-purple rounded-lg text-lg  border-2 border-white"
             style={{ marginLeft: -40, width: 600 }}
           >
@@ -128,12 +127,12 @@ const Card = ({
               </Button>
             </Link>
           </div>
-      </div>
+        </div>
         <div className=" w-full p-5 md:grid-cols-4 ">
           <div className=" w-full bg-white rounded-md  sm:col-span-3 md:px-5 lg:px-14">
             <div className="h-full p-3 text-center">
               <div className="grid grid-cols-1 gap-5 ">
-              <div className="grid grid-cols-7 mx-0 mt-5 gap-10">
+                <div className="grid grid-cols-7 mx-0 mt-5 gap-10">
                   <div className="col-span-3">
                     <LetterCard
                       label={labelR}
@@ -143,11 +142,10 @@ const Card = ({
                     />
                   </div>
                   <div className="h-full flex-1 align-middle self-center ">
-                    <div className="my-auto self-center mt-48" >
-
-                    <IconButton aria-label="delete" size="large"   >
-                      <ArrowForwardIcon fontSize="inherit" color={bgL} />
-                    </IconButton>
+                    <div className="my-auto self-center mt-48">
+                      <IconButton aria-label="delete" size="large">
+                        <ArrowForwardIcon fontSize="inherit" color={bgL} />
+                      </IconButton>
                     </div>
                   </div>
                   <div className="col-span-3">
@@ -186,6 +184,7 @@ export default function VerticalTabs(props) {
 
   const [randomColorL, setRandomColorL] = useState("#56C3F1");
   const [randomColorR, setRandomColorR] = useState("#09DBDB");
+  const [selectedOption, setSelectedOption] = useState(0);
 
   const bgStyle = {
     color: "blue",
@@ -194,26 +193,56 @@ export default function VerticalTabs(props) {
     },
   };
 
-  const GenerateColor = () => {
+  const GenerateColor = (index) => {
     var colors = [
-        "#09DBDB",
-        "#FD5678",
-        "#ECABE1",
-        "#56C3F1",
-        "#05DBB4",
-        "#F56C40",
-        "#865658",
-        "#7fc254",
-        "#B780FE",
-        "#BD5DBF",
-        "#FF7C60",
-      ];
+      "#09DBDB",
+      "#FD5678",
+      "#ECABE1",
+      "#56C3F1",
+      "#05DBB4",
+      "#F56C40",
+      "#865658",
+      "#7fc254",
+      "#B780FE",
+      "#BD5DBF",
+      "#FF7C60",
+    ];
+
+    setSelectedOption(index);
 
     // selecting random color
     setRandomColorL(colors[Math.floor(Math.random() * colors.length)]),
       setRandomColorR(colors[Math.floor(Math.random() * colors.length)]),
       console.log("random_colorL", randomColorL);
     console.log("random_colorR", randomColorR);
+  };
+
+  const sliderCardSelected = {
+    fontSize: 40,
+    fontFamily:
+      'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
+    color: "white",
+    borderWidth: 2,
+    borderColor: "white",
+    margin: 10,
+    backgroundColor: randomColorR,   
+    borderRadius: 15,
+  }
+  const sliderCard = {
+    fontSize: 40,
+    fontFamily:
+      'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
+    color: "white",
+    borderWidth: 2,
+    borderColor: "white",
+    margin: 10,
+    // backgroundColor: randomColorR,   
+    borderRadius: 15,
+  }
+
+  const handleSliderCardClick = (index) => {
+    setSelectedOption(index);
+    console.log(selectedOption, "selectedOpt");
   };
 
   return (
@@ -238,99 +267,99 @@ export default function VerticalTabs(props) {
         className="bg-dark-purple text-white"
       >
         <Tab
-          onClick={() => GenerateColor()}
+          onClick={() => {GenerateColor(0)}}
           label="بــ - یــ"
-          className={`lg:text-4xl text-3xl  py-3 px-0 m-3  w-60 text-white font-bold rounded-lg font-sans  focus:bg-cyan-400 border-2 border-emerald-200`}
+          // className={`lg:text-4xl text-3xl  py-3 px-0 m-3  w-60 text-white font-bold rounded-lg font-sans  focus:bg-cyan-400 border-2 border-emerald-200`}
+          style={selectedOption == 0 ? sliderCardSelected : sliderCard}
           
           {...a11yProps(0)}
         />
         <Tab
-          onClick={() => GenerateColor()}
+          onClick={() => {GenerateColor(1)}}
           label="نـــ - تـــ"
-          className={`lg:text-4xl text-3xl  py-3 px-0 m-3 w-60 text-white font-bold rounded-lg font-sans  focus:bg-cyan-400 border-2 border-emerald-200`}
+          style={selectedOption == 1  ? sliderCardSelected : sliderCard}
           {...a11yProps(1)}
         />
         <Tab
-          onClick={() => GenerateColor()}
+          onClick={() => {GenerateColor(2)}}
           label="ثــ  -شـــ"
-          className={`lg:text-4xl text-3xl  py-3 px-0 m-3 w-60 text-white font-bold rounded-lg font-sans  focus:bg-cyan-400 border-2 border-emerald-200`}
+          style={selectedOption == 2 ? sliderCardSelected : sliderCard}
           {...a11yProps(2)}
         />
         <Tab
-          onClick={() => GenerateColor()}
+          onClick={() => {GenerateColor(3)}}
           label="جــ. -خـــ"
-          className={`lg:text-4xl text-3xl  py-3 px-0 m-3 w-60 text-white font-bold rounded-lg font-sans  focus:bg-cyan-400 border-2 border-emerald-200`}
+          style={selectedOption == 3 ? sliderCardSelected : sliderCard}
           {...a11yProps(3)}
         />
         <Tab
-          onClick={() => GenerateColor()}
+          onClick={() => GenerateColor(4)}
           label="ر-ز"
-          className={`lg:text-4xl text-3xl  py-3 px-0 m-3 w-60 text-white font-bold rounded-lg font-sans  focus:bg-cyan-400 border-2 border-emerald-200`}
+          style={selectedOption == 4 ? sliderCardSelected : sliderCard}
           {...a11yProps(4)}
         />
         <Tab
-          onClick={() => GenerateColor()}
+          onClick={() => GenerateColor(5)}
           label="د-ذ"
-          className={`lg:text-4xl text-3xl  py-3 px-0 m-3 w-60 text-white font-bold rounded-lg font-sans  focus:bg-cyan-400 border-2 border-emerald-200`}
+          style={selectedOption == 5 ? sliderCardSelected : sliderCard}
           {...a11yProps(5)}
         />
         <Tab
-          onClick={() => GenerateColor()}
+          onClick={() => GenerateColor(6)}
           label="ضــ  -صــ"
-          className={`lg:text-4xl text-3xl  py-3 px-0 m-3 w-60 text-white font-bold rounded-lg font-sans  focus:bg-cyan-400 border-2 border-emerald-200`}
+          style={selectedOption == 6 ? sliderCardSelected : sliderCard}
           {...a11yProps(6)}
         />
         <Tab
-          onClick={() => GenerateColor()}
+          onClick={() => GenerateColor(7)}
           label="طــ - ظــ"
-          className={`lg:text-4xl text-3xl  py-3 px-0 m-3 w-60 text-white font-bold rounded-lg font-sans  focus:bg-cyan-400 border-2 border-emerald-200`}
+          style={selectedOption == 7 ? sliderCardSelected : sliderCard}
           {...a11yProps(8)}
         />
         <Tab
-          onClick={() => GenerateColor()}
+          onClick={() => GenerateColor(8)}
           label="ـــفــ. - ــقـــ"
-          className={`lg:text-4xl text-3xl  py-3 px-0 m-3 w-60 text-white font-bold rounded-lg font-sans  focus:bg-cyan-400 border-2 border-emerald-200`}
+          style={selectedOption == 8 ? sliderCardSelected : sliderCard}
           {...a11yProps(9)}
         />
         <Tab
-          onClick={() => GenerateColor()}
+          onClick={() => GenerateColor(9)}
           label="ل-ك"
-          className={`lg:text-4xl text-3xl  py-3 px-0 m-3 w-60 text-white font-bold rounded-lg font-sans  focus:bg-cyan-400 border-2 border-emerald-200`}
+          style={selectedOption == 9 ? sliderCardSelected : sliderCard}
           {...a11yProps(10)}
         />
         <Tab
-          onClick={() => GenerateColor()}
+          onClick={() => GenerateColor(10)}
           label="ه-ة"
-          className={`lg:text-4xl text-3xl text-wrap py-3 px-0 m-3 w-60 text-white font-bold rounded-lg font-sans  focus:bg-cyan-400 border-2 border-emerald-200`}
+          style={selectedOption == 10 ? sliderCardSelected : sliderCard}
           {...a11yProps(11)}
         />
         <Tab
-          onClick={() => GenerateColor()}
+          onClick={() => GenerateColor(11)}
           label="  ــه - ـة"
-          className={`lg:text-4xl text-3xl text-wrap py-3 px-0 m-3 w-60 text-white font-bold rounded-lg font-sans  focus:bg-cyan-400 border-2 border-emerald-200`}
+          style={selectedOption == 11 ? sliderCardSelected : sliderCard}
           {...a11yProps(12)}
         />
         <Tab
-          onClick={() => GenerateColor()}
+          onClick={() => GenerateColor(12)}
           label="أ - ــلــ"
-          className={`lg:text-4xl text-3xl  py-3 px-0 m-3 w-60 text-white font-bold rounded-lg font-sans  focus:bg-cyan-400 border-2 border-emerald-200`}
+          style={selectedOption == 12 ? sliderCardSelected : sliderCard}
           {...a11yProps(13)}
         />
         <Tab
-          onClick={() => GenerateColor()}
+          onClick={() => GenerateColor(13)}
           label="نــ -  ــذ"
-          className={`lg:text-4xl text-3xl  py-3 px-0 m-3 w-60 text-white font-bold rounded-lg font-sans  focus:bg-cyan-400 border-2 border-emerald-200`}
+          style={selectedOption == 13 ? sliderCardSelected : sliderCard}
           {...a11yProps(14)}
         />
         <Tab
-          onClick={() => GenerateColor()}
+          onClick={() => GenerateColor(14)}
           label="ـــغــــ   -    
           ـــفـــــ"
-          className={`lg:text-4xl text-3xl  py-3 px-0 m-3 w-60 text-white font-bold rounded-lg font-sans  focus:bg-cyan-400 border-2 border-emerald-200`}
+          style={selectedOption == 14 ? sliderCardSelected : sliderCard}
           {...a11yProps(15)}
         />
-                <p className={`w-80`} />
-
+        <p className={`w-80`} />
       </Tabs>
       <TabPanel style={{ width: "100%" }} value={value} index={0}>
         <Card
