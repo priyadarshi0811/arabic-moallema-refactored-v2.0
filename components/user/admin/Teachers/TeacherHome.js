@@ -21,6 +21,7 @@ import {
 } from "@/backend/Batches/BatchesDB";
 import BatchContext from "@/components/Context/store/batch-context";
 import SuccessPrompt from "@/components/Layout/elements/SuccessPrompt";
+import WarningCard from "@/components/Layout/card/WarningCard";
 
 const style = {
   position: "absolute",
@@ -39,6 +40,7 @@ const TeacherHome = () => {
   const [filteredTeacher, setfilteredTeacher] = React.useState([]);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [warning, setWarning] = React.useState(false);
 
   const authCtx = useContext(AuthContext);
   const batchCtx = useContext(BatchContext);
@@ -83,6 +85,14 @@ const TeacherHome = () => {
 
   const dataToDisplay =
     filteredTeacher.length > 0 ? filteredTeacher : authCtx.teachersList;
+
+  useEffect(() => {
+    if (dataToDisplay && dataToDisplay.length > 0) {
+      setWarning(false);
+    } else {
+      setWarning(true);
+    }
+  }, [dataToDisplay]);
 
   return (
     <div
@@ -130,6 +140,9 @@ const TeacherHome = () => {
               </div>
             </div>
             <Divider variant="middle" />
+            {warning && (
+              <WarningCard title="No teacher is added to the application" />
+            )}
           </div>
           {batchCtx.submitted && !batchCtx.submittedDelete && (
             <SuccessPrompt

@@ -127,3 +127,26 @@ export const fetchSubModulesCreatedActivity = async () => {
   }
   return data;
 };
+
+export const checkAssignmentSubmitionStatus = async (
+  module,
+  subModule,
+  batch,
+  student_id
+) => {
+  const { data, error } = await supabase
+    .from("assignments_exp_duplicate")
+    .select("*")
+    .match({
+      module_name: module,
+      sub_module: subModule,
+      batch_id: batch,
+      student_id: student_id,
+    });
+
+  if (error) {
+    console.log("Error creating Activity Log: ", error);
+    return null;
+  }
+  return data;
+};
