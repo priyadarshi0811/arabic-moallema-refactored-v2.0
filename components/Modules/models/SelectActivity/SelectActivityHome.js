@@ -106,6 +106,7 @@ const SelectActivityHome = ({ subModule, module, activityIndex }) => {
   console.log("user type: ", userType);
   console.log("currentIndex: ", currentIndex);
 
+  console.log(audioUrl);
   const handleNext = () => {
     setCurrentIndex(+currentIndex + 1);
 

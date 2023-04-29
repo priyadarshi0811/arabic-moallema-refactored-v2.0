@@ -9,11 +9,14 @@ import { fetchLiveClassData } from "@/backend/LiveClass/LiveClassDB";
 import { fetchBatchesData } from "@/backend/Announcement/AnnouncementDB";
 import AuthContext from "@/components/Context/store/auth-context";
 import { fetchBatcheIdBasedOnBatchName } from "@/backend/Batches/BatchesDB";
+import { useEffect } from "react";
+import WarningCard from "@/components/Layout/card/WarningCard";
 
 const LiveClassHome = () => {
   const [liveClass, setLiveClass] = React.useState([]);
   const [filteredBatch, setFilteredBatch] = React.useState([]);
   const [error, setError] = React.useState();
+  const [warning, setWarning] = React.useState(false);
 
   const authCtx = useContext(AuthContext);
 
@@ -33,21 +36,14 @@ const LiveClassHome = () => {
     fetchBatches();
   }, []);
 
-  console.log(authCtx.batchesList);
-
   //get the filtered value
   const handleSelectedItem = async (batchData) => {
-    console.log("batchData", batchData);
-
     let batchId;
-    console.log("batchData", batchData);
 
     const idData = await fetchBatcheIdBasedOnBatchName(batchData);
     if (idData[0]) {
       batchId = idData[0].batch_id;
     }
-
-    console.log(batchId);
 
     let selectedBatch = liveClass.filter((batch) => batch.batch_id === batchId);
     if (batchData) {
@@ -58,7 +54,14 @@ const LiveClassHome = () => {
 
   const dataToDisplay = filteredBatch.length === 0 ? liveClass : filteredBatch;
   console.log(dataToDisplay);
-  console.log("okl");
+
+  useEffect(() => {
+    if (dataToDisplay && dataToDisplay.length > 0) {
+      setWarning(false);
+    } else {
+      setWarning(true);
+    }
+  }, [dataToDisplay]);
 
   return (
     <div
@@ -94,6 +97,7 @@ const LiveClassHome = () => {
               </div>
             </div>
             <Divider variant="middle" />
+            {warning && <WarningCard title="No live classes going on" />}
           </div>
           {error && (
             <p className="text-red-500 justify-center items-center flex text-xl font-bold">

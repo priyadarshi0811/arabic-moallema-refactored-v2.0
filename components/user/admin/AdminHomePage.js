@@ -15,6 +15,7 @@ import AuthContext from "@/components/Context/store/auth-context";
 import BatchContext from "@/components/Context/store/batch-context";
 import SuccessPrompt from "@/components/Layout/elements/SuccessPrompt";
 import Spinner from "@/components/Layout/spinner/Spinner";
+import WarningCard from "@/components/Layout/card/WarningCard";
 
 const style = {
   position: "absolute",
@@ -31,6 +32,7 @@ const style = {
 const AdminHomePage = () => {
   const [open, setOpen] = React.useState(false);
   const [filteredBatch, setFilteredBatch] = React.useState([]);
+  const [warning, setWarning] = React.useState(false);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -58,6 +60,14 @@ const AdminHomePage = () => {
 
   const dataToDisplay =
     filteredBatch.length === 0 ? auth.batchesList : filteredBatch;
+
+  useEffect(() => {
+    if (dataToDisplay && dataToDisplay.length > 0) {
+      setWarning(false);
+    } else {
+      setWarning(true);
+    }
+  }, [dataToDisplay]);
 
   return (
     <div
@@ -105,6 +115,7 @@ const AdminHomePage = () => {
               </div>
             </div>
             <Divider variant="middle" />
+            {warning && <WarningCard title="No batch is been created" />}
           </div>
           <div className="m-0 p-10 w-full h-fit">
             {batchCtx.submitted && (

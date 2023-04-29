@@ -60,7 +60,7 @@ const Modules_Option = {
   ],
   harakat: [
     { id: 1, title: "fatahah" },
-    { id: 2, title: "Dumma" },
+    { id: 2, title: "damma" },
     { id: 3, title: "kasara" },
   ],
 };

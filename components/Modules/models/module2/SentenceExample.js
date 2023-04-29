@@ -8,13 +8,26 @@ import FilterFramesIcon from "@mui/icons-material/FilterFrames";
 
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { fetchAssignmentForLetter } from "@/backend/Assignment/FetchAssignmentDB";
+import {
+  checkAssignmentSubmitionStatus,
+  fetchAssignmentForLetter,
+} from "@/backend/Assignment/FetchAssignmentDB";
 import BatchContext from "@/components/Context/store/batch-context";
 import { fetchBatcheIdBasedOnBatchName } from "@/backend/Batches/BatchesDB";
 import {
   addActivityStartStatus,
   checkActivityStartStatus,
 } from "@/backend/ActivityStartLog/SetActivityLogDB";
+import AuthContext from "@/components/Context/store/auth-context";
+import { fetchStudentIdBasedOnEmail } from "@/backend/Students/StudentDB";
+
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+} from "@mui/material";
 
 const SentenceMaking = ({ user, screenNo, nextUrl, type, module, nextM }) => {
   const [cardIndex, setCardIndex] = useState(0);
@@ -24,8 +37,51 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module, nextM }) => {
   const [batchId, setBatchId] = useState();
   const [isStarted, setIsStarted] = useState();
 
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [showSubmissionWarning, setShowSubmissionWarning] = useState(false);
+  const [studentId, setStudentId] = useState();
+
   const { myArray, setMyArray } = useContext(BatchContext);
   console.log(myArray);
+
+  const authCtx = useContext(AuthContext);
+  const userEmail = authCtx.userEmail;
+
+  useEffect(() => {
+    const getId = async () => {
+      if (userEmail) {
+        const data = await fetchStudentIdBasedOnEmail(userEmail);
+        if (data[0]) {
+          setStudentId(data[0].student_id);
+        }
+      }
+    };
+    getId();
+  }, [userEmail]);
+
+  useEffect(() => {
+    const getSubmittedAssignment = async () => {
+      if (batchId && "harakat" && type && studentId) {
+        const data = await checkAssignmentSubmitionStatus(
+          "harakat",
+          type,
+          batchId,
+          studentId
+        );
+        if (data) {
+          if (data[0]) {
+            setIsSubmitted(true);
+          } else {
+            setIsSubmitted(false);
+          }
+          console.log(data);
+        }
+      }
+    };
+    getSubmittedAssignment();
+  }, [batchId, type, studentId]);
+
+  console.log(isSubmitted);
 
   useEffect(() => {
     const getId = async () => {
@@ -39,14 +95,20 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module, nextM }) => {
     getId();
   }, []);
 
+  console.log("batch id: ", batchId);
+  console.log("module : ", module);
+  console.log("type:  ", type);
+
   useEffect(() => {
+    console.log("is there");
     const getStarted = async () => {
       let data;
-      if (type && batchId && module) {
+      if (type && batchId) {
         console.log("in");
-        data = await checkActivityStartStatus(module, type, batchId);
+        data = await checkActivityStartStatus("harakat", type, batchId);
         console.log(data[0]);
         if (data) {
+          console.log("in data");
           if (data[0]) {
             setIsStarted(true);
           }
@@ -56,7 +118,7 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module, nextM }) => {
       }
     };
     getStarted();
-  }, [type, batchId, module]);
+  }, [type, batchId]);
 
   console.log("is started: ", isStarted);
 
@@ -91,19 +153,23 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module, nextM }) => {
       }
     }
 
+    if (isSubmitted) {
+      setShowSubmissionWarning(true);
+    }
+
     if (user === "student" && isStarted === undefined) {
       console.log("in");
       window.location.href = `/${user}/activity/tracing/alphabets/${type}/${0}`;
       return;
     }
 
-    if (activityPath && type === "fatha") {
-      window.location.href = `/${user}/activity/${activityPath}/harakat/fatha/${0}`;
+    if (activityPath && type && !isSubmitted) {
+      setShowSubmissionWarning(false);
+
+      console.log("in type");
+      window.location.href = `/${user}/activity/${activityPath}/harakat/${type}/${0}`;
     }
-    if (activityPath && type === "kasra") {
-      console.log("inside kasra");
-      window.location.href = `/${user}/activity/${activityPath}/harakat/kasra/${0}`;
-    }
+
     console.log(activityPath);
   };
 
@@ -397,7 +463,7 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module, nextM }) => {
   };
 
   const divStyles = {
-    boxShadow: 'inset 0 0 10px rgba(0,2,1,0.4)',
+    boxShadow: "inset 0 0 10px rgba(0,2,1,0.4)",
     backgroundColor: randomColor,
   };
 
@@ -415,9 +481,27 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module, nextM }) => {
     >
       {" "}
       <div className="mx-16 rounded-3xl bg-white ">
-      <div className=" w-full p-5 rounded-md  flex flex-row justify-between   pt-10">
-      
-      <h1
+        <Dialog
+          open={showSubmissionWarning}
+          onClose={(e) => setShowSubmissionWarning(false)}
+        >
+          <DialogTitle>Assignment Already submitted</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              You have already submitted the assignment
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={(e) => setShowSubmissionWarning(false)}
+              color="primary"
+            >
+              Close
+            </Button>
+          </DialogActions>
+        </Dialog>
+        <div className=" w-full p-5 rounded-md  flex flex-row justify-between   pt-10">
+          <h1
             className="p-3 text-white bg-dark-purple rounded-lg text-lg  border-2 border-white"
             style={{ marginLeft: -60, width: 600 }}
           >
@@ -426,30 +510,30 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module, nextM }) => {
             {props.name} " {props.symbol} "
           </span> */}
           </h1>
-        <div>
-          {user == "teacher" ? (
-            <Link href={`/teacher/whiteboard`} className="">
-              <IconButton
-                aria-label="delete"
-                size="large"
-                className="bg-white text-dark-purple hover:bg-gray-200"
-              >
-                <FilterFramesIcon />
-              </IconButton>
-            </Link>
-          ) : null}
+          <div>
+            {user == "teacher" ? (
+              <Link href={`/teacher/whiteboard`} className="">
+                <IconButton
+                  aria-label="delete"
+                  size="large"
+                  className="bg-white text-dark-purple hover:bg-gray-200"
+                >
+                  <FilterFramesIcon />
+                </IconButton>
+              </Link>
+            ) : null}
 
-          <Link href={`/${user}/module/harakat/${type}`} className="mx-5">
-            <Button
-              variant="contained"
-              className="bg-white text-dark-purple"
-              startIcon={<ArrowBackIcon />}
-            >
-              Back To Main Module
-            </Button>
-          </Link>
+            <Link href={`/${user}/module/harakat/${type}`} className="mx-5">
+              <Button
+                variant="contained"
+                className="bg-white text-dark-purple"
+                startIcon={<ArrowBackIcon />}
+              >
+                Back To Main Module
+              </Button>
+            </Link>
+          </div>
         </div>
-      </div>
         <div className="w-full  ">
           <div className="  rounded-md w-full mt-5 ">
             <h1 className="text-3xl text-center pt-6 py-2 text-white">
@@ -463,7 +547,10 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module, nextM }) => {
                       <>
                         {cardIndex == ex.index ? (
                           <div className=" " style={{ width: "100%" }}>
-                            <div className="grid grid-cols-3   py-10 lg:px-20  shadow-lg rounded-lg mb-5" style={divStyles}>
+                            <div
+                              className="grid grid-cols-3   py-10 lg:px-20  shadow-lg rounded-lg mb-5"
+                              style={divStyles}
+                            >
                               <div className="col-span-1 border-r-2 border-white ">
                                 <div className=" font-bold text-center lg:mx-10 py-5 lg:py-0  h-62 border-8 border-gray-100 rounded-3xl bg-gray-100 ">
                                   <img
@@ -496,20 +583,105 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module, nextM }) => {
                                   startIcon={<ArrowBackIcon />}
                                   onClick={() => {
                                     setCardIndex(cardIndex - 1);
-                                     GenerateColor()
+                                    GenerateColor();
                                   }}
                                 >
                                   Pre
                                 </Button>
                               ) : null}
-                              {cardIndex < maxIndexfatha ? (
+                              {cardIndex < maxIndexfatah ? (
                                 <Button
                                   variant="contained"
                                   className="bg-white text-dark-purple"
                                   endIcon={<ArrowForwardIcon />}
                                   onClick={() => {
                                     setCardIndex(cardIndex + 1);
-                                    GenerateColor()
+                                    GenerateColor();
+                                  }}
+                                >
+                                  Next
+                                </Button>
+                              ) : (
+                                <>
+                                  <Button
+                                    onClick={setActivitySubmodule}
+                                    variant="contained"
+                                    className="text-dark-purple bg-white mr-3"
+                                  >
+                                    Activity
+                                  </Button>
+                                  <Link
+                                    href={`/${user}/module/harakat/${type}`}
+                                  >
+                                    <Button
+                                      variant="contained"
+                                      className="text-dark-purple bg-white"
+                                    >
+                                      Back To Main Module
+                                    </Button>
+                                  </Link>
+                                </>
+                              )}
+                            </div>
+                          </div>
+                        ) : null}
+                      </>
+                    ))
+                  : type == "kasara"
+                  ? KasaraSentenceExamples.map((ex) => (
+                      <>
+                        {cardIndex == ex.index ? (
+                          <div className=" " style={{ width: "100%" }}>
+                            <div
+                              className="grid grid-cols-3   py-10 lg:px-20 border-2  border-gray-400 shadow-lg rounded-lg mb-5"
+                              style={{ backgroundColor: randomColor }}
+                            >
+                              <div className="col-span-1 border-r-2 border-gray-400 ">
+                                <div className=" font-bold text-center lg:mx-10 py-10 lg:py-0  h-62 ">
+                                  <img
+                                    src={
+                                      ex.image ||
+                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEaXaItHR4BIfzC3jGoYxHBEje9KVIyHmzYA&usqp=CAU  "
+                                    }
+                                    alt=""
+                                    className="w-full  "
+                                  />
+                                </div>
+                              </div>
+                              <div className="col-span-2">
+                                <div className=" h-fit p-10 ">
+                                  <h2 className="text-5xl font-sans text-dark-purple  py-8">
+                                    {ex.word}
+                                  </h2>
+                                  <h2 className="text-3xl font-sans text-dark-purple  pb-8">
+                                    {ex.meaning}
+                                  </h2>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="w-full my-3 flex justify-center">
+                              {cardIndex > 0 ? (
+                                <Button
+                                  variant="contained"
+                                  className="bg-white text-dark-purple mr-3"
+                                  startIcon={<ArrowBackIcon />}
+                                  onClick={() => {
+                                    setCardIndex(cardIndex - 1);
+                                    GenerateColor();
+                                  }}
+                                >
+                                  Pre
+                                </Button>
+                              ) : null}
+                              {cardIndex < maxIndexKasara ? (
+                                <Button
+                                  variant="contained"
+                                  className="bg-white text-dark-purple"
+                                  endIcon={<ArrowForwardIcon />}
+                                  onClick={() => {
+                                    setCardIndex(cardIndex + 1);
+                                    GenerateColor();
                                   }}
                                 >
                                   Next
