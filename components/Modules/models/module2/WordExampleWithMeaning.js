@@ -20,7 +20,7 @@ import MUIMiniCard from "@/components/Layout/card/MUIMiniCard";
 import wordExampleForHarakat from "@/components/Modules/data/wordExampleForHarakat";
 import FilterFramesIcon from "@mui/icons-material/FilterFrames";
 
-const fatahahWordExapmle = [
+const fathaWordExapmle = [
   {
     index: 0,
     image:
@@ -174,7 +174,7 @@ const fatahahWordExapmle = [
     meaning: "rose",
   },
 ];
-const kasaraWordExapmle = [
+const kasraWordExapmle = [
   {
     index: 0,
     image:
@@ -522,8 +522,8 @@ const HowToRead = ({ type, nextUrl, user }) => {
                 {/* Custome Cards  */}
 
                 {console.log(type)}
-                {type === "fatahah"
-                  ? fatahahWordExapmle.map((ex) => (
+                {type === "fatha"
+                  ? fathaWordExapmle.map((ex) => (
                       <div
                         className=" flex my-5 mx-20"
                         style={{ width: "20vw" }}
@@ -582,7 +582,7 @@ const HowToRead = ({ type, nextUrl, user }) => {
                         </div>
                       </div>
                     ))
-                  : kasaraWordExapmle.map((ex) => (
+                  : kasraWordExapmle.map((ex) => (
                       <div
                         className=" flex my-5 mx-20"
                         style={{ width: "20vw" }}

@@ -10,21 +10,21 @@ import { Button, IconButton } from "@mui/material";
 import GeneralCard from "@/components/Layout/card/GeneralCard";
 import AudioButton from "@/components/Layout/elements/AudioBtn";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import Fatahah from "@/components/src/img/arabic_fatha.png";
+import fatha from "@/components/src/img/arabic_fatha.png";
 import FilterFramesIcon from "@mui/icons-material/FilterFrames";
 import { useState } from "react";
 const singleLattersExamples = [
   {
     index: 0,
-    fatahahInitial: "أَ",
-    fatahahMiddle: "مَـ",
-    fatahahFinal: "ـرَ",
-    fatahahWord: "أَمَرَ",
+    fathaInitial: "أَ",
+    fathaMiddle: "مَـ",
+    fathaFinal: "ـرَ",
+    fathaWord: "أَمَرَ",
 
-    kasaraFinal: "ــسَ",
-    kasaraMiddle: "ئِـ",
-    kasaraInitial: "يَـ",
-    kasaraWord: "يَئِسَ",
+    kasraFinal: "ــسَ",
+    kasraMiddle: "ئِـ",
+    kasraInitial: "يَـ",
+    kasraWord: "يَئِسَ",
 
     dammaFinal: "  نَ",
     dammaMiddle: "ذِ",
@@ -33,15 +33,15 @@ const singleLattersExamples = [
   },
   {
     index: 1,
-    fatahahInitial: "سَـ",
-    fatahahMiddle: "ـأَ",
-    fatahahFinal: "لَ",
-    fatahahWord: "سَأَلَ",
+    fathaInitial: "سَـ",
+    fathaMiddle: "ـأَ",
+    fathaFinal: "لَ",
+    fathaWord: "سَأَلَ",
 
-    kasaraFinal: "طَ",
-    kasaraMiddle: "ـبِـ",
-    kasaraInitial: "حَـ",
-    kasaraWord: "حَبِطَ",
+    kasraFinal: "طَ",
+    kasraMiddle: "ـبِـ",
+    kasraInitial: "حَـ",
+    kasraWord: "حَبِطَ",
 
     dammaFinal: "  تَ",
     dammaMiddle: "هِ",
@@ -50,15 +50,15 @@ const singleLattersExamples = [
   },
   {
     index: 2,
-    fatahahInitial: " لَـ ",
-    fatahahMiddle: "ـجـَ",
-    fatahahFinal: "أَ",
-    fatahahWord: "لـَـجَـأ",
+    fathaInitial: " لَـ ",
+    fathaMiddle: "ـجـَ",
+    fathaFinal: "أَ",
+    fathaWord: "لـَـجَـأ",
 
-    kasaraFinal: "ـهَ",
-    kasaraMiddle: "ـتِـ",
-    kasaraInitial: "عَـ",
-    kasaraWord: "عَتِهَ",
+    kasraFinal: "ـهَ",
+    kasraMiddle: "ـتِـ",
+    kasraInitial: "عَـ",
+    kasraWord: "عَتِهَ",
 
     dammaInitial: "تُ",
     dammaMiddle: "لِ",
@@ -67,15 +67,15 @@ const singleLattersExamples = [
   },
   {
     index: 3,
-    fatahahFinal: "ـشَ",
-    fatahahMiddle: "ـطَـ",
-    fatahahInitial: "بَـ",
-    fatahahWord: "بَطَشَ",
+    fathaFinal: "ـشَ",
+    fathaMiddle: "ـطَـ",
+    fathaInitial: "بَـ",
+    fathaWord: "بَطَشَ",
 
-    kasaraFinal: "ـقَ",
-    kasaraMiddle: "ثِـ",
-    kasaraInitial: "وَ",
-    kasaraWord: "وَثِقَ",
+    kasraFinal: "ـقَ",
+    kasraMiddle: "ثِـ",
+    kasraInitial: "وَ",
+    kasraWord: "وَثِقَ",
 
     dammaInitial: "ثُ",
     dammaMiddle: "قِ",
@@ -84,15 +84,15 @@ const singleLattersExamples = [
   },
   {
     index: 4,
-    fatahahFinal: "ـذَ",
-    fatahahMiddle: "ـبَـ",
-    fatahahInitial: "نَـ",
-    fatahahWord: "نَبَذَ",
+    fathaFinal: "ـذَ",
+    fathaMiddle: "ـبَـ",
+    fathaInitial: "نَـ",
+    fathaWord: "نَبَذَ",
 
-    kasaraFinal: "ـلَ",
-    kasaraMiddle: "جِـ",
-    kasaraInitial: "وَ",
-    kasaraWord: "وَجِلَ",
+    kasraFinal: "ـلَ",
+    kasraMiddle: "جِـ",
+    kasraInitial: "وَ",
+    kasraWord: "وَجِلَ",
 
     dammaInitial: "جُ",
     dammaMiddle: "مِ",
@@ -101,15 +101,15 @@ const singleLattersExamples = [
   },
   {
     index: 5,
-    fatahahFinal: "ـبَ",
-    fatahahMiddle: "ـقَـ",
-    fatahahInitial: "ثَـ",
-    fatahahWord: "ثَقَبَ",
+    fathaFinal: "ـبَ",
+    fathaMiddle: "ـقَـ",
+    fathaInitial: "ثَـ",
+    fathaWord: "ثَقَبَ",
 
-    kasaraFinal: "ــمَلَ",
-    kasaraMiddle: "حِـ",
-    kasaraInitial: "رَ",
-    kasaraWord: "رَحِمَ",
+    kasraFinal: "ــمَلَ",
+    kasraMiddle: "حِـ",
+    kasraInitial: "رَ",
+    kasraWord: "رَحِمَ",
 
     dammaInitial: "حُ",
     dammaMiddle: "مِ",
@@ -118,15 +118,15 @@ const singleLattersExamples = [
   },
   {
     index: 6,
-    fatahahFinal: "ـرَ",
-    fatahahMiddle: "ـجَـ",
-    fatahahInitial: "تَـ",
-    fatahahWord: "تَجَرَ",
+    fathaFinal: "ـرَ",
+    fathaMiddle: "ـجَـ",
+    fathaInitial: "تَـ",
+    fathaWord: "تَجَرَ",
 
-    kasaraFinal: "ـلَ",
-    kasaraMiddle: "ـخِـ",
-    kasaraInitial: "بَـ",
-    kasaraWord: "بَخِلَ",
+    kasraFinal: "ـلَ",
+    kasraMiddle: "ـخِـ",
+    kasraInitial: "بَـ",
+    kasraWord: "بَخِلَ",
 
     dammaInitial: "خُ",
     dammaMiddle: "لِ",
@@ -135,15 +135,15 @@ const singleLattersExamples = [
   },
   {
     index: 7,
-    fatahahFinal: "ـبَ",
-    fatahahMiddle: "ـتَـ",
-    fatahahInitial: "كَـ",
-    fatahahWord: "كَتَبَ",
+    fathaFinal: "ـبَ",
+    fathaMiddle: "ـتَـ",
+    fathaInitial: "كَـ",
+    fathaWord: "كَتَبَ",
 
-    kasaraFinal: "مَ",
-    kasaraMiddle: "ـدِ",
-    kasaraInitial: "قَـ",
-    kasaraWord: "قَدِمَ",
+    kasraFinal: "مَ",
+    kasraMiddle: "ـدِ",
+    kasraInitial: "قَـ",
+    kasraWord: "قَدِمَ",
 
     dammaInitial: "دُ",
     dammaMiddle: "عِ",
@@ -152,15 +152,15 @@ const singleLattersExamples = [
   },
   {
     index: 8,
-    fatahahFinal: "ـتَ",
-    fatahahMiddle: "ـبَـ",
-    fatahahInitial: "ثَـ",
-    fatahahWord: "ثَبَتَ",
+    fathaFinal: "ـتَ",
+    fathaMiddle: "ـبَـ",
+    fathaInitial: "ثَـ",
+    fathaWord: "ثَبَتَ",
 
-    kasaraFinal: "ـظَ",
-    kasaraMiddle: "ـفِـ",
-    kasaraInitial: "حَـ",
-    kasaraWord: "حَفِظَ",
+    kasraFinal: "ـظَ",
+    kasraMiddle: "ـفِـ",
+    kasraInitial: "حَـ",
+    kasraWord: "حَفِظَ",
 
     dammaInitial: "ذُ",
     dammaMiddle: "بِ",
@@ -169,15 +169,15 @@ const singleLattersExamples = [
   },
   {
     index: 9,
-    fatahahFinal: "ـبَ",
-    fatahahMiddle: "ـتَـ",
-    fatahahInitial: "كَـ",
-    fatahahWord: "كَتَدَ",
+    fathaFinal: "ـبَ",
+    fathaMiddle: "ـتَـ",
+    fathaInitial: "كَـ",
+    fathaWord: "كَتَبَ",
 
-    kasaraFinal: "ـيَ",
-    kasaraMiddle: "ـظِـ",
-    kasaraInitial: "حَـ",
-    kasaraWord: "حَظِيَ",
+    kasraFinal: "ـيَ",
+    kasraMiddle: "ـظِـ",
+    kasraInitial: "حَـ",
+    kasraWord: "حَظِيَ",
 
     dammaInitial: "رُ",
     dammaMiddle: "حِ",
@@ -186,15 +186,15 @@ const singleLattersExamples = [
   },
   {
     index: 10,
-    fatahahFinal: "ـرَ",
-    fatahahMiddle: "ـثَـ",
-    fatahahInitial: "نَـ",
-    fatahahWord: "نَـثَرَ",
+    fathaFinal: "ـرَ",
+    fathaMiddle: "ـثَـ",
+    fathaInitial: "نَـ",
+    fathaWord: "نَـثَرَ",
 
-    kasaraFinal: "ـرَ",
-    kasaraMiddle: "ـفِـ",
-    kasaraInitial: "ظَـ",
-    kasaraWord: "ظَفِرَ",
+    kasraFinal: "ـرَ",
+    kasraMiddle: "ـفِـ",
+    kasraInitial: "ظَـ",
+    kasraWord: "ظَفِرَ",
 
     dammaInitial: "زُ",
     dammaMiddle: "رِ",
@@ -203,15 +203,15 @@ const singleLattersExamples = [
   },
   {
     index: 11,
-    fatahahFinal: "ـثَ",
-    fatahahMiddle: "ـعَـ",
-    fatahahInitial: "بَـ",
-    fatahahWord: "بَعَثَ",
+    fathaFinal: "ـثَ",
+    fathaMiddle: "ـعَـ",
+    fathaInitial: "بَـ",
+    fathaWord: "بَعَثَ",
 
-    kasaraFinal: "ـيَ",
-    kasaraMiddle: "ـقِـ",
-    kasaraInitial: "بـَ",
-    kasaraWord: "بَقِيَ",
+    kasraFinal: "ـيَ",
+    kasraMiddle: "ـقِـ",
+    kasraInitial: "بـَ",
+    kasraWord: "بَقِيَ",
 
     dammaInitial: "سُ",
     dammaMiddle: "ئِ",
@@ -220,15 +220,15 @@ const singleLattersExamples = [
   },
   {
     index: 12,
-    fatahahFinal: "ـدَ",
-    fatahahMiddle: "ـجَـ",
-    fatahahInitial: "سَـ",
-    fatahahWord: "سَجَدَ",
+    fathaFinal: "ـدَ",
+    fathaMiddle: "ـجَـ",
+    fathaInitial: "سَـ",
+    fathaWord: "سَجَدَ",
 
-    kasaraFinal: "بَ",
-    kasaraMiddle: "ـرِ",
-    kasaraInitial: "شَـ",
-    kasaraWord: "شَرِبَ",
+    kasraFinal: "بَ",
+    kasraMiddle: "ـرِ",
+    kasraInitial: "شَـ",
+    kasraWord: "شَرِبَ",
 
     dammaInitial: "شُ",
     dammaMiddle: "كِ",
@@ -237,15 +237,15 @@ const singleLattersExamples = [
   },
   {
     index: 13,
-    fatahahFinal: "ـجَ",
-    fatahahMiddle: "ـسَـ",
-    fatahahInitial: "نَـ",
-    fatahahWord: "نَسَجَ",
+    fathaFinal: "ـجَ",
+    fathaMiddle: "ـسَـ",
+    fathaInitial: "نَـ",
+    fathaWord: "نَسَجَ",
 
-    kasaraFinal: "ـدَ",
-    kasaraMiddle: "ـعِـ",
-    kasaraInitial: "سَـ",
-    kasaraWord: "سَعِدَ",
+    kasraFinal: "ـدَ",
+    kasraMiddle: "ـعِـ",
+    kasraInitial: "سَـ",
+    kasraWord: "سَعِدَ",
 
     dammaInitial: "صُ",
     dammaMiddle: "عِ",
@@ -254,15 +254,15 @@ const singleLattersExamples = [
   },
   {
     index: 14,
-    fatahahFinal: "ـسَ",
-    fatahahMiddle: "ـبـَ",
-    fatahahInitial: "حَـ",
-    fatahahWord: "حَبَسَ",
+    fathaFinal: "ـسَ",
+    fathaMiddle: "ـبـَ",
+    fathaInitial: "حَـ",
+    fathaWord: "حَبَسَ",
 
-    kasaraFinal: "ـبَ",
-    kasaraMiddle: "كِـ",
-    kasaraInitial: "رَ",
-    kasaraWord: "رَكِبَ",
+    kasraFinal: "ـبَ",
+    kasraMiddle: "كِـ",
+    kasraInitial: "رَ",
+    kasraWord: "رَكِبَ",
 
     dammaInitial: "ضُ",
     dammaMiddle: "رِ",
@@ -271,15 +271,15 @@ const singleLattersExamples = [
   },
   {
     index: 15,
-    fatahahFinal: "ـنَ",
-    fatahahMiddle: "ـحَـ",
-    fatahahInitial: "طَـ",
-    fatahahWord: "طَحَنَ",
+    fathaFinal: "ـنَ",
+    fathaMiddle: "ـحَـ",
+    fathaInitial: "طَـ",
+    fathaWord: "طَحَنَ",
 
-    kasaraFinal: "رَ",
-    kasaraMiddle: "ـوِ",
-    kasaraInitial: "عَـ",
-    kasaraWord: "عَوِرَ",
+    kasraFinal: "رَ",
+    kasraMiddle: "ـوِ",
+    kasraInitial: "عَـ",
+    kasraWord: "عَوِرَ",
 
     dammaInitial: "طُ",
     dammaMiddle: "رِ",
@@ -288,15 +288,15 @@ const singleLattersExamples = [
   },
   {
     index: 16,
-    fatahahFinal: "ـحَ",
-    fatahahMiddle: "ـسَـ",
-    fatahahInitial: "مَـ",
-    fatahahWord: "مَسَحَ",
+    fathaFinal: "ـحَ",
+    fathaMiddle: "ـسَـ",
+    fathaInitial: "مَـ",
+    fathaWord: "مَسَحَ",
 
-    kasaraFinal: "ـدَ",
-    kasaraMiddle: "ـهِـ",
-    kasaraInitial: "عَـ",
-    kasaraWord: "عَهِدَ",
+    kasraFinal: "ـدَ",
+    kasraMiddle: "ـهِـ",
+    kasraInitial: "عَـ",
+    kasraWord: "عَهِدَ",
 
     dammaInitial: "ظُ",
     dammaMiddle: "لِ",
@@ -305,15 +305,15 @@ const singleLattersExamples = [
   },
   {
     index: 17,
-    fatahahFinal: "ـعَ",
-    fatahahMiddle: "ـضَـ",
-    fatahahInitial: "خَـ",
-    fatahahWord: "خَضَعَ",
+    fathaFinal: "ـعَ",
+    fathaMiddle: "ـضَـ",
+    fathaInitial: "خَـ",
+    fathaWord: "خَضَعَ",
 
-    kasaraFinal: "ـقَ",
-    kasaraMiddle: "ـنِـ",
-    kasaraInitial: "حَـ",
-    kasaraWord: "حَنِقَ",
+    kasraFinal: "ـقَ",
+    kasraMiddle: "ـنِـ",
+    kasraInitial: "حَـ",
+    kasraWord: "حَنِقَ",
 
     dammaInitial: "قُ",
     dammaMiddle: "تِ",
@@ -322,15 +322,15 @@ const singleLattersExamples = [
   },
   {
     index: 18,
-    fatahahFinal: "ـرَ",
-    fatahahMiddle: "ـخَـ",
-    fatahahInitial: "نَـ",
-    fatahahWord: "نَـخَـرَ",
+    fathaFinal: "ـرَ",
+    fathaMiddle: "ـخَـ",
+    fathaInitial: "نَـ",
+    fathaWord: "نَـخَـرَ",
 
-    kasaraFinal: "ـعَ",
-    kasaraMiddle: "ـمِـ",
-    kasaraInitial: "سَـ",
-    kasaraWord: "سَمِعَ",
+    kasraFinal: "ـعَ",
+    kasraMiddle: "ـمِـ",
+    kasraInitial: "سَـ",
+    kasraWord: "سَمِعَ",
 
     dammaInitial: "كُ",
     dammaMiddle: "تِ",
@@ -339,15 +339,15 @@ const singleLattersExamples = [
   },
   {
     index: 19,
-    fatahahFinal: "دَ",
-    fatahahMiddle: "ـرَ",
-    fatahahInitial: "ثَـ",
-    fatahahWord: "ثَرَدَ",
+    fathaFinal: "دَ",
+    fathaMiddle: "ـرَ",
+    fathaInitial: "ثَـ",
+    fathaWord: "ثَرَدَ",
 
-    kasaraFinal: "ـمَ",
-    kasaraMiddle: "ـلِـ",
-    kasaraInitial: "عَـ",
-    kasaraWord: "عَلِمَ",
+    kasraFinal: "ـمَ",
+    kasraMiddle: "ـلِـ",
+    kasraInitial: "عَـ",
+    kasraWord: "عَلِمَ",
 
     dammaInitial: "مُ",
     dammaMiddle: "نِ",
@@ -359,13 +359,13 @@ const singleLattersExamples = [
 const doubleLattersExamples = [
   {
     index: 0,
-    fatahahFinal: "ـدَ",
-    fatahahInitial: "صَعَـ",
-    fatahahWord: "صَعَدَ",
+    fathaFinal: "ـدَ",
+    fathaInitial: "صَعَـ",
+    fathaWord: "صَعَدَ",
 
-    kasaraFinal: "ـكَ",
-    kasaraInitial: "ضَحِـ",
-    kasaraWord: "ضَحِكَ",
+    kasraFinal: "ـكَ",
+    kasraInitial: "ضَحِـ",
+    kasraWord: "ضَحِكَ",
 
     dammaInitial: "نُسِ",
     dammaFinal: "  يَ",
@@ -373,13 +373,13 @@ const doubleLattersExamples = [
   },
   {
     index: 1,
-    fatahahFinal: " ـهَ  ",
-    fatahahInitial: " وَلَـ ",
-    fatahahWord: "وَ لَـهَ ",
+    fathaFinal: " ـهَ  ",
+    fathaInitial: " وَلَـ ",
+    fathaWord: "وَ لَـهَ ",
 
-    kasaraFinal: "حَ",
-    kasaraInitial: "مَرِ",
-    kasaraWord: "مَرِحَ",
+    kasraFinal: "حَ",
+    kasraInitial: "مَرِ",
+    kasraWord: "مَرِحَ",
 
     dammaInitial: "هُدِ",
     dammaFinal: "  يَ",
@@ -388,13 +388,13 @@ const doubleLattersExamples = [
   {
     index: 2,
 
-    fatahahFinal: "ـمَ",
-    fatahahInitial: " فَطَـ ",
-    fatahahWord: "فَطَمَ",
+    fathaFinal: "ـمَ",
+    fathaInitial: " فَطَـ ",
+    fathaWord: "فَطَمَ",
 
-    kasaraFinal: "ـلَ",
-    kasaraInitial: "عَمِـ",
-    kasaraWord: "عَمِلَ",
+    kasraFinal: "ـلَ",
+    kasraInitial: "عَمِـ",
+    kasraWord: "عَمِلَ",
 
     dammaInitial: "وُجِ",
     dammaFinal: "  دَ",
@@ -402,13 +402,13 @@ const doubleLattersExamples = [
   },
   {
     index: 3,
-    fatahahFinal: "ـفَ",
-    fatahahInitial: "شَغَـ",
-    fatahahWord: "شَغَفَ",
+    fathaFinal: "ـفَ",
+    fathaInitial: "شَغَـ",
+    fathaWord: "شَغَفَ",
 
-    kasaraFinal: "ـلَ",
-    kasaraInitial: "عَقِـ",
-    kasaraWord: "عَقِلَ",
+    kasraFinal: "ـلَ",
+    kasraInitial: "عَقِـ",
+    kasraWord: "عَقِلَ",
 
     dammaInitial: "وُضِ",
     dammaFinal: "عَ",
@@ -416,13 +416,13 @@ const doubleLattersExamples = [
   },
   {
     index: 4,
-    fatahahFinal: "ـغَ",
-    fatahahInitial: "مَضَـ",
-    fatahahWord: "مَضَغَ",
+    fathaFinal: "ـغَ",
+    fathaInitial: "مَضَـ",
+    fathaWord: "مَضَغَ",
 
-    kasaraFinal: "ـلَ",
-    kasaraInitial: "جَهِـ",
-    kasaraWord: "جَهِلَ",
+    kasraFinal: "ـلَ",
+    kasraInitial: "جَهِـ",
+    kasraWord: "جَهِلَ",
 
     dammaInitial: "شُرِ",
     dammaFinal: "بَ",
@@ -430,13 +430,13 @@ const doubleLattersExamples = [
   },
   {
     index: 5,
-    fatahahFinal: "ـخَ",
-    fatahahInitial: "نَفَـ",
-    fatahahWord: "نَفَخَ",
+    fathaFinal: "ـخَ",
+    fathaInitial: "نَفَـ",
+    fathaWord: "نَفَخَ",
 
-    kasaraFinal: "ـلَ",
-    kasaraInitial: "خَجِـ",
-    kasaraWord: "خَجِلَ",
+    kasraFinal: "ـلَ",
+    kasraInitial: "خَجِـ",
+    kasraWord: "خَجِلَ",
 
     dammaInitial: "رُسِ",
     dammaFinal: "مَ",
@@ -444,13 +444,13 @@ const doubleLattersExamples = [
   },
   {
     index: 6,
-    fatahahFinal: "ـعَ",
-    fatahahInitial: "شَفَـ",
-    fatahahWord: "شَفَعَ",
+    fathaFinal: "ـعَ",
+    fathaInitial: "شَفَـ",
+    fathaWord: "شَفَعَ",
 
-    kasaraFinal: "ـبَ",
-    kasaraInitial: "غَضِـ",
-    kasaraWord: "غَضِبَ",
+    kasraFinal: "ـبَ",
+    kasraInitial: "غَضِـ",
+    kasraWord: "غَضِبَ",
 
     dammaInitial: "فُتِ",
     dammaFinal: "حَ",
@@ -458,13 +458,13 @@ const doubleLattersExamples = [
   },
   {
     index: 7,
-    fatahahFinal: "حَ",
-    fatahahInitial: "شَرَ",
-    fatahahWord: "شَرَحَ",
+    fathaFinal: "حَ",
+    fathaInitial: "شَرَ",
+    fathaWord: "شَرَحَ",
 
-    kasaraFinal: "نَ",
-    kasaraInitial: "أذِ",
-    kasaraWord: "أذِنَ",
+    kasraFinal: "نَ",
+    kasraInitial: "أذِ",
+    kasraWord: "أذِنَ",
 
     dammaInitial: "دُبِ",
     dammaFinal: "غَ",
@@ -472,13 +472,13 @@ const doubleLattersExamples = [
   },
   {
     index: 8,
-    fatahahFinal: "ـتَ",
-    fatahahInitial: "قَنَـ",
-    fatahahWord: "قَنَتَ",
+    fathaFinal: "ـتَ",
+    fathaInitial: "قَنَـ",
+    fathaWord: "قَنَتَ",
 
-    kasaraFinal: "ـفَ",
-    kasaraInitial: "ألِـ",
-    kasaraWord: "ألِفَ",
+    kasraFinal: "ـفَ",
+    kasraInitial: "ألِـ",
+    kasraWord: "ألِفَ",
 
     dammaInitial: "سُبُ",
     dammaFinal: "لُ",
@@ -486,13 +486,13 @@ const doubleLattersExamples = [
   },
   {
     index: 9,
-    fatahahFinal: "ـطَ",
-    fatahahInitial: "سَقَـ",
-    fatahahWord: "سَقَطَ",
+    fathaFinal: "ـطَ",
+    fathaInitial: "سَقَـ",
+    fathaWord: "سَقَطَ",
 
-    kasaraFinal: "ـبَ",
-    kasaraInitial: "صَـحِـ",
-    kasaraWord: "صَحِبَ",
+    kasraFinal: "ـبَ",
+    kasraInitial: "صَـحِـ",
+    kasraWord: "صَحِبَ",
 
     dammaInitial: "رُسُ",
     dammaFinal: "لُ",
@@ -500,13 +500,13 @@ const doubleLattersExamples = [
   },
   {
     index: 10,
-    fatahahFinal: "قَ",
-    fatahahInitial: "خَلَـ",
-    fatahahWord: "خَلَقَ",
+    fathaFinal: "قَ",
+    fathaInitial: "خَلَـ",
+    fathaWord: "خَلَقَ",
 
-    kasaraFinal: "ـتَ",
-    kasaraInitial: "عَنِـ",
-    kasaraWord: "عَنِتَ",
+    kasraFinal: "ـتَ",
+    kasraInitial: "عَنِـ",
+    kasraWord: "عَنِتَ",
 
     dammaInitial: "أُفُ",
     dammaFinal: "قُ",
@@ -514,13 +514,13 @@ const doubleLattersExamples = [
   },
   {
     index: 11,
-    fatahahFinal: "ـرَ",
-    fatahahInitial: "كَسَـ",
-    fatahahWord: "كَسَرَ",
+    fathaFinal: "ـرَ",
+    fathaInitial: "كَسَـ",
+    fathaWord: "كَسَرَ",
 
-    kasaraFinal: "ـثَ",
-    kasaraInitial: "شَـعِـ",
-    kasaraWord: "شَعِثَ",
+    kasraFinal: "ـثَ",
+    kasraInitial: "شَـعِـ",
+    kasraWord: "شَعِثَ",
 
     dammaInitial: "نُظُ",
     dammaFinal: "مُ",
@@ -528,13 +528,13 @@ const doubleLattersExamples = [
   },
   {
     index: 12,
-    fatahahFinal: "ـرَ",
-    fatahahInitial: "شَكَـ",
-    fatahahWord: "شَكَرَ",
+    fathaFinal: "ـرَ",
+    fathaInitial: "شَكَـ",
+    fathaWord: "شَكَرَ",
 
-    kasaraFinal: "ـبَ",
-    kasaraInitial: "رَقِـ",
-    kasaraWord: "رَقِبَ",
+    kasraFinal: "ـبَ",
+    kasraInitial: "رَقِـ",
+    kasraWord: "رَقِبَ",
 
     dammaInitial: "مَثَ",
     dammaFinal: "لُ",
@@ -542,13 +542,13 @@ const doubleLattersExamples = [
   },
   {
     index: 13,
-    fatahahFinal: "ـكَ",
-    fatahahInitial: "مَلَـ",
-    fatahahWord: "مَلَكَ",
+    fathaFinal: "ـكَ",
+    fathaInitial: "مَلَـ",
+    fathaWord: "مَلَكَ",
 
-    kasaraFinal: "ـبَ",
-    kasaraInitial: "صَئِـ",
-    kasaraWord: "صَئِبَ",
+    kasraFinal: "ـبَ",
+    kasraInitial: "صَئِـ",
+    kasraWord: "صَئِبَ",
 
     dammaInitial: "لَطُ",
     dammaFinal: "فَ",
@@ -556,13 +556,13 @@ const doubleLattersExamples = [
   },
   {
     index: 14,
-    fatahahFinal: "ـمَ",
-    fatahahInitial: "لَطَـ",
-    fatahahWord: "لَطَمَ",
+    fathaFinal: "ـمَ",
+    fathaInitial: "لَطَـ",
+    fathaWord: "لَطَمَ",
 
-    kasaraFinal: "ـبَ",
-    kasaraInitial: "كَئِـ",
-    kasaraWord: "كَئِبَ",
+    kasraFinal: "ـبَ",
+    kasraInitial: "كَئِـ",
+    kasraWord: "كَئِبَ",
 
     dammaInitial: "ثُلِ",
     dammaFinal: "بَ",
@@ -570,13 +570,13 @@ const doubleLattersExamples = [
   },
   {
     index: 15,
-    fatahahFinal: "أَ",
-    fatahahInitial: "مَلَـ",
-    fatahahWord: "مَلأَ",
+    fathaFinal: "أَ",
+    fathaInitial: "مَلَـ",
+    fathaWord: "مَلأَ",
 
-    kasaraFinal: "ئَ",
-    kasaraInitial: "صَدِ",
-    kasaraWord: "صَدِئَ",
+    kasraFinal: "ئَ",
+    kasraInitial: "صَدِ",
+    kasraWord: "صَدِئَ",
 
     dammaInitial: "عُقَ",
     dammaFinal: "دُ",
@@ -584,13 +584,13 @@ const doubleLattersExamples = [
   },
   {
     index: 16,
-    fatahahFinal: "ـسَ",
-    fatahahInitial: "ھَمَـ",
-    fatahahWord: "ھَمَسَ",
+    fathaFinal: "ـسَ",
+    fathaInitial: "ھَمَـ",
+    fathaWord: "ھَمَسَ",
 
-    kasaraFinal: "ـصَ",
-    kasaraInitial: "نَغِـ",
-    kasaraWord: "نَغِصَ",
+    kasraFinal: "ـصَ",
+    kasraInitial: "نَغِـ",
+    kasraWord: "نَغِصَ",
 
     dammaInitial: "حُجَ",
     dammaFinal: "رُ",
@@ -598,13 +598,13 @@ const doubleLattersExamples = [
   },
   {
     index: 17,
-    fatahahFinal: "ـعَ",
-    fatahahInitial: "یَفَ",
-    fatahahWord: "یَفَعَ",
+    fathaFinal: "ـعَ",
+    fathaInitial: "یَفَ",
+    fathaWord: "یَفَعَ",
 
-    kasaraFinal: "ـجَ",
-    kasaraInitial: "نَضِـ",
-    kasaraWord: "نَضِجَ",
+    kasraFinal: "ـجَ",
+    kasraInitial: "نَضِـ",
+    kasraWord: "نَضِجَ",
 
     dammaInitial: "حُشِ",
     dammaFinal: "رَ",
@@ -612,13 +612,13 @@ const doubleLattersExamples = [
   },
   {
     index: 18,
-    fatahahFinal: "ـزَ",
-    fatahahInitial: "وَ عَـ",
-    fatahahWord: "وَ عَزَ",
+    fathaFinal: "ـزَ",
+    fathaInitial: "وَ عَـ",
+    fathaWord: "وَ عَزَ",
 
-    kasaraFinal: "ـبَ",
-    kasaraInitial: "لَغِـ",
-    kasaraWord: "لَغِبَ",
+    kasraFinal: "ـبَ",
+    kasraInitial: "لَغِـ",
+    kasraWord: "لَغِبَ",
 
     dammaInitial: "فُرَ",
     dammaFinal: "صُ",
@@ -626,13 +626,13 @@ const doubleLattersExamples = [
   },
   {
     index: 19,
-    fatahahFinal: "ـعَ",
-    fatahahInitial: "یَنَـ",
-    fatahahWord: "یَنَعَ",
+    fathaFinal: "ـعَ",
+    fathaInitial: "یَنَـ",
+    fathaWord: "یَنَعَ",
 
-    kasaraFinal: " ـئَ",
-    kasaraInitial: "دَفِـ",
-    kasaraWord: "دَفِئَ",
+    kasraFinal: " ـئَ",
+    kasraInitial: "دَفِـ",
+    kasraWord: "دَفِئَ",
 
     dammaInitial: "شُحِ",
     dammaFinal: "ذَ",
@@ -682,48 +682,48 @@ const Card = ({
   screen,
   nextUrl,
   type,
-  bgColor
+  bgColor,
 }) => {
   console.log("Card", word, initial, middle, final);
   return (
     <div className="w-full  ">
       <div className=" bg-white rounded-3xl w-full mt-5">
-      <div className=" w-full p-2 rounded-md  flex flex-row justify-between   pt-8">
-        {/* <img src={logo.src} className="h-14" alt="" />{" "} */}
-        
-        <h1
+        <div className=" w-full p-2 rounded-md  flex flex-row justify-between   pt-8">
+          {/* <img src={logo.src} className="h-14" alt="" />{" "} */}
+
+          <h1
             className="p-3 text-white bg-dark-purple rounded-lg text-lg  border-2 border-white"
             style={{ marginLeft: -30, width: 600 }}
           >
-             Module 2: How to Make words is Arabic
+            Module 2: How to Make words is Arabic
             {/* <span className="p-2 bg-green-200 text-dark-purple rounded-md">
             {props.name} " {props.symbol} "
           </span> */}
           </h1>
-        <div>
-          {user == "teacher" ? (
-            <Link href={`/teacher/whiteboard`} className="">
-              <IconButton
-                aria-label="delete"
-                size="large"
-                className="bg-cyan-200 text-dark-purple hover:bg-gray-200"
-              >
-                <FilterFramesIcon />
-              </IconButton>
-            </Link>
-          ) : null}
+          <div>
+            {user == "teacher" ? (
+              <Link href={`/teacher/whiteboard`} className="">
+                <IconButton
+                  aria-label="delete"
+                  size="large"
+                  className="bg-cyan-200 text-dark-purple hover:bg-gray-200"
+                >
+                  <FilterFramesIcon />
+                </IconButton>
+              </Link>
+            ) : null}
 
-          <Link href={`/${user}/module/harakat/${type}`} className="mx-5">
-            <Button
-              variant="contained"
-              className="bg-cyan-200 text-dark-purple"
-              startIcon={<ArrowBackIcon />} 
-            >
-              Back To Main Module
-            </Button>
-          </Link>
+            <Link href={`/${user}/module/harakat/${type}`} className="mx-5">
+              <Button
+                variant="contained"
+                className="bg-cyan-200 text-dark-purple"
+                startIcon={<ArrowBackIcon />}
+              >
+                Back To Main Module
+              </Button>
+            </Link>
+          </div>
         </div>
-      </div>
         <div className=" w-full p-5 md:grid-cols-4   ">
           <div className=" w-full bg-white rounded-md  sm:col-span-3 md:px-5 lg:px-14">
             <div className=" p-3 text-center ">
@@ -732,9 +732,19 @@ const Card = ({
               <div className=" mx-0 mt-5 lg:gap-12 gap-5 xl:gap-20 ">
                 <div className=" ">
                   <div className="items-center w-full bg-dark-purple overflow-hidden rounded-3xl border-2 shadow-lg min:h-fit  min:w-fit  my-16">
-                    <div className=" font-bold text-center  text-white h-80  " style={{backgroundColor: bgColor}}>
+                    <div
+                      className=" font-bold text-center  text-white h-80  "
+                      style={{ backgroundColor: bgColor }}
+                    >
                       {middle ? (
-                        <h2 className="text-7xl font-sans flex justify-center content-center pb-12 pt-10">
+                        <h2
+                          className="text-7xl flex justify-center content-center pb-12 pt-10"
+                          style={{
+                            fontFamily:
+                              '"Geeza Pro", "Nadeem", "Al Bayan", "DecoType Naskh", "DejaVu Serif", "STFangsong", "STHeiti", "STKaiti", "STSong", "AB AlBayan", "AB Geeza", "AB Kufi", "DecoType Naskh", "Aldhabi", "Andalus", "Sakkal Majalla", "Simplified Arabic", "Traditional Arabic", "Arabic Typesetting", "Urdu Typesetting", "Droid Naskh", "Droid Kufi", "Roboto", "Tahoma", "Times New Roman", "Arial", serif',
+                              fontWeight:500
+                          }}
+                        >
                           <span className="mx-10">{final}</span>
                           <span className="mx-10">{middle}</span>
                           <span className="mx-10">{initial}</span>
@@ -747,11 +757,22 @@ const Card = ({
                       )}
                     </div>
                   </div>
-                    <div className="bg-slate-50 h-64 w-80 p-5 mx-auto rounded-3xl border-4 " style={{marginTop: -200, borderColor: bgColor}} >
-                      <h2 className="text-8xl font-sans  flex justify-center pb-12 pt-10" style={{color: bgColor}}>
-                        {word}
-                      </h2>
-                    </div>
+                  <div
+                    className="bg-slate-50 h-64 w-80 p-5 mx-auto rounded-3xl border-4 "
+                    style={{ marginTop: -200, borderColor: bgColor }}
+                  >
+                    <h2
+                      className="text-8xl  flex justify-center pb-12 pt-10"
+                      style={{
+                        color: bgColor,
+                        fontFamily:
+                          '"Geeza Pro", "Nadeem", "Al Bayan", "DecoType Naskh", "DejaVu Serif", "STFangsong", "STHeiti", "STKaiti", "STSong", "AB AlBayan", "AB Geeza", "AB Kufi", "DecoType Naskh", "Aldhabi", "Andalus", "Sakkal Majalla", "Simplified Arabic", "Traditional Arabic", "Arabic Typesetting", "Urdu Typesetting", "Droid Naskh", "Droid Kufi", "Roboto", "Tahoma", "Times New Roman", "Arial", serif',
+                        fontWeight: 500,
+                      }}
+                    >
+                      {word}
+                    </h2>
+                  </div>
                 </div>
               </div>
             </div>
@@ -782,9 +803,18 @@ export default function VerticalTabs({ wordType, user, type, nextUrl }) {
     setValue(newValue);
   };
 
-  const [randomColor, setRandomColor] = useState("#ECABE1");
+  const [randomColorL, setRandomColorL] = useState("#56C3F1");
+  const [randomColorR, setRandomColorR] = useState("#09DBDB");
+  const [selectedOption, setSelectedOption] = useState(0);
 
-  const GenerateColor = () => {
+  const bgStyle = {
+    color: "blue",
+    ":focus": {
+      backgroundColor: randomColorL,
+    },
+  };
+
+  const GenerateColor = (index) => {
     var colors = [
       "#09DBDB",
       "#FD5678",
@@ -799,12 +829,37 @@ export default function VerticalTabs({ wordType, user, type, nextUrl }) {
       "#FF7C60",
     ];
 
+    setSelectedOption(index);
+
     // selecting random color
-    setRandomColor(colors[Math.floor(Math.random() * colors.length)]),
-      console.log("random_color", randomColor);
+    setRandomColorL(colors[Math.floor(Math.random() * colors.length)]),
+      setRandomColorR(colors[Math.floor(Math.random() * colors.length)]),
+      console.log("random_colorL", randomColorL);
+    console.log("random_colorR", randomColorR);
   };
 
-  console.log(type, "type");
+  const sliderCardSelected = {
+    fontSize: 40,
+    fontFamily:
+    '"Geeza Pro", "Nadeem", "Al Bayan", "DecoType Naskh", "DejaVu Serif", "STFangsong", "STHeiti", "STKaiti", "STSong", "AB AlBayan", "AB Geeza", "AB Kufi", "DecoType Naskh", "Aldhabi", "Andalus", "Sakkal Majalla", "Simplified Arabic", "Traditional Arabic", "Arabic Typesetting", "Urdu Typesetting", "Droid Naskh", "Droid Kufi", "Roboto", "Tahoma", "Times New Roman", "Arial", serif',
+    color: "white",
+    borderWidth: 2,
+    borderColor: "white",
+    margin: 10,
+    backgroundColor: randomColorL,
+    borderRadius: 15,
+  };
+  const sliderCard = {
+    fontSize: 40,
+    fontFamily:
+    '"Geeza Pro", "Nadeem", "Al Bayan", "DecoType Naskh", "DejaVu Serif", "STFangsong", "STHeiti", "STKaiti", "STSong", "AB AlBayan", "AB Geeza", "AB Kufi", "DecoType Naskh", "Aldhabi", "Andalus", "Sakkal Majalla", "Simplified Arabic", "Traditional Arabic", "Arabic Typesetting", "Urdu Typesetting", "Droid Naskh", "Droid Kufi", "Roboto", "Tahoma", "Times New Roman", "Arial", serif',
+    color: "white",
+    borderWidth: 2,
+    borderColor: "white",
+    margin: 10,
+    // backgroundColor: randomColorR,
+    borderRadius: 15,
+  };
 
   return (
     <>
@@ -832,26 +887,33 @@ export default function VerticalTabs({ wordType, user, type, nextUrl }) {
             {singleLattersExamples.map((alphabate) => (
               <Tab
                 label={
-                  type === "fatahah"
-                    ? alphabate.fatahahWord
-                    : type === "kasara"
-                    ? alphabate.kasaraWord
+                  type === "fatha"
+                    ? alphabate.fathaWord
+                    : type === "kasra"
+                    ? alphabate.kasraWord
                     : alphabate.dammaWord
                 }
-                onClick={()=>GenerateColor()}
-                className={`lg:text-4xl text-3xl  py-3 px-0 m-3  w-60  text-white font-bold rounded-lg font-sans  focus:bg-cyan-400 border-2 border-emerald-200`}
+                
+                onClick={() => {
+                  GenerateColor(alphabate.index);
+                }}
+                style={
+                  selectedOption == alphabate.index
+                    ? sliderCardSelected
+                    : sliderCard
+                }
                 {...a11yProps(alphabate.index)}
               />
             ))}
             {/* {singleLattersExamples.map((alphabate) => (
            <>
-           {type == "fatahah" ? (<Tab
-             label={alphabate.fatahahWord}
+           {type == "fatha" ? (<Tab
+             label={alphabate.fathaWord}
              className={`lg:text-4xl text-3xl  py-3 px-0 m-3  w-60  text-white font-bold rounded-lg font-sans  focus:bg-cyan-400 border-2 border-emerald-200`}
              {...a11yProps(alphabate.index)}
            />): null }
-           {type == "kasara" ? (<Tab
-             label={alphabate.kasaraWord}
+           {type == "kasra" ? (<Tab
+             label={alphabate.kasraWord}
              className={`lg:text-4xl text-3xl  py-3 px-0 m-3  w-60  text-white font-bold rounded-lg font-sans  focus:bg-cyan-400 border-2 border-emerald-200`}
              {...a11yProps(alphabate.index)}
            />): null }
@@ -865,32 +927,31 @@ export default function VerticalTabs({ wordType, user, type, nextUrl }) {
               style={{ width: "100%" }}
               value={value}
               index={alphabate.index}
-              
             >
-              {type == "fatahah" ? (
+              {type == "fatha" ? (
                 <Card
-                  initial={alphabate.fatahahInitial}
-                  middle={alphabate.fatahahMiddle}
-                  final={alphabate.fatahahFinal}
-                  word={alphabate.fatahahWord}
+                  initial={alphabate.fathaInitial}
+                  middle={alphabate.fathaMiddle}
+                  final={alphabate.fathaFinal}
+                  word={alphabate.fathaWord}
                   user={user}
                   screen="double"
                   nextUrl={nextUrl}
                   type={type}
-                  bgColor={randomColor}
+                  bgColor={randomColorL}
                 />
               ) : null}
-              {type == "kasara" ? (
+              {type == "kasra" ? (
                 <Card
-                  initial={alphabate.kasaraInitial}
-                  middle={alphabate.kasaraMiddle}
-                  final={alphabate.kasaraFinal}
-                  word={alphabate.kasaraWord}
+                  initial={alphabate.kasraInitial}
+                  middle={alphabate.kasraMiddle}
+                  final={alphabate.kasraFinal}
+                  word={alphabate.kasraWord}
                   user={user}
                   screen="double"
                   nextUrl={nextUrl}
                   type={type}
-                  bgColor={randomColor}
+                  bgColor={randomColorL}
                 />
               ) : null}
               {type == "damma" ? (
@@ -903,7 +964,7 @@ export default function VerticalTabs({ wordType, user, type, nextUrl }) {
                   screen="double"
                   nextUrl={nextUrl}
                   type={type}
-                  bgColor={randomColor}
+                  bgColor={randomColorL}
                 />
               ) : null}
             </TabPanel>
@@ -933,16 +994,20 @@ export default function VerticalTabs({ wordType, user, type, nextUrl }) {
             {doubleLattersExamples.map((alphabate) => (
               <Tab
                 label={
-                  type === "fatahah"
-                    ? alphabate.fatahahWord
-                    : type === "kasara"
-                    ? alphabate.kasaraWord
+                  type === "fatha"
+                    ? alphabate.fathaWord
+                    : type === "kasra"
+                    ? alphabate.kasraWord
                     : alphabate.dammaWord
                 }
                 onClick={() => {
-                   GenerateColor()
+                  GenerateColor(alphabate.index);
                 }}
-                className={`lg:text-4xl text-3xl  py-3 px-0 m-3  w-60  text-white font-bold rounded-lg font-sans  focus:bg-cyan-400 border-2 border-emerald-200`}
+                style={
+                  selectedOption == alphabate.index
+                    ? sliderCardSelected
+                    : sliderCard
+                }
                 {...a11yProps(alphabate.index)}
               />
             ))}
@@ -954,29 +1019,30 @@ export default function VerticalTabs({ wordType, user, type, nextUrl }) {
               value={value}
               index={alphabate.index}
             >
-              {type == "fatahah" ? (
+              {type == "fatha" ? (
                 <Card
-                  initial={alphabate.fatahahInitial}
-                  middle={alphabate.fatahahMiddle}
-                  final={alphabate.fatahahFinal}
-                  word={alphabate.fatahahWord}
+                  initial={alphabate.fathaInitial}
+                  middle={alphabate.fathaMiddle}
+                  final={alphabate.fathaFinal}
+                  word={alphabate.fathaWord}
                   user={user}
                   screen="double"
                   nextUrl={nextUrl}
                   type={type}
-                  bgColor={randomColor}
+                  bgColor={randomColorL}
                 />
               ) : null}
-              {type == "kasara" ? (
+              {type == "kasra" ? (
                 <Card
-                  initial={alphabate.kasaraInitial}
-                  middle={alphabate.kasaraMiddle}
-                  final={alphabate.kasaraFinal}
-                  word={alphabate.kasaraWord}
+                  initial={alphabate.kasraInitial}
+                  middle={alphabate.kasraMiddle}
+                  final={alphabate.kasraFinal}
+                  word={alphabate.kasraWord}
                   user={user}
                   screen="double"
                   nextUrl={nextUrl}
                   type={type}
+                  bgColor={randomColorL}
                 />
               ) : null}
               {type == "damma" ? (
@@ -989,6 +1055,7 @@ export default function VerticalTabs({ wordType, user, type, nextUrl }) {
                   screen="double"
                   nextUrl={nextUrl}
                   type={type}
+                  bgColor={randomColorL}
                 />
               ) : null}
             </TabPanel>

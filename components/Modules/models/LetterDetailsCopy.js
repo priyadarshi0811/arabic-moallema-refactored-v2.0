@@ -17,6 +17,7 @@ import VideoControlBtn from "@/components/Layout/elements/VideoControlBtn";
 import GeneralCard from "@/components/Layout/card/GeneralCard";
 import { IconButton } from "@mui/joy";
 import FilterFramesIcon from "@mui/icons-material/FilterFrames";
+import Teacher from "@/components/src/img/Teacher.png";
 
 import Ractangle from "@/components/src/img/Rectangle.png";
 import { useContext } from "react";
@@ -307,14 +308,44 @@ const LetterDetails = (props) => {
                 How to Write: {props.name} "{props.symbol}"
               </h2> */}
               <div className=" p-4 w-full border-2 rounded-3xl    mt-2 flex  items-center font-sans">
-                <img
+                {/* <img
                   src={
                     props.gif ||
                     "https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExZjA2ZWUyMGYxNWMwODZlZTJiYWE3YTk5MTUxMWQwMzRmM2U4NGU2MyZjdD1z/Qhg5vbmLB0iszYoktc/giphy.gif"
                   }
                   alt="Example GIF"
                   className="h-72 object-cover mx-auto "
-                />
+                /> */}
+
+                <div
+                  className="w-full align-middle mx-auto bg-cyan-300 rounded-2xl"
+                  style={{ position: "relative" }}
+                >
+                  <div className="w-96 h-80 rounded-3xl bg-cyan-300  mx-auto">
+                    <img className="rounded-3xl" src={Teacher.src} alt="" />
+
+                    <div className="w-40">
+                      <img
+                        className="w-full"
+                        style={{
+                          position: "relative",
+                          // display: "none",
+                          width: "100%",
+                          height: "100%",
+                          top: -300,
+                          left: 170,
+                          right: 50,
+                          bottom: 50,
+                          backgroundColor: "red",
+                          cursor: "pointer",
+                          zIndex: 100,
+                        }}
+                        src={props.gif}
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <div className="grid grid-cols-1 gap-5 ">

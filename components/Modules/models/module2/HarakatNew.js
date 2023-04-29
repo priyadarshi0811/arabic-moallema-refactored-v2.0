@@ -11,7 +11,7 @@ import GeneralCard from "@/components/Layout/card/GeneralCard";
 import AudioButton from "@/components/Layout/elements/AudioBtn";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import FilterFramesIcon from "@mui/icons-material/FilterFrames";
-import Fatahah from "@/components/src/img/arabic_fatha.png";
+import fathaah from "@/components/src/img/arabic_fatha.png";
 import BatchContext from "@/components/Context/store/batch-context";
 import { fetchAssignmentForLetter } from "@/backend/Assignment/FetchAssignmentDB";
 import ReactPlayer from "react-player";
@@ -313,7 +313,7 @@ const Alphabates = [
   },
 ];
 
-const fatahahWordExample = [
+const fathaWordExample = [
   {
     initial: "أَمَرَ",
     middle: "سَأَلَ",
@@ -461,10 +461,10 @@ const GeneralCardSm = ({
           className="grid content-between border-y-8  font-bold text-center   min-h-64  "
           style={{ borderColor: color }}
         >
-          {harakatType == "fatahah" ? (
+          {harakatType == "fatha" ? (
             <div className="grid content-between grid-cols-1  font-bold text-center text-gray-600 min-h-64  ">
               <img
-                src={Fatahah.src}
+                src={fathaah.src}
                 className="w-8 mx-auto mb-0 pt-3 flex"
                 alt=""
                 style={{ filter: "invert(40%)" }}
@@ -485,7 +485,7 @@ const GeneralCardSm = ({
             <div className="grid content-between grid-cols-1  font-bold text-center text-gray-600 min-h-64  ">
               <h2 className="text-5xl pt-5 font-sans">{title}</h2>
               <img
-                src={Fatahah.src}
+                src={fathaah.src}
                 className="w-8 mx-auto mb-0 pb-3 flex"
                 alt=""
                 style={{ filter: "invert(30%)" }}
@@ -564,7 +564,7 @@ const Card = ({
   //get the assignment for the selected activity
   useEffect(() => {
     const fetchAssignment = async () => {
-      const data = await fetchAssignmentForLetter("Fatah", "harakat");
+      const data = await fetchAssignmentForLetter("fatha", "harakat");
       if (data[0]) {
         setAssignment(data[0].assignment_json.letter);
         if (data[0].assignment_json.letter[0].activity_type === "trace") {
@@ -587,12 +587,12 @@ const Card = ({
   console.log(assignment);
 
   const setActivitySubmodule = async () => {
-    if (activityPath && harakatType === "fatahah") {
-      window.location.href = `/${user}/activity/${activityPath}/harakat/fatahah/${0}`;
+    if (activityPath && harakatType === "fatha") {
+      window.location.href = `/${user}/activity/${activityPath}/harakat/fatha/${0}`;
     }
-    if (activityPath && harakatType === "kasara") {
+    if (activityPath && harakatType === "kasra") {
       console.log("inside kasra");
-      window.location.href = `/${user}/activity/${activityPath}/harakat/kasara/${0}`;
+      window.location.href = `/${user}/activity/${activityPath}/harakat/kasra/${0}`;
     }
     console.log(activityPath);
   };
@@ -743,11 +743,11 @@ const Card = ({
                       title={letterForm[index].initial}
                       color="#09DBDB"
                       ex={
-                        harakatType == "fatahah"
-                          ? fatahahWordExample[index].initial
-                          : harakatType == "kasara"
-                          ? kasraWordExample[index].initial
-                          : dammaWordExample[index].initial
+                        harakatType == "fatha"
+                          ? fathaWordExample[index].initial 
+                          : harakatType == "kasra"
+                          ? kasraWordExample[index].initial 
+                          : dammaWordExample[index].initial 
                       }
                     />
                     <GeneralCardSm
@@ -756,11 +756,11 @@ const Card = ({
                       title={letterForm[index].final}
                       color="#FD5678"
                       ex={
-                        harakatType == "fatahah"
-                          ? fatahahWordExample[index].middle
-                          : harakatType == "kasara"
-                          ? kasraWordExample[index].middle
-                          : dammaWordExample[index].middle
+                        harakatType == "fatha"
+                          ? fathaWordExample[index].middle 
+                          : harakatType == "kasra"
+                          ? kasraWordExample[index].middle 
+                          : dammaWordExample[index].middle 
                       }
                     />
                     <GeneralCardSm
@@ -769,11 +769,11 @@ const Card = ({
                       title={letterForm[index].final}
                       color="#ECABE1"
                       ex={
-                        harakatType == "fatahah"
-                          ? fatahahWordExample[index].final
-                          : harakatType == "kasara"
-                          ? kasraWordExample[index].final
-                          : dammaWordExample[index].final
+                        harakatType == "fatha"
+                          ? fathaWordExample[index].final 
+                          : harakatType == "kasra"
+                          ? kasraWordExample[index].final 
+                          : dammaWordExample[index].final 
                       }
                     />
                   </div>
@@ -834,16 +834,64 @@ export default function VerticalTabs(props) {
 
   // }
 
-  const [randomColorL, setRandomColorL] = useState("#035124");
-  const [randomColoR, setRandomColorR] = useState("#7fc254");
+  const [randomColorL, setRandomColorL] = useState("#56C3F1");
+  const [randomColorR, setRandomColorR] = useState("#09DBDB");
+  const [selectedOption, setSelectedOption] = useState(0);
 
   const bgStyle = {
     color: "blue",
     ":focus": {
       backgroundColor: randomColorL,
     },
-    mp4: "https://res.cloudinary.com/daftxtnxw/video/upload/v1680602810/2_sqg5aa.mp4",
   };
+
+  const GenerateColor = (index) => {
+    var colors = [
+      "#09DBDB",
+      "#FD5678",
+      "#ECABE1",
+      "#56C3F1",
+      "#05DBB4",
+      "#F56C40",
+      "#865658",
+      "#7fc254",
+      "#B780FE",
+      "#BD5DBF",
+      "#FF7C60",
+    ];
+
+    setSelectedOption(index);
+
+    // selecting random color
+    setRandomColorL(colors[Math.floor(Math.random() * colors.length)]),
+      setRandomColorR(colors[Math.floor(Math.random() * colors.length)]),
+      console.log("random_colorL", randomColorL);
+    console.log("random_colorR", randomColorR);
+  };
+
+  const sliderCardSelected = {
+    fontSize: 40,
+    fontFamily:
+      'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
+    color: "white",
+    borderWidth: 2,
+    borderColor: "white",
+    margin: 10,
+    backgroundColor: randomColorR,   
+    borderRadius: 15,
+  }
+  const sliderCard = {
+    fontSize: 40,
+    fontFamily:
+      'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
+    color: "white",
+    borderWidth: 2,
+    borderColor: "white",
+    margin: 10,
+    // backgroundColor: randomColorR,   
+    borderRadius: 15,
+  }
+
 
   return (
     <Box
@@ -869,27 +917,9 @@ export default function VerticalTabs(props) {
         {Alphabates.map((alphabate) => (
           <Tab
             label={alphabate.letter}
-            onClick={() => {
-              var colors = [
-                "#000",
-                "#004042",
-                "#035124",
-                "#043f38",
-                "#865658",
-                "#7fc254",
-              ];
-
-              // selecting random color
-              setRandomColorL(
-                colors[Math.floor(Math.random() * colors.length)]
-              ),
-                setRandomColorR(
-                  colors[Math.floor(Math.random() * colors.length)]
-                ),
-                console.log("random_colorL", randomColorL);
-              console.log("random_colorR", randomColoR);
-            }}
-            className={`lg:text-4xl text-3xl  py-3 px-0 m-3  w-60  text-white font-bold rounded-lg font-sans  focus:bg-cyan-400 border-2 border-emerald-200`}
+            onClick={() => {GenerateColor(alphabate.index)}}
+            style={selectedOption == alphabate.index ? sliderCardSelected : sliderCard}
+          
             {...a11yProps(alphabate.index)}
             // style={bgStyle}
           />
@@ -920,7 +950,7 @@ export default function VerticalTabs(props) {
             nextUrl={props.nextUrl}
             harakatType={props.harakatType}
             randomColorL={randomColorL}
-            randomColorR={randomColoR}
+            randomColorR={randomColorR}
             mp4={alphabate.mp4}
             gif={alphabate.gif}
           />

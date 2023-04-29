@@ -101,9 +101,9 @@ const index = () => {
             Flip Book pg:3
           </Button>
         </Link> */}
-        <Link href="/teacher/module/harakat/fatahah">
+        <Link href="/teacher/module/harakat">
           <Button className="bg-white text-dark-purple mx-2" variant="contained" endIcon={<ArrowForwardIcon />}>
-            Go to Module 2
+            Go to Next Module
           </Button>
         </Link>
         <Link href={`/teacher/whiteboard`} className="mx-5 ">
@@ -125,6 +125,9 @@ const index = () => {
           <img src={teacherImg.src} className="w-72" alt="" />
         </div>
         <div className="col-span-3 pt-10">
+        <div className="my-2 mx-10 "> 
+          <h1 className="text-4xl text-white font-sans">Module 1 : <span className="text-5xl">Alphabets</span> </h1>
+          </div>
           <div className="p-5  grid grid-cols-7 m-4 justify-center ">
             
             {Alphabates.map((alphabate) => (

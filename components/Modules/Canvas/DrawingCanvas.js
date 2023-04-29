@@ -285,6 +285,7 @@ const DrawingCanvas = (props) => {
     }
 
     const { offsetX, offsetY } = nativeEvent;
+    // event.stopPropagation();
     contextRef.current.lineTo(offsetX, offsetY);
     contextRef.current.stroke();
     nativeEvent.preventDefault();
