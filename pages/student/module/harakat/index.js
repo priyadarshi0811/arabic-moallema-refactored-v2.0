@@ -58,7 +58,7 @@ const positioning = () => {
       }}
     >
       <div className=" w-full p-2 rounded-md  flex flex-row justify-center content-center pt-5">
-        <Link href="/teacher">
+        <Link href="/student">
           <Button
             className="bg-white text-dark-purple mx-2"
             variant="contained"
@@ -72,7 +72,7 @@ const positioning = () => {
           Flip Book pg:3
         </Button>
       </Link> */}
-        <Link href="/teacher/module/alphabets">
+        <Link href="/student/module/alphabets">
           <Button
             className="bg-white text-dark-purple mx-2"
             variant="contained"
@@ -81,7 +81,7 @@ const positioning = () => {
             Previous Module
           </Button>
         </Link>
-        <Link href="/teacher/module/harakat">
+        <Link href="/student/module/harakat">
           <Button
             className="bg-white text-dark-purple mx-2"
             variant="contained"
@@ -90,7 +90,7 @@ const positioning = () => {
             Next Module
           </Button>
         </Link>
-        <Link href={`/teacher/whiteboard`} className="mx-5 ">
+        <Link href={`/student/whiteboard`} className="mx-5 ">
           <IconButton
             aria-label=""
             size="large"
@@ -115,7 +115,7 @@ const positioning = () => {
           <div className="p-5  grid grid-cols-3  w-full justify-center align-middle content-center my-auto ">
             <div className="   mt-6 rounded overflow-hidden  items-center justify-center  py-2 ">
               <Link
-                href={`/teacher/module/harakat/fatha/discription`}
+                href={`/student/module/harakat/fatha/discription`}
                 // onClick={nameHandler}
                 className="font-extrabold text-center text-dark-purple"
               >
@@ -136,7 +136,7 @@ const positioning = () => {
             </div>
             <div className="   mt-6 rounded overflow-hidden  items-center justify-center  py-2 ">
               <Link
-                href={`/teacher/module/harakat/kasra/discription`}
+                href={`/student/module/harakat/kasra/discription`}
                 // onClick={nameHandler}
                 className="font-extrabold text-center text-dark-purple"
               >
@@ -157,7 +157,7 @@ const positioning = () => {
             </div>
             <div className="   mt-6 rounded overflow-hidden  items-center justify-center  py-2 ">
               <Link
-                href={`/teacher/module/harakat/damma/discription`}
+                href={`/student/module/harakat/damma/discription`}
                 // onClick={nameHandler}
                 className="font-extrabold text-center text-dark-purple"
               >
@@ -187,7 +187,7 @@ const positioning = () => {
 export default positioning;
 
 {
-  /* <Link href='/teacher/module/harakat/fatha/discription' className="bg-red-400 text-white py-2 px-5 m-5 rounded-lg">fatha</Link>
-<Link href='/teacher/module/harakat/kasra/discription' className="bg-red-400 text-white py-2 px-5 m-5 rounded-lg">Kasra</Link>
-<Link href='/teacher/module/harakat/damma/discription' className="bg-red-400 text-white py-2 px-5 m-5 rounded-lg">damma</Link> */
+  /* <Link href='/student/module/harakat/fatha/discription' className="bg-red-400 text-white py-2 px-5 m-5 rounded-lg">fatha</Link>
+<Link href='/student/module/harakat/kasra/discription' className="bg-red-400 text-white py-2 px-5 m-5 rounded-lg">Kasra</Link>
+<Link href='/student/module/harakat/damma/discription' className="bg-red-400 text-white py-2 px-5 m-5 rounded-lg">damma</Link> */
 }

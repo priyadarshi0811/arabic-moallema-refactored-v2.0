@@ -14,7 +14,7 @@ import FilterFramesIcon from '@mui/icons-material/FilterFrames';
 const HowToRead = ({ user, screenNo, nextUrl, type }) => {
   const [videoIndex, setVideoIndex] = useState(1);
 
-  /* --------------------------------- fataha --------------------------------- */
+  /* --------------------------------- fathaa --------------------------------- */
   const HFRFST_V1 =
     "https://res.cloudinary.com/daftxtnxw/video/upload/v1680674726/3%20letters/animation_1_ez3s0m.mp4";
   const HFRFST_V2 =

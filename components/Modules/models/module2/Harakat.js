@@ -11,7 +11,7 @@ import GeneralCard from "@/components/Layout/card/GeneralCard";
 import AudioButton from "@/components/Layout/elements/AudioBtn";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import FilterFramesIcon from "@mui/icons-material/FilterFrames";
-import Fatahah from "@/components/src/img/arabic_fatha.png";
+import fathaah from "@/components/src/img/arabic_fatha.png";
 import BatchContext from "@/components/Context/store/batch-context";
 import { fetchAssignmentForLetter } from "@/backend/Assignment/FetchAssignmentDB";
 
@@ -339,13 +339,13 @@ const LetterCardL = ({ label, name, audioUrl, harakatType, randomColor }) => {
 
   return (
     <div className="items-center w-full  overflow-hidden rounded border-2 shadow-lg min:h-fit justify-cente min:w-fit  my-16">
-      {harakatType != "kasara" ? (
+      {harakatType != "kasra" ? (
         <div
           className=" font-bold text-center  text-white h-72   content-center "
           style={{ backgroundColor: randomColor }}
         >
           <img
-            src={Fatahah.src}
+            src={fathaah.src}
             className="w-0 mx-auto mb-0 flex pt-10"
             alt=""
           />
@@ -359,7 +359,7 @@ const LetterCardL = ({ label, name, audioUrl, harakatType, randomColor }) => {
             {label}
           </h2>
           <img
-            src={Fatahah.src}
+            src={fathaah.src}
             className="w-0 mx-auto mb-0 flex pt-10"
             alt=""
           />
@@ -382,13 +382,13 @@ const LetterCardR = ({ label, name, audioUrl, harakatType, randomColor }) => {
   console.log(label, "label");
   return (
     <div className="items-center w-full  overflow-hidden border-2 rounded shadow-lg min:h-fit justify-cente min:w-fit  my-16">
-      {harakatType == "fatahah" ? (
+      {harakatType == "fatha" ? (
         <div
           className=" font-bold text-center  text-white h-72   content-center "
           style={{ backgroundColor: randomColor }}
         >
           <img
-            src={Fatahah.src}
+            src={fathaah.src}
             className="w-20 mx-auto mb-0 flex pt-10"
             alt=""
             style={{ filter: "invert(100%)", color: "purple" }}
@@ -415,7 +415,7 @@ const LetterCardR = ({ label, name, audioUrl, harakatType, randomColor }) => {
             {label}
           </h2>
           <img
-            src={Fatahah.src}
+            src={fathaah.src}
             className="w-20 mx-auto mb-0 flex pb-3"
             alt=""
             style={{ filter: "opacity(50%)", color: "purple" }}
@@ -440,10 +440,10 @@ const SmallCard = ({ disc, title, btnText, link, btnProp, harakatType }) => {
   return (
     <div>
       <div className="items-center max-w-80 border-2 overflow-hidden rounded shadow-lg min:h-fit justify-cente min:w-fit h-full">
-        {harakatType == "fatahah" ? (
+        {harakatType == "fatha" ? (
           <div className="grid content-between grid-cols-1  font-bold text-center bg-dark-purple text-white min-h-64  ">
             <img
-              src={Fatahah.src}
+              src={fathaah.src}
               className="w-8 mx-auto mb-0 pt-3 flex"
               alt=""
               style={{ filter: "invert(100%)" }}
@@ -464,7 +464,7 @@ const SmallCard = ({ disc, title, btnText, link, btnProp, harakatType }) => {
           <div className="grid content-between grid-cols-1  font-bold text-center bg-dark-purple text-white min-h-64  ">
             <h2 className="text-5xl pt-5 font-sans">{title}</h2>
             <img
-              src={Fatahah.src}
+              src={fathaah.src}
               className="w-8 mx-auto mb-0 pb-3 flex"
               alt=""
               style={{ filter: "invert(100%)" }}
@@ -524,7 +524,7 @@ const Card = ({
   //get the assignment for the selected activity
   useEffect(() => {
     const fetchAssignment = async () => {
-      const data = await fetchAssignmentForLetter("Fatah", "harakat");
+      const data = await fetchAssignmentForLetter("fatha", "harakat");
       if (data[0]) {
         setAssignment(data[0].assignment_json.letter);
         if (data[0].assignment_json.letter[0].activity_type === "trace") {
@@ -547,12 +547,12 @@ const Card = ({
   console.log(assignment);
 
   const setActivitySubmodule = async () => {
-    if (activityPath && harakatType === "fatahah") {
-      window.location.href = `/${user}/activity/${activityPath}/harakat/fatahah/${0}`;
+    if (activityPath && harakatType === "fatha") {
+      window.location.href = `/${user}/activity/${activityPath}/harakat/fatha/${0}`;
     }
-    if (activityPath && harakatType === "kasara") {
+    if (activityPath && harakatType === "kasra") {
       console.log("inside kasra");
-      window.location.href = `/${user}/activity/${activityPath}/harakat/kasara/${0}`;
+      window.location.href = `/${user}/activity/${activityPath}/harakat/kasra/${0}`;
     }
     console.log(activityPath);
   };
@@ -640,7 +640,7 @@ const Card = ({
       </div>
       <div className=" w-full p-2 rounded-md  flex flex-row justify-center   pt-3">
         <div className="mx-5">
-          {/* <Link href={`/${user}/activity/match/harakat/Fatah/4`}>
+          {/* <Link href={`/${user}/activity/match/harakat/fatha/4`}>
             <Button
               variant="contained"
               className="text-dark-purple bg-white "

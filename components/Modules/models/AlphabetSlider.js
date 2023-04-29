@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { width } from "@mui/system";
 import { useState } from "react";
+import index from "@/pages/admin";
 
 const Alphabates = [
   { letter: "ا", title: "Alif" },
@@ -86,6 +87,7 @@ export default function VerticalTabs(props) {
 
   // const [letterName, setLetterName] = useState();
   const [styleBg, setStyleBg] = useState("bg-black");
+  const [selectedOption, setSelectedOption] = useState(0);
 
   const changeStyle = () => {
     if (props.id == props.id) {
@@ -100,6 +102,23 @@ export default function VerticalTabs(props) {
   const getSymbol = (symbolValue) => {
     console.log(symbolValue);
     setSymbol(symbolValue);
+  };
+
+  const sliderStyle = {
+    fontSize: 40,
+    padding: 15,
+    borderWidth: 2,
+    borderColor: "white",
+    borderRadius: 100,
+    
+  };
+  const sliderStyleSelected = {
+    fontSize: 40,
+    padding: 15,
+    borderWidth: 2,
+    borderColor: "white",
+    borderRadius: 100,
+    backgroundColor: 'cyan'
   };
 
   return (
@@ -137,9 +156,7 @@ export default function VerticalTabs(props) {
             </Link>
           ))}
         </Tabs>
-      ) : (
-        null
-      )}
+      ) : null}
       {props.type == "alphabets" ? (
         <Tabs
           orientation="vertical"
@@ -158,10 +175,12 @@ export default function VerticalTabs(props) {
           {Alphabates.map((alphabate) => (
             <Link
               href={`/${props.user}/module/${props.type}/${alphabate.title}`}
-              className=" p-0 my-2 rounded-full text-center"
+              className=" p-0 my-2 rounded-full text-center "
             >
               <Tab
-                className={`text-3xl  py-3 px-0 mx-0 text-white font-bold rounded-full font-sans  focus:bg-cyan-400 bg-black`} // ${styleBg}
+              onClick={()=>setSelectedOption(alphabate.letter)}
+                // className={`text-3xl  py-3 px-0 mx-0 text-white font-bold rounded-full font-sans  focus:bg-cyan-400 bg-black`} // ${styleBg}
+                style={selectedOption == alphabate.letter ? sliderStyleSelected : sliderStyle}
                 label={alphabate.letter}
                 id={props.id}
                 sx={{ border: "2px solid white" }}
@@ -170,9 +189,7 @@ export default function VerticalTabs(props) {
             </Link>
           ))}
         </Tabs>
-      ) : (
-        null
-      )}
+      ) : null}
       {props.type == "alphabets" ? (
         <TabPanel value={value} index={0}>
           {props.id && (
@@ -184,15 +201,10 @@ export default function VerticalTabs(props) {
             />
           )}
         </TabPanel>
-      ) : (
-        null
-      )}
+      ) : null}
       {props.type == "tracing" ? (
         <ActivityDetail symbol={symbol} id={props.id} type="LetterTracing" />
-      ) : (
-        null
-      )}
-
+      ) : null}
 
       {/* Module: 2 */}
 
@@ -226,9 +238,7 @@ export default function VerticalTabs(props) {
             </Link>
           ))}
         </Tabs>
-      ) : (
-        null
-      )}
+      ) : null}
       {props.type == "harakat" ? (
         <TabPanel value={value} index={0}>
           {props.id && (
@@ -242,10 +252,7 @@ export default function VerticalTabs(props) {
             // <h1 className="bg-white w-full h-full">Harakat</h1>
           )}
         </TabPanel>
-      ) : (
-        null
-      )}
-
+      ) : null}
 
       {/* {props.type == "tracing" ? (
         <Tabs
@@ -282,7 +289,7 @@ export default function VerticalTabs(props) {
       ) : (
         null
       )} */}
-      
+
       {/* {props.type == "tracing" ? (
         <ActivityDetail symbol={symbol} id={props.id} type="LetterTracing" />
       ) : (
