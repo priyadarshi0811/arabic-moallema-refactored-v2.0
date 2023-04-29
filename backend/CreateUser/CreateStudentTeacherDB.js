@@ -25,7 +25,7 @@ export const addStudentTeacherToDB = async (
   contact,
   typeUser
 ) => {
-  const { errorTable } = await supabase
+  const { data, errorTable } = await supabase
     .from(finalUser)
     .insert({
       email: email,
@@ -34,8 +34,10 @@ export const addStudentTeacherToDB = async (
       type: typeUser,
     })
     .select();
-
-  console.log(errorTable);
+  if (errorTable) {
+    console.log(errorTable);
+  }
+  return data;
 };
 
 export const getStudentId = async (email) => {

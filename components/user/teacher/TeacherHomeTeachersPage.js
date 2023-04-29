@@ -6,11 +6,13 @@ import AuthContext from "@/components/Context/store/auth-context";
 import { fetchTeacherBatches } from "@/backend/Batches/BatchesForTeachersStudentsDB";
 import CardList from "../admin/CardList";
 import { fetchTeachersIdBasedOnEmail } from "@/backend/Teachers/TeacherDB";
+import WarningCard from "@/components/Layout/card/WarningCard";
 // import InProgress from "@/components/Layout/screen/InProgress";
 // import MiniCard from "@/components/Layout/card/MiniCard";
 
 const TeacherHomeTeachersPage = ({ email }) => {
   const [teacherId, setTeacherId] = useState();
+  const [warning, setWarning] = React.useState(false);
 
   const authCtx = useContext(AuthContext);
 
@@ -24,7 +26,6 @@ const TeacherHomeTeachersPage = ({ email }) => {
     getTeacherId();
   }, [email]);
 
-  console.log(teacherId);
   useEffect(() => {
     const teacherBatches = async () => {
       if (teacherId) {
@@ -36,6 +37,14 @@ const TeacherHomeTeachersPage = ({ email }) => {
   }, [teacherId]);
 
   console.log(authCtx.batchesList);
+
+  useEffect(() => {
+    if (authCtx.batchesList && authCtx.batchesList.length > 0) {
+      setWarning(false);
+    } else {
+      setWarning(true);
+    }
+  }, [authCtx.batchesList]);
 
   return (
     <div
@@ -51,6 +60,8 @@ const TeacherHomeTeachersPage = ({ email }) => {
     >
       <div className="flex min-h-screen h-full">
         <div className="flex-1 h-screen p-7  ">
+          {warning && <WarningCard title="No Batches assign to the teacher" />}
+
           <div className="m-0 p-10 w-full h-fit">
             <div className="grid grid-cols-2 lg:grid-cols-3 w-full mx-auto my-10 gap-10">
               {authCtx.batchesList &&

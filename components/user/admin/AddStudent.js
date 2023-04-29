@@ -18,7 +18,10 @@ import Link from "next/link";
 import MultipleSelectChip from "@/components/Layout/elements/MultiChipSelector";
 import { Checkbox, Divider, FormControlLabel, Grid } from "@mui/material";
 import InputWithLable from "@/components/Layout/elements/InputWithLable";
-import { createStudentTeacher } from "@/backend/CreateUser/CreateStudentTeacherDB";
+import {
+  addStudentTeacherToDB,
+  createStudentTeacher,
+} from "@/backend/CreateUser/CreateStudentTeacherDB";
 import { fetchBatchesData } from "@/backend/Announcement/AnnouncementDB";
 import AuthContext from "@/components/Context/store/auth-context";
 import { addStudentToBatch } from "@/backend/Batches/AddStudentToBatchDB";
@@ -130,10 +133,30 @@ export default function AddUser({
           contact,
           batchId,
         })
-        .then((res) => console.log("res: ", res))
+        .then((res) => {
+          console.log("res: ", res);
+
+          const getData = async () => {
+            let finalUser = "students_exp_duplicate";
+            let typeUser = "student";
+            const dataUser = await addStudentTeacherToDB(
+              finalUser,
+              email,
+              name,
+              contact,
+              typeUser
+            );
+            if (dataUser) {
+              addStudentToBatch(dataUser[0].student_id, batchId);
+            }
+            console.log("final data: ", dataUser);
+          };
+          getData();
+        })
         .catch((err) => console.log("error: ", err));
 
       console.log(`User ${data.email} created successfully`);
+
       setIsLoading(false);
       setOpen(false);
       batchCtx.setSubmittedHandler(true);
@@ -279,7 +302,7 @@ export default function AddUser({
             </div>
           </div>
         </FormControl>
-        
+
         <div className="items-center  py-3 text-right mt-2">
           <Button
             onClick={

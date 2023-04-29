@@ -7,7 +7,10 @@ import MultipleSelectChip from "@/components/Layout/elements/MultiChipSelector";
 import InputWithLable from "@/components/Layout/elements/InputWithLable";
 import { Button, Box, Modal } from "@mui/material";
 import RemoveUser from "@/components/Modules/batches/RemoveUser";
-import { createStudentTeacher } from "@/backend/CreateUser/CreateStudentTeacherDB";
+import {
+  addStudentTeacherToDB,
+  createStudentTeacher,
+} from "@/backend/CreateUser/CreateStudentTeacherDB";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import { updateStudentDetail } from "@/backend/Students/StudentDB";
@@ -103,7 +106,25 @@ export default function AddUser({
           name,
           contact,
         })
-        .then((res) => console.log("res: ", res))
+        .then((res) => {
+          console.log("res: ", res);
+
+          const getData = async () => {
+            let finalUser = "teachers_exp_duplicate";
+            let typeUser = "instructor";
+
+            const dataUser = await addStudentTeacherToDB(
+              finalUser,
+              email,
+              name,
+              contact,
+              typeUser
+            );
+
+            console.log("final data: ", dataUser);
+          };
+          getData();
+        })
         .catch((err) => console.log("error: ", err));
 
       console.log(`User ${data.email} created successfully`);
@@ -124,20 +145,6 @@ export default function AddUser({
       updateTeacherDetail(email, name, contact, teacherId);
       batchCtx.setSubmittedHandler(true);
     }
-    // if (userType === "showTeacher") {
-    //   let prevEmail;
-
-    //   setEmail((prev) => {
-    //     prevEmail = prev;
-    //   });
-    //   if (email != prevEmail) {
-    //     console.log(email);
-
-    //     console.log("email changed");
-    //   } else {
-    //     console.log("not changed");
-    //   }
-    // }
   };
 
   const EditEmailHandler = async (e) => {

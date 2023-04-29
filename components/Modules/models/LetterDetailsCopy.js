@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
-import ColorOptions from "@/components/Modules/Canvas/ColorOptions";
-import colorBgImg from "@/components/src/img/MouthImg.png";
-import AudioButton from "@/components/Layout/elements/AudioBtn";
 import Link from "next/link";
 import { Button } from "@mui/material";
-import logo from "@/components/src/img/AMLogo.png";
 import {
   addActivityStartStatus,
   checkActivityStartStatus,
 } from "@/backend/ActivityStartLog/SetActivityLogDB";
 import { fetchBatcheIdBasedOnBatchName } from "@/backend/Batches/BatchesDB";
-import { fetchAssignmentForLetter } from "@/backend/Assignment/FetchAssignmentDB";
+import {
+  checkAssignmentSubmitionStatus,
+  fetchAssignmentForLetter,
+} from "@/backend/Assignment/FetchAssignmentDB";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ReactPlayer from "react-player";
@@ -19,7 +18,18 @@ import GeneralCard from "@/components/Layout/card/GeneralCard";
 import { IconButton } from "@mui/joy";
 import FilterFramesIcon from "@mui/icons-material/FilterFrames";
 
-import Ractangle from "@/components/src/img/Rectangle.png"
+import Ractangle from "@/components/src/img/Rectangle.png";
+import { useContext } from "react";
+import AuthContext from "@/components/Context/store/auth-context";
+import { fetchStudentIdBasedOnEmail } from "@/backend/Students/StudentDB";
+
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+} from "@mui/material";
 
 const LetterDetails = (props) => {
   console.log("user: ", props.user);
@@ -30,12 +40,32 @@ const LetterDetails = (props) => {
   const [batchId, setBatchId] = useState();
   const [assignment, setAssignment] = useState([]);
   const [isStarted, setIsStarted] = useState();
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [showSubmissionWarning, setShowSubmissionWarning] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [studentId, setStudentId] = useState();
+
+  const authCtx = useContext(AuthContext);
+  const userEmail = authCtx.userEmail;
+
+  useEffect(() => {
+    const getId = async () => {
+      if (userEmail) {
+        const data = await fetchStudentIdBasedOnEmail(userEmail);
+        if (data[0]) {
+          setStudentId(data[0].student_id);
+        }
+      }
+    };
+    getId();
+  }, [userEmail]);
+
+  console.log(studentId);
 
   const changeColorPri = (colorData) => {
     //console.log(getColor);
     setColor(colorData);
   };
-  console.log(getColor);
 
   useEffect(() => {
     const getId = async () => {
@@ -48,10 +78,6 @@ const LetterDetails = (props) => {
     };
     getId();
   }, []);
-
-  console.log(batchId);
-  console.log(props.module);
-  console.log(props.name);
 
   //get the assignment for the selected activity
   useEffect(() => {
@@ -97,6 +123,28 @@ const LetterDetails = (props) => {
     getStarted();
   }, [props.name, batchId, props.module]);
 
+  useEffect(() => {
+    const getSubmittedAssignment = async () => {
+      if (batchId && props.module && props.name && studentId) {
+        const data = await checkAssignmentSubmitionStatus(
+          props.module,
+          props.name,
+          batchId,
+          studentId
+        );
+        if (data) {
+          if (data[0]) {
+            setIsSubmitted(true);
+          } else {
+            setIsSubmitted(false);
+          }
+          console.log(data);
+        }
+      }
+    };
+    getSubmittedAssignment();
+  }, [batchId, props.module, props.name, studentId]);
+
   const setActivitySubmodule = async () => {
     if (props.user !== "student" && isStarted === undefined) {
       let data;
@@ -108,7 +156,13 @@ const LetterDetails = (props) => {
         }
       }
     }
-    if (activityPath) {
+
+    if (isSubmitted) {
+      setShowSubmissionWarning(true);
+    }
+    if (activityPath && !isSubmitted) {
+      setShowSubmissionWarning(false);
+
       window.location.href = `/${
         props.user
       }/activity/${activityPath}/alphabets/${props.name}/${0}`;
@@ -161,16 +215,37 @@ const LetterDetails = (props) => {
 
   console.log("mp4", props.mp4);
 
-
-
   return (
     <>
       <div className=" bg-white rounded-3xl w-full mt-5 ml-5">
+        <Dialog
+          open={showSubmissionWarning}
+          onClose={(e) => setShowSubmissionWarning(false)}
+        >
+          <DialogTitle>Assignment Already submitted</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              You have already submitted the assignment
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={(e) => setShowSubmissionWarning(false)}
+              color="primary"
+            >
+              Close
+            </Button>
+          </DialogActions>
+        </Dialog>
         <div className=" w-full p-2 rounded-3xl  flex flex-row justify-between pt-6">
           {/* <img src={logo.src} className="h-14" alt="" />{" "} */}
           <h1
             className="p-3 text-white  rounded-lg text-lg  border-2 border-white bg-dark-purple"
-            style={{ marginLeft: -40, width: 600, backgroundImage: `url(${Ractangle})`,  }}
+            style={{
+              marginLeft: -40,
+              width: 600,
+              backgroundImage: `url(${Ractangle})`,
+            }}
           >
             Arabic Alphabets : {props.name}
             {/* <span className="p-2 bg-green-200 text-dark-purple rounded-md">
@@ -213,7 +288,7 @@ const LetterDetails = (props) => {
                 playing={playing}
                 muted={muted}
                 onEnded={cFunction}
-                  //  onEnded={onEnded}
+                //  onEnded={onEnded}
               />
               <VideoControlBtn
                 onPlayPause={playPauseHandler}

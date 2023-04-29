@@ -11,10 +11,6 @@ export default async function sendEmail(req, res) {
     return res.status(405).end();
   }
   const { email, password, userPath, name, contact, batchId } = req.body;
-  console.log(email);
-  console.log(password);
-  console.log(userPath);
-  console.log("batchId: ", batchId);
 
   let finalUser =
     userPath === "student"
@@ -33,23 +29,33 @@ export default async function sendEmail(req, res) {
     });
 
     //inserting data to student/teacher table
-    setTimeout(() => {
-      addStudentTeacherToDB(finalUser, email, name, contact, typeUser);
-    }, 2000);
+    // setTimeout(() => {
+    //   const getData = async () => {
+    //     const data = await addStudentTeacherToDB(
+    //       finalUser,
+    //       email,
+    //       name,
+    //       contact,
+    //       typeUser
+    //     );
+    //     console.log("final data: ", data);
+    //   };
+    //   getData();
+    // }, 2000);
 
-    if (userPath === "student") {
-      let studentId;
-      setTimeout(() => {
-        const getTid = async () => {
-          const data = await getStudentId(email);
+    // if (userPath === "student") {
+    //   let studentId;
+    //   setTimeout(() => {
+    //     const getTid = async () => {
+    //       const data = await getStudentId(email);
 
-          if (data[0]) {
-            addStudentToBatch(data[0].student_id, batchId);
-          }
-        };
-        getTid();
-      }, 3000);
-    }
+    //       if (data[0]) {
+    //         addStudentToBatch(data[0].student_id, batchId);
+    //       }
+    //     };
+    //     getTid();
+    //   }, 3000);
+    // }
 
     const mailOptions = {
       from: "jatinanjana51@gmail.com",

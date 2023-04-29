@@ -20,6 +20,7 @@ import {
 import { fetchBatchesData } from "@/backend/Announcement/AnnouncementDB";
 import BatchContext from "@/components/Context/store/batch-context";
 import SuccessPrompt from "@/components/Layout/elements/SuccessPrompt";
+import WarningCard from "@/components/Layout/card/WarningCard";
 const style = {
   position: "absolute",
   top: "50%",
@@ -37,6 +38,7 @@ const StudentHome = () => {
   const [error, setError] = React.useState();
 
   const [filteredStudent, setFilteredStudent] = React.useState([]);
+  const [warning, setWarning] = React.useState(false);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -93,7 +95,13 @@ const StudentHome = () => {
   const dataToDisplay =
     filteredStudent.length > 0 ? filteredStudent : authCtx.studentsList;
 
-  console.log("sdf");
+  useEffect(() => {
+    if (dataToDisplay && dataToDisplay.length > 0) {
+      setWarning(false);
+    } else {
+      setWarning(true);
+    }
+  }, [dataToDisplay]);
 
   return (
     <div
@@ -141,6 +149,9 @@ const StudentHome = () => {
               </div>
             </div>
             <Divider variant="middle" />
+            {warning && (
+              <WarningCard title="No student added to the application" />
+            )}
           </div>
           {batchCtx.submitted && !batchCtx.submittedDelete && (
             <SuccessPrompt
