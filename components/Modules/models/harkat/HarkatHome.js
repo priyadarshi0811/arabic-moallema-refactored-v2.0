@@ -90,7 +90,7 @@ const HarkatHome = ({ user }) => {
           <div className="p-5  grid grid-cols-3  w-full justify-center align-middle content-center my-auto ">
             <div className="   mt-6 rounded overflow-hidden  items-center justify-center  py-2 ">
               <Link
-                href={`/${user}/module/harakat/fatahah`}
+                href={`/${user}/module/harakat/fatha/discription`}
                 // onClick={nameHandler}
                 className="font-extrabold text-center text-dark-purple"
               >
@@ -109,7 +109,7 @@ const HarkatHome = ({ user }) => {
             </div>
             <div className="   mt-6 rounded overflow-hidden  items-center justify-center  py-2 ">
               <Link
-                href={`/${user}/module/harakat/kasara`}
+                href={`/${user}/module/harakat/kasra/discription`}
                 // onClick={nameHandler}
                 className="font-extrabold text-center text-dark-purple"
               >
@@ -128,7 +128,7 @@ const HarkatHome = ({ user }) => {
             </div>
             <div className="   mt-6 rounded overflow-hidden  items-center justify-center  py-2 ">
               <Link
-                href={`/${user}/module/harakat/damma`}
+                href={`/${user}/module/harakat/damma/discription`}
                 // onClick={nameHandler}
                 className="font-extrabold text-center text-dark-purple"
               >
@@ -155,7 +155,7 @@ const HarkatHome = ({ user }) => {
 export default HarkatHome;
 
 {
-  /* <Link href='/teacher/module/harakat/fatahah/discription' className="bg-red-400 text-white py-2 px-5 m-5 rounded-lg">Fatah</Link>
-<Link href='/teacher/module/harakat/kasara/discription' className="bg-red-400 text-white py-2 px-5 m-5 rounded-lg">Kasra</Link>
+  /* <Link href='/teacher/module/harakat/fatha/discription' className="bg-red-400 text-white py-2 px-5 m-5 rounded-lg">Fatah</Link>
+<Link href='/teacher/module/harakat/kasra/discription' className="bg-red-400 text-white py-2 px-5 m-5 rounded-lg">Kasra</Link>
 <Link href='/teacher/module/harakat/damma/discription' className="bg-red-400 text-white py-2 px-5 m-5 rounded-lg">damma</Link> */
 }

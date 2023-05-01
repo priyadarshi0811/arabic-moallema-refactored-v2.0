@@ -163,12 +163,11 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module, nextM }) => {
       return;
     }
 
-    if (activityPath && type === "fatha") {
-      window.location.href = `/${user}/activity/${activityPath}/harakat/fatha/${0}`;
-    }
-    if (activityPath && type === "kasra") {
-      console.log("inside kasra");
-      window.location.href = `/${user}/activity/${activityPath}/harakat/kasra/${0}`;
+    if (activityPath && type && !isSubmitted) {
+      setShowSubmissionWarning(false);
+
+      console.log("in type");
+      window.location.href = `/${user}/activity/${activityPath}/harakat/${type}/${0}`;
     }
 
     console.log(activityPath);
@@ -633,80 +632,83 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module, nextM }) => {
                       <>
                         {cardIndex == ex.index ? (
                           <div className=" " style={{ width: "100%" }}>
-                          <div className="grid grid-cols-3   py-10 lg:px-20  shadow-lg rounded-lg mb-5" style={divStyles}>
-                            <div className="col-span-1 border-r-2 border-white ">
-                              <div className=" font-bold text-center lg:mx-10 py-5 lg:py-0  h-62 border-8 border-gray-100 rounded-3xl bg-gray-100 ">
-                                <img
-                                  src={
-                                    ex.image ||
-                                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEaXaItHR4BIfzC3jGoYxHBEje9KVIyHmzYA&usqp=CAU  "
-                                  }
-                                  alt=""
-                                  className="w-full  rounded-3xl"
-                                />
+                            <div
+                              className="grid grid-cols-3   py-10 lg:px-20  shadow-lg rounded-lg mb-5"
+                              style={divStyles}
+                            >
+                              <div className="col-span-1 border-r-2 border-white ">
+                                <div className=" font-bold text-center lg:mx-10 py-5 lg:py-0  h-62 border-8 border-gray-100 rounded-3xl bg-gray-100 ">
+                                  <img
+                                    src={
+                                      ex.image ||
+                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEaXaItHR4BIfzC3jGoYxHBEje9KVIyHmzYA&usqp=CAU  "
+                                    }
+                                    alt=""
+                                    className="w-full  rounded-3xl"
+                                  />
+                                </div>
+                              </div>
+                              <div className="col-span-2">
+                                <div className=" h-fit p-10 ">
+                                  <h2 className="text-5xl font-sans text-dark-purple  py-8">
+                                    {ex.word}
+                                  </h2>
+                                  <h2 className="text-3xl font-sans text-dark-purple  pb-8">
+                                    {ex.meaning}
+                                  </h2>
+                                </div>
                               </div>
                             </div>
-                            <div className="col-span-2">
-                              <div className=" h-fit p-10 ">
-                                <h2 className="text-5xl font-sans text-dark-purple  py-8">
-                                  {ex.word}
-                                </h2>
-                                <h2 className="text-3xl font-sans text-dark-purple  pb-8">
-                                  {ex.meaning}
-                                </h2>
-                              </div>
-                            </div>
-                          </div>
 
-                          <div className="w-full my-3 flex justify-center">
-                            {cardIndex > 0 ? (
-                              <Button
-                                variant="contained"
-                                className="bg-white text-dark-purple mr-3"
-                                startIcon={<ArrowBackIcon />}
-                                onClick={() => {
-                                  setCardIndex(cardIndex - 1);
-                                   GenerateColor()
-                                }}
-                              >
-                                Pre
-                              </Button>
-                            ) : null}
-                            {cardIndex < maxIndexKasra ? (
-                              <Button
-                                variant="contained"
-                                className="bg-white text-dark-purple"
-                                endIcon={<ArrowForwardIcon />}
-                                onClick={() => {
-                                  setCardIndex(cardIndex + 1);
-                                  GenerateColor()
-                                }}
-                              >
-                                Next
-                              </Button>
-                            ) : (
-                              <>
+                            <div className="w-full my-3 flex justify-center">
+                              {cardIndex > 0 ? (
                                 <Button
-                                  onClick={setActivitySubmodule}
                                   variant="contained"
-                                  className="text-dark-purple bg-white mr-3"
+                                  className="bg-white text-dark-purple mr-3"
+                                  startIcon={<ArrowBackIcon />}
+                                  onClick={() => {
+                                    setCardIndex(cardIndex - 1);
+                                    GenerateColor();
+                                  }}
                                 >
-                                  Activity
+                                  Pre
                                 </Button>
-                                <Link
-                                  href={`/${user}/module/harakat/${nextM}`}
+                              ) : null}
+                              {cardIndex < maxIndexKasra ? (
+                                <Button
+                                  variant="contained"
+                                  className="bg-white text-dark-purple"
+                                  endIcon={<ArrowForwardIcon />}
+                                  onClick={() => {
+                                    setCardIndex(cardIndex + 1);
+                                    GenerateColor();
+                                  }}
                                 >
+                                  Next
+                                </Button>
+                              ) : (
+                                <>
                                   <Button
+                                    onClick={setActivitySubmodule}
                                     variant="contained"
-                                    className="text-dark-purple bg-white"
+                                    className="text-dark-purple bg-white mr-3"
                                   >
-                                    Next Module
+                                    Activity
                                   </Button>
-                                </Link>
-                              </>
-                            )}
+                                  <Link
+                                    href={`/${user}/module/harakat/${nextM}`}
+                                  >
+                                    <Button
+                                      variant="contained"
+                                      className="text-dark-purple bg-white"
+                                    >
+                                      Next Module
+                                    </Button>
+                                  </Link>
+                                </>
+                              )}
+                            </div>
                           </div>
-                        </div>
                         ) : null}
                       </>
                     ))
@@ -714,80 +716,83 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module, nextM }) => {
                       <>
                         {cardIndex == ex.index ? (
                           <div className=" " style={{ width: "100%" }}>
-                          <div className="grid grid-cols-3   py-10 lg:px-20  shadow-lg rounded-lg mb-5" style={divStyles}>
-                            <div className="col-span-1 border-r-2 border-white ">
-                              <div className=" font-bold text-center lg:mx-10 py-5 lg:py-0  h-62 border-8 border-gray-100 rounded-3xl bg-gray-100 ">
-                                <img
-                                  src={
-                                    ex.image ||
-                                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEaXaItHR4BIfzC3jGoYxHBEje9KVIyHmzYA&usqp=CAU  "
-                                  }
-                                  alt=""
-                                  className="w-full  rounded-3xl"
-                                />
+                            <div
+                              className="grid grid-cols-3   py-10 lg:px-20  shadow-lg rounded-lg mb-5"
+                              style={divStyles}
+                            >
+                              <div className="col-span-1 border-r-2 border-white ">
+                                <div className=" font-bold text-center lg:mx-10 py-5 lg:py-0  h-62 border-8 border-gray-100 rounded-3xl bg-gray-100 ">
+                                  <img
+                                    src={
+                                      ex.image ||
+                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEaXaItHR4BIfzC3jGoYxHBEje9KVIyHmzYA&usqp=CAU  "
+                                    }
+                                    alt=""
+                                    className="w-full  rounded-3xl"
+                                  />
+                                </div>
+                              </div>
+                              <div className="col-span-2">
+                                <div className=" h-fit p-10 ">
+                                  <h2 className="text-5xl font-sans text-dark-purple  py-8">
+                                    {ex.word}
+                                  </h2>
+                                  <h2 className="text-3xl font-sans text-dark-purple  pb-8">
+                                    {ex.meaning}
+                                  </h2>
+                                </div>
                               </div>
                             </div>
-                            <div className="col-span-2">
-                              <div className=" h-fit p-10 ">
-                                <h2 className="text-5xl font-sans text-dark-purple  py-8">
-                                  {ex.word}
-                                </h2>
-                                <h2 className="text-3xl font-sans text-dark-purple  pb-8">
-                                  {ex.meaning}
-                                </h2>
-                              </div>
-                            </div>
-                          </div>
 
-                          <div className="w-full my-3 flex justify-center">
-                            {cardIndex > 0 ? (
-                              <Button
-                                variant="contained"
-                                className="bg-white text-dark-purple mr-3"
-                                startIcon={<ArrowBackIcon />}
-                                onClick={() => {
-                                  setCardIndex(cardIndex - 1);
-                                   GenerateColor()
-                                }}
-                              >
-                                Pre
-                              </Button>
-                            ) : null}
-                            {cardIndex < maxIndexDamma ? (
-                              <Button
-                                variant="contained"
-                                className="bg-white text-dark-purple"
-                                endIcon={<ArrowForwardIcon />}
-                                onClick={() => {
-                                  setCardIndex(cardIndex + 1);
-                                  GenerateColor()
-                                }}
-                              >
-                                Next
-                              </Button>
-                            ) : (
-                              <>
+                            <div className="w-full my-3 flex justify-center">
+                              {cardIndex > 0 ? (
                                 <Button
-                                  onClick={setActivitySubmodule}
                                   variant="contained"
-                                  className="text-dark-purple bg-white mr-3"
+                                  className="bg-white text-dark-purple mr-3"
+                                  startIcon={<ArrowBackIcon />}
+                                  onClick={() => {
+                                    setCardIndex(cardIndex - 1);
+                                    GenerateColor();
+                                  }}
                                 >
-                                  Activity
+                                  Pre
                                 </Button>
-                                <Link
-                                  href={`/${user}/module/harakat/${nextM}`}
+                              ) : null}
+                              {cardIndex < maxIndexDamma ? (
+                                <Button
+                                  variant="contained"
+                                  className="bg-white text-dark-purple"
+                                  endIcon={<ArrowForwardIcon />}
+                                  onClick={() => {
+                                    setCardIndex(cardIndex + 1);
+                                    GenerateColor();
+                                  }}
                                 >
+                                  Next
+                                </Button>
+                              ) : (
+                                <>
                                   <Button
+                                    onClick={setActivitySubmodule}
                                     variant="contained"
-                                    className="text-dark-purple bg-white"
+                                    className="text-dark-purple bg-white mr-3"
                                   >
-                                    Next Module
+                                    Activity
                                   </Button>
-                                </Link>
-                              </>
-                            )}
+                                  <Link
+                                    href={`/${user}/module/harakat/${nextM}`}
+                                  >
+                                    <Button
+                                      variant="contained"
+                                      className="text-dark-purple bg-white"
+                                    >
+                                      Next Module
+                                    </Button>
+                                  </Link>
+                                </>
+                              )}
+                            </div>
                           </div>
-                        </div>
                         ) : null}
                       </>
                     ))}

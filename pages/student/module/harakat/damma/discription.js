@@ -5,41 +5,41 @@ import FullCard from "@/components/Layout/card/FullCard";
 import AudioButton from "@/components/Layout/elements/AudioBtn";
 import Link from "next/link";
 import { Button } from "@mui/material";
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import { useContext } from "react";
 import AuthContext from "@/components/Context/store/auth-context";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
 const positioning = () => {
-
   const authCtx = useContext(AuthContext);
   const router = useRouter();
 
-  /**************Restricting Teachers Route************************* */
+  /**************Restricting Students Route************************* */
   const loggedIn = authCtx.isLoggedIn;
-  const typeTeacher = authCtx.userType === "instructor" ? true : false;
-  if (!typeTeacher && loggedIn) {
+
+  const typeStudent = authCtx.userType === "student" ? true : false;
+  if (!typeStudent && loggedIn) {
     router.replace("/");
   }
 
   useEffect(() => {
     console.log("in");
-    if (typeTeacher && loggedIn) {
-      if (!typeTeacher && !loggedIn) {
+    if (typeStudent && loggedIn) {
+      if (!typeStudent && !loggedIn) {
         console.log("second in");
         router.replace("/");
       }
     }
     const localType = localStorage.getItem("type");
-    if (localType !== "instructor") {
+    if (localType !== "student") {
       console.log("second in");
       router.replace("/");
     }
-  }, [loggedIn, typeTeacher]);
-  /**************Restricting Teachers Route************************* */
+  }, [loggedIn, typeStudent]);
 
-  
+  /**************Restricting Students Route************************* */
+
   return (
     <div
       className="p-10 "
@@ -53,8 +53,8 @@ const positioning = () => {
       }}
     >
       <div className="bg-white rounded-3xl">
-      <div className=" w-full p-5 rounded-md  flex flex-row justify-between    pt-10">
-      <h1
+        <div className=" w-full p-5 rounded-md  flex flex-row justify-between    pt-10">
+          <h1
             className="p-3 text-white bg-dark-purple rounded-lg text-lg  border-2 border-white"
             style={{ marginLeft: -40, width: 600 }}
           >
@@ -63,45 +63,55 @@ const positioning = () => {
             {props.name} " {props.symbol} "
           </span> */}
           </h1>
-        <div>
-         
-
-          <Link href="" className="mx-5">
-            <Button
-              variant="contained" 
-              className="bg-cyan-200 text-dark-purple"
-              // startIcon={<ArrowBackIcon />}
-            >
-              Back To Main Module
-            </Button>
-          </Link>
-        </div>
-      </div>
-      <div className="p-10">
-      <div className="mx-10  bg-dark-purple   text-center text-dark-purple h-full rounded-3xl  ">
-          <div className="bg-dark-purple rounded-3xl">
-            <h1 className="text-9xl pb-5 text-white ">ــُـ</h1>
-            {/* <h1 className="text-3xl pt-2 my-2">Fatha</h1> */}
-          </div>
-          <div className="bg-white rounded-3xl border-b-8 border-cyan-400">
-            {" "}
-            <p className="py-5 text-lg font-medium">
-            The damma in phonics is the short /u/ sound. It is an exact replica of the letterو /waaw/, but smaller. The damma in Arabic is ضمة and it looks like this on top of the consonant: ُ
-One of the many meanings of damma is to piece together in a cuddle-like way, and this is what it does to a letter. For example, the letter ك is pronounced /saf/. With the addition of the damma, it becomes كُ pronounced /ku/. It feels like it has been cuddled in.
-You probably already guessed it, but the Arabic damma comes from the long vowel و pronounced ū/ as in “soon.” Let’s look at an example:
-
-WordWith HarakatTransliterationMeaningكتبكُتُب/kotob/Books
-            </p>
+          <div>
+            <Link href="" className="mx-5">
+              <Button
+                variant="contained"
+                className="bg-cyan-200 text-dark-purple"
+                // startIcon={<ArrowBackIcon />}
+              >
+                Back To Main Module
+              </Button>
+            </Link>
           </div>
         </div>
-       
-        
-        <div className="mt-5 w-full flex justify-center">
-            <Link href ='/student/module/harakat/damma'><Button variant="contained" className="bg-white text-dark-purple"  endIcon={<NavigateNextIcon />} >Start</Button></Link>
+        <div className="p-10">
+          <div className="mx-10  bg-dark-purple   text-center text-dark-purple h-full rounded-3xl  ">
+            <div className="bg-dark-purple rounded-3xl">
+              <h1 className="text-9xl pb-5 text-white ">ــُـ</h1>
+              {/* <h1 className="text-3xl pt-2 my-2">Fatha</h1> */}
+            </div>
+            <div className="bg-white rounded-3xl border-b-8 border-cyan-400">
+              {" "}
+              <p className="py-5 text-lg font-medium">
+                The damma in phonics is the short /u/ sound. It is an exact
+                replica of the letterو /waaw/, but smaller. The damma in Arabic
+                is ضمة and it looks like this on top of the consonant: ُ One of
+                the many meanings of damma is to piece together in a cuddle-like
+                way, and this is what it does to a letter. For example, the
+                letter ك is pronounced /saf/. With the addition of the damma, it
+                becomes كُ pronounced /ku/. It feels like it has been cuddled
+                in. You probably already guessed it, but the Arabic damma comes
+                from the long vowel و pronounced ū/ as in “soon.” Let’s look at
+                an example: WordWith
+                HarakatTransliterationMeaningكتبكُتُب/kotob/Books
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-5 w-full flex justify-center">
+            <Link href="/student/module/harakat/damma">
+              <Button
+                variant="contained"
+                className="bg-white text-dark-purple"
+                endIcon={<NavigateNextIcon />}
+              >
+                Start
+              </Button>
+            </Link>
+          </div>
         </div>
       </div>
-      </div>
-       
     </div>
   );
 };

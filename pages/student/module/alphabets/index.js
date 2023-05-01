@@ -8,12 +8,12 @@ import TopTitleWithImg from "@/components/Layout/section/TopTitleWithImg";
 import HomeActivityCard from "@/components/Layout/card/HomeActivityCard";
 import logo from "@/components/src/img/AMLogo.png";
 import { Button, IconButton } from "@mui/material";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import FilterFramesIcon from '@mui/icons-material/FilterFrames';
+import FilterFramesIcon from "@mui/icons-material/FilterFrames";
 import AuthContext from "@/components/Context/store/auth-context";
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 const Alphabates = [
   { letter: "خ", title: "Khaa" },
@@ -51,31 +51,32 @@ const index = () => {
 
   const router = useRouter();
   const authCtx = useContext(AuthContext);
-  
-  /**************Restricting Teachers Route************************* */
+
+  /**************Restricting Students Route************************* */
   const loggedIn = authCtx.isLoggedIn;
-  const typeTeacher = authCtx.userType === "instructor" ? true : false;
-  if (!typeTeacher && loggedIn) {
+
+  const typeStudent = authCtx.userType === "student" ? true : false;
+  if (!typeStudent && loggedIn) {
     router.replace("/");
   }
 
   useEffect(() => {
     console.log("in");
-    if (typeTeacher && loggedIn) {
-      if (!typeTeacher && !loggedIn) {
+    if (typeStudent && loggedIn) {
+      if (!typeStudent && !loggedIn) {
         console.log("second in");
         router.replace("/");
       }
     }
     const localType = localStorage.getItem("type");
-    if (localType !== "instructor") {
+    if (localType !== "student") {
       console.log("second in");
       router.replace("/");
     }
-  }, [loggedIn, typeTeacher]);
+  }, [loggedIn, typeStudent]);
 
-  /**************Restricting Teachers Route************************* */
-  
+  /**************Restricting Students Route************************* */
+
   return (
     <div
       className=""
@@ -88,11 +89,13 @@ const index = () => {
         minHeight: "100vh",
       }}
     >
-      
       <div className=" w-full p-2 rounded-md  flex flex-row justify-center content-center pt-5">
-    
         <Link href="/student">
-          <Button className="bg-white text-dark-purple mx-2" variant="contained" startIcon={<ArrowBackIcon />}>
+          <Button
+            className="bg-white text-dark-purple mx-2"
+            variant="contained"
+            startIcon={<ArrowBackIcon />}
+          >
             Back to Dashboard
           </Button>
         </Link>
@@ -102,19 +105,23 @@ const index = () => {
           </Button>
         </Link> */}
         <Link href="/student/module/harakat">
-          <Button className="bg-white text-dark-purple mx-2" variant="contained" endIcon={<ArrowForwardIcon />}>
+          <Button
+            className="bg-white text-dark-purple mx-2"
+            variant="contained"
+            endIcon={<ArrowForwardIcon />}
+          >
             Go to Next Module
           </Button>
         </Link>
         <Link href={`/student/whiteboard`} className="mx-5 ">
-            <IconButton
-              aria-label=""
-              size="large"
-              className="bg-white text-dark-purple rounded-full hover:bg-gray-200 p-1.5 "
-            >
-              <FilterFramesIcon />
-            </IconButton>
-          </Link>
+          <IconButton
+            aria-label=""
+            size="large"
+            className="bg-white text-dark-purple rounded-full hover:bg-gray-200 p-1.5 "
+          >
+            <FilterFramesIcon />
+          </IconButton>
+        </Link>
       </div>
       {/* <div className=" w-full p-2 rounded-md  flex flex-row justify-center content-center pt-5">
           <img src={logo.src} className="h-14" alt="" />{" "}
@@ -125,17 +132,18 @@ const index = () => {
           <img src={teacherImg.src} className="w-72" alt="" />
         </div>
         <div className="col-span-3 pt-10">
-        <div className="my-2 mx-10 "> 
-          <h1 className="text-4xl text-white font-sans">Module 1 : <span className="text-5xl">Alphabets</span> </h1>
+          <div className="my-2 mx-10 ">
+            <h1 className="text-4xl text-white font-sans">
+              Module 1 : <span className="text-5xl">Alphabets</span>{" "}
+            </h1>
           </div>
           <div className="p-5  grid grid-cols-7 m-4 justify-center ">
-            
             {Alphabates.map((alphabate) => (
               <HomeActivityCard
                 name={alphabate.letter}
                 title={alphabate.title}
                 letter={setLetterName}
-                link='alphabets'
+                link="alphabets"
               />
             ))}
           </div>

@@ -59,9 +59,9 @@ const Modules_Option = {
     { letter: "ك", title: "Kaaf" },
   ],
   harakat: [
-    { id: 1, title: "fatahah" },
+    { id: 1, title: "fatha" },
     { id: 2, title: "damma" },
-    { id: 3, title: "kasara" },
+    { id: 3, title: "kasra" },
   ],
 };
 
