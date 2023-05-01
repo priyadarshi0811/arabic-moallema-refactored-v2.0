@@ -2,15 +2,15 @@ import * as React from "react";
 import IconButton from "@mui/material/IconButton";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import { Button } from "@mui/material";
-export default function BackButton(props) {
+export default function BackButton({isBtn, btn}) {
   const back = () => {
     history.back();
   };
 
   return (
     <>
-    {props.isBtn == 'true' ? ( <Button variant="contained" className="p-0  bg-dark-purple" startIcon={<KeyboardBackspaceIcon />}>
-        {props.btn} 
+    {isBtn == 'true' ? ( <Button variant="contained" className="p-0  bg-dark-purple" startIcon={<KeyboardBackspaceIcon />}>
+        {btn} 
       </Button>) : (
       <IconButton
         className=" "

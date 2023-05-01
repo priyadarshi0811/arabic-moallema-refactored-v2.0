@@ -107,7 +107,7 @@ const Card = ({
           </span> */}
           </h1>
           <div className="flex content-center">
-            <Link href={`/teacher/whiteboard`} className="mx-5 ">
+            <Link href={`/teacher/whiteboard`} className="mx-3 ">
               <IconButton
                 aria-label="delete"
                 size="large"
@@ -117,7 +117,16 @@ const Card = ({
               </IconButton>
             </Link>
 
-            <Link href={`/${user}/module/alphabets`} className="mx-5 ">
+            <Link href={`/${user}/module/alphabets`} className="mx-2 ">
+              <Button
+                variant="contained"
+                className="bg-cyan-200 text-dark-purple"
+                startIcon={<ArrowBackIcon />}
+              >
+                Main Module
+              </Button>
+            </Link>
+            <Link href={`/${user}/module/alphabets/Alif`} className="mx-2 ">
               <Button
                 variant="contained"
                 className="bg-cyan-200 text-dark-purple"

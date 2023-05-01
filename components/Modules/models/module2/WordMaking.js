@@ -683,6 +683,7 @@ const Card = ({
   nextUrl,
   type,
   bgColor,
+  preM,
 }) => {
   console.log("Card", word, initial, middle, final);
   return (
@@ -700,26 +701,34 @@ const Card = ({
             {props.name} " {props.symbol} "
           </span> */}
           </h1>
-          <div>
-            {user == "teacher" ? (
-              <Link href={`/teacher/whiteboard`} className="">
-                <IconButton
-                  aria-label="delete"
-                  size="large"
-                  className="bg-cyan-200 text-dark-purple hover:bg-gray-200"
-                >
-                  <FilterFramesIcon />
-                </IconButton>
-              </Link>
-            ) : null}
+          <div className="flex content-center">
+            <Link href={`/teacher/whiteboard`} className="mx-3 ">
+              <IconButton
+                aria-label="delete"
+                size="large"
+                className="bg-cyan-200 text-dark-purple rounded-full hover:bg-gray-200 p-2 "
+              >
+                <FilterFramesIcon />
+              </IconButton>
+            </Link>
 
-            <Link href={`/${user}/module/harakat/${type}`} className="mx-5">
+            <Link href={`/${user}/module/hatrakat`} className="mx-3 ">
               <Button
                 variant="contained"
-                className="bg-cyan-200 text-dark-purple"
+                className="bg-cyan-200 text-dark-purple h-10"
                 startIcon={<ArrowBackIcon />}
               >
-                Back To Main Module
+                Home Module
+              </Button>
+            </Link>
+
+            <Link href={`/${user}/module/harakat/${preM}`} className="mx-2 ">
+              <Button
+                variant="contained"
+                className="bg-cyan-200 text-dark-purple h-10"
+                startIcon={<ArrowBackIcon />}
+              >
+                Back
               </Button>
             </Link>
           </div>
@@ -742,7 +751,7 @@ const Card = ({
                           style={{
                             fontFamily:
                               '"Geeza Pro", "Nadeem", "Al Bayan", "DecoType Naskh", "DejaVu Serif", "STFangsong", "STHeiti", "STKaiti", "STSong", "AB AlBayan", "AB Geeza", "AB Kufi", "DecoType Naskh", "Aldhabi", "Andalus", "Sakkal Majalla", "Simplified Arabic", "Traditional Arabic", "Arabic Typesetting", "Urdu Typesetting", "Droid Naskh", "Droid Kufi", "Roboto", "Tahoma", "Times New Roman", "Arial", serif',
-                              fontWeight:500
+                            fontWeight: 500,
                           }}
                         >
                           <span className="mx-10">{final}</span>
@@ -750,7 +759,11 @@ const Card = ({
                           <span className="mx-10">{initial}</span>
                         </h2>
                       ) : (
-                        <h2 className="text-7xl font-sans flex justify-center content-center pb-12 pt-10">
+                        <h2 className="text-7xl flex justify-center content-center pb-12 pt-10" style={{
+                          fontFamily:
+                            '"Geeza Pro", "Nadeem", "Al Bayan", "DecoType Naskh", "DejaVu Serif", "STFangsong", "STHeiti", "STKaiti", "STSong", "AB AlBayan", "AB Geeza", "AB Kufi", "DecoType Naskh", "Aldhabi", "Andalus", "Sakkal Majalla", "Simplified Arabic", "Traditional Arabic", "Arabic Typesetting", "Urdu Typesetting", "Droid Naskh", "Droid Kufi", "Roboto", "Tahoma", "Times New Roman", "Arial", serif',
+                          fontWeight: 500,
+                        }}>
                           <span className="mx-10">{final}</span>
                           <span className="mx-10">{initial}</span>
                         </h2>
@@ -792,7 +805,7 @@ const Card = ({
   );
 };
 
-export default function VerticalTabs({ wordType, user, type, nextUrl }) {
+export default function VerticalTabs({ wordType, user, type, nextUrl, preM }) {
   const [value, setValue] = React.useState(0);
 
   React.useEffect(() => {
@@ -841,7 +854,7 @@ export default function VerticalTabs({ wordType, user, type, nextUrl }) {
   const sliderCardSelected = {
     fontSize: 40,
     fontFamily:
-    '"Geeza Pro", "Nadeem", "Al Bayan", "DecoType Naskh", "DejaVu Serif", "STFangsong", "STHeiti", "STKaiti", "STSong", "AB AlBayan", "AB Geeza", "AB Kufi", "DecoType Naskh", "Aldhabi", "Andalus", "Sakkal Majalla", "Simplified Arabic", "Traditional Arabic", "Arabic Typesetting", "Urdu Typesetting", "Droid Naskh", "Droid Kufi", "Roboto", "Tahoma", "Times New Roman", "Arial", serif',
+      '"Geeza Pro", "Nadeem", "Al Bayan", "DecoType Naskh", "DejaVu Serif", "STFangsong", "STHeiti", "STKaiti", "STSong", "AB AlBayan", "AB Geeza", "AB Kufi", "DecoType Naskh", "Aldhabi", "Andalus", "Sakkal Majalla", "Simplified Arabic", "Traditional Arabic", "Arabic Typesetting", "Urdu Typesetting", "Droid Naskh", "Droid Kufi", "Roboto", "Tahoma", "Times New Roman", "Arial", serif',
     color: "white",
     borderWidth: 2,
     borderColor: "white",
@@ -852,7 +865,7 @@ export default function VerticalTabs({ wordType, user, type, nextUrl }) {
   const sliderCard = {
     fontSize: 40,
     fontFamily:
-    '"Geeza Pro", "Nadeem", "Al Bayan", "DecoType Naskh", "DejaVu Serif", "STFangsong", "STHeiti", "STKaiti", "STSong", "AB AlBayan", "AB Geeza", "AB Kufi", "DecoType Naskh", "Aldhabi", "Andalus", "Sakkal Majalla", "Simplified Arabic", "Traditional Arabic", "Arabic Typesetting", "Urdu Typesetting", "Droid Naskh", "Droid Kufi", "Roboto", "Tahoma", "Times New Roman", "Arial", serif',
+      '"Geeza Pro", "Nadeem", "Al Bayan", "DecoType Naskh", "DejaVu Serif", "STFangsong", "STHeiti", "STKaiti", "STSong", "AB AlBayan", "AB Geeza", "AB Kufi", "DecoType Naskh", "Aldhabi", "Andalus", "Sakkal Majalla", "Simplified Arabic", "Traditional Arabic", "Arabic Typesetting", "Urdu Typesetting", "Droid Naskh", "Droid Kufi", "Roboto", "Tahoma", "Times New Roman", "Arial", serif',
     color: "white",
     borderWidth: 2,
     borderColor: "white",
@@ -893,7 +906,6 @@ export default function VerticalTabs({ wordType, user, type, nextUrl }) {
                     ? alphabate.kasraWord
                     : alphabate.dammaWord
                 }
-                
                 onClick={() => {
                   GenerateColor(alphabate.index);
                 }}
@@ -939,6 +951,7 @@ export default function VerticalTabs({ wordType, user, type, nextUrl }) {
                   nextUrl={nextUrl}
                   type={type}
                   bgColor={randomColorL}
+                  preM={preM}
                 />
               ) : null}
               {type == "kasra" ? (
@@ -952,6 +965,7 @@ export default function VerticalTabs({ wordType, user, type, nextUrl }) {
                   nextUrl={nextUrl}
                   type={type}
                   bgColor={randomColorL}
+                  preM={preM}
                 />
               ) : null}
               {type == "damma" ? (
@@ -965,6 +979,7 @@ export default function VerticalTabs({ wordType, user, type, nextUrl }) {
                   nextUrl={nextUrl}
                   type={type}
                   bgColor={randomColorL}
+                  preM={preM}
                 />
               ) : null}
             </TabPanel>
@@ -1030,6 +1045,7 @@ export default function VerticalTabs({ wordType, user, type, nextUrl }) {
                   nextUrl={nextUrl}
                   type={type}
                   bgColor={randomColorL}
+                  preM={preM}
                 />
               ) : null}
               {type == "kasra" ? (
@@ -1043,6 +1059,7 @@ export default function VerticalTabs({ wordType, user, type, nextUrl }) {
                   nextUrl={nextUrl}
                   type={type}
                   bgColor={randomColorL}
+                  preM={preM}
                 />
               ) : null}
               {type == "damma" ? (
@@ -1056,6 +1073,7 @@ export default function VerticalTabs({ wordType, user, type, nextUrl }) {
                   nextUrl={nextUrl}
                   type={type}
                   bgColor={randomColorL}
+                  preM={preM}
                 />
               ) : null}
             </TabPanel>

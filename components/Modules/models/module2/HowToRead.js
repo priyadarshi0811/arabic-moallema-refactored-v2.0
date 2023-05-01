@@ -9,9 +9,9 @@ import VideoWithBtn from "@/components/Layout/elements/VideoWithBtn";
 import ReactPlayer from "react-player";
 import VideoControlBtn from "@/components/Layout/elements/VideoControlBtn";
 import { useState } from "react";
-import FilterFramesIcon from '@mui/icons-material/FilterFrames';
+import FilterFramesIcon from "@mui/icons-material/FilterFrames";
 
-const HowToRead = ({ user, screenNo, nextUrl, type }) => {
+const HowToRead = ({ user, screenNo, nextUrl, harakatType, preM }) => {
   const [videoIndex, setVideoIndex] = useState(1);
 
   /* --------------------------------- fathaa --------------------------------- */
@@ -68,12 +68,11 @@ const HowToRead = ({ user, screenNo, nextUrl, type }) => {
     // background: 'rgba(225, 225, 225, 0.9)',
     background: `url(${WhiteBG.src})`,
     // opacity: '0.95',
-    filter: 'drop-shadow(0px 4px 53px rgba(0, 52, 73, 0.25))',
-    borderRadius: '70px',
-    backgroundColor: '#F5F5F5',
-    backgroundRepeat: 'repeat',
-    
-  }
+    filter: "drop-shadow(0px 4px 53px rgba(0, 52, 73, 0.25))",
+    borderRadius: "70px",
+    backgroundColor: "#F5F5F5",
+    backgroundRepeat: "repeat",
+  };
 
   return (
     <div
@@ -89,43 +88,52 @@ const HowToRead = ({ user, screenNo, nextUrl, type }) => {
     >
       {" "}
       <div className="mx-10 pt-2 rounded-3xl bg-white " style={cardBg}>
-      <div className=" w-full p-5 rounded-md  flex flex-row justify-between   pt-10" >
-       
-        <h1
+        <div className=" w-full p-5 rounded-md  flex flex-row justify-between   pt-10">
+          <h1
             className="p-3 text-white bg-dark-purple rounded-lg text-lg  border-2 border-white"
             style={{ marginLeft: -40, width: 600 }}
           >
-             Arabic Alphabets : How to Read
+            Arabic Alphabets : How to Read
             {/* <span className="p-2 bg-green-200 text-dark-purple rounded-md">
             {props.name} " {props.symbol} "
           </span> */}
           </h1>
-        <div>
-          {user == "teacher" ? (
-            <Link href={`/teacher/whiteboard`} className="" >
+          <div className="flex content-center">
+            <Link href={`/teacher/whiteboard`} className="mx-3 ">
               <IconButton
                 aria-label="delete"
                 size="large"
-                className="bg-cyan-200 text-dark-purple hover:bg-gray-200"
+                className="bg-cyan-200 text-dark-purple rounded-full hover:bg-gray-200 p-2 "
               >
                 <FilterFramesIcon />
               </IconButton>
             </Link>
-          ) : null}
 
-          <Link href={`/${user}/module/harakat/${type}`} className="mx-5">
-            <Button
-              variant="contained"
-              className="bg-cyan-200 text-dark-purple"
-              startIcon={<ArrowBackIcon />}
+            <Link href={`/${user}/module/harakat`} className="mx-3 ">
+              <Button
+                variant="contained"
+                className="bg-cyan-200 text-dark-purple h-10"
+                startIcon={<ArrowBackIcon />}
+              >
+                Home Module
+              </Button>
+            </Link>
+            <Link
+              href={`/${user}/module/harakat/${preM}`}
+              className="mx-2 "
             >
-              Back To Main Module
-            </Button>
-          </Link>
-        </div>  
-      </div>
+              <Button
+                variant="contained"
+                className="bg-cyan-200 text-dark-purple h-10"
+                startIcon={<ArrowBackIcon />}
+              >
+                Back
+              </Button>
+            </Link>
+          </div>
+        </div>
         <div className="w-full  ">
-          <div className="  rounded-md w-full mt-5 " >
+          <div className="  rounded-md w-full mt-5 ">
             {videoIndex == 1 ? (
               <div className="  p-5 md:grid-cols-4 mx-auto flex flex-wrap flex-col justify-center content-center	 ">
                 {/* <VideoWithBtn /> */}
@@ -145,7 +153,7 @@ const HowToRead = ({ user, screenNo, nextUrl, type }) => {
                     borderClip: "padding-box",
                     boxShadow:
                       "-50px -50px 0 -40px var(--red), 50px 50px 0 -40px var(--red)",
-                      backgroundColor:'white'
+                    backgroundColor: "white",
                   }}
                 />
                 <VideoControlBtn
@@ -173,7 +181,7 @@ const HowToRead = ({ user, screenNo, nextUrl, type }) => {
                     borderClip: "padding-box",
                     boxShadow:
                       "-50px -50px 0 -40px var(--red), 50px 50px 0 -40px var(--red)",
-                      backgroundColor:'white'
+                    backgroundColor: "white",
                   }}
                 />
                 <VideoControlBtn
@@ -201,7 +209,7 @@ const HowToRead = ({ user, screenNo, nextUrl, type }) => {
                     borderClip: "padding-box",
                     boxShadow:
                       "-50px -50px 0 -40px var(--red), 50px 50px 0 -40px var(--red)",
-                      backgroundColor:'white'
+                    backgroundColor: "white",
                   }}
                 />
                 <VideoControlBtn

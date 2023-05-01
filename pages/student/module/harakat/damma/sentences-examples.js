@@ -4,7 +4,7 @@ import React from 'react'
 const SentencesExamples = () => {
   return (
     <div>
-      <SentenceMaking user="student" type="damma" nextM='madd' />
+      <SentenceMaking user="student" type="damma" nextM='madd' preM="damma/words-examples" />
     </div>
   )
 }

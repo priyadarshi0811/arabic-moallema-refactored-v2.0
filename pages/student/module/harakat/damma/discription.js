@@ -58,7 +58,7 @@ const positioning = () => {
             className="p-3 text-white bg-dark-purple rounded-lg text-lg  border-2 border-white"
             style={{ marginLeft: -40, width: 600 }}
           >
-            Damma: Discription
+            Damma: Description
             {/* <span className="p-2 bg-green-200 text-dark-purple rounded-md">
             {props.name} " {props.symbol} "
           </span> */}
@@ -78,7 +78,12 @@ const positioning = () => {
         <div className="p-10">
           <div className="mx-10  bg-dark-purple   text-center text-dark-purple h-full rounded-3xl  ">
             <div className="bg-dark-purple rounded-3xl">
-              <h1 className="text-9xl pb-5 text-white ">ــُـ</h1>
+            <h1 className="text-9xl py-5 text-white "
+                style={{
+                  fontFamily:
+                    '"Geeza Pro", "Nadeem", "Al Bayan", "DecoType Naskh", "DejaVu Serif", "STFangsong", "STHeiti", "STKaiti", "STSong", "AB AlBayan", "AB Geeza", "AB Kufi", "DecoType Naskh", "Aldhabi", "Andalus", "Sakkal Majalla", "Simplified Arabic", "Traditional Arabic", "Arabic Typesetting", "Urdu Typesetting", "Droid Naskh", "Droid Kufi", "Roboto", "Tahoma", "Times New Roman", "Arial", serif',
+                  fontWeight: 500,
+                }}>ــُـ</h1>
               {/* <h1 className="text-3xl pt-2 my-2">Fatha</h1> */}
             </div>
             <div className="bg-white rounded-3xl border-b-8 border-cyan-400">
@@ -111,6 +116,12 @@ const positioning = () => {
             </Link>
           </div>
         </div>
+       
+        
+        <div className="mt-5 w-full flex justify-center">
+            <Link href ='/student/module/harakat/damma/how-to-read-1'><Button variant="contained" className="bg-white text-dark-purple"  endIcon={<NavigateNextIcon />} >Start</Button></Link>
+        </div>
+      
       </div>
     </div>
   );

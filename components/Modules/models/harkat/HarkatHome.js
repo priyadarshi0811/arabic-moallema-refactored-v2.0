@@ -96,7 +96,11 @@ const HarkatHome = ({ user }) => {
               >
                 <div className="mx-10  bg-dark-purple border-t-2 border-x-2 hover:border-t-cyan-400 hover:border-x-cyan-400  border-white   text-center text-dark-purple h-full rounded-3xl  ">
                   <div className="bg-dark-purple  rounded-3xl">
-                    <h1 className="text-9xl pb-10 text-white ">ــَـ</h1>
+                    <h1 className="text-9xl py-10 text-white " style={{
+                  fontFamily:
+                    '"Geeza Pro", "Nadeem", "Al Bayan", "DecoType Naskh", "DejaVu Serif", "STFangsong", "STHeiti", "STKaiti", "STSong", "AB AlBayan", "AB Geeza", "AB Kufi", "DecoType Naskh", "Aldhabi", "Andalus", "Sakkal Majalla", "Simplified Arabic", "Traditional Arabic", "Arabic Typesetting", "Urdu Typesetting", "Droid Naskh", "Droid Kufi", "Roboto", "Tahoma", "Times New Roman", "Arial", serif',
+                  fontWeight: 500,
+                }}>ــَـ</h1>
                     {/* <h1 className="text-3xl pt-2 my-2">Fatha</h1> */}
                   </div>
                   <div className="bg-white rounded-3xl border-b-8 border-cyan-400">
@@ -115,7 +119,11 @@ const HarkatHome = ({ user }) => {
               >
                 <div className="mx-10  bg-dark-purple border-t-2 border-x-2 hover:border-t-cyan-400 hover:border-x-cyan-400  border-white   text-center text-dark-purple h-full rounded-3xl  ">
                   <div className="bg-dark-purple  rounded-3xl">
-                    <h1 className="text-9xl pb-10 text-white ">ــِـ</h1>
+                    <h1 className="text-9xl py-10 text-white "  style={{
+                  fontFamily:
+                    '"Geeza Pro", "Nadeem", "Al Bayan", "DecoType Naskh", "DejaVu Serif", "STFangsong", "STHeiti", "STKaiti", "STSong", "AB AlBayan", "AB Geeza", "AB Kufi", "DecoType Naskh", "Aldhabi", "Andalus", "Sakkal Majalla", "Simplified Arabic", "Traditional Arabic", "Arabic Typesetting", "Urdu Typesetting", "Droid Naskh", "Droid Kufi", "Roboto", "Tahoma", "Times New Roman", "Arial", serif',
+                  fontWeight: 500,
+                }}>ــِـ</h1>
                     {/* <h1 className="text-3xl pt-2 my-2">Fatha</h1> */}
                   </div>
                   <div className="bg-white rounded-3xl border-b-8 border-cyan-400">
@@ -134,7 +142,11 @@ const HarkatHome = ({ user }) => {
               >
                 <div className="mx-10  bg-dark-purple border-t-2 border-x-2 hover:border-t-cyan-400 hover:border-x-cyan-400  border-white   text-center text-dark-purple h-full rounded-3xl  ">
                   <div className="bg-dark-purple  rounded-3xl">
-                    <h1 className="text-9xl pb-10 text-white ">ــُـ</h1>
+                    <h1 className="text-9xl py-10 text-white " style={{
+                  fontFamily:
+                    '"Geeza Pro", "Nadeem", "Al Bayan", "DecoType Naskh", "DejaVu Serif", "STFangsong", "STHeiti", "STKaiti", "STSong", "AB AlBayan", "AB Geeza", "AB Kufi", "DecoType Naskh", "Aldhabi", "Andalus", "Sakkal Majalla", "Simplified Arabic", "Traditional Arabic", "Arabic Typesetting", "Urdu Typesetting", "Droid Naskh", "Droid Kufi", "Roboto", "Tahoma", "Times New Roman", "Arial", serif',
+                  fontWeight: 500,
+                }}>ــُـ</h1>
                     {/* <h1 className="text-3xl pt-2 my-2">Fatha</h1> */}
                   </div>
                   <div className="bg-white rounded-3xl border-b-8 border-cyan-400">
@@ -155,7 +167,7 @@ const HarkatHome = ({ user }) => {
 export default HarkatHome;
 
 {
-  /* <Link href='/teacher/module/harakat/fatha/discription' className="bg-red-400 text-white py-2 px-5 m-5 rounded-lg">Fatah</Link>
-<Link href='/teacher/module/harakat/kasra/discription' className="bg-red-400 text-white py-2 px-5 m-5 rounded-lg">Kasra</Link>
+  /* <Link href='/teacher/module/harakat/fatahah/discription' className="bg-red-400 text-white py-2 px-5 m-5 rounded-lg">Fatah</Link>
+<Link href='/teacher/module/harakat/kasara/discription' className="bg-red-400 text-white py-2 px-5 m-5 rounded-lg">Kasra</Link>
 <Link href='/teacher/module/harakat/damma/discription' className="bg-red-400 text-white py-2 px-5 m-5 rounded-lg">damma</Link> */
 }
