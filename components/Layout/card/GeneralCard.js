@@ -23,7 +23,11 @@ const GeneralCard = ({ disc, title, btnText, link, btnProp, color }) => {
       <div className="items-center w-full  overflow-hidden rounded-3xl shadow-lg min:h-fit justify-cente min:w-fit h-full">
         <div className="grid content-between grid-cols-1  font-bold text-center  text-white min-h-64  " style={{backgroundColor: color}} >
          
-            <h2 className="text-5xl py-5 font-sans">{title}</h2>
+            <h2 className="text-5xl py-5 " style={{
+                  fontFamily:
+                    '"Geeza Pro", "Nadeem", "Al Bayan", "DecoType Naskh", "DejaVu Serif", "STFangsong", "STHeiti", "STKaiti", "STSong", "AB AlBayan", "AB Geeza", "AB Kufi", "DecoType Naskh", "Aldhabi", "Andalus", "Sakkal Majalla", "Simplified Arabic", "Traditional Arabic", "Arabic Typesetting", "Urdu Typesetting", "Droid Naskh", "Droid Kufi", "Roboto", "Tahoma", "Times New Roman", "Arial", serif',
+                  fontWeight: 500,
+                }}>{title}</h2>
             </div>
           <div className="bg-slate-50 h-fit">
           <div>

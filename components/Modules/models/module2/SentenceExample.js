@@ -29,7 +29,7 @@ import {
   DialogActions,
 } from "@mui/material";
 
-const SentenceMaking = ({ user, screenNo, nextUrl, type, module, nextM }) => {
+const SentenceMaking = ({ user, screenNo, nextUrl, type, module, nextM, preM }) => {
   const [cardIndex, setCardIndex] = useState(0);
 
   const [assignment, setAssignment] = useState([]);
@@ -179,98 +179,98 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module, nextM }) => {
       image:
         "https://t3.ftcdn.net/jpg/05/76/13/90/240_F_576139049_LriBxc0l7nKRc1ul4CtSbPRrg48FUbMK.jpg",
       word: "رَكَعَ و سَجَدَ",
-      meaning: "Bowing and prostrating in Salah",
+      meaning: "Bowed and prostrated",
     },
     {
       index: 1,
       image:
         "https://t4.ftcdn.net/jpg/00/55/54/13/240_F_55541327_hV669Iopv537qBm9QSGmgdvbvCbtvEMS.jpg",
       word: "دَخَلَ و جَلَس    ",
-      meaning: "He entered and sat down",
+      meaning: "Entered and sat",
     },
     {
       index: 2,
       image: "",
       word: "مَسَكَ فَنَظَرَ",
-      meaning: "caught and looked",
+      meaning: "Held and looked",
     },
     {
       index: 3,
       image: "",
       word: "قَنَتَ فَذَكَرَ",
-      meaning: "He said it",
+      meaning: "Remained devout and remembered",
     },
     {
       index: 4,
       image: "",
       word: "زَرَعَ و حَصَدَ",
-      meaning: "sowed and reaped",
+      meaning: "Planted and harvested",
     },
     {
       index: 5,
       image: "",
       word: "عَرَفَ و كَتَمَ",
-      meaning: "Araf and Katam",
+      meaning: "Knew and kept secret",
     },
     {
       index: 6,
       image: "",
       word: "حَلَفَ فَصَدَقَ",
-      meaning: "He swore and was true",
+      meaning: "Swore and kept his word",
     },
     {
       index: 7,
       image: "",
       word: "سَأَلَ فَعَرَفَ",
-      meaning: "He asked, and he knew",
+      meaning: "Asked and knew",
     },
     {
       index: 8,
       image: "",
       word: "غَرَسَ فَنَبَتَ",
-      meaning: "He planted and sprouted",
+      meaning: "Planted and grew",
     },
     {
       index: 9,
       image: "",
       word: "خَلَقَ فَرَزَقَ",
-      meaning: "He was created and provided",
+      meaning: "Created and provided",
     },
     {
       index: 10,
       image: "",
       word: "عَبَدَ و شَكَرَ",
-      meaning: "He worshiped and thanked",
+      meaning: "Worshiped and thanked",
     },
     {
       index: 11,
       image: "",
       word: "قَفَزَ فَوَقَعَ",
-      meaning: "He jumped and fell",
+      meaning: "Jumped and fell",
     },
     {
       index: 12,
       image: "",
       word: "قَرَأَ و كَتَبَ فَنَجَحَ",
-      meaning: "He read and wrote and succeeded",
+      meaning: "Read and wrote",
     },
     {
       index: 13,
       image: "",
       word: "حَكَمَ و عَدَلَ فَصَدَقَ",
-      meaning: "Judgment and justice, so believe",
+      meaning: "Judged and was just",
     },
     {
       index: 14,
       image: "",
       word: "قَطَعَ و نَشَرَ فَصَنَعَ",
-      meaning: "He cut and sawed and made",
+      meaning: "Cut and spread out",
     },
     {
       index: 15,
       image: "",
       word: "طَحَنَ و نَخَلَ فَعَجَنَ",
-      meaning: "He grinded and sifted and kneaded",
+      meaning: "Ground and kneaded",
     },
   ];
   const KasraSentenceExamples = [
@@ -279,31 +279,31 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module, nextM }) => {
       image:
         "https://t4.ftcdn.net/jpg/04/81/77/89/240_F_481778976_1d2EdHiMmiBANj4NwiRiuwyoNLjEixQT.jpg",
       word: "عَطَسَ فَحَمِدَ",
-      meaning: "He sneezed and thanked",
+      meaning: "He sneezed, so Hamid praised (God)",
     },
     {
       index: 1,
       image: "",
       word: "رَكَبَ ورَدِفَ",
-      meaning: "rode and rump",
+      meaning: "He rode and supported/backed",
     },
     {
       index: 2,
       image: "",
       word: "سَكَتَ فَسَلِمَ",
-      meaning: "He was silent",
+      meaning: "He remained silent and then greeted (said Salam)",
     },
     {
       index: 3,
       image: "",
       word: "ذَكَرَ فَخَشِيَ",
-      meaning: "Fakhshi mentioned",
+      meaning: "He mentioned, so he feared",
     },
     {
       index: 4,
       image: "",
       word: "فَهِمَ وَ عَلِمَ",
-      meaning: "He understood and learned",
+      meaning: "understood and knew",
     },
     {
       index: 5,
@@ -315,31 +315,31 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module, nextM }) => {
       index: 6,
       image: "",
       word: "مَرِضَ فَصَبَرَ",
-      meaning: "sick, so be patient",
+      meaning: "He became ill and endured patiently",
     },
     {
       index: 7,
       image: "",
       word: "عَمِلَ فَرَبِحَ",
-      meaning: "He worked and won",
+      meaning: "He worked and made a profit",
     },
     {
       index: 8,
       image: "",
       word: "طَعِمَ فَشَبِعَ",
-      meaning: "He ate and was satisfied",
+      meaning: "He tasted and became full",
     },
     {
       index: 9,
       image: "",
       word: "فَرِحَ فَضَحِكَ",
-      meaning: "He rejoiced",
+      meaning: "He rejoiced and laughed",
     },
     {
       index: 10,
       image: "",
       word: "سَهِرَ فَتَعِبَ",
-      meaning: "He stayed up and got tired",
+      meaning: "He stayed up late and got tired",
     },
     {
       index: 11,
@@ -351,7 +351,7 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module, nextM }) => {
       index: 12,
       image: "",
       word: "صَدَقَ فَرَبِحَ",
-      meaning: "He believed and won",
+      meaning: "He was truthful, so he profited/gained",
     },
     {
       index: 13,
@@ -363,7 +363,7 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module, nextM }) => {
       index: 14,
       image: "",
       word: "كَرِهَ و سَخَطَ",
-      meaning: "hate and indignation",
+      meaning: "He hated and angered",
     },
   ];
   const dammaSentenceExamples = [
@@ -372,7 +372,7 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module, nextM }) => {
       image:
         "https://t4.ftcdn.net/jpg/01/82/18/81/240_F_182188121_dcE04I7AhXps8XZJdUAWPti0CoC4iAPC.jpg",
       word: "جَمُلَ ثَمَرُكَ",
-      meaning: "Gather your fruit",
+      meaning: "Your camel was loaded with fruit",
     },
     {
       index: 1,
@@ -384,31 +384,31 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module, nextM }) => {
       index: 2,
       image: "",
       word: "بَسَطَ فُرُشَهُ فَقَعَدَ",
-      meaning: "He spread his bed and sat down",
+      meaning: "He spread out his mat and sat down",
     },
     {
       index: 3,
       image: "",
       word: "شَرِبَ فَذَهَبَ ظَمَؤُهُ",
-      meaning: "He drank and his thirst went away",
+      meaning: "He drank and his thirst was quenched",
     },
     {
       index: 4,
       image: "",
       word: "مَرِضَ فَضَعُفَ بَدَنُهُ",
-      meaning: "Disease weakened his body",
+      meaning: "He got sick and his body became weak",
     },
     {
       index: 5,
       image: "",
       word: "رَكِبَ جَمَلَهُ لِيَصِلَ رَحِمَهُ",
-      meaning: "rode his camel to reach his womb",
+      meaning: "He rode his camel to reach his destination",
     },
     {
       index: 6,
       image: "",
       word: "كَتَبَ وَرَقَهَ بِقَلَمِهِ",
-      meaning: "He wrote his paper with his pen",
+      meaning: "He wrote a paper with his pen",
     },
     {
       index: 7,
@@ -420,19 +420,19 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module, nextM }) => {
       index: 8,
       image: "",
       word: "نَجَحَ وَلَدُهُ فَفَرِحَ",
-      meaning: "His son succeeded, so he rejoiced",
+      meaning: "His son succeeded and he was happy",
     },
     {
       index: 9,
       image: "",
       word: "ظُلِمَ فَصَبَرَ فَنُصِرَ",
-      meaning: "Injustice, so he was patient and victorious",
+      meaning: "He was wronged, but he was patient and then he was helped",
     },
     {
       index: 10,
       image: "",
       word: "كَمُلَ أَدَبُهُ فَحَسُنَ خُلُقُهُ",
-      meaning: "perfected his etiquette and improved his manners",
+      meaning: "His manners were completed, so his character became good",
     },
   ];
 
@@ -510,26 +510,37 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module, nextM }) => {
             {props.name} " {props.symbol} "
           </span> */}
           </h1>
-          <div>
-            {user == "teacher" ? (
-              <Link href={`/teacher/whiteboard`} className="">
-                <IconButton
-                  aria-label="delete"
-                  size="large"
-                  className="bg-white text-dark-purple hover:bg-gray-200"
-                >
-                  <FilterFramesIcon />
-                </IconButton>
-              </Link>
-            ) : null}
+          <div className="flex content-center">
+          <Link href={`/teacher/whiteboard`} className="mx-3 ">
+              <IconButton
+                aria-label="delete"
+                size="large"
+                className="bg-cyan-200 text-dark-purple rounded-full hover:bg-gray-200 p-2 "
+              >
+                <FilterFramesIcon />
+              </IconButton>
+            </Link>
 
-            <Link href={`/${user}/module/harakat/${type}`} className="mx-5">
+            <Link href={`/${user}/module/harakat`} className="mx-3 ">
               <Button
                 variant="contained"
-                className="bg-white text-dark-purple"
+                className="bg-cyan-200 text-dark-purple h-10"
                 startIcon={<ArrowBackIcon />}
               >
-                Back To Main Module
+                Home Module
+              </Button>
+            </Link>
+
+            <Link
+              href={`/${user}/module/harakat/${preM}`}
+              className="mx-2 "
+            >
+              <Button
+                variant="contained"
+                className="bg-cyan-200 text-dark-purple h-10"
+                startIcon={<ArrowBackIcon />}
+              >
+                Back
               </Button>
             </Link>
           </div>
@@ -565,7 +576,11 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module, nextM }) => {
                               </div>
                               <div className="col-span-2">
                                 <div className=" h-fit p-10 ">
-                                  <h2 className="text-5xl font-sans text-dark-purple  py-8">
+                                  <h2 className="text-5xl  text-dark-purple  py-8" style={{
+                            fontFamily:
+                              '"Geeza Pro", "Nadeem", "Al Bayan", "DecoType Naskh", "DejaVu Serif", "STFangsong", "STHeiti", "STKaiti", "STSong", "AB AlBayan", "AB Geeza", "AB Kufi", "DecoType Naskh", "Aldhabi", "Andalus", "Sakkal Majalla", "Simplified Arabic", "Traditional Arabic", "Arabic Typesetting", "Urdu Typesetting", "Droid Naskh", "Droid Kufi", "Roboto", "Tahoma", "Times New Roman", "Arial", serif',
+                            fontWeight: 500,
+                          }}>
                                     {ex.word}
                                   </h2>
                                   <h2 className="text-3xl font-sans text-dark-purple  pb-8">
@@ -631,91 +646,94 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module, nextM }) => {
                   ? KasraSentenceExamples.map((ex) => (
                       <>
                         {cardIndex == ex.index ? (
-                          <div className=" " style={{ width: "100%" }}>
-                            <div
-                              className="grid grid-cols-3   py-10 lg:px-20  shadow-lg rounded-lg mb-5"
-                              style={divStyles}
-                            >
-                              <div className="col-span-1 border-r-2 border-white ">
-                                <div className=" font-bold text-center lg:mx-10 py-5 lg:py-0  h-62 border-8 border-gray-100 rounded-3xl bg-gray-100 ">
-                                  <img
-                                    src={
-                                      ex.image ||
-                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEaXaItHR4BIfzC3jGoYxHBEje9KVIyHmzYA&usqp=CAU  "
-                                    }
-                                    alt=""
-                                    className="w-full  rounded-3xl"
-                                  />
-                                </div>
-                              </div>
-                              <div className="col-span-2">
-                                <div className=" h-fit p-10 ">
-                                  <h2 className="text-5xl font-sans text-dark-purple  py-8">
-                                    {ex.word}
-                                  </h2>
-                                  <h2 className="text-3xl font-sans text-dark-purple  pb-8">
-                                    {ex.meaning}
-                                  </h2>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="w-full my-3 flex justify-center">
-                              {cardIndex > 0 ? (
-                                <Button
-                                  variant="contained"
-                                  className="bg-white text-dark-purple mr-3"
-                                  startIcon={<ArrowBackIcon />}
-                                  onClick={() => {
-                                    setCardIndex(cardIndex - 1);
-                                    GenerateColor();
-                                  }}
-                                >
-                                  Pre
-                                </Button>
-                              ) : null}
-                              {cardIndex < maxIndexKasra ? (
-                                <Button
-                                  variant="contained"
-                                  className="bg-white text-dark-purple"
-                                  endIcon={<ArrowForwardIcon />}
-                                  onClick={() => {
-                                    setCardIndex(cardIndex + 1);
-                                    GenerateColor();
-                                  }}
-                                >
-                                  Next
-                                </Button>
-                              ) : (
-                                <>
-                                  <Button
-                                    onClick={setActivitySubmodule}
-                                    variant="contained"
-                                    className="text-dark-purple bg-white mr-3"
-                                  >
-                                    Activity
-                                  </Button>
-                                  <Link
-                                    href={`/${user}/module/harakat/${nextM}`}
-                                  >
-                                    <Button
-                                      variant="contained"
-                                      className="text-dark-purple bg-white"
-                                    >
-                                      Next Module
-                                    </Button>
-                                  </Link>
-                                </>
-                              )}
-                            </div>
+                      <div className=" " style={{ width: "100%" }}>
+                      <div
+                        className="grid grid-cols-3   py-10 lg:px-20  shadow-lg rounded-lg mb-5"
+                        style={divStyles}
+                      >
+                        <div className="col-span-1 border-r-2 border-white ">
+                          <div className=" font-bold text-center lg:mx-10 py-5 lg:py-0  h-62 border-8 border-gray-100 rounded-3xl bg-gray-100 ">
+                            <img
+                              src={
+                                ex.image ||
+                                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEaXaItHR4BIfzC3jGoYxHBEje9KVIyHmzYA&usqp=CAU  "
+                              }
+                              alt=""
+                              className="w-full  rounded-3xl"
+                            />
                           </div>
+                        </div>
+                        <div className="col-span-2">
+                          <div className=" h-fit p-10 ">
+                            <h2 className="text-5xl  text-dark-purple  py-8" style={{
+                      fontFamily:
+                        '"Geeza Pro", "Nadeem", "Al Bayan", "DecoType Naskh", "DejaVu Serif", "STFangsong", "STHeiti", "STKaiti", "STSong", "AB AlBayan", "AB Geeza", "AB Kufi", "DecoType Naskh", "Aldhabi", "Andalus", "Sakkal Majalla", "Simplified Arabic", "Traditional Arabic", "Arabic Typesetting", "Urdu Typesetting", "Droid Naskh", "Droid Kufi", "Roboto", "Tahoma", "Times New Roman", "Arial", serif',
+                      fontWeight: 500,
+                    }}>
+                              {ex.word}
+                            </h2>
+                            <h2 className="text-3xl font-sans text-dark-purple  pb-8">
+                              {ex.meaning}
+                            </h2>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="w-full my-3 flex justify-center">
+                        {cardIndex > 0 ? (
+                          <Button
+                            variant="contained"
+                            className="bg-white text-dark-purple mr-3"
+                            startIcon={<ArrowBackIcon />}
+                            onClick={() => {
+                              setCardIndex(cardIndex - 1);
+                              GenerateColor();
+                            }}
+                          >
+                            Pre
+                          </Button>
+                        ) : null}
+                        {cardIndex < maxIndexfatha ? (
+                          <Button
+                            variant="contained"
+                            className="bg-white text-dark-purple"
+                            endIcon={<ArrowForwardIcon />}
+                            onClick={() => {
+                              setCardIndex(cardIndex + 1);
+                              GenerateColor();
+                            }}
+                          >
+                            Next
+                          </Button>
+                        ) : (
+                          <>
+                            <Button
+                              onClick={setActivitySubmodule}
+                              variant="contained"
+                              className="text-dark-purple bg-white mr-3"
+                            >
+                              Activity
+                            </Button>
+                            <Link
+                              href={`/${user}/module/harakat/${nextM}`}
+                            >
+                              <Button
+                                variant="contained"
+                                className="text-dark-purple bg-white"
+                              >
+                                Next Module
+                              </Button>
+                            </Link>
+                          </>
+                        )}
+                      </div>
+                    </div>
                         ) : null}
                       </>
                     ))
                   : dammaSentenceExamples.map((ex) => (
                       <>
-                        {cardIndex == ex.index ? (
-                          <div className=" " style={{ width: "100%" }}>
+                      <div className=" " style={{ width: "100%" }}>
                             <div
                               className="grid grid-cols-3   py-10 lg:px-20  shadow-lg rounded-lg mb-5"
                               style={divStyles}
@@ -734,7 +752,11 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module, nextM }) => {
                               </div>
                               <div className="col-span-2">
                                 <div className=" h-fit p-10 ">
-                                  <h2 className="text-5xl font-sans text-dark-purple  py-8">
+                                  <h2 className="text-5xl  text-dark-purple  py-8" style={{
+                            fontFamily:
+                              '"Geeza Pro", "Nadeem", "Al Bayan", "DecoType Naskh", "DejaVu Serif", "STFangsong", "STHeiti", "STKaiti", "STSong", "AB AlBayan", "AB Geeza", "AB Kufi", "DecoType Naskh", "Aldhabi", "Andalus", "Sakkal Majalla", "Simplified Arabic", "Traditional Arabic", "Arabic Typesetting", "Urdu Typesetting", "Droid Naskh", "Droid Kufi", "Roboto", "Tahoma", "Times New Roman", "Arial", serif',
+                            fontWeight: 500,
+                          }}>
                                     {ex.word}
                                   </h2>
                                   <h2 className="text-3xl font-sans text-dark-purple  pb-8">
@@ -758,7 +780,7 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module, nextM }) => {
                                   Pre
                                 </Button>
                               ) : null}
-                              {cardIndex < maxIndexDamma ? (
+                              {cardIndex < maxIndexfatha ? (
                                 <Button
                                   variant="contained"
                                   className="bg-white text-dark-purple"
@@ -793,7 +815,6 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module, nextM }) => {
                               )}
                             </div>
                           </div>
-                        ) : null}
                       </>
                     ))}
               </div>

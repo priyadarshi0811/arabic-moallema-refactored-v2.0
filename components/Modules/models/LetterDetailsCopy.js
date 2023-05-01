@@ -32,6 +32,14 @@ import {
   DialogActions,
 } from "@mui/material";
 
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+} from "@mui/material";
+import BackButton from "@/components/Layout/elements/BackButton";
 const LetterDetails = (props) => {
   console.log("user: ", props.user);
   const [showCanvas, setShowCanvas] = useState(false);
@@ -238,7 +246,7 @@ const LetterDetails = (props) => {
             </Button>
           </DialogActions>
         </Dialog>
-        <div className=" w-full p-2 rounded-3xl  flex flex-row justify-between pt-6">
+        <div className="  p-2 rounded-3xl  flex flex-row justify-between pt-6">
           {/* <img src={logo.src} className="h-14" alt="" />{" "} */}
           <h1
             className="p-3 text-white  rounded-lg text-lg  border-2 border-white bg-dark-purple"
@@ -254,25 +262,34 @@ const LetterDetails = (props) => {
           </span> */}
           </h1>
           <div className="flex content-center">
-            <Link href={`/teacher/whiteboard`} className="mx-5 ">
+            <Link href={`/teacher/whiteboard`} className="mx-3 ">
               <IconButton
                 aria-label="delete"
                 size="large"
-                className="bg-cyan-200 text-dark-purple rounded-full hover:bg-gray-200 p-1.5 "
+                className="bg-cyan-200 text-dark-purple rounded-full hover:bg-gray-200 p-2 "
               >
                 <FilterFramesIcon />
               </IconButton>
             </Link>
 
-            <Link href={`/${props.user}/module/alphabets`} className="mx-5 ">
+            <Link href={`/${props.user}/module/alphabets`} className="mx-3 ">
               <Button
                 variant="contained"
-                className="bg-cyan-200 text-dark-purple"
+                className="bg-cyan-200 text-dark-purple h-10"
                 startIcon={<ArrowBackIcon />}
               >
-                Back
+                Home Module
               </Button>
             </Link>
+
+            <Button
+              variant="contained"
+              className="bg-cyan-200 text-dark-purple mx-3 h-10"
+              onClick={() => history.back()}
+              startIcon={<ArrowBackIcon />}
+            >
+              Back
+            </Button>
           </div>
         </div>
         <div className="grid grid-cols-2  p-5 md:grid-cols-4 lg:ml-5 gap-4">

@@ -24,211 +24,211 @@ const fathaWordExapmle = [
   {
     index: 0,
     image:
-      "https://img.freepik.com/free-photo/blue-approval-good-signal-accord_1172-538.jpg?size=626&ext=jpg&ga=GA1.1.1391325598.1678967841&semt=sph",
+      "",
     word: "سَمَحَ",
-    meaning: "Allowed",
+    meaning: "Forgave",
   },
   {
     index: 1,
     image:
-      "https://img.freepik.com/free-photo/long-shot-water-stream-grassland_23-2148214226.jpg?size=626&ext=jpg&ga=GA1.1.1391325598.1678967841&semt=sph",
+      "",
     word: "نَھَرَ",
-    meaning: "River",
+    meaning: "Flowed",
   },
   {
     index: 2,
     image:
-      "https://img.freepik.com/free-photo/businessman-locking-door_23-2147876768.jpg?size=626&ext=jpg&ga=GA1.1.1391325598.1678967841&semt=ais",
+      "",
     word: "وَ لَجَ",
-    meaning: "And he entered",
+    meaning: "Entered",
   },
   {
     index: 3,
     image:
-      "https://img.freepik.com/free-photo/coins-banknotes-with-growth-arrow_23-2148780593.jpg?size=626&ext=jpg&ga=GA1.1.1391325598.1678967841&semt=ais",
+      "",
     word: "رَبَأَ",
-    meaning: "usury",
+    meaning: "Raised",
   },
   {
     index: 4,
     image:
-      "https://img.freepik.com/free-photo/3d-render-hand-holding-open-gift-box-with-ribbon_107791-16374.jpg?size=626&ext=jpg&ga=GA1.1.1391325598.1678967841&semt=sph",
+      "",
     word: "عَرَضَ",
-    meaning: "an offer",
+    meaning: "Presented",
   },
   {
     index: 5,
     image: "",
     word: "خَلَدَ",
-    meaning: "immortalize",
+    meaning: "Persevered",
   },
   {
     index: 6,
     image:
-      "https://as1.ftcdn.net/v2/jpg/00/64/07/16/1000_F_64071640_5uTO7cvPD0MiMLLmPrCaIPIXVAw61u9x.jpg",
+      "",
     word: "قَنَصَ",
-    meaning: "snipe",
+    meaning: "Hunted",
   },
   {
     index: 7,
     image:
-      "https://as2.ftcdn.net/v2/jpg/03/19/72/59/1000_F_319725929_WwtUaB8o5iFu9CGQRTLTrTiw2KUpB8iX.jpg",
+      "",
     word: "صَھَرَ",
-    meaning: "he melted",
+    meaning: "Melted",
   },
   {
     index: 8,
     image: "",
     word: "صَدَرَ",
-    meaning: "released",
+    meaning: "Appeared",
   },
   {
     index: 9,
     image: "",
     word: "مَقَتَ",
-    meaning: "abhor",
+    meaning: "Hated",
   },
   {
     index: 10,
     image: "",
     word: "نَبَضَ",
-    meaning: "to throb",
+    meaning: "Pulsed",
   },
   {
     index: 11,
     image: "",
     word: "طَلَقَ",
-    meaning: "divorced",
+    meaning: "Divorced",
   },
   {
     index: 12,
     image: "",
     word: "أَثَرَ",
-    meaning: "Effect",
+    meaning: "Left a mark",
   },
   {
     index: 13,
     image: "",
     word: "قَنَعَ",
-    meaning: "disguised",
+    meaning: "Convinced",
   },
   {
     index: 14,
     image: "",
     word: "لَقَطَ",
-    meaning: "clamped",
+    meaning: "Picked up",
   },
   {
     index: 15,
     image: "",
     word: "نَسَفَ",
-    meaning: "blow up",
+    meaning: "Demolished",
   },
   {
     index: 16,
     image: "",
     word: "نَصَفَ",
-    meaning: "half",
+    meaning: "Halved",
   },
   {
     index: 17,
     image: "",
     word: "فَتَنَ",
-    meaning: "fascinate",
+    meaning: "Tempted",
   },
 
   {
     index: 18,
     image: "",
     word: "فَطَنَ",
-    meaning: "Clever",
+    meaning: "Was clever",
   },
   {
     index: 19,
     image: "",
     word: "شَمَخَ",
-    meaning: "sniffed",
+    meaning: "Rose high",
   },
   {
     index: 20,
     image: "",
     word: "طَرَقَ",
-    meaning: "Methods",
+    meaning: "Knocked",
   },
   {
     index: 21,
     image: "",
     word: "تَرَكَ",
-    meaning: "to leave",
+    meaning: "Left",
   },
   {
     index: 22,
     image: "",
     word: "وَ لَدَ",
-    meaning: "child",
+    meaning: "Gave birth",
   },
   {
     index: 23,
     image: "",
     word: "وَ رَدَ",
-    meaning: "rose",
+    meaning: "Responded",
   },
 ];
 const kasraWordExapmle = [
   {
     index: 0,
     image:
-      "https://t4.ftcdn.net/jpg/03/36/98/49/240_F_336984953_OLUkwitRZXtd4rxYIprCxLIclGKYLGhZ.jpg",
+      "",
     word: "مِئَةَ",
-    meaning: "one hundred",
+    meaning: "Hundred",
   },
   {
     index: 1,
     image: "",
     word: "هِبَةَ",
-    meaning: "A gift",
+    meaning: "Gift",
   },
   {
     index: 2,
     image: "",
     word: "وَذَرِ",
-    meaning: "and leave",
+    meaning: "Particle",
   },
   {
     index: 3,
     image: "",
     word: "إِرَمَ",
-    meaning: "toss",
+    meaning: "Iram (an ancient city)",
   },
   {
     index: 4,
     image: "",
     word: "فِئَةَ",
-    meaning: "category",
+    meaning: "Category",
   },
   {
     index: 5,
     image: "",
     word: "صِفَةَ",
-    meaning: "characteristic",
+    meaning: "Attribute",
   },
   {
     index: 6,
     image: "",
     word: "وَهِمَ",
-    meaning: "delusion",
+    meaning: "Delusion",
   },
   {
     index: 7,
     image: "",
     word: "هَلِعَ",
-    meaning: "panic",
+    meaning: "Panic",
   },
   {
     index: 8,
     image: "",
     word: "دَلِةَ",
-    meaning: "coffee pot",
+    meaning: "Guide",
   },
   {
     index: 9,
@@ -240,197 +240,240 @@ const kasraWordExapmle = [
     index: 10,
     image: "",
     word: "حَمِدَ",
-    meaning: "He praised",
+    meaning: "Praised",
   },
   {
     index: 11,
     image: "",
     word: "نَشِطَ",
-    meaning: "active",
+    meaning: "Active",
   },
   {
     index: 12,
     image: "",
     word: "صَحِبَكَ",
-    meaning: "your company",
+    meaning: "Your friend",
   },
   {
     index: 13,
     image: "",
     word: "بِيَدِهِ",
-    meaning: "with his hand",
+    meaning: "In his hand",
   },
   {
     index: 14,
     image: "",
     word: "قِبَلَكَ",
-    meaning: "before you",
+    meaning: "Towards you",
   },
   {
     index: 15,
     image: "",
     word: "فَطَفِقَ",
-    meaning: "So he did",
+    meaning: "Struggling",
   },
   {
     index: 16,
     image: "",
     word: "وَقَعَتِ",
-    meaning: "Occurred",
+    meaning: "Fell",
   },
   {
     index: 17,
     image: "",
     word: "فَفَزِعَ",
-    meaning: "So he panicked",
+    meaning: "Startled",
   },
 
   {
     index: 18,
     image: "",
     word: "تَبِعَكَ",
-    meaning: "follow you",
+    meaning: "Followed you",
   },
   {
     index: 19,
     image: "",
     word: "وَوَرِثَ",
-    meaning: "and inherited",
+    meaning: "Inherited",
   },
   {
     index: 20,
     image: "",
     word: "عَقِبِهِ",
-    meaning: "obstacle",
+    meaning: "His aftermath",
   },
   {
     index: 21,
     image: "",
     word: "لَحَبِطَ",
-    meaning: "to frustrate",
+    meaning: "Withered",
   },
   {
     index: 22,
     image: "",
     word: "قَدَمِكَ",
-    meaning: "your foot",
+    meaning: "Your foot",
   },
   {
     index: 23,
     image: "",
     word: "وَعَنَتِ",
-    meaning: "And you meant",
+    meaning: "Weary",
   },
 ];
 const dammaWordExapmle = [
   {
     index: 0,
     image:
-      "https://t3.ftcdn.net/jpg/04/82/31/48/240_F_482314886_gpFeuRzpaFLMMgVfJfLDGIkmvQ5sFnlx.jpg",
-    word: "قَرَأَ كُتُبَهُ",
-    meaning: "He read his books",
+      "",
+    word: "نُسِيَ ",
+    meaning: "was forgotten",
   },
   {
     index: 1,
     image: "",
-    word: "تُلِيَ فَفَهِمَ",
-    meaning: "Follow them",
+    word: "هُدِيَ ",
+    meaning: "was guided",
   },
   {
     index: 2,
     image: "",
-    word: "قُرِئَ و كُتِبَ",
-    meaning: "He read and wrote",
+    word: "وُجِدَ",
+    meaning: "was found",
   },
   {
     index: 3,
     image: "",
-    word: "وَقَفَ و يَقِفُ",
-    meaning: "He stood and stood",
+    word: "وُضِعَ",
+    meaning: "was placed",
   },
   {
     index: 4,
     image: "",
-    word: "لُبِسَ و خُلِعَ",
-    meaning: "He put on and took off",
+    word: "شُرِبَ ",
+    meaning: "was drunk",
   },
   {
     index: 5,
     image: "",
-    word: "جُرِحَ و شُفِيَ",
-    meaning: "He was wounded and healed",
+    word: "رُسِمَ",
+    meaning: "was drawn",
   },
   {
     index: 6,
     image: "",
-    word: "جُمِعَ و قُسِمَ",
-    meaning: "collected and divided",
+    word: "فُتِحَ",
+    meaning: "was opened",
   },
   {
     index: 7,
     image: "",
-    word: "بُعِثَ و حُشِرَ",
-    meaning: "He was resurrected",
+    word: "دُبِغَ",
+    meaning: "was dyed",
   },
   {
     index: 8,
     image: "",
-    word: "قُطِعَ فَوَصَلَ",
-    meaning: "cut off",
+    word: "سُبُلُ",
+    meaning: "paths",
   },
   {
     index: 9,
     image: "",
-    word: "رُزِقَ فَحَمِدَ",
-    meaning: "Rizq Fahamed",
+    word: "رُسُلُ",
+    meaning: "messengers",
   },
   {
     index: 10,
     image: "",
-    word: "رَضِيَ و فَرَحَ",
-    meaning: "Satisfied and happy",
+    word: "أُفُقُ",
+    meaning: "horizons",
   },
   {
     index: 11,
     image: "",
-    word: "كُتِبَ وَرَقُكَ",
-    meaning: "write your paper",
+    word: "نُظُمُ",
+    meaning: "systems",
   },
   {
     index: 12,
     image: "",
-    word: "حَسُنَ عَمَلُكَ",
-    meaning: "do well",
+    word: "مَثَلُ",
+    meaning: "example",
   },
   {
     index: 13,
     image: "",
-    word: "خَلُصَ عَسَلُكَ",
-    meaning: "save your honey",
+    word: "لَطُفَ",
+    meaning: "kindness",
   },
   {
     index: 14,
     image: "",
-    word: "أُكِلَ بَلَحُكَ",
-    meaning: "I eat dates",
+    word: "ثُلِبَ",
+    meaning: "was blamed",
   },
   {
     index: 15,
     image: "",
-    word: "فُقِدَ وَوُجِدَ",
-    meaning: "Lost and found",
+    word: "عُقَدُ",
+    meaning: "a contract",
   },
   {
     index: 16,
     image: "",
-    word: "شَكَرَ و شُكِرَ",
-    meaning: "Thanks and thanks",
+    word: "حُجَرُ",
+    meaning: "stones",
+  },
+  {
+    index: 17,
+    image: "",
+    word: "غُرَفُ",
+    meaning: "rooms",
+  },
+
+  {
+    index: 18,
+    image: "",
+    word: "فُرَصُ",
+    meaning: "opportunities",
+  },
+  {
+    index: 19,
+    image: "",
+    word: "نُقِلَ",
+    meaning: "was transported",
+  },
+  {
+    index: 20,
+    image: "",
+    word: "كَمُلَ",
+    meaning: "was completed",
+  },
+  {
+    index: 21,
+    image: "",
+    word: "حُشِرَ",
+    meaning: "was gathered",
+  },
+  {
+    index: 22,
+    image: "",
+    word: "زَمَنُ",
+    meaning: "time/era",
+  },
+  {
+    index: 23,
+    image: "",
+    word: "شُحِذَ",
+    meaning: "was sharpened",
   },
 ];
 
 console.log("wordExampleForHarakat", wordExampleForHarakat);
 
-const HowToRead = ({ type, nextUrl, user }) => {
+const HowToRead = ({ type, nextUrl, user, preM }) => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -482,26 +525,34 @@ const HowToRead = ({ type, nextUrl, user }) => {
             {props.name} " {props.symbol} "
           </span> */}
           </h1>
-          <div>
-            {user == "teacher" ? (
-              <Link href={`/teacher/whiteboard`} className="">
-                <IconButton
-                  aria-label="delete"
-                  size="large"
-                  className="bg-cyan-200 text-dark-purple hover:bg-gray-200" 
-                >
-                  <FilterFramesIcon />
-                </IconButton>
-              </Link>
-            ) : null}
+          <div className="flex content-center">
+            <Link href={`/teacher/whiteboard`} className="mx-3 ">
+              <IconButton
+                aria-label="delete"
+                size="large"
+                className="bg-cyan-200 text-dark-purple rounded-full hover:bg-gray-200 p-2 "
+              >
+                <FilterFramesIcon />
+              </IconButton>
+            </Link>
 
-            <Link href={`/${user}/module/harakat/${type}`} className="mx-5">
+            <Link href={`/${user}/module/harakat`} className="mx-3 ">
               <Button
                 variant="contained"
-                className="bg-cyan-200 text-dark-purple"
+                className="bg-cyan-200 text-dark-purple h-10"
                 startIcon={<ArrowBackIcon />}
               >
-                Back To Main Module
+                Home Module
+              </Button>
+            </Link>
+
+            <Link href={`/${user}/module/harakat/${preM}`} className="mx-2 ">
+              <Button
+                variant="contained"
+                className="bg-cyan-200 text-dark-purple h-10"
+                startIcon={<ArrowBackIcon />}
+              >
+                Back
               </Button>
             </Link>
           </div>
@@ -541,7 +592,11 @@ const HowToRead = ({ type, nextUrl, user }) => {
                               />
                             </div>
                             <div className="bg-purple-400 h-fit">
-                              <h2 className="text-3xl font-sans text-white flex justify-center pb-5 pt-5">
+                              <h2 className="text-3xl text-white flex justify-center pb-5 pt-5" style={{
+                            fontFamily:
+                              '"Geeza Pro", "Nadeem", "Al Bayan", "DecoType Naskh", "DejaVu Serif", "STFangsong", "STHeiti", "STKaiti", "STSong", "AB AlBayan", "AB Geeza", "AB Kufi", "DecoType Naskh", "Aldhabi", "Andalus", "Sakkal Majalla", "Simplified Arabic", "Traditional Arabic", "Arabic Typesetting", "Urdu Typesetting", "Droid Naskh", "Droid Kufi", "Roboto", "Tahoma", "Times New Roman", "Arial", serif',
+                            fontWeight: 500,
+                          }}>
                                 {ex.word}
                               </h2>
                               <h2 className="text-2xl font-sans text-white flex justify-center pb-8">
@@ -571,7 +626,11 @@ const HowToRead = ({ type, nextUrl, user }) => {
                               />
                             </div>
                             <div className="bg-purple-400 h-fit">
-                              <h2 className="text-3xl font-sans text-white flex justify-center pb-5 pt-5">
+                              <h2 className="text-3xl  text-white flex justify-center pb-5 pt-5" style={{
+                            fontFamily:
+                              '"Geeza Pro", "Nadeem", "Al Bayan", "DecoType Naskh", "DejaVu Serif", "STFangsong", "STHeiti", "STKaiti", "STSong", "AB AlBayan", "AB Geeza", "AB Kufi", "DecoType Naskh", "Aldhabi", "Andalus", "Sakkal Majalla", "Simplified Arabic", "Traditional Arabic", "Arabic Typesetting", "Urdu Typesetting", "Droid Naskh", "Droid Kufi", "Roboto", "Tahoma", "Times New Roman", "Arial", serif',
+                            fontWeight: 500,
+                          }}>
                                 {ex.word}
                               </h2>
                               <h2 className="text-2xl font-sans text-white flex justify-center pb-8">
@@ -600,7 +659,11 @@ const HowToRead = ({ type, nextUrl, user }) => {
                               />
                             </div>
                             <div className="bg-purple-400 h-fit">
-                              <h2 className="text-3xl font-sans text-white flex justify-center pb-5 pt-5">
+                              <h2 className="text-3xl  text-white flex justify-center pb-5 pt-5" style={{
+                            fontFamily:
+                              '"Geeza Pro", "Nadeem", "Al Bayan", "DecoType Naskh", "DejaVu Serif", "STFangsong", "STHeiti", "STKaiti", "STSong", "AB AlBayan", "AB Geeza", "AB Kufi", "DecoType Naskh", "Aldhabi", "Andalus", "Sakkal Majalla", "Simplified Arabic", "Traditional Arabic", "Arabic Typesetting", "Urdu Typesetting", "Droid Naskh", "Droid Kufi", "Roboto", "Tahoma", "Times New Roman", "Arial", serif',
+                            fontWeight: 500,
+                          }}>
                                 {ex.word}
                               </h2>
                               <h2 className="text-2xl font-sans text-white flex justify-center pb-8">

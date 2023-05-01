@@ -26,8 +26,8 @@ const Alphabates = [
     title: "Alif",
     harakat: { zabar: "اَ", zer: "اِ", pesh: "اُ" },
 
-    gif:'https://res.cloudinary.com/daftxtnxw/image/upload/v1682420500/Gifs/ezgif.com-video-to-gif_4_m1bj8c.gif ',
-    
+    gif: "https://res.cloudinary.com/daftxtnxw/image/upload/v1682420500/Gifs/ezgif.com-video-to-gif_4_m1bj8c.gif ",
+
     mp4: "https://res.cloudinary.com/daftxtnxw/video/upload/v1680592002/1_ux9sp8.mp4",
   },
   {
@@ -497,7 +497,16 @@ const GeneralCardSm = ({
           <h2 className="py-2 text-sm text-dark-purple">{disc}</h2>
         </div>
         <div className="col-span-2">
-          <h2 className="py-2  text-dark-purple text-7xl">{ex}</h2>
+          <h2
+            className="py-2  text-dark-purple text-7xl"
+            style={{
+              fontFamily:
+                '"Geeza Pro", "Nadeem", "Al Bayan", "DecoType Naskh", "DejaVu Serif", "STFangsong", "STHeiti", "STKaiti", "STSong", "AB AlBayan", "AB Geeza", "AB Kufi", "DecoType Naskh", "Aldhabi", "Andalus", "Sakkal Majalla", "Simplified Arabic", "Traditional Arabic", "Arabic Typesetting", "Urdu Typesetting", "Droid Naskh", "Droid Kufi", "Roboto", "Tahoma", "Times New Roman", "Arial", serif',
+              fontWeight: 500,
+            }}
+          >
+            {ex}
+          </h2>
         </div>
         {/* <div className="">
           <h2 className="py-2 text-sm text-dark-purple">{disc}</h2>
@@ -653,25 +662,46 @@ const Card = ({
           </span> */}
             </h1>
             <div className="flex content-center">
-              <Link href={`/${user}/whiteboard`} className="mx-5 ">
+              <Link href={`/${user}/whiteboard`} className="mx-3 ">
                 <IconButton
                   aria-label="delete"
                   size="large"
-                  className="bg-cyan-200 text-dark-purple rounded-full hover:bg-gray-200 p-1.5 "
+                  className="bg-cyan-200 text-dark-purple rounded-full hover:bg-gray-200 p-2 "
                 >
                   <FilterFramesIcon />
                 </IconButton>
               </Link>
 
-              <Link href={`/${user}/module`} className="mx-5 ">
+              <Link href={`/${user}/module/harakat`} className="mx-2 ">
                 <Button
                   variant="contained"
-                  className="bg-cyan-200 text-dark-purple"
+                  className="bg-cyan-200 text-dark-purple h-10"
+                  startIcon={<ArrowBackIcon />}
+                >
+                  Home Module
+                </Button>
+              </Link>
+              <Link
+                href={`/${user}/module/harakat/${harakatType}/word-making-1`}
+                className="mx-2 "
+              >
+                <Button
+                  variant="contained"
+                  className="bg-cyan-200 text-dark-purple h-10"
                   startIcon={<ArrowBackIcon />}
                 >
                   Back
                 </Button>
               </Link>
+
+              {/* <Button
+              variant="contained"
+              className="bg-cyan-200 text-dark-purple mx-3 h-10"
+              onClick={() => history.back()}
+              startIcon={<ArrowBackIcon />}
+            >
+              Back
+            </Button> */}
             </div>
           </div>
           <div className="grid grid-cols-2  p-5 md:grid-cols-3 lg:ml-5 gap-4">
@@ -695,31 +725,33 @@ const Card = ({
                   playing={playing}
                 /> */}
 
-                <div className="w-full align-middle mx-auto" style={{position: "relative"}}>
-                  
-                  <div className="w-80 h-80 mt-8 rounded-3xl bg-cyan-300  mx-auto" >
-                      <img className="rounded-3xl" src={Teacher.src} alt="" />
-                  
-                  <div className="w-32">
-                    <img
-                      className="w-full"
-                      style={{
-                        position: "relative",
-                        // display: "none",
-                        width: "100%",
-                        height: "100%",
-                        top: -250,
-                        left: 145,
-                        right: 50,
-                        bottom: 50,
-                        backgroundColor: "red",
-                        cursor: "pointer",
-                        zIndex:100,
-                      }}
-                      src={gif}
-                      alt=""
-                    />
-                  </div>
+                <div
+                  className="w-full align-middle mx-auto"
+                  style={{ position: "relative" }}
+                >
+                  <div className="w-80 h-80 mt-8 rounded-3xl bg-cyan-300  mx-auto">
+                    <img className="rounded-3xl" src={Teacher.src} alt="" />
+
+                    <div className="w-32">
+                      <img
+                        className="w-full"
+                        style={{
+                          position: "relative",
+                          // display: "none",
+                          width: "100%",
+                          height: "100%",
+                          top: -250,
+                          left: 145,
+                          right: 50,
+                          bottom: 50,
+                          backgroundColor: "red",
+                          cursor: "pointer",
+                          zIndex: 100,
+                        }}
+                        src={gif}
+                        alt=""
+                      />
+                    </div>
                   </div>
                 </div>
 
@@ -744,10 +776,10 @@ const Card = ({
                       color="#09DBDB"
                       ex={
                         harakatType == "fatha"
-                          ? fathaWordExample[index].initial 
+                          ? fathaWordExample[index].initial
                           : harakatType == "kasra"
-                          ? kasraWordExample[index].initial 
-                          : dammaWordExample[index].initial 
+                          ? kasraWordExample[index].initial
+                          : dammaWordExample[index].initial
                       }
                     />
                     <GeneralCardSm
@@ -757,10 +789,10 @@ const Card = ({
                       color="#FD5678"
                       ex={
                         harakatType == "fatha"
-                          ? fathaWordExample[index].middle 
+                          ? fathaWordExample[index].middle
                           : harakatType == "kasra"
-                          ? kasraWordExample[index].middle 
-                          : dammaWordExample[index].middle 
+                          ? kasraWordExample[index].middle
+                          : dammaWordExample[index].middle
                       }
                     />
                     <GeneralCardSm
@@ -770,10 +802,10 @@ const Card = ({
                       color="#ECABE1"
                       ex={
                         harakatType == "fatha"
-                          ? fathaWordExample[index].final 
+                          ? fathaWordExample[index].final
                           : harakatType == "kasra"
-                          ? kasraWordExample[index].final 
-                          : dammaWordExample[index].final 
+                          ? kasraWordExample[index].final
+                          : dammaWordExample[index].final
                       }
                     />
                   </div>
@@ -877,9 +909,9 @@ export default function VerticalTabs(props) {
     borderWidth: 2,
     borderColor: "white",
     margin: 10,
-    backgroundColor: randomColorR,   
+    backgroundColor: randomColorR,
     borderRadius: 15,
-  }
+  };
   const sliderCard = {
     fontSize: 40,
     fontFamily:
@@ -888,10 +920,9 @@ export default function VerticalTabs(props) {
     borderWidth: 2,
     borderColor: "white",
     margin: 10,
-    // backgroundColor: randomColorR,   
+    // backgroundColor: randomColorR,
     borderRadius: 15,
-  }
-
+  };
 
   return (
     <Box
@@ -917,9 +948,14 @@ export default function VerticalTabs(props) {
         {Alphabates.map((alphabate) => (
           <Tab
             label={alphabate.letter}
-            onClick={() => {GenerateColor(alphabate.index)}}
-            style={selectedOption == alphabate.index ? sliderCardSelected : sliderCard}
-          
+            onClick={() => {
+              GenerateColor(alphabate.index);
+            }}
+            style={
+              selectedOption == alphabate.index
+                ? sliderCardSelected
+                : sliderCard
+            }
             {...a11yProps(alphabate.index)}
             // style={bgStyle}
           />

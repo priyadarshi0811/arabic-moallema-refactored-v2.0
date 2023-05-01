@@ -5,15 +5,20 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import colorBgImg from "@/components/src/img/colorBgImg.png";
+import RewordGIf from "@/components/src/gif/RewordGIf.gif";
 import Link from "next/link";
 import { Button, IconButton } from "@mui/material";
-import GeneralCard from "@/components/Layout/card/GeneralCard";
 import AudioButton from "@/components/Layout/elements/AudioBtn";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useState } from "react";
 import FilterFramesIcon from "@mui/icons-material/FilterFrames";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-
+import Modal from "@mui/material/Modal";
+import Confetti from "react-confetti";
+import CardM from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import { CardActionArea } from "@mui/material";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -92,6 +97,23 @@ const Card = ({
   bgL,
   bgR,
 }) => {
+  const style = {
+    position: "absolute",
+    top: "48%",
+    left: "58%",
+    transform: "translate(-50%, -50%)",
+    width: "80%",
+    height: "80%",
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    borderRadius: 10,
+    boxShadow: 24,
+  };
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   return (
     <div className="w-full  ">
       <div className=" bg-white rounded-3xl w-full mt-5 ml-5">
@@ -107,7 +129,7 @@ const Card = ({
           </span> */}
           </h1>
           <div className="flex content-center">
-            <Link href={`/teacher/whiteboard`} className="mx-5 ">
+            <Link href={`/teacher/whiteboard`} className="mx-3 ">
               <IconButton
                 aria-label="delete"
                 size="large"
@@ -117,7 +139,19 @@ const Card = ({
               </IconButton>
             </Link>
 
-            <Link href={`/${user}/module/alphabets`} className="mx-5 ">
+            <Link href={`/${user}/module/alphabets`} className="mx-2 ">
+              <Button
+                variant="contained"
+                className="bg-cyan-200 text-dark-purple"
+                startIcon={<ArrowBackIcon />}
+              >
+                Main Module
+              </Button>
+            </Link>
+            <Link
+              href={`/${user}/module/alphabets/similar-sounding-letters`}
+              className="mx-2 "
+            >
               <Button
                 variant="contained"
                 className="bg-cyan-200 text-dark-purple"
@@ -164,12 +198,62 @@ const Card = ({
       </div>
       <div className=" w-full p-2 rounded-md  flex flex-row justify-center   pt-3">
         <div className="mx-5">
-          <Link href={`/${user}/module/harakat/fatahah`}>
-            <Button variant="contained" className="text-dark-purple bg-white">
-              Next Module
-            </Button>
-          </Link>
+          {/* <Link href={`/${user}/module/harakat/fatahah`}> */}
+          <Button
+            variant="contained"
+            className="text-dark-purple bg-white"
+            onClick={handleOpen}
+          >
+            Next Module
+          </Button>
+          {/* </Link> */}
         </div>
+      </div>
+      <div>
+        {/* <Button onClick={handleOpen}>Open modal</Button> */}
+
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={{}} id="my-canvas">
+            <CardM sx={style}>
+              <CardActionArea className="h-full flex-1 ">
+                <Confetti />
+                <div className="h-10 w-full">
+                  <img src={RewordGIf.src} className="w-80 mx-auto" />
+                </div>
+                <CardContent className="mt-56 text-center">
+                  <Typography gutterBottom variant="h1" component="div">
+                  Congratulations 
+                  </Typography>
+                  <Typography gutterBottom variant="h5" component="div">
+                    You have Completed the Arabic Alphabets Modules
+                  </Typography>
+                  {/* <Typography variant="body" color="text.secondary">
+                    Lizards are a widespread group of squamate reptiles, with
+                    over 6,000 species, ranging across all continents except
+                    Antarctica
+                  </Typography> */}
+                </CardContent>
+                <center>
+
+                <Link href={`/${user}/module/harakat/fatha`}>
+                  
+                  <Button
+                    variant="contained"
+                    className="text-dark-purple bg-yellow-400"
+                  >
+                    Next Module
+                  </Button>
+                </Link>
+                </center>
+              </CardActionArea>
+            </CardM>
+          </Box>
+        </Modal>
       </div>
     </div>
   );
@@ -225,9 +309,9 @@ export default function VerticalTabs(props) {
     borderWidth: 2,
     borderColor: "white",
     margin: 10,
-    backgroundColor: randomColorR,   
+    backgroundColor: randomColorR,
     borderRadius: 15,
-  }
+  };
   const sliderCard = {
     fontSize: 40,
     fontFamily:
@@ -236,9 +320,9 @@ export default function VerticalTabs(props) {
     borderWidth: 2,
     borderColor: "white",
     margin: 10,
-    // backgroundColor: randomColorR,   
+    // backgroundColor: randomColorR,
     borderRadius: 15,
-  }
+  };
 
   const handleSliderCardClick = (index) => {
     setSelectedOption(index);
@@ -267,27 +351,34 @@ export default function VerticalTabs(props) {
         className="bg-dark-purple text-white"
       >
         <Tab
-          onClick={() => {GenerateColor(0)}}
+          onClick={() => {
+            GenerateColor(0);
+          }}
           label="بــ - یــ"
           // className={`lg:text-4xl text-3xl  py-3 px-0 m-3  w-60 text-white font-bold rounded-lg font-sans  focus:bg-cyan-400 border-2 border-emerald-200`}
           style={selectedOption == 0 ? sliderCardSelected : sliderCard}
-          
           {...a11yProps(0)}
         />
         <Tab
-          onClick={() => {GenerateColor(1)}}
+          onClick={() => {
+            GenerateColor(1);
+          }}
           label="نـــ - تـــ"
-          style={selectedOption == 1  ? sliderCardSelected : sliderCard}
+          style={selectedOption == 1 ? sliderCardSelected : sliderCard}
           {...a11yProps(1)}
         />
         <Tab
-          onClick={() => {GenerateColor(2)}}
+          onClick={() => {
+            GenerateColor(2);
+          }}
           label="ثــ  -شـــ"
           style={selectedOption == 2 ? sliderCardSelected : sliderCard}
           {...a11yProps(2)}
         />
         <Tab
-          onClick={() => {GenerateColor(3)}}
+          onClick={() => {
+            GenerateColor(3);
+          }}
           label="جــ. -خـــ"
           style={selectedOption == 3 ? sliderCardSelected : sliderCard}
           {...a11yProps(3)}
@@ -318,7 +409,7 @@ export default function VerticalTabs(props) {
         />
         <Tab
           onClick={() => GenerateColor(8)}
-          label="ـــفــ. - ــقـــ"
+          label="ـــفــ - ــقـــ"
           style={selectedOption == 8 ? sliderCardSelected : sliderCard}
           {...a11yProps(9)}
         />

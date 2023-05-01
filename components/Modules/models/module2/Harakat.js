@@ -580,13 +580,31 @@ const Card = ({
 
           <Link href={`/${user}/module`} className="mx-5">
             <Button
+                variant="contained"
+                className="bg-cyan-200 text-dark-purple h-10"
+                startIcon={<ArrowBackIcon />}
+              >
+                Home Module
+              </Button>
+            </Link>
+          <Link href={`/${user}/module/`} className="mx-5">
+            <Button
+                variant="contained"
+                className="bg-cyan-200 text-dark-purple h-10"
+                startIcon={<ArrowBackIcon />}
+              >
+                Home Module
+              </Button>
+            </Link>
+
+            <Button
               variant="contained"
-              className="bg-white text-dark-purple"
+              className="bg-cyan-200 text-dark-purple mx-3 h-10"
+              onClick={() => history.back()}
               startIcon={<ArrowBackIcon />}
             >
               Back
             </Button>
-          </Link>
         </div>
       </div>
       <div className=" bg-white rounded-md w-full mt-5">
