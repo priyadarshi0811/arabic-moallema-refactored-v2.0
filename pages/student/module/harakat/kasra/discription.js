@@ -15,28 +15,30 @@ const positioning = () => {
   const authCtx = useContext(AuthContext);
   const router = useRouter();
 
-  /**************Restricting Teachers Route************************* */
+  /**************Restricting Students Route************************* */
   const loggedIn = authCtx.isLoggedIn;
-  const typeTeacher = authCtx.userType === "instructor" ? true : false;
-  if (!typeTeacher && loggedIn) {
+
+  const typeStudent = authCtx.userType === "student" ? true : false;
+  if (!typeStudent && loggedIn) {
     router.replace("/");
   }
 
   useEffect(() => {
     console.log("in");
-    if (typeTeacher && loggedIn) {
-      if (!typeTeacher && !loggedIn) {
+    if (typeStudent && loggedIn) {
+      if (!typeStudent && !loggedIn) {
         console.log("second in");
         router.replace("/");
       }
     }
     const localType = localStorage.getItem("type");
-    if (localType !== "instructor") {
+    if (localType !== "student") {
       console.log("second in");
       router.replace("/");
     }
-  }, [loggedIn, typeTeacher]);
-  /**************Restricting Teachers Route************************* */
+  }, [loggedIn, typeStudent]);
+
+  /**************Restricting Students Route************************* */
 
   return (
     <div
