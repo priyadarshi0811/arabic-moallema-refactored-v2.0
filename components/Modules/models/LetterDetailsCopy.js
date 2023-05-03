@@ -32,13 +32,6 @@ import {
   DialogActions,
 } from "@mui/material";
 
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions,
-} from "@mui/material";
 import BackButton from "@/components/Layout/elements/BackButton";
 const LetterDetails = (props) => {
   console.log("user: ", props.user);
