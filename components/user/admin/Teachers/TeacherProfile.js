@@ -46,6 +46,8 @@ const TeacherProfile = ({ email }) => {
   const [teacherId, setTeacherId] = React.useState();
   const [batchId, setBatchId] = React.useState();
 
+  const [errorProfile, setErrorProfile] = React.useState(false);
+
   const batchCtx = React.useContext(BatchContext);
 
   const handleOpen = () => setOpen(true);
@@ -65,6 +67,7 @@ const TeacherProfile = ({ email }) => {
   }, [batchCtx.submitted, email]);
 
   console.log(teacherId);
+  console.log("techer err: ", errorProfile);
 
   //getting the profile data for teachers
   React.useEffect(() => {
@@ -153,6 +156,8 @@ const TeacherProfile = ({ email }) => {
           <div className="m-0 p-10 w-full h-fit">
             {profileData && batchesData && (
               <UserDetails
+                errorProfile={errorProfile}
+                setErrorProfile={setErrorProfile}
                 teacherId={teacherId}
                 batchDataTeacher={batchesData}
                 profileData={profileData}
