@@ -5,6 +5,7 @@ import AddStudent from "@/components/user/admin/AddStudent";
 import AddTeacher from "@/components/user/admin/AddTeacher";
 import SelectDropdown from "@/components/Layout/elements/SelectDropdown";
 import { fetchBatchDataBasedOnBatchId } from "@/backend/Batches/BatchesDB";
+import ValidationCard from "@/components/Layout/card/ValidationCard";
 
 const LiveBatchDetails = ({
   user,
@@ -15,11 +16,14 @@ const LiveBatchDetails = ({
   batchDataTeacher,
   studentId,
   teacherId,
+  setErrorProfile,
+  errorProfile,
 }) => {
   console.log(` and isStudent = ${isStudent} `);
   const [batchName, setBatchName] = React.useState();
   const [batchesData, setBatchData] = React.useState();
 
+  console.log(errorProfile);
   //get student batch data
   React.useEffect(() => {
     const batchData = async () => {
@@ -45,8 +49,16 @@ const LiveBatchDetails = ({
         {isStudent && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
             <div className="col-span-1">
+              {errorProfile && (
+                <ValidationCard
+                  message="Please write correct details"
+                  title="Warning"
+                />
+              )}
               {batchId && batchName && (
                 <AddStudent
+                  errorProfile={errorProfile}
+                  setErrorProfile={setErrorProfile}
                   batchName={batchName}
                   batchesData={batchesData}
                   profileData={profileData}
@@ -74,8 +86,16 @@ const LiveBatchDetails = ({
         {!isStudent && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
             <div className="col-span-1">
+              {errorProfile && (
+                <ValidationCard
+                  message="Please write correct details"
+                  title="Warning"
+                />
+              )}
               {batchDataTeacher && profileData && (
                 <AddTeacher
+                  errorProfile={errorProfile}
+                  setErrorProfile={setErrorProfile}
                   batchesData={batchDataTeacher}
                   profileData={profileData}
                   userType={userType}

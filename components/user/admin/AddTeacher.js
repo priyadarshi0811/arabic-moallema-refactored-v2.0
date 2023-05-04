@@ -23,6 +23,7 @@ import Spinner from "@/components/Layout/spinner/Spinner";
 import supabase from "@/supabaseClient";
 import supabaseAdmin from "@/backend/DeleteUser/SupabaseAdmin";
 import { updateTeacherEmailFromAuth } from "@/backend/Teachers/UpdateTeacherEmail";
+import ValidationCard from "@/components/Layout/card/ValidationCard";
 
 // const names = ["Batch 1", "Batch 2", "Batch 3", "Batch 4", "Batch 5"];
 
@@ -47,6 +48,8 @@ export default function AddUser({
   userType,
   profileData,
   batchesData,
+  setErrorProfile,
+  errorProfile,
 }) {
   const theme = useTheme();
 
@@ -57,6 +60,13 @@ export default function AddUser({
   const [newEmail, setNewEmail] = React.useState("");
 
   const [teacherId, setTeacherId] = React.useState("");
+
+  //validation states
+  const [error, setError] = React.useState(false);
+  const [validateError, setvalidateError] = React.useState(false);
+  const [emailError, setEmailError] = React.useState(false);
+  const [contactError, setContactError] = React.useState(false);
+  const [editEmailError, setEditEmailError] = React.useState(false);
 
   const [isLoading, setIsLoading] = React.useState(false);
   const batchCtx = React.useContext(BatchContext);
@@ -88,15 +98,51 @@ export default function AddUser({
     e.preventDefault();
     setIsLoading(true);
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     console.log("adding teacher");
 
-    if (name && contact && email) {
+    if (name === "" || email === "" || contact === "") {
+      setvalidateError(true);
+      return;
+    }
+
+    console.log(contact.length);
+    if (contact.length !== 10) {
+      console.log("in");
+      setContactError(true);
+      setEmailError(false);
+      setvalidateError(false);
+
+      return;
+    }
+    if (!emailRegex.test(email)) {
+      setEmailError(true);
+      setvalidateError(false);
+      setContactError(false);
+
+      return;
+    }
+
+    if (name && contact && emailRegex.test(email) && contact.length === 10) {
       const password = uuidv4() + "@123AM"; // Generate a unique password for each user
 
       const data = await createStudentTeacher(email, password, "instructor");
 
       if (!data) {
-        throw new Error(`Error creating user ${email}: ${error.message}`);
+        setError(true);
+        setEmailError(false);
+        setvalidateError(false);
+        // throw new Error(`Error creating user ${email}: ${error.message}`);
+        return;
+      }
+
+      if (data) {
+        setIsLoading(true);
+        setError(false);
+        setEmailError(false);
+        setContactError(false);
+        setvalidateError(false);
       }
       await axios
         .post("/api/send-email", {
@@ -122,6 +168,11 @@ export default function AddUser({
             );
 
             console.log("final data: ", dataUser);
+
+            setvalidateError(false);
+            setEmailError(false);
+            setError(false);
+            setContactError(false);
           };
           getData();
         })
@@ -133,6 +184,7 @@ export default function AddUser({
       batchCtx.setSubmittedHandler(true);
     } else {
       setIsLoading(false);
+      setvalidateError(true);
       console.log("Please fill in all fields");
     }
   };
@@ -140,10 +192,28 @@ export default function AddUser({
   const editTeachersDetail = async (e) => {
     e.preventDefault();
     console.log("update Teacher Detail");
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (teacherId) {
+    if (name === "" || email === "" || contact === "") {
+      console.log("ind");
+      setErrorProfile(true);
+      return;
+    }
+    if (contact.length !== 10) {
+      console.log("in");
+      setErrorProfile(true);
+
+      return;
+    }
+    if (!emailRegex.test(email)) {
+      setErrorProfile(true);
+      return;
+    }
+
+    if (name && contact && teacherId && contact.length === 10) {
       updateTeacherDetail(email, name, contact, teacherId);
       batchCtx.setSubmittedHandler(true);
+      setErrorProfile(false);
     }
   };
 
@@ -155,8 +225,21 @@ export default function AddUser({
     console.log(email);
     console.log(newEmail);
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (newEmail === "") {
+      setEditEmailError(true);
+      return;
+    }
+
+    if (!emailRegex.test(newEmail)) {
+      setEditEmailError(true);
+      return;
+    }
+
     if (newEmail) {
       updateTeacherEmail(newEmail, teacherId);
+      setEditEmailError(false);
     }
 
     const { data, error } = await supabaseAdmin.auth.admin.listUsers();
@@ -168,6 +251,7 @@ export default function AddUser({
 
     if (userId && newEmail) {
       updateTeacherEmailFromAuth(userId, newEmail);
+      setEditEmailError(false);
     }
 
     if (email && newEmail) {
@@ -211,8 +295,38 @@ export default function AddUser({
 
   return (
     <div className=" p-5 rounded-md bg-white  pl-2">
-      {isLoading && <Spinner title="Adding Teacher" />}
+      {!error &&
+        !validateError &&
+        !emailError &&
+        !contactError &&
+        isLoading && <Spinner title="Adding Teacher" />}
 
+      {error && (
+        <div>
+          <ValidationCard
+            message="Email Address Already Exists!"
+            title="Warning"
+          />
+        </div>
+      )}
+      {validateError && (
+        <ValidationCard
+          message="All Fields should be filled!"
+          title="Warning"
+        />
+      )}
+      {emailError && (
+        <ValidationCard
+          message="Please Enter a correct email address"
+          title="Warning"
+        />
+      )}
+      {contactError && (
+        <ValidationCard
+          message="Please Enter a correct contact"
+          title="Warning"
+        />
+      )}
       <h1 className="text-2xl pl-2 pb-2">{title || user + " Details"}</h1>
       <Box
         component="form"
@@ -288,7 +402,12 @@ export default function AddUser({
         <div className=" mt-5 p-5 rounded-md bg-white  pl-2">
           {isLoading && <Spinner title="Adding Student" />}
           <h1 className="text-2xl pl-2 pb-2">Change Email Address</h1>
-
+          {editEmailError && (
+            <ValidationCard
+              message="Please Enter a correct Email "
+              title="Warning"
+            />
+          )}
           <Box
             component="form"
             sx={{

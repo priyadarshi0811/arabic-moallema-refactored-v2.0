@@ -46,6 +46,7 @@ const StudentProfile = ({ email }) => {
   const [batchesData, setBatchData] = React.useState();
   const [studentId, setStudnetId] = React.useState();
   const [batchId, setBatchId] = React.useState();
+  const [errorProfile, setErrorProfile] = React.useState(false);
 
   let router = useRouter();
 
@@ -66,6 +67,8 @@ const StudentProfile = ({ email }) => {
   }, [batchCtx.submitted, email]);
 
   console.log(studentId);
+
+  console.log("error: ", errorProfile);
 
   //get student profile data
 
@@ -152,6 +155,8 @@ const StudentProfile = ({ email }) => {
           <div className="m-0 p-10 w-full h-fit">
             {batchId && studentId && (
               <UserDetails
+                errorProfile={errorProfile}
+                setErrorProfile={setErrorProfile}
                 studentId={studentId}
                 batchId={batchId}
                 profileData={profileData}
