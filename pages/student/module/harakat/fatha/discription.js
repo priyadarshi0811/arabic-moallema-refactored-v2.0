@@ -75,9 +75,10 @@ const positioning = () => {
             </Link>
           </div>
         </div>
-        <div className="p-10">
-          <div className="mx-10  bg-dark-purple   text-center text-dark-purple h-full rounded-3xl  ">
-            <div className="bg-dark-purple rounded-3xl">
+      </div>
+      <div className="p-10">
+      <div className="mx-10  bg-dark-purple   text-center text-dark-purple h-full rounded-3xl  ">
+          <div className="bg-dark-purple rounded-3xl">
             <h1 className="text-9xl py-5 text-white "
                 style={{
                   fontFamily:
@@ -122,7 +123,6 @@ const positioning = () => {
         <div className="mt-5 w-full flex justify-center">
             <Link href ='/student/module/harakat/fatha/how-to-read-1'><Button variant="contained" className="bg-white text-dark-purple"  endIcon={<NavigateNextIcon />} >Start</Button></Link>
         </div>
-      </div>
     </div>
   );
 };
