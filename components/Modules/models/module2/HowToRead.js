@@ -14,7 +14,7 @@ import FilterFramesIcon from "@mui/icons-material/FilterFrames";
 const HowToRead = ({ user, screenNo, nextUrl, harakatType, preM }) => {
   const [videoIndex, setVideoIndex] = useState(1);
 
-  /* --------------------------------- fathaa --------------------------------- */
+  /* --------------------------------- fatha --------------------------------- */
   const HFRFST_V1 =
     "https://res.cloudinary.com/daftxtnxw/video/upload/v1680674726/3%20letters/animation_1_ez3s0m.mp4";
   const HFRFST_V2 =
@@ -28,7 +28,38 @@ const HowToRead = ({ user, screenNo, nextUrl, harakatType, preM }) => {
   const HFRSND_V3 =
     "https://res.cloudinary.com/daftxtnxw/video/upload/v1680674722/2%20letter%20joint/animation_3_kx6dz7.mp4";
 
-  /* --------------------------------- kasara --------------------------------- */
+  /* --------------------------------- kasra --------------------------------- */
+  
+  const HKRFST_V1 =
+    "https://res.cloudinary.com/daftxtnxw/video/upload/v1683176784/kasra/3%20word/animation_2_w6zuyl.mp4";
+  const HKRFST_V2 =
+    "https://res.cloudinary.com/daftxtnxw/video/upload/v1683176786/kasra/3%20word/animation_3_t1d9ib.mp4";
+  const HKRFST_V3 =
+    "https://res.cloudinary.com/daftxtnxw/video/upload/v1683176787/kasra/3%20word/animation_1_oajmc7.mp4";
+  const HKRSND_V1 =
+    "https://res.cloudinary.com/daftxtnxw/video/upload/v1683176786/kasra/2%20word/animation_1_ihu36m.mp4";
+  const HKRSND_V2 =
+    "https://res.cloudinary.com/daftxtnxw/video/upload/v1683176784/kasra/2%20word/animation_3_xnopjn.mp4";
+  const HKRSND_V3 =
+    "https://res.cloudinary.com/daftxtnxw/video/upload/v1683176784/kasra/2%20word/animation_2_aj9esu.mp4";
+  
+  
+  /* --------------------------------- Damma --------------------------------- */
+
+  const HDRFST_V1 =
+    "https://res.cloudinary.com/daftxtnxw/video/upload/v1683176788/damma/3%20words/Animation_1_mx3lbl.mp4";
+  const HDRFST_V2 =
+    "https://res.cloudinary.com/daftxtnxw/video/upload/v1683176788/damma/3%20words/Animation_2_wnoh1x.mp4";
+  const HDRFST_V3 =
+    "https://res.cloudinary.com/daftxtnxw/video/upload/v1683176785/damma/3%20words/Animation_3_jjx2mr.mp4";
+  const HDRSND_V1 =
+    "https://res.cloudinary.com/daftxtnxw/video/upload/v1680674723/2%20letter%20joint/animation_1_revuyu.mp4";
+  const HDRSND_V2 =
+    "https://res.cloudinary.com/daftxtnxw/video/upload/v1680674723/2%20letter%20joint/animation_2_risa7e.mp4";
+  const HDRSND_V3 =
+    "https://res.cloudinary.com/daftxtnxw/video/upload/v1680674722/2%20letter%20joint/animation_3_kx6dz7.mp4";
+  
+
 
   const [videoState, setVideoState] = useState({
     playing: true,
@@ -118,10 +149,7 @@ const HowToRead = ({ user, screenNo, nextUrl, harakatType, preM }) => {
                 Home Module
               </Button>
             </Link>
-            <Link
-              href={`/${user}/module/harakat/${preM}`}
-              className="mx-2 "
-            >
+            <Link href={`/${user}/module/harakat/${preM}`} className="mx-2 ">
               <Button
                 variant="contained"
                 className="bg-cyan-200 text-dark-purple h-10"
@@ -139,7 +167,21 @@ const HowToRead = ({ user, screenNo, nextUrl, harakatType, preM }) => {
                 {/* <VideoWithBtn /> */}
                 <ReactPlayer
                   className="player"
-                  url={screenNo == "fst" ? HFRFST_V1 : HFRSND_V1}
+                  url={
+                    harakatType == "fatha" && screenNo == "fst"
+                      ? HFRFST_V1
+                      : harakatType == "fatha" && screenNo == "snd"
+                      ? HFRSND_V1
+                      : harakatType == "kasra" && screenNo == "fst"
+                      ? HKRFST_V1
+                      : harakatType == "kasra" && screenNo == "snd"
+                      ? HKRSND_V1
+                      : harakatType == "damma" && screenNo == "fst"
+                      ? HDRFST_V1
+                      : harakatType == "damma" && screenNo == "snd"
+                      ? HDRSND_V1                     
+                      : null
+                  }
                   // width="100%"
                   height={360}
                   playing={playing}
@@ -167,7 +209,19 @@ const HowToRead = ({ user, screenNo, nextUrl, harakatType, preM }) => {
                 {/* <VideoWithBtn /> */}
                 <ReactPlayer
                   className="player"
-                  url={screenNo == "fst" ? HFRFST_V2 : HFRSND_V2}
+                  url={harakatType == "fatha" && screenNo == "fst"
+                  ? HFRFST_V2
+                  : harakatType == "fatha" && screenNo == "snd"
+                  ? HFRSND_V2
+                  : harakatType == "kasra" && screenNo == "fst"
+                  ? HKRFST_V2
+                  : harakatType == "kasra" && screenNo == "snd"
+                  ? HKRSND_V2
+                  : harakatType == "damma" && screenNo == "fst"
+                  ? HDRFST_V2
+                  : harakatType == "damma" && screenNo == "snd"
+                  ? HDRSND_V2                      
+                  : null}
                   // width="100%"
                   height={360}
                   playing={playing}
@@ -195,7 +249,19 @@ const HowToRead = ({ user, screenNo, nextUrl, harakatType, preM }) => {
                 {/* <VideoWithBtn /> */}
                 <ReactPlayer
                   className="player"
-                  url={screenNo == "fst" ? HFRFST_V3 : HFRSND_V3}
+                  url={harakatType == "fatha" && screenNo == "fst"
+                  ? HFRFST_V3
+                  : harakatType == "fatha" && screenNo == "snd"
+                  ? HFRSND_V3
+                  : harakatType == "kasra" && screenNo == "fst"
+                  ? HKRFST_V3
+                  : harakatType == "kasra" && screenNo == "snd"
+                  ? HKRSND_V3
+                  : harakatType == "damma" && screenNo == "fst"
+                  ? HDRFST_V3
+                  : harakatType == "damma" && screenNo == "snd"
+                  ? HDRSND_V3                      
+                  : null}
                   // width="100%"
                   height={360}
                   playing={playing}
