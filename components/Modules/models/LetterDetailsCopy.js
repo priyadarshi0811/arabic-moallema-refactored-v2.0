@@ -219,7 +219,7 @@ const LetterDetails = (props) => {
 
   return (
     <>
-      <div className=" bg-white rounded-3xl w-full mt-5 ml-5">
+      <div className=" bg-white rounded-3xl  mt-5 ml-5">
         <Dialog
           open={showSubmissionWarning}
           onClose={(e) => setShowSubmissionWarning(false)}

@@ -511,7 +511,7 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module, nextM, preM }) 
           </span> */}
           </h1>
           <div className="flex content-center">
-          <Link href={`/teacher/whiteboard`} className="mx-3 ">
+            <Link href={`/teacher/whiteboard`} className="mx-3 ">
               <IconButton
                 aria-label="delete"
                 size="large"
