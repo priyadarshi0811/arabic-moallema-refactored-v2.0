@@ -87,9 +87,9 @@ const SentenceMaking = ({
 
   useEffect(() => {
     const getSubmittedAssignment = async () => {
-      if (batchId && "harakat" && type && studentId) {
+      if (batchId && "almadood" && type && studentId) {
         const data = await checkAssignmentSubmitionStatus(
-          "harakat",
+          "almadood",
           type,
           batchId,
           studentId
@@ -131,7 +131,7 @@ const SentenceMaking = ({
       let data;
       if (type && batchId) {
         console.log("in");
-        data = await checkActivityStartStatus("harakat", type, batchId);
+        data = await checkActivityStartStatus("almadood", type, batchId);
         console.log(data[0]);
         if (data) {
           console.log("in data");
@@ -154,7 +154,7 @@ const SentenceMaking = ({
       if (type) {
         console.log("inside");
         console.log(type);
-        const data = await fetchAssignmentForLetter(type, "harakat");
+        const data = await fetchAssignmentForLetter(type, "almadood");
         if (data[0]) {
           setAssignment(data[0].assignment_json.letter);
           setActivityPath(`${data[0].assignment_json.letter[0].activity_type}`);
@@ -168,12 +168,13 @@ const SentenceMaking = ({
   console.log(assignment);
 
   console.log("module: ", module);
+
   const setActivitySubmodule = async () => {
     if (user !== "student" && isStarted === undefined) {
       console.log(isStarted);
       let data;
       if (type && batchId) {
-        data = await addActivityStartStatus("harakat", type, batchId);
+        data = await addActivityStartStatus("almadood", type, batchId);
         if (!data) {
           console.log("already added");
         }
@@ -194,13 +195,12 @@ const SentenceMaking = ({
       setShowSubmissionWarning(false);
 
       console.log("in type");
-      window.location.href = `/${user}/activity/${activityPath}/harakat/${type}/${0}`;
+      window.location.href = `/${user}/activity/${activityPath}/almadood/${type}/${0}`;
     }
-
     console.log(activityPath);
   };
 
-  const fathaSentenceExamples = [
+  const alifSentenceExample = [
     {
       index: 0,
       image:
@@ -300,7 +300,7 @@ const SentenceMaking = ({
       meaning: "Ground and kneaded",
     },
   ];
-  const KasraSentenceExamples = [
+  const yaaSentenceExample = [
     {
       index: 0,
       image:
@@ -393,7 +393,7 @@ const SentenceMaking = ({
       meaning: "He hated and angered",
     },
   ];
-  const dammaSentenceExamples = [
+  const wawSentenceExample = [
     {
       index: 0,
       image:
@@ -548,7 +548,7 @@ const SentenceMaking = ({
               </IconButton>
             </Link>
 
-            <Link href={`/${user}/module/harakat`} className="mx-3 ">
+            <Link href={`/${user}/module/almadood`} className="mx-3 ">
               <Button
                 variant="contained"
                 className="bg-cyan-200 text-dark-purple h-10"
@@ -558,7 +558,7 @@ const SentenceMaking = ({
               </Button>
             </Link>
 
-            <Link href={`/${user}/module/harakat/${preM}`} className="mx-2 ">
+            <Link href={`/${user}/module/almadood/${preM}`} className="mx-2 ">
               <Button
                 variant="contained"
                 className="bg-cyan-200 text-dark-purple h-10"
@@ -577,8 +577,8 @@ const SentenceMaking = ({
 
             <>
               <div className=" flex my-5 mx-20">
-                {type == "fatha"
-                  ? fathaSentenceExamples.map((ex) => (
+                {type == "alif"
+                  ? alifSentenceExample.map((ex) => (
                       <>
                         {cardIndex == ex.index ? (
                           <div className=" " style={{ width: "100%" }}>
@@ -660,8 +660,6 @@ const SentenceMaking = ({
                                   >
                                     Next Module
                                   </Button>
-
-                                  {/* /${user}/module/harakat/${nextM} */}
                                 </>
                               )}
                             </div>
@@ -669,8 +667,8 @@ const SentenceMaking = ({
                         ) : null}
                       </>
                     ))
-                  : type == "kasra"
-                  ? KasraSentenceExamples.map((ex) => (
+                  : type == "yaa"
+                  ? yaaSentenceExample.map((ex) => (
                       <>
                         {cardIndex == ex.index ? (
                           <div className=" " style={{ width: "100%" }}>
@@ -758,7 +756,7 @@ const SentenceMaking = ({
                         ) : null}
                       </>
                     ))
-                  : dammaSentenceExamples.map((ex) => (
+                  : wawSentenceExample.map((ex) => (
                       <>
                         {cardIndex == ex.index ? (
                           <div className=" " style={{ width: "100%" }}>
@@ -832,7 +830,6 @@ const SentenceMaking = ({
                                   >
                                     Activity
                                   </Button>
-                                  {/* <Link href={`/${user}/module/harakat/${nextM}`} > */}
                                   <Button
                                     variant="contained"
                                     className="text-dark-purple bg-white"
@@ -886,7 +883,7 @@ const SentenceMaking = ({
       </div>
       <CompleateModal
         moduleName={type}
-        nextModule={`/${user}/module/harakat/${type}/discription`}
+        nextModule={`/${user}/module/almadood/${type}/discription`}
         open={open}
         setOpen={setOpen}
       />

@@ -69,7 +69,7 @@ const StudentHome = () => {
     let batchId;
     console.log("batchData", batchData);
     const idData = await fetchBatcheIdBasedOnBatchName(batchData);
-    if (idData[0]) {
+    if (idData && idData[0]) {
       batchId = idData[0].batch_id;
     }
 

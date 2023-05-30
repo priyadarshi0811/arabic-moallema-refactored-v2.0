@@ -32,7 +32,7 @@ const BatchEdit = ({ actionBtn, link, setOpen }) => {
     const fetchTeacherId = async () => {
       const data = await fetchTeachersIdBasedOnEmail(selectedTeacher);
       console.log(data);
-      if (data[0]) {
+      if (data) {
         setTeacherId(data[0].teacher_id);
       }
     };
@@ -212,11 +212,12 @@ const BatchEdit = ({ actionBtn, link, setOpen }) => {
                       required
                       className="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                     >
-                      {options.map((option) => (
-                        <option key={option.id} value={option.email}>
-                          {option.name}
-                        </option>
-                      ))}
+                      {options &&
+                        options.map((option) => (
+                          <option key={option.id} value={option.email}>
+                            {option.name}
+                          </option>
+                        ))}
                     </select>
                   </div>
                   <div className="col-span-9 sm:col-span-3">

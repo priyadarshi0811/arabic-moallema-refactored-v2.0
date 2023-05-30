@@ -11,52 +11,53 @@ import VideoControlBtn from "@/components/Layout/elements/VideoControlBtn";
 import { useState } from "react";
 import FilterFramesIcon from "@mui/icons-material/FilterFrames";
 
-const HowToRead = ({ user, screenNo, nextUrl, harakatType, preM }) => {
+const HowToReadAlMadood = ({ user, screenNo, nextUrl, harakatType, preM }) => {
   const [videoIndex, setVideoIndex] = useState(1);
 
-  /* --------------------------------- fathaa --------------------------------- */
+  /* --------------------------------- Alif --------------------------------- */
   const HFRFST_V1 =
-    "https://res.cloudinary.com/daftxtnxw/video/upload/v1680674726/3%20letters/animation_1_ez3s0m.mp4";
+    "https://res.cloudinary.com/daftxtnxw/video/upload/v1685438724/Madd/Maad_Animation_2_fuy9pl.mp4";
   const HFRFST_V2 =
-    "https://res.cloudinary.com/daftxtnxw/video/upload/v1680674722/3%20letters/animation_2_hw9njl.mp4";
+    "https://res.cloudinary.com/daftxtnxw/video/upload/v1685438722/Madd/Maad_Animation_1_jj4ia6.mp4";
   const HFRFST_V3 =
-    "https://res.cloudinary.com/daftxtnxw/video/upload/v1680674722/3%20letters/animation_3_vthrl1.mp4";
+    "https://res.cloudinary.com/daftxtnxw/video/upload/v1685438722/Madd/Maad_Animation_3_yokphg.mp4";
   const HFRSND_V1 =
-    "https://res.cloudinary.com/daftxtnxw/video/upload/v1680674723/2%20letter%20joint/animation_1_revuyu.mp4";
+    "https://res.cloudinary.com/daftxtnxw/video/upload/v1685438724/Madd/Maad_Animation_2_fuy9pl.mp4";
   const HFRSND_V2 =
-    "https://res.cloudinary.com/daftxtnxw/video/upload/v1680674723/2%20letter%20joint/animation_2_risa7e.mp4";
+    "https://res.cloudinary.com/daftxtnxw/video/upload/v1685438722/Madd/Maad_Animation_1_jj4ia6.mp4";
   const HFRSND_V3 =
-    "https://res.cloudinary.com/daftxtnxw/video/upload/v1680674722/2%20letter%20joint/animation_3_kx6dz7.mp4";
+    "https://res.cloudinary.com/daftxtnxw/video/upload/v1685438722/Madd/Maad_Animation_3_yokphg.mp4";
 
-  /* --------------------------------- kasara --------------------------------- */
+  /* --------------------------------- Yaa --------------------------------- */
 
   const HKFST_V1 =
-    "https://res.cloudinary.com/daftxtnxw/video/upload/v1683176787/kasra/3%20word/animation_1_oajmc7.mp4";
-  const HKFST_V2 =
-    "https://res.cloudinary.com/daftxtnxw/video/upload/v1683176784/kasra/3%20word/animation_2_w6zuyl.mp4";
-  const HKFST_V3 =
-    "https://res.cloudinary.com/daftxtnxw/video/upload/v1683176786/kasra/3%20word/animation_3_t1d9ib.mp4";
-  const HKSND_V1 =
-    "https://res.cloudinary.com/daftxtnxw/video/upload/v1683176784/kasra/2%20word/animation_3_xnopjn.mp4";
-  const HKSND_V2 =
-    "https://res.cloudinary.com/daftxtnxw/video/upload/v1683176786/kasra/2%20word/animation_1_ihu36m.mp4";
-  const HKSND_V3 =
-    "https://res.cloudinary.com/daftxtnxw/video/upload/v1683176784/kasra/2%20word/animation_2_aj9esu.mp4";
+    "https://res.cloudinary.com/daftxtnxw/video/upload/v1685438724/Madd/Maad_Animation_2_fuy9pl.mp4";
 
-  /* --------------------------------- Damma --------------------------------- */
+  const HKFST_V2 =
+    "https://res.cloudinary.com/daftxtnxw/video/upload/v1685438722/Madd/Maad_Animation_1_jj4ia6.mp4";
+  const HKFST_V3 =
+    "https://res.cloudinary.com/daftxtnxw/video/upload/v1685438722/Madd/Maad_Animation_3_yokphg.mp4";
+  const HKSND_V1 =
+    "https://res.cloudinary.com/daftxtnxw/video/upload/v1685438724/Madd/Maad_Animation_2_fuy9pl.mp4";
+  const HKSND_V2 =
+    "https://res.cloudinary.com/daftxtnxw/video/upload/v1685438722/Madd/Maad_Animation_1_jj4ia6.mp4";
+  const HKSND_V3 =
+    "https://res.cloudinary.com/daftxtnxw/video/upload/v1685438722/Madd/Maad_Animation_3_yokphg.mp4";
+
+  /* --------------------------------- Waa --------------------------------- */
 
   const HDFST_V1 =
-    "https://res.cloudinary.com/daftxtnxw/video/upload/v1683176788/damma/3%20words/Animation_1_mx3lbl.mp4";
+    "https://res.cloudinary.com/daftxtnxw/video/upload/v1685438724/Madd/Maad_Animation_2_fuy9pl.mp4";
   const HDFST_V2 =
-    "https://res.cloudinary.com/daftxtnxw/video/upload/v1683176788/damma/3%20words/Animation_2_wnoh1x.mp4";
+    "https://res.cloudinary.com/daftxtnxw/video/upload/v1685438722/Madd/Maad_Animation_1_jj4ia6.mp4";
   const HDFST_V3 =
-    "https://res.cloudinary.com/daftxtnxw/video/upload/v1683176785/damma/3%20words/Animation_3_jjx2mr.mp4";
+    "https://res.cloudinary.com/daftxtnxw/video/upload/v1685438722/Madd/Maad_Animation_3_yokphg.mp4";
   const HDSND_V1 =
-    "https://res.cloudinary.com/daftxtnxw/video/upload/v1680674723/2%20letter%20joint/animation_1_revuyu.mp4";
+    "https://res.cloudinary.com/daftxtnxw/video/upload/v1685438724/Madd/Maad_Animation_2_fuy9pl.mp4";
   const HDSND_V2 =
-    "https://res.cloudinary.com/daftxtnxw/video/upload/v1680674723/2%20letter%20joint/animation_2_risa7e.mp4";
+    "https://res.cloudinary.com/daftxtnxw/video/upload/v1685438722/Madd/Maad_Animation_1_jj4ia6.mp4";
   const HDSND_V3 =
-    "https://res.cloudinary.com/daftxtnxw/video/upload/v1680674722/2%20letter%20joint/animation_3_kx6dz7.mp4";
+    "https://res.cloudinary.com/daftxtnxw/video/upload/v1685438722/Madd/Maad_Animation_3_yokphg.mp4";
 
   const [videoState, setVideoState] = useState({
     playing: true,
@@ -137,7 +138,7 @@ const HowToRead = ({ user, screenNo, nextUrl, harakatType, preM }) => {
               </IconButton>
             </Link>
 
-            <Link href={`/${user}/module/harakat`} className="mx-3 ">
+            <Link href={`/${user}/module/almadood`} className="mx-3 ">
               <Button
                 variant="contained"
                 className="bg-cyan-200 text-dark-purple h-10"
@@ -146,7 +147,7 @@ const HowToRead = ({ user, screenNo, nextUrl, harakatType, preM }) => {
                 Home Module
               </Button>
             </Link>
-            <Link href={`/${user}/module/harakat/${preM}`} className="mx-2 ">
+            <Link href={`/${user}/module/almadood/${preM}`} className="mx-2 ">
               <Button
                 variant="contained"
                 className="bg-cyan-200 text-dark-purple h-10"
@@ -165,17 +166,17 @@ const HowToRead = ({ user, screenNo, nextUrl, harakatType, preM }) => {
                 <ReactPlayer
                   className="player"
                   url={
-                    harakatType == "fatha" && screenNo == "fst"
+                    harakatType == "alif" && screenNo == "fst"
                       ? HFRFST_V1
-                      : harakatType == "fatha" && screenNo == "snd"
+                      : harakatType == "alif" && screenNo == "snd"
                       ? HFRSND_V1
-                      : harakatType == "kasra" && screenNo == "fst"
+                      : harakatType == "yaa" && screenNo == "fst"
                       ? HKFST_V1
-                      : harakatType == "kasra" && screenNo == "snd"
+                      : harakatType == "yaa" && screenNo == "snd"
                       ? HKSND_V1
-                      : harakatType == "damma" && screenNo == "fst"
+                      : harakatType == "waw" && screenNo == "fst"
                       ? HDFST_V1
-                      : harakatType == "damma" && screenNo == "snd"
+                      : harakatType == "waw" && screenNo == "snd"
                       ? HDSND_V1
                       : null
                   }
@@ -207,17 +208,17 @@ const HowToRead = ({ user, screenNo, nextUrl, harakatType, preM }) => {
                 <ReactPlayer
                   className="player"
                   url={
-                    harakatType == "fatha" && screenNo == "fst"
+                    harakatType == "alif" && screenNo == "fst"
                       ? HFRFST_V2
-                      : harakatType == "fatha" && screenNo == "snd"
+                      : harakatType == "alif" && screenNo == "snd"
                       ? HFRSND_V2
-                      : harakatType == "kasra" && screenNo == "fst"
+                      : harakatType == "yaa" && screenNo == "fst"
                       ? HKFST_V2
-                      : harakatType == "kasra" && screenNo == "snd"
+                      : harakatType == "yaa" && screenNo == "snd"
                       ? HKSND_V2
-                      : harakatType == "damma" && screenNo == "fst"
+                      : harakatType == "waw" && screenNo == "fst"
                       ? HDFST_V2
-                      : harakatType == "damma" && screenNo == "snd"
+                      : harakatType == "waw" && screenNo == "snd"
                       ? HDSND_V2
                       : null
                   }
@@ -249,17 +250,17 @@ const HowToRead = ({ user, screenNo, nextUrl, harakatType, preM }) => {
                 <ReactPlayer
                   className="player"
                   url={
-                    harakatType == "fatha" && screenNo == "fst"
+                    harakatType == "alif" && screenNo == "fst"
                       ? HFRFST_V3
-                      : harakatType == "fatha" && screenNo == "snd"
+                      : harakatType == "alif" && screenNo == "snd"
                       ? HFRSND_V3
-                      : harakatType == "kasra" && screenNo == "fst"
+                      : harakatType == "yaa" && screenNo == "fst"
                       ? HKFST_V3
-                      : harakatType == "kasra" && screenNo == "snd"
+                      : harakatType == "yaa" && screenNo == "snd"
                       ? HKSND_V3
-                      : harakatType == "damma" && screenNo == "fst"
+                      : harakatType == "waw" && screenNo == "fst"
                       ? HDFST_V3
-                      : harakatType == "damma" && screenNo == "snd"
+                      : harakatType == "waw" && screenNo == "snd"
                       ? HDSND_V3
                       : null
                   }
@@ -333,7 +334,7 @@ const HowToRead = ({ user, screenNo, nextUrl, harakatType, preM }) => {
                 Pre
               </Button>
 
-              <Link href={`/${user}/module/harakat/${nextUrl}`}>
+              <Link href={`/${user}/module/almadood/${nextUrl}`}>
                 <Button
                   variant="contained"
                   className="bg-white text-dark-purple"
@@ -351,4 +352,4 @@ const HowToRead = ({ user, screenNo, nextUrl, harakatType, preM }) => {
   );
 };
 
-export default HowToRead;
+export default HowToReadAlMadood;

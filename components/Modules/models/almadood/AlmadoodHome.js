@@ -17,7 +17,7 @@ import FilterFramesIcon from "@mui/icons-material/FilterFrames";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import HomeActivityCard from "@/components/Layout/card/HomeActivityCard";
 
-const HarkatHome = ({ user }) => {
+const AlmadoodHome = ({ user }) => {
   return (
     <div
       className=""
@@ -56,7 +56,7 @@ const HarkatHome = ({ user }) => {
                 Previous Module
               </Button>
             </Link>
-            <Link href={`/student/module/harakat`}>
+            <Link href={`/student/module/almadood`}>
               <Button
                 className="bg-white text-dark-purple mx-2"
                 variant="contained"
@@ -89,13 +89,13 @@ const HarkatHome = ({ user }) => {
         <div className="col-span-3 pt-10">
           <div className="my-2 mx-10 h-20">
             <h1 className="text-4xl text-white font-sans">
-              Module 2 : <span className="text-5xl">Harakat</span>{" "}
+              Module 3 : <span className="text-5xl">Almadood</span>{" "}
             </h1>
           </div>
           <div className="p-5  grid grid-cols-3  w-full justify-center align-middle content-center my-auto ">
             <div className="   mt-6 rounded overflow-hidden  items-center justify-center  py-2 ">
               <Link
-                href={`/${user}/module/harakat/fatha/discription`}
+                href={`/${user}/module/almadood/alif/discription`}
                 // onClick={nameHandler}
                 className="font-extrabold text-center text-dark-purple"
               >
@@ -109,13 +109,13 @@ const HarkatHome = ({ user }) => {
                         fontWeight: 500,
                       }}
                     >
-                      ــَـ
+                      ـا
                     </h1>
                     {/* <h1 className="text-3xl pt-2 my-2">Fatha</h1> */}
                   </div>
                   <div className="bg-white rounded-3xl border-b-8 border-cyan-400">
                     {" "}
-                    <p className="py-5 font-medium text-2xl">Fatah</p>
+                    <p className="py-5 font-medium text-2xl">Alif</p>
                   </div>
                 </div>
                 {/* <h2 className="pt-2  text-lg">b</h2> */}
@@ -123,7 +123,7 @@ const HarkatHome = ({ user }) => {
             </div>
             <div className="   mt-6 rounded overflow-hidden  items-center justify-center  py-2 ">
               <Link
-                href={`/${user}/module/harakat/kasra/discription`}
+                href={`/${user}/module/almadood/yaa/discription`}
                 // onClick={nameHandler}
                 className="font-extrabold text-center text-dark-purple"
               >
@@ -137,13 +137,13 @@ const HarkatHome = ({ user }) => {
                         fontWeight: 500,
                       }}
                     >
-                      ــِـ
+                      ـي
                     </h1>
                     {/* <h1 className="text-3xl pt-2 my-2">Fatha</h1> */}
                   </div>
                   <div className="bg-white rounded-3xl border-b-8 border-cyan-400">
                     {" "}
-                    <p className="py-5 font-medium text-2xl">Kasra</p>
+                    <p className="py-5 font-medium text-2xl">Yaa</p>
                   </div>
                 </div>
                 {/* <h2 className="pt-2  text-lg">b</h2> */}
@@ -151,7 +151,7 @@ const HarkatHome = ({ user }) => {
             </div>
             <div className="   mt-6 rounded overflow-hidden  items-center justify-center  py-2 ">
               <Link
-                href={`/${user}/module/harakat/damma/discription`}
+                href={`/${user}/module/almadood/waw/discription`}
                 // onClick={nameHandler}
                 className="font-extrabold text-center text-dark-purple"
               >
@@ -165,13 +165,13 @@ const HarkatHome = ({ user }) => {
                         fontWeight: 500,
                       }}
                     >
-                      ــُـ
+                      ـو'
                     </h1>
                     {/* <h1 className="text-3xl pt-2 my-2">Fatha</h1> */}
                   </div>
                   <div className="bg-white rounded-3xl border-b-8 border-cyan-400">
                     {" "}
-                    <p className="py-5 font-medium text-2xl">Damma</p>
+                    <p className="py-5 font-medium text-2xl">Waw</p>
                   </div>
                 </div>
                 {/* <h2 className="pt-2  text-lg">b</h2> */}
@@ -184,10 +184,4 @@ const HarkatHome = ({ user }) => {
   );
 };
 
-export default HarkatHome;
-
-{
-  /* <Link href='/teacher/module/harakat/fatahah/discription' className="bg-red-400 text-white py-2 px-5 m-5 rounded-lg">Fatah</Link>
-<Link href='/teacher/module/harakat/kasara/discription' className="bg-red-400 text-white py-2 px-5 m-5 rounded-lg">Kasra</Link>
-<Link href='/teacher/module/harakat/damma/discription' className="bg-red-400 text-white py-2 px-5 m-5 rounded-lg">damma</Link> */
-}
+export default AlmadoodHome;

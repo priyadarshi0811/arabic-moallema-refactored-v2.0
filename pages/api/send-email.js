@@ -18,6 +18,8 @@ export default async function sendEmail(req, res) {
       : "teachers_exp_duplicate";
   let typeUser = userPath === "student" ? "student" : "instructor";
 
+  let emailNameUser =
+    finalUser === "students_exp_duplicate" ? "student" : "teacher";
   try {
     // Send email using Nodemailer
     const transporter = createTransport({
@@ -69,7 +71,7 @@ export default async function sendEmail(req, res) {
       <hr style="width: 30%;">  <h2>Welcome to Arabic Moallema</h2>
       <p>
           Hello user,
-          Here is your crederntials as a ${finalUser} for Arabic Moallema:
+          Here is your crederntials as a ${emailNameUser} for Arabic Moallema:
           <br/>
           <hr style="width: 30%;">
           <label style="font-size: 20px;">Email: ${email}</label>
