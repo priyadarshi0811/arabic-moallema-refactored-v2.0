@@ -101,11 +101,11 @@ const index = () => {
             Flip Book pg:3
           </Button>
         </Link> */}
-        <Link href="/teacher/module/harakat">
+        {/* <Link href="/teacher/module/harakat">
           <Button className="bg-white text-dark-purple mx-2" variant="contained" endIcon={<ArrowForwardIcon />}>
             Go to Next Module
           </Button>
-        </Link>
+        </Link> */}
         <Link href={`/teacher/whiteboard`} className="mx-5 ">
             <IconButton
               aria-label=""

@@ -1,14 +1,14 @@
 import React from "react";
-import WordMakingCard from "@/components/Modules/models/module2/WordMaking";
+import WordMakingCard from "@/components/Modules/models/almadood/WordMakingAlmadood";
 
 const WordMaking = () => {
   return (
     <WordMakingCard
       wordType="single"
       user="teacher"
-      type="damma"
-      nextUrl="damma/how-to-read-2"
-      preM="damma"
+      type="waw"
+      nextUrl="waw/how-to-read-2"
+      preM="waw"
     />
   );
 };

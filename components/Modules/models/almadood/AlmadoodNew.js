@@ -312,47 +312,12 @@ const Alphabates = [
     mp4: "https://res.cloudinary.com/daftxtnxw/video/upload/v1680602812/28_z2f6ml.mp4",
   },
 ];
-/*****************************Ha****************************** */
-const fathaWordExample = [
-  {
-    initial: "أَمَرَ",
-    middle: "سَأَلَ",
-    final: "مَلَأَ",
-  },
-  {
-    initial: "بَدَأَ",
-    middle: "نَبَذَ",
-    final: "ثَقَبَ",
-  },
-];
-const kasraWordExample = [
-  {
-    initial: "أذِنَ",
-    middle: "ضِاَبَ",
-    final: "خَمَاِ",
-  },
-  {
-    initial: "بَغِظِ",
-    middle: "ضِاَبَ",
-    final: "فَتَعِبَ",
-  },
-];
-const dammaWordExample = [
-  {
-    initial: "اُظِفَ",
-    middle: "ثَاُثَ",
-    final: "فُغِاَ",
-  },
-  {
-    initial: "بَقُيَ",
-    middle: "عِبَلُ",
-    final: "مُنِبَ",
-  },
-];
+
+/*****************************Almadood****************************** */
 
 const alifWordExample = [
   {
-    initial: "اُظِفَ",
+    initial: "ءا",
     middle: "ثَاُثَ",
     final: "فُغِاَ",
   },
@@ -457,15 +422,6 @@ function a11yProps(index) {
   };
 }
 
-// Array containing colors
-// var colors = ["#000", "#004042", "#035124", "#043f38", "#865658", "#7fc254"];
-
-// // selecting random color
-// var random_color = colors[Math.floor(Math.random() * colors.length)];
-
-// var x = document.getElementById('pick');
-// x.style.color = random_color;
-
 const GeneralCardSm = ({
   disc,
   title,
@@ -476,20 +432,6 @@ const GeneralCardSm = ({
   ex,
   harakatType,
 }) => {
-  // const [randomColor, setRandomColor] = useState("#035124")
-
-  // var colors = [
-  //   "#000",
-  //   "#004042",
-  //   "#035124",
-  //   "#043f38",
-  //   "#865658",
-  //   "#7fc254",
-  // ];
-
-  // // selecting random color
-  // setRandomColor( colors[Math.floor(Math.random() * colors.length)])
-
   return (
     <div>
       <div
@@ -610,27 +552,27 @@ const Card = ({
   console.log(myArray);
 
   //get the assignment for the selected activity
-  useEffect(() => {
-    const fetchAssignment = async () => {
-      const data = await fetchAssignmentForLetter("fatha", "harakat");
-      if (data[0]) {
-        setAssignment(data[0].assignment_json.letter);
-        if (data[0].assignment_json.letter[0].activity_type === "trace") {
-          setActivityPath("tracing");
-        }
-        if (data[0].assignment_json.letter[0].activity_type === "dnd") {
-          setActivityPath("dnd");
-        }
-        if (data[0].assignment_json.letter[0].activity_type === "select") {
-          setActivityPath("select");
-        }
-        if (data[0].assignment_json.letter[0].activity_type === "match") {
-          setActivityPath("match");
-        }
-      }
-    };
-    fetchAssignment();
-  }, [harakatType]);
+  // useEffect(() => {
+  //   const fetchAssignment = async () => {
+  //     const data = await fetchAssignmentForLetter("fatha", "harakat");
+  //     if (data[0]) {
+  //       setAssignment(data[0].assignment_json.letter);
+  //       if (data[0].assignment_json.letter[0].activity_type === "trace") {
+  //         setActivityPath("tracing");
+  //       }
+  //       if (data[0].assignment_json.letter[0].activity_type === "dnd") {
+  //         setActivityPath("dnd");
+  //       }
+  //       if (data[0].assignment_json.letter[0].activity_type === "select") {
+  //         setActivityPath("select");
+  //       }
+  //       if (data[0].assignment_json.letter[0].activity_type === "match") {
+  //         setActivityPath("match");
+  //       }
+  //     }
+  //   };
+  //   fetchAssignment();
+  // }, [harakatType]);
 
   console.log(assignment);
 
@@ -695,7 +637,7 @@ const Card = ({
                 backgroundImage: `url(${Ractangle})`,
               }}
             >
-              Harakat : {harakatType}
+              Almadood : {harakatType}
               {/* <span className="p-2 bg-green-200 text-dark-purple rounded-md">
             {props.name} " {props.symbol} "
           </span> */}
@@ -711,7 +653,7 @@ const Card = ({
                 </IconButton>
               </Link>
 
-              <Link href={`/${user}/module/harakat`} className="mx-2 ">
+              <Link href={`/${user}/module/almadood`} className="mx-2 ">
                 <Button
                   variant="contained"
                   className="bg-cyan-200 text-dark-purple h-10"
@@ -721,7 +663,7 @@ const Card = ({
                 </Button>
               </Link>
               <Link
-                href={`/${user}/module/harakat/${harakatType}/how-to-read-1`}
+                href={`/${user}/module/almadood/${harakatType}/how-to-read-1`}
                 className="mx-2 "
               >
                 <Button
@@ -814,11 +756,11 @@ const Card = ({
                       title={letterForm[index].initial}
                       color="#09DBDB"
                       ex={
-                        harakatType == "fatha"
-                          ? fathaWordExample[index].initial
-                          : harakatType == "kasra"
-                          ? kasraWordExample[index].initial
-                          : dammaWordExample[index].initial
+                        harakatType == "alif"
+                          ? alifWordExample[index].initial
+                          : harakatType == "yaa"
+                          ? yaaWordExample[index].initial
+                          : wawWordExample[index].initial
                       }
                     />
                     <GeneralCardSm
@@ -827,11 +769,11 @@ const Card = ({
                       title={letterForm[index].final}
                       color="#FD5678"
                       ex={
-                        harakatType == "fatha"
-                          ? fathaWordExample[index].middle
-                          : harakatType == "kasra"
-                          ? kasraWordExample[index].middle
-                          : dammaWordExample[index].middle
+                        harakatType == "alif"
+                          ? alifWordExample[index].middle
+                          : harakatType == "yaa"
+                          ? yaaWordExample[index].middle
+                          : wawWordExample[index].middle
                       }
                     />
                     <GeneralCardSm
@@ -840,11 +782,11 @@ const Card = ({
                       title={letterForm[index].final}
                       color="#ECABE1"
                       ex={
-                        harakatType == "fatha"
-                          ? fathaWordExample[index].final
-                          : harakatType == "kasra"
-                          ? kasraWordExample[index].final
-                          : dammaWordExample[index].final
+                        harakatType == "alif"
+                          ? alifWordExample[index].final
+                          : harakatType == "yaa"
+                          ? yaaWordExample[index].final
+                          : wawWordExample[index].final
                       }
                     />
                   </div>
@@ -855,7 +797,7 @@ const Card = ({
         </div>
         <div className=" w-full p-2 rounded-md  flex flex-row justify-center   pt-3">
           <div className="mx-5">
-            <Link href={`/${user}/module/harakat/${nextUrl}`}>
+            <Link href={`/${user}/module/almadood/${nextUrl}`}>
               <Button variant="contained" className="text-dark-purple bg-white">
                 Next Section
               </Button>

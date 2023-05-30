@@ -25,7 +25,7 @@ const CreateAssignment = () => {
   const typeAdmin = authCtx.userType === "admin" ? true : false;
 
   if (!typeAdmin && loggedIn) {
-    router.replace("/");
+    router.replace("/login");
   }
 
   useEffect(() => {

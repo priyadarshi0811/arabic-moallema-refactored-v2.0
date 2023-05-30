@@ -13,630 +13,631 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import fatha from "@/components/src/img/arabic_fatha.png";
 import FilterFramesIcon from "@mui/icons-material/FilterFrames";
 import { useState } from "react";
+
 const singleLattersExamples = [
   {
     index: 0,
-    fathaInitial: "أَ",
-    fathaMiddle: "مَـ",
-    fathaFinal: "ـرَ",
-    fathaWord: "أَمَرَ",
+    alifInitial: "أَ",
+    alifMiddle: "مَـ",
+    alifFinal: "ـرَ",
+    alifWord: "أَمَرَ",
 
-    kasraFinal: "ــسَ",
-    kasraMiddle: "ئِـ",
-    kasraInitial: "يَـ",
-    kasraWord: "يَئِسَ",
+    yaaFinal: "ــسَ",
+    yaaMiddle: "ئِـ",
+    yaaInitial: "يَـ",
+    yaaWord: "يَئِسَ",
 
-    dammaFinal: "  نَ",
-    dammaMiddle: "ذِ",
-    dammaInitial: "أُ",
-    dammaWord: "أُذِنَ",
+    wawFinal: "  نَ",
+    wawMiddle: "ذِ",
+    wawInitital: "أُ",
+    wawWord: "أُذِنَ",
   },
   {
     index: 1,
-    fathaInitial: "سَـ",
-    fathaMiddle: "ـأَ",
-    fathaFinal: "لَ",
-    fathaWord: "سَأَلَ",
+    alifInitial: "سَـ",
+    alifMiddle: "ـأَ",
+    alifFinal: "لَ",
+    alifWord: "سَأَلَ",
 
-    kasraFinal: "طَ",
-    kasraMiddle: "ـبِـ",
-    kasraInitial: "حَـ",
-    kasraWord: "حَبِطَ",
+    yaaFinal: "طَ",
+    yaaMiddle: "ـبِـ",
+    yaaInitial: "حَـ",
+    yaaWord: "حَبِطَ",
 
-    dammaFinal: "  تَ",
-    dammaMiddle: "هِ",
-    dammaInitial: "بُ",
-    dammaWord: "بُهِتَ",
+    wawFinal: "  تَ",
+    wawMiddle: "هِ",
+    wawInitital: "بُ",
+    wawWord: "بُهِتَ",
   },
   {
     index: 2,
-    fathaInitial: " لَـ ",
-    fathaMiddle: "ـجـَ",
-    fathaFinal: "أَ",
-    fathaWord: "لـَـجَـأ",
+    alifInitial: " لَـ ",
+    alifMiddle: "ـجـَ",
+    alifFinal: "أَ",
+    alifWord: "لـَـجَـأ",
 
-    kasraFinal: "ـهَ",
-    kasraMiddle: "ـتِـ",
-    kasraInitial: "عَـ",
-    kasraWord: "عَتِهَ",
+    yaaFinal: "ـهَ",
+    yaaMiddle: "ـتِـ",
+    yaaInitial: "عَـ",
+    yaaWord: "عَتِهَ",
 
-    dammaInitial: "تُ",
-    dammaMiddle: "لِ",
-    dammaFinal: "  يَ",
-    dammaWord: "تُلِيَ",
+    wawInitital: "تُ",
+    wawMiddle: "لِ",
+    wawFinal: "  يَ",
+    wawWord: "تُلِيَ",
   },
   {
     index: 3,
-    fathaFinal: "ـشَ",
-    fathaMiddle: "ـطَـ",
-    fathaInitial: "بَـ",
-    fathaWord: "بَطَشَ",
+    alifFinal: "ـشَ",
+    alifMiddle: "ـطَـ",
+    alifInitial: "بَـ",
+    alifWord: "بَطَشَ",
 
-    kasraFinal: "ـقَ",
-    kasraMiddle: "ثِـ",
-    kasraInitial: "وَ",
-    kasraWord: "وَثِقَ",
+    yaaFinal: "ـقَ",
+    yaaMiddle: "ثِـ",
+    yaaInitial: "وَ",
+    yaaWord: "وَثِقَ",
 
-    dammaInitial: "ثُ",
-    dammaMiddle: "قِ",
-    dammaFinal: "بَ",
-    dammaWord: "ثُقِبَ",
+    wawInitital: "ثُ",
+    wawMiddle: "قِ",
+    wawFinal: "بَ",
+    wawWord: "ثُقِبَ",
   },
   {
     index: 4,
-    fathaFinal: "ـذَ",
-    fathaMiddle: "ـبَـ",
-    fathaInitial: "نَـ",
-    fathaWord: "نَبَذَ",
+    alifFinal: "ـذَ",
+    alifMiddle: "ـبَـ",
+    alifInitial: "نَـ",
+    alifWord: "نَبَذَ",
 
-    kasraFinal: "ـلَ",
-    kasraMiddle: "جِـ",
-    kasraInitial: "وَ",
-    kasraWord: "وَجِلَ",
+    yaaFinal: "ـلَ",
+    yaaMiddle: "جِـ",
+    yaaInitial: "وَ",
+    yaaWord: "وَجِلَ",
 
-    dammaInitial: "جُ",
-    dammaMiddle: "مِ",
-    dammaFinal: "عَ",
-    dammaWord: "جُمِعَ",
+    wawInitital: "جُ",
+    wawMiddle: "مِ",
+    wawFinal: "عَ",
+    wawWord: "جُمِعَ",
   },
   {
     index: 5,
-    fathaFinal: "ـبَ",
-    fathaMiddle: "ـقَـ",
-    fathaInitial: "ثَـ",
-    fathaWord: "ثَقَبَ",
+    alifFinal: "ـبَ",
+    alifMiddle: "ـقَـ",
+    alifInitial: "ثَـ",
+    alifWord: "ثَقَبَ",
 
-    kasraFinal: "ــمَلَ",
-    kasraMiddle: "حِـ",
-    kasraInitial: "رَ",
-    kasraWord: "رَحِمَ",
+    yaaFinal: "ــمَلَ",
+    yaaMiddle: "حِـ",
+    yaaInitial: "رَ",
+    yaaWord: "رَحِمَ",
 
-    dammaInitial: "حُ",
-    dammaMiddle: "مِ",
-    dammaFinal: "دَ",
-    dammaWord: "حُمِدَ",
+    wawInitital: "حُ",
+    wawMiddle: "مِ",
+    wawFinal: "دَ",
+    wawWord: "حُمِدَ",
   },
   {
     index: 6,
-    fathaFinal: "ـرَ",
-    fathaMiddle: "ـجَـ",
-    fathaInitial: "تَـ",
-    fathaWord: "تَجَرَ",
+    alifFinal: "ـرَ",
+    alifMiddle: "ـجَـ",
+    alifInitial: "تَـ",
+    alifWord: "تَجَرَ",
 
-    kasraFinal: "ـلَ",
-    kasraMiddle: "ـخِـ",
-    kasraInitial: "بَـ",
-    kasraWord: "بَخِلَ",
+    yaaFinal: "ـلَ",
+    yaaMiddle: "ـخِـ",
+    yaaInitial: "بَـ",
+    yaaWord: "بَخِلَ",
 
-    dammaInitial: "خُ",
-    dammaMiddle: "لِ",
-    dammaFinal: "قَ",
-    dammaWord: "خُلِقَ",
+    wawInitital: "خُ",
+    wawMiddle: "لِ",
+    wawFinal: "قَ",
+    wawWord: "خُلِقَ",
   },
   {
     index: 7,
-    fathaFinal: "ـبَ",
-    fathaMiddle: "ـتَـ",
-    fathaInitial: "كَـ",
-    fathaWord: "كَتَبَ",
+    alifFinal: "ـبَ",
+    alifMiddle: "ـتَـ",
+    alifInitial: "كَـ",
+    alifWord: "كَتَبَ",
 
-    kasraFinal: "مَ",
-    kasraMiddle: "ـدِ",
-    kasraInitial: "قَـ",
-    kasraWord: "قَدِمَ",
+    yaaFinal: "مَ",
+    yaaMiddle: "ـدِ",
+    yaaInitial: "قَـ",
+    yaaWord: "قَدِمَ",
 
-    dammaInitial: "دُ",
-    dammaMiddle: "عِ",
-    dammaFinal: "يَ",
-    dammaWord: "دُعِيَ",
+    wawInitital: "دُ",
+    wawMiddle: "عِ",
+    wawFinal: "يَ",
+    wawWord: "دُعِيَ",
   },
   {
     index: 8,
-    fathaFinal: "ـتَ",
-    fathaMiddle: "ـبَـ",
-    fathaInitial: "ثَـ",
-    fathaWord: "ثَبَتَ",
+    alifFinal: "ـتَ",
+    alifMiddle: "ـبَـ",
+    alifInitial: "ثَـ",
+    alifWord: "ثَبَتَ",
 
-    kasraFinal: "ـظَ",
-    kasraMiddle: "ـفِـ",
-    kasraInitial: "حَـ",
-    kasraWord: "حَفِظَ",
+    yaaFinal: "ـظَ",
+    yaaMiddle: "ـفِـ",
+    yaaInitial: "حَـ",
+    yaaWord: "حَفِظَ",
 
-    dammaInitial: "ذُ",
-    dammaMiddle: "بِ",
-    dammaFinal: "حَ",
-    dammaWord: "ذُبِحَ",
+    wawInitital: "ذُ",
+    wawMiddle: "بِ",
+    wawFinal: "حَ",
+    wawWord: "ذُبِحَ",
   },
   {
     index: 9,
-    fathaFinal: "ـبَ",
-    fathaMiddle: "ـتَـ",
-    fathaInitial: "كَـ",
-    fathaWord: "كَتَبَ",
+    alifFinal: "ـبَ",
+    alifMiddle: "ـتَـ",
+    alifInitial: "كَـ",
+    alifWord: "كَتَبَ",
 
-    kasraFinal: "ـيَ",
-    kasraMiddle: "ـظِـ",
-    kasraInitial: "حَـ",
-    kasraWord: "حَظِيَ",
+    yaaFinal: "ـيَ",
+    yaaMiddle: "ـظِـ",
+    yaaInitial: "حَـ",
+    yaaWord: "حَظِيَ",
 
-    dammaInitial: "رُ",
-    dammaMiddle: "حِ",
-    dammaFinal: "مَ",
-    dammaWord: "رُحِمَ",
+    wawInitital: "رُ",
+    wawMiddle: "حِ",
+    wawFinal: "مَ",
+    wawWord: "رُحِمَ",
   },
   {
     index: 10,
-    fathaFinal: "ـرَ",
-    fathaMiddle: "ـثَـ",
-    fathaInitial: "نَـ",
-    fathaWord: "نَـثَرَ",
+    alifFinal: "ـرَ",
+    alifMiddle: "ـثَـ",
+    alifInitial: "نَـ",
+    alifWord: "نَـثَرَ",
 
-    kasraFinal: "ـرَ",
-    kasraMiddle: "ـفِـ",
-    kasraInitial: "ظَـ",
-    kasraWord: "ظَفِرَ",
+    yaaFinal: "ـرَ",
+    yaaMiddle: "ـفِـ",
+    yaaInitial: "ظَـ",
+    yaaWord: "ظَفِرَ",
 
-    dammaInitial: "زُ",
-    dammaMiddle: "رِ",
-    dammaFinal: "عَ",
-    dammaWord: "زُرِعَ",
+    wawInitital: "زُ",
+    wawMiddle: "رِ",
+    wawFinal: "عَ",
+    wawWord: "زُرِعَ",
   },
   {
     index: 11,
-    fathaFinal: "ـثَ",
-    fathaMiddle: "ـعَـ",
-    fathaInitial: "بَـ",
-    fathaWord: "بَعَثَ",
+    alifFinal: "ـثَ",
+    alifMiddle: "ـعَـ",
+    alifInitial: "بَـ",
+    alifWord: "بَعَثَ",
 
-    kasraFinal: "ـيَ",
-    kasraMiddle: "ـقِـ",
-    kasraInitial: "بـَ",
-    kasraWord: "بَقِيَ",
+    yaaFinal: "ـيَ",
+    yaaMiddle: "ـقِـ",
+    yaaInitial: "بـَ",
+    yaaWord: "بَقِيَ",
 
-    dammaInitial: "سُ",
-    dammaMiddle: "ئِ",
-    dammaFinal: "لَ",
-    dammaWord: "سُئِلَ",
+    wawInitital: "سُ",
+    wawMiddle: "ئِ",
+    wawFinal: "لَ",
+    wawWord: "سُئِلَ",
   },
   {
     index: 12,
-    fathaFinal: "ـدَ",
-    fathaMiddle: "ـجَـ",
-    fathaInitial: "سَـ",
-    fathaWord: "سَجَدَ",
+    alifFinal: "ـدَ",
+    alifMiddle: "ـجَـ",
+    alifInitial: "سَـ",
+    alifWord: "سَجَدَ",
 
-    kasraFinal: "بَ",
-    kasraMiddle: "ـرِ",
-    kasraInitial: "شَـ",
-    kasraWord: "شَرِبَ",
+    yaaFinal: "بَ",
+    yaaMiddle: "ـرِ",
+    yaaInitial: "شَـ",
+    yaaWord: "شَرِبَ",
 
-    dammaInitial: "شُ",
-    dammaMiddle: "كِ",
-    dammaFinal: "رَ",
-    dammaWord: "شُكِرَ",
+    wawInitital: "شُ",
+    wawMiddle: "كِ",
+    wawFinal: "رَ",
+    wawWord: "شُكِرَ",
   },
   {
     index: 13,
-    fathaFinal: "ـجَ",
-    fathaMiddle: "ـسَـ",
-    fathaInitial: "نَـ",
-    fathaWord: "نَسَجَ",
+    alifFinal: "ـجَ",
+    alifMiddle: "ـسَـ",
+    alifInitial: "نَـ",
+    alifWord: "نَسَجَ",
 
-    kasraFinal: "ـدَ",
-    kasraMiddle: "ـعِـ",
-    kasraInitial: "سَـ",
-    kasraWord: "سَعِدَ",
+    yaaFinal: "ـدَ",
+    yaaMiddle: "ـعِـ",
+    yaaInitial: "سَـ",
+    yaaWord: "سَعِدَ",
 
-    dammaInitial: "صُ",
-    dammaMiddle: "عِ",
-    dammaFinal: "قَ",
-    dammaWord: "صُعِقَ",
+    wawInitital: "صُ",
+    wawMiddle: "عِ",
+    wawFinal: "قَ",
+    wawWord: "صُعِقَ",
   },
   {
     index: 14,
-    fathaFinal: "ـسَ",
-    fathaMiddle: "ـبـَ",
-    fathaInitial: "حَـ",
-    fathaWord: "حَبَسَ",
+    alifFinal: "ـسَ",
+    alifMiddle: "ـبـَ",
+    alifInitial: "حَـ",
+    alifWord: "حَبَسَ",
 
-    kasraFinal: "ـبَ",
-    kasraMiddle: "كِـ",
-    kasraInitial: "رَ",
-    kasraWord: "رَكِبَ",
+    yaaFinal: "ـبَ",
+    yaaMiddle: "كِـ",
+    yaaInitial: "رَ",
+    yaaWord: "رَكِبَ",
 
-    dammaInitial: "ضُ",
-    dammaMiddle: "رِ",
-    dammaFinal: "بَ",
-    dammaWord: "ضُرِبَ",
+    wawInitital: "ضُ",
+    wawMiddle: "رِ",
+    wawFinal: "بَ",
+    wawWord: "ضُرِبَ",
   },
   {
     index: 15,
-    fathaFinal: "ـنَ",
-    fathaMiddle: "ـحَـ",
-    fathaInitial: "طَـ",
-    fathaWord: "طَحَنَ",
+    alifFinal: "ـنَ",
+    alifMiddle: "ـحَـ",
+    alifInitial: "طَـ",
+    alifWord: "طَحَنَ",
 
-    kasraFinal: "رَ",
-    kasraMiddle: "ـوِ",
-    kasraInitial: "عَـ",
-    kasraWord: "عَوِرَ",
+    yaaFinal: "رَ",
+    yaaMiddle: "ـوِ",
+    yaaInitial: "عَـ",
+    yaaWord: "عَوِرَ",
 
-    dammaInitial: "طُ",
-    dammaMiddle: "رِ",
-    dammaFinal: "حَ",
-    dammaWord: "طُرِحَ",
+    wawInitital: "طُ",
+    wawMiddle: "رِ",
+    wawFinal: "حَ",
+    wawWord: "طُرِحَ",
   },
   {
     index: 16,
-    fathaFinal: "ـحَ",
-    fathaMiddle: "ـسَـ",
-    fathaInitial: "مَـ",
-    fathaWord: "مَسَحَ",
+    alifFinal: "ـحَ",
+    alifMiddle: "ـسَـ",
+    alifInitial: "مَـ",
+    alifWord: "مَسَحَ",
 
-    kasraFinal: "ـدَ",
-    kasraMiddle: "ـهِـ",
-    kasraInitial: "عَـ",
-    kasraWord: "عَهِدَ",
+    yaaFinal: "ـدَ",
+    yaaMiddle: "ـهِـ",
+    yaaInitial: "عَـ",
+    yaaWord: "عَهِدَ",
 
-    dammaInitial: "ظُ",
-    dammaMiddle: "لِ",
-    dammaFinal: "مَ",
-    dammaWord: "ظُلِمَ",
+    wawInitital: "ظُ",
+    wawMiddle: "لِ",
+    wawFinal: "مَ",
+    wawWord: "ظُلِمَ",
   },
   {
     index: 17,
-    fathaFinal: "ـعَ",
-    fathaMiddle: "ـضَـ",
-    fathaInitial: "خَـ",
-    fathaWord: "خَضَعَ",
+    alifFinal: "ـعَ",
+    alifMiddle: "ـضَـ",
+    alifInitial: "خَـ",
+    alifWord: "خَضَعَ",
 
-    kasraFinal: "ـقَ",
-    kasraMiddle: "ـنِـ",
-    kasraInitial: "حَـ",
-    kasraWord: "حَنِقَ",
+    yaaFinal: "ـقَ",
+    yaaMiddle: "ـنِـ",
+    yaaInitial: "حَـ",
+    yaaWord: "حَنِقَ",
 
-    dammaInitial: "قُ",
-    dammaMiddle: "تِ",
-    dammaFinal: "لَ",
-    dammaWord: "قُتِلَ",
+    wawInitital: "قُ",
+    wawMiddle: "تِ",
+    wawFinal: "لَ",
+    wawWord: "قُتِلَ",
   },
   {
     index: 18,
-    fathaFinal: "ـرَ",
-    fathaMiddle: "ـخَـ",
-    fathaInitial: "نَـ",
-    fathaWord: "نَـخَـرَ",
+    alifFinal: "ـرَ",
+    alifMiddle: "ـخَـ",
+    alifInitial: "نَـ",
+    alifWord: "نَـخَـرَ",
 
-    kasraFinal: "ـعَ",
-    kasraMiddle: "ـمِـ",
-    kasraInitial: "سَـ",
-    kasraWord: "سَمِعَ",
+    yaaFinal: "ـعَ",
+    yaaMiddle: "ـمِـ",
+    yaaInitial: "سَـ",
+    yaaWord: "سَمِعَ",
 
-    dammaInitial: "كُ",
-    dammaMiddle: "تِ",
-    dammaFinal: "بَ",
-    dammaWord: "كُتِبَ",
+    wawInitital: "كُ",
+    wawMiddle: "تِ",
+    wawFinal: "بَ",
+    wawWord: "كُتِبَ",
   },
   {
     index: 19,
-    fathaFinal: "دَ",
-    fathaMiddle: "ـرَ",
-    fathaInitial: "ثَـ",
-    fathaWord: "ثَرَدَ",
+    alifFinal: "دَ",
+    alifMiddle: "ـرَ",
+    alifInitial: "ثَـ",
+    alifWord: "ثَرَدَ",
 
-    kasraFinal: "ـمَ",
-    kasraMiddle: "ـلِـ",
-    kasraInitial: "عَـ",
-    kasraWord: "عَلِمَ",
+    yaaFinal: "ـمَ",
+    yaaMiddle: "ـلِـ",
+    yaaInitial: "عَـ",
+    yaaWord: "عَلِمَ",
 
-    dammaInitial: "مُ",
-    dammaMiddle: "نِ",
-    dammaFinal: "عَ",
-    dammaWord: "مُنِعَ",
+    wawInitital: "مُ",
+    wawMiddle: "نِ",
+    wawFinal: "عَ",
+    wawWord: "مُنِعَ",
   },
 ];
 
 const doubleLattersExamples = [
   {
     index: 0,
-    fathaFinal: "ـدَ",
-    fathaInitial: "صَعَـ",
-    fathaWord: "صَعَدَ",
+    alifFinal: "ـدَ",
+    alifInitial: "صَعَـ",
+    alifWord: "صَعَدَ",
 
-    kasraFinal: "ـكَ",
-    kasraInitial: "ضَحِـ",
-    kasraWord: "ضَحِكَ",
+    yaaFinal: "ـكَ",
+    yaaInitial: "ضَحِـ",
+    yaaWord: "ضَحِكَ",
 
-    dammaInitial: "نُسِ",
-    dammaFinal: "  يَ",
-    dammaWord: "نُسِيَ",
+    wawInitital: "نُسِ",
+    wawFinal: "  يَ",
+    wawWord: "نُسِيَ",
   },
   {
     index: 1,
-    fathaFinal: " ـهَ  ",
-    fathaInitial: " وَلَـ ",
-    fathaWord: "وَ لَـهَ ",
+    alifFinal: " ـهَ  ",
+    alifInitial: " وَلَـ ",
+    alifWord: "وَ لَـهَ ",
 
-    kasraFinal: "حَ",
-    kasraInitial: "مَرِ",
-    kasraWord: "مَرِحَ",
+    yaaFinal: "حَ",
+    yaaInitial: "مَرِ",
+    yaaWord: "مَرِحَ",
 
-    dammaInitial: "هُدِ",
-    dammaFinal: "  يَ",
-    dammaWord: "هُدِيَ",
+    wawInitital: "هُدِ",
+    wawFinal: "  يَ",
+    wawWord: "هُدِيَ",
   },
   {
     index: 2,
 
-    fathaFinal: "ـمَ",
-    fathaInitial: " فَطَـ ",
-    fathaWord: "فَطَمَ",
+    alifFinal: "ـمَ",
+    alifInitial: " فَطَـ ",
+    alifWord: "فَطَمَ",
 
-    kasraFinal: "ـلَ",
-    kasraInitial: "عَمِـ",
-    kasraWord: "عَمِلَ",
+    yaaFinal: "ـلَ",
+    yaaInitial: "عَمِـ",
+    yaaWord: "عَمِلَ",
 
-    dammaInitial: "وُجِ",
-    dammaFinal: "  دَ",
-    dammaWord: "وُجِدَ",
+    wawInitital: "وُجِ",
+    wawFinal: "  دَ",
+    wawWord: "وُجِدَ",
   },
   {
     index: 3,
-    fathaFinal: "ـفَ",
-    fathaInitial: "شَغَـ",
-    fathaWord: "شَغَفَ",
+    alifFinal: "ـفَ",
+    alifInitial: "شَغَـ",
+    alifWord: "شَغَفَ",
 
-    kasraFinal: "ـلَ",
-    kasraInitial: "عَقِـ",
-    kasraWord: "عَقِلَ",
+    yaaFinal: "ـلَ",
+    yaaInitial: "عَقِـ",
+    yaaWord: "عَقِلَ",
 
-    dammaInitial: "وُضِ",
-    dammaFinal: "عَ",
-    dammaWord: "وُضِعَ",
+    wawInitital: "وُضِ",
+    wawFinal: "عَ",
+    wawWord: "وُضِعَ",
   },
   {
     index: 4,
-    fathaFinal: "ـغَ",
-    fathaInitial: "مَضَـ",
-    fathaWord: "مَضَغَ",
+    alifFinal: "ـغَ",
+    alifInitial: "مَضَـ",
+    alifWord: "مَضَغَ",
 
-    kasraFinal: "ـلَ",
-    kasraInitial: "جَهِـ",
-    kasraWord: "جَهِلَ",
+    yaaFinal: "ـلَ",
+    yaaInitial: "جَهِـ",
+    yaaWord: "جَهِلَ",
 
-    dammaInitial: "شُرِ",
-    dammaFinal: "بَ",
-    dammaWord: "شُرِبَ",
+    wawInitital: "شُرِ",
+    wawFinal: "بَ",
+    wawWord: "شُرِبَ",
   },
   {
     index: 5,
-    fathaFinal: "ـخَ",
-    fathaInitial: "نَفَـ",
-    fathaWord: "نَفَخَ",
+    alifFinal: "ـخَ",
+    alifInitial: "نَفَـ",
+    alifWord: "نَفَخَ",
 
-    kasraFinal: "ـلَ",
-    kasraInitial: "خَجِـ",
-    kasraWord: "خَجِلَ",
+    yaaFinal: "ـلَ",
+    yaaInitial: "خَجِـ",
+    yaaWord: "خَجِلَ",
 
-    dammaInitial: "رُسِ",
-    dammaFinal: "مَ",
-    dammaWord: "رُسِمَ",
+    wawInitital: "رُسِ",
+    wawFinal: "مَ",
+    wawWord: "رُسِمَ",
   },
   {
     index: 6,
-    fathaFinal: "ـعَ",
-    fathaInitial: "شَفَـ",
-    fathaWord: "شَفَعَ",
+    alifFinal: "ـعَ",
+    alifInitial: "شَفَـ",
+    alifWord: "شَفَعَ",
 
-    kasraFinal: "ـبَ",
-    kasraInitial: "غَضِـ",
-    kasraWord: "غَضِبَ",
+    yaaFinal: "ـبَ",
+    yaaInitial: "غَضِـ",
+    yaaWord: "غَضِبَ",
 
-    dammaInitial: "فُتِ",
-    dammaFinal: "حَ",
-    dammaWord: "فُتِحَ",
+    wawInitital: "فُتِ",
+    wawFinal: "حَ",
+    wawWord: "فُتِحَ",
   },
   {
     index: 7,
-    fathaFinal: "حَ",
-    fathaInitial: "شَرَ",
-    fathaWord: "شَرَحَ",
+    alifFinal: "حَ",
+    alifInitial: "شَرَ",
+    alifWord: "شَرَحَ",
 
-    kasraFinal: "نَ",
-    kasraInitial: "أذِ",
-    kasraWord: "أذِنَ",
+    yaaFinal: "نَ",
+    yaaInitial: "أذِ",
+    yaaWord: "أذِنَ",
 
-    dammaInitial: "دُبِ",
-    dammaFinal: "غَ",
-    dammaWord: "دُبِغَ",
+    wawInitital: "دُبِ",
+    wawFinal: "غَ",
+    wawWord: "دُبِغَ",
   },
   {
     index: 8,
-    fathaFinal: "ـتَ",
-    fathaInitial: "قَنَـ",
-    fathaWord: "قَنَتَ",
+    alifFinal: "ـتَ",
+    alifInitial: "قَنَـ",
+    alifWord: "قَنَتَ",
 
-    kasraFinal: "ـفَ",
-    kasraInitial: "ألِـ",
-    kasraWord: "ألِفَ",
+    yaaFinal: "ـفَ",
+    yaaInitial: "ألِـ",
+    yaaWord: "ألِفَ",
 
-    dammaInitial: "سُبُ",
-    dammaFinal: "لُ",
-    dammaWord: "سُبُلُ",
+    wawInitital: "سُبُ",
+    wawFinal: "لُ",
+    wawWord: "سُبُلُ",
   },
   {
     index: 9,
-    fathaFinal: "ـطَ",
-    fathaInitial: "سَقَـ",
-    fathaWord: "سَقَطَ",
+    alifFinal: "ـطَ",
+    alifInitial: "سَقَـ",
+    alifWord: "سَقَطَ",
 
-    kasraFinal: "ـبَ",
-    kasraInitial: "صَـحِـ",
-    kasraWord: "صَحِبَ",
+    yaaFinal: "ـبَ",
+    yaaInitial: "صَـحِـ",
+    yaaWord: "صَحِبَ",
 
-    dammaInitial: "رُسُ",
-    dammaFinal: "لُ",
-    dammaWord: "رُسُلُ",
+    wawInitital: "رُسُ",
+    wawFinal: "لُ",
+    wawWord: "رُسُلُ",
   },
   {
     index: 10,
-    fathaFinal: "قَ",
-    fathaInitial: "خَلَـ",
-    fathaWord: "خَلَقَ",
+    alifFinal: "قَ",
+    alifInitial: "خَلَـ",
+    alifWord: "خَلَقَ",
 
-    kasraFinal: "ـتَ",
-    kasraInitial: "عَنِـ",
-    kasraWord: "عَنِتَ",
+    yaaFinal: "ـتَ",
+    yaaInitial: "عَنِـ",
+    yaaWord: "عَنِتَ",
 
-    dammaInitial: "أُفُ",
-    dammaFinal: "قُ",
-    dammaWord: "أُفُقُ",
+    wawInitital: "أُفُ",
+    wawFinal: "قُ",
+    wawWord: "أُفُقُ",
   },
   {
     index: 11,
-    fathaFinal: "ـرَ",
-    fathaInitial: "كَسَـ",
-    fathaWord: "كَسَرَ",
+    alifFinal: "ـرَ",
+    alifInitial: "كَسَـ",
+    alifWord: "كَسَرَ",
 
-    kasraFinal: "ـثَ",
-    kasraInitial: "شَـعِـ",
-    kasraWord: "شَعِثَ",
+    yaaFinal: "ـثَ",
+    yaaInitial: "شَـعِـ",
+    yaaWord: "شَعِثَ",
 
-    dammaInitial: "نُظُ",
-    dammaFinal: "مُ",
-    dammaWord: "نُظُمُ",
+    wawInitital: "نُظُ",
+    wawFinal: "مُ",
+    wawWord: "نُظُمُ",
   },
   {
     index: 12,
-    fathaFinal: "ـرَ",
-    fathaInitial: "شَكَـ",
-    fathaWord: "شَكَرَ",
+    alifFinal: "ـرَ",
+    alifInitial: "شَكَـ",
+    alifWord: "شَكَرَ",
 
-    kasraFinal: "ـبَ",
-    kasraInitial: "رَقِـ",
-    kasraWord: "رَقِبَ",
+    yaaFinal: "ـبَ",
+    yaaInitial: "رَقِـ",
+    yaaWord: "رَقِبَ",
 
-    dammaInitial: "مَثَ",
-    dammaFinal: "لُ",
-    dammaWord: "مَثَلُ",
+    wawInitital: "مَثَ",
+    wawFinal: "لُ",
+    wawWord: "مَثَلُ",
   },
   {
     index: 13,
-    fathaFinal: "ـكَ",
-    fathaInitial: "مَلَـ",
-    fathaWord: "مَلَكَ",
+    alifFinal: "ـكَ",
+    alifInitial: "مَلَـ",
+    alifWord: "مَلَكَ",
 
-    kasraFinal: "ـبَ",
-    kasraInitial: "صَئِـ",
-    kasraWord: "صَئِبَ",
+    yaaFinal: "ـبَ",
+    yaaInitial: "صَئِـ",
+    yaaWord: "صَئِبَ",
 
-    dammaInitial: "لَطُ",
-    dammaFinal: "فَ",
-    dammaWord: "لَطُفَ",
+    wawInitital: "لَطُ",
+    wawFinal: "فَ",
+    wawWord: "لَطُفَ",
   },
   {
     index: 14,
-    fathaFinal: "ـمَ",
-    fathaInitial: "لَطَـ",
-    fathaWord: "لَطَمَ",
+    alifFinal: "ـمَ",
+    alifInitial: "لَطَـ",
+    alifWord: "لَطَمَ",
 
-    kasraFinal: "ـبَ",
-    kasraInitial: "كَئِـ",
-    kasraWord: "كَئِبَ",
+    yaaFinal: "ـبَ",
+    yaaInitial: "كَئِـ",
+    yaaWord: "كَئِبَ",
 
-    dammaInitial: "ثُلِ",
-    dammaFinal: "بَ",
-    dammaWord: "ثُلِبَ",
+    wawInitital: "ثُلِ",
+    wawFinal: "بَ",
+    wawWord: "ثُلِبَ",
   },
   {
     index: 15,
-    fathaFinal: "أَ",
-    fathaInitial: "مَلَـ",
-    fathaWord: "مَلأَ",
+    alifFinal: "أَ",
+    alifInitial: "مَلَـ",
+    alifWord: "مَلأَ",
 
-    kasraFinal: "ئَ",
-    kasraInitial: "صَدِ",
-    kasraWord: "صَدِئَ",
+    yaaFinal: "ئَ",
+    yaaInitial: "صَدِ",
+    yaaWord: "صَدِئَ",
 
-    dammaInitial: "عُقَ",
-    dammaFinal: "دُ",
-    dammaWord: "عُقَدُ",
+    wawInitital: "عُقَ",
+    wawFinal: "دُ",
+    wawWord: "عُقَدُ",
   },
   {
     index: 16,
-    fathaFinal: "ـسَ",
-    fathaInitial: "ھَمَـ",
-    fathaWord: "ھَمَسَ",
+    alifFinal: "ـسَ",
+    alifInitial: "ھَمَـ",
+    alifWord: "ھَمَسَ",
 
-    kasraFinal: "ـصَ",
-    kasraInitial: "نَغِـ",
-    kasraWord: "نَغِصَ",
+    yaaFinal: "ـصَ",
+    yaaInitial: "نَغِـ",
+    yaaWord: "نَغِصَ",
 
-    dammaInitial: "حُجَ",
-    dammaFinal: "رُ",
-    dammaWord: "حُجَرُ",
+    wawInitital: "حُجَ",
+    wawFinal: "رُ",
+    wawWord: "حُجَرُ",
   },
   {
     index: 17,
-    fathaFinal: "ـعَ",
-    fathaInitial: "یَفَ",
-    fathaWord: "یَفَعَ",
+    alifFinal: "ـعَ",
+    alifInitial: "یَفَ",
+    alifWord: "یَفَعَ",
 
-    kasraFinal: "ـجَ",
-    kasraInitial: "نَضِـ",
-    kasraWord: "نَضِجَ",
+    yaaFinal: "ـجَ",
+    yaaInitial: "نَضِـ",
+    yaaWord: "نَضِجَ",
 
-    dammaInitial: "حُشِ",
-    dammaFinal: "رَ",
-    dammaWord: "حُشِرَ",
+    wawInitital: "حُشِ",
+    wawFinal: "رَ",
+    wawWord: "حُشِرَ",
   },
   {
     index: 18,
-    fathaFinal: "ـزَ",
-    fathaInitial: "وَ عَـ",
-    fathaWord: "وَ عَزَ",
+    alifFinal: "ـزَ",
+    alifInitial: "وَ عَـ",
+    alifWord: "وَ عَزَ",
 
-    kasraFinal: "ـبَ",
-    kasraInitial: "لَغِـ",
-    kasraWord: "لَغِبَ",
+    yaaFinal: "ـبَ",
+    yaaInitial: "لَغِـ",
+    yaaWord: "لَغِبَ",
 
-    dammaInitial: "فُرَ",
-    dammaFinal: "صُ",
-    dammaWord: "فُرَصُ",
+    wawInitital: "فُرَ",
+    wawFinal: "صُ",
+    wawWord: "فُرَصُ",
   },
   {
     index: 19,
-    fathaFinal: "ـعَ",
-    fathaInitial: "یَنَـ",
-    fathaWord: "یَنَعَ",
+    alifFinal: "ـعَ",
+    alifInitial: "یَنَـ",
+    alifWord: "یَنَعَ",
 
-    kasraFinal: " ـئَ",
-    kasraInitial: "دَفِـ",
-    kasraWord: "دَفِئَ",
+    yaaFinal: " ـئَ",
+    yaaInitial: "دَفِـ",
+    yaaWord: "دَفِئَ",
 
-    dammaInitial: "شُحِ",
-    dammaFinal: "ذَ",
-    dammaWord: "شُحِذَ",
+    wawInitital: "شُحِ",
+    wawFinal: "ذَ",
+    wawWord: "شُحِذَ",
   },
 ];
 
@@ -696,7 +697,7 @@ const Card = ({
             className="p-3 text-white bg-dark-purple rounded-lg text-lg  border-2 border-white"
             style={{ marginLeft: -30, width: 600 }}
           >
-            Module 2: How to Make words is Arabic
+            Module 3: How to Make words with Alif Madd
             {/* <span className="p-2 bg-green-200 text-dark-purple rounded-md">
             {props.name} " {props.symbol} "
           </span> */}
@@ -712,7 +713,7 @@ const Card = ({
               </IconButton>
             </Link>
 
-            <Link href={`/${user}/module/harakat`} className="mx-3 ">
+            <Link href={`/${user}/module/almadood`} className="mx-3 ">
               <Button
                 variant="contained"
                 className="bg-cyan-200 text-dark-purple h-10"
@@ -722,7 +723,7 @@ const Card = ({
               </Button>
             </Link>
 
-            <Link href={`/${user}/module/harakat/${preM}`} className="mx-2 ">
+            <Link href={`/${user}/module/almadood/${preM}`} className="mx-2 ">
               <Button
                 variant="contained"
                 className="bg-cyan-200 text-dark-purple h-10"
@@ -797,7 +798,7 @@ const Card = ({
       </div>
       <div className=" w-full p-2 rounded-md  flex flex-row justify-center   pt-3">
         <div className="mx-5">
-          <Link href={`/${user}/module/harakat/${nextUrl}`}>
+          <Link href={`/${user}/module/almadood/${nextUrl}`}>
             <Button variant="contained" className="text-dark-purple bg-white">
               Next Section
             </Button>
@@ -903,11 +904,11 @@ export default function VerticalTabs({ wordType, user, type, nextUrl, preM }) {
             {singleLattersExamples.map((alphabate) => (
               <Tab
                 label={
-                  type === "fatha"
-                    ? alphabate.fathaWord
-                    : type === "kasra"
-                    ? alphabate.kasraWord
-                    : alphabate.dammaWord
+                  type === "alif"
+                    ? alphabate.alifWord
+                    : type === "yaa"
+                    ? alphabate.yaaWord
+                    : alphabate.wawWord
                 }
                 onClick={() => {
                   GenerateColor(alphabate.index);
@@ -920,21 +921,7 @@ export default function VerticalTabs({ wordType, user, type, nextUrl, preM }) {
                 {...a11yProps(alphabate.index)}
               />
             ))}
-            {/* {singleLattersExamples.map((alphabate) => (
-           <>
-           {type == "fatha" ? (<Tab
-             label={alphabate.fathaWord}
-             className={`lg:text-4xl text-3xl  py-3 px-0 m-3  w-60  text-white font-bold rounded-lg font-sans  focus:bg-cyan-400 border-2 border-emerald-200`}
-             {...a11yProps(alphabate.index)}
-           />): null }
-           {type == "kasra" ? (<Tab
-             label={alphabate.kasraWord}
-             className={`lg:text-4xl text-3xl  py-3 px-0 m-3  w-60  text-white font-bold rounded-lg font-sans  focus:bg-cyan-400 border-2 border-emerald-200`}
-             {...a11yProps(alphabate.index)}
-           />): null }
-           
-           </>
-          ))} */}
+
             <p className={`w-80`} />
           </Tabs>
           {singleLattersExamples.map((alphabate) => (
@@ -943,12 +930,12 @@ export default function VerticalTabs({ wordType, user, type, nextUrl, preM }) {
               value={value}
               index={alphabate.index}
             >
-              {type == "fatha" ? (
+              {type == "alif" ? (
                 <Card
-                  initial={alphabate.fathaInitial}
-                  middle={alphabate.fathaMiddle}
-                  final={alphabate.fathaFinal}
-                  word={alphabate.fathaWord}
+                  initial={alphabate.alifInitial}
+                  middle={alphabate.alifMiddle}
+                  final={alphabate.alifFinal}
+                  word={alphabate.alifWord}
                   user={user}
                   screen="double"
                   nextUrl={nextUrl}
@@ -957,12 +944,12 @@ export default function VerticalTabs({ wordType, user, type, nextUrl, preM }) {
                   preM={preM}
                 />
               ) : null}
-              {type == "kasra" ? (
+              {type == "yaa" ? (
                 <Card
-                  initial={alphabate.kasraInitial}
-                  middle={alphabate.kasraMiddle}
-                  final={alphabate.kasraFinal}
-                  word={alphabate.kasraWord}
+                  initial={alphabate.yaaInitial}
+                  middle={alphabate.yaaMiddle}
+                  final={alphabate.yaaFinal}
+                  word={alphabate.yaaWord}
                   user={user}
                   screen="double"
                   nextUrl={nextUrl}
@@ -971,12 +958,12 @@ export default function VerticalTabs({ wordType, user, type, nextUrl, preM }) {
                   preM={preM}
                 />
               ) : null}
-              {type == "damma" ? (
+              {type == "waw" ? (
                 <Card
-                  initial={alphabate.dammaInitial}
-                  middle={alphabate.dammaMiddle}
-                  final={alphabate.dammaFinal}
-                  word={alphabate.dammaWord}
+                  initial={alphabate.wawInitital}
+                  middle={alphabate.wawMiddle}
+                  final={alphabate.wawFinal}
+                  word={alphabate.wawWord}
                   user={user}
                   screen="double"
                   nextUrl={nextUrl}
@@ -1012,11 +999,11 @@ export default function VerticalTabs({ wordType, user, type, nextUrl, preM }) {
             {doubleLattersExamples.map((alphabate) => (
               <Tab
                 label={
-                  type === "fatha"
-                    ? alphabate.fathaWord
-                    : type === "kasra"
-                    ? alphabate.kasraWord
-                    : alphabate.dammaWord
+                  type === "alif"
+                    ? alphabate.alifWord
+                    : type === "yaa"
+                    ? alphabate.yaaWord
+                    : alphabate.wawWord
                 }
                 onClick={() => {
                   GenerateColor(alphabate.index);
@@ -1037,12 +1024,12 @@ export default function VerticalTabs({ wordType, user, type, nextUrl, preM }) {
               value={value}
               index={alphabate.index}
             >
-              {type == "fatha" ? (
+              {type == "alif" ? (
                 <Card
-                  initial={alphabate.fathaInitial}
-                  middle={alphabate.fathaMiddle}
-                  final={alphabate.fathaFinal}
-                  word={alphabate.fathaWord}
+                  initial={alphabate.alifInitial}
+                  middle={alphabate.alifMiddle}
+                  final={alphabate.alifFinal}
+                  word={alphabate.alifWord}
                   user={user}
                   screen="double"
                   nextUrl={nextUrl}
@@ -1051,12 +1038,12 @@ export default function VerticalTabs({ wordType, user, type, nextUrl, preM }) {
                   preM={preM}
                 />
               ) : null}
-              {type == "kasra" ? (
+              {type == "yaa" ? (
                 <Card
-                  initial={alphabate.kasraInitial}
-                  middle={alphabate.kasraMiddle}
-                  final={alphabate.kasraFinal}
-                  word={alphabate.kasraWord}
+                  initial={alphabate.yaaInitial}
+                  middle={alphabate.yaaMiddle}
+                  final={alphabate.yaaFinal}
+                  word={alphabate.yaaWord}
                   user={user}
                   screen="double"
                   nextUrl={nextUrl}
@@ -1065,12 +1052,12 @@ export default function VerticalTabs({ wordType, user, type, nextUrl, preM }) {
                   preM={preM}
                 />
               ) : null}
-              {type == "damma" ? (
+              {type == "waw" ? (
                 <Card
-                  initial={alphabate.dammaInitial}
-                  middle={alphabate.dammaMiddle}
-                  final={alphabate.dammaFinal}
-                  word={alphabate.dammaWord}
+                  initial={alphabate.wawInitital}
+                  middle={alphabate.wawMiddle}
+                  final={alphabate.wawFinal}
+                  word={alphabate.wawWord}
                   user={user}
                   screen="double"
                   nextUrl={nextUrl}

@@ -81,7 +81,7 @@ export default function AddUser({
     const fetchBatchId = async () => {
       console.log("in");
       const data = await fetchBatcheIdBasedOnBatchName(batch);
-      if (data[0]) {
+      if (data && data[0]) {
         setBatchId(data[0].batch_id);
       }
     };

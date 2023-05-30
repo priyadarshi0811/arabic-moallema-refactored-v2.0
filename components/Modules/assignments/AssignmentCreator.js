@@ -26,6 +26,7 @@ import SelectOption from "@/components/Layout/mui-comps/assignment_builder_selec
 import MatchFollowing from "@/components/Layout/mui-comps/assignment_builder_selector/match_the_folowing";
 import ColorHurufTracing from "@/components/Layout/mui-comps/assignment_builder_selector/color_huruf_tracing";
 import SelectCorrectWords from "@/components/Layout/mui-comps/assignment_builder_selector/select_correct_words";
+import ValidationCard from "@/components/Layout/card/ValidationCard";
 
 const Modules_Option = {
   alphabets: [
@@ -63,13 +64,21 @@ const Modules_Option = {
     { id: 2, title: "damma" },
     { id: 3, title: "kasra" },
   ],
+
+  almadood: [
+    { id: 1, title: "alif" },
+    { id: 2, title: "yaa" },
+    { id: 3, title: "waw" },
+  ],
 };
 
 const modules = [
   { id: 1, title: "harakat" },
   { id: 2, title: "alphabets" },
-  { id: 3, title: "tanveen" },
-  { id: 4, title: "hamza" },
+  { id: 2, title: "almadood" },
+
+  // { id: 3, title: "tanveen" },
+  // { id: 4, title: "hamza" },
 ];
 
 const ADD_ACTIVITY = "Add Activity";
@@ -159,6 +168,7 @@ const AssignmentCreator = () => {
   });
 
   /////////////////////////starting the logic of test the knowledge activity///////////////////////////////////////////
+  const [validateError, setvalidateError] = useState(false);
 
   // 5. test the knowledge
   const [letterStudentOne, setLetterStudentOne] = useState();
@@ -888,6 +898,19 @@ const AssignmentCreator = () => {
   }
 
   const CreateAssignmentHandler = () => {
+    console.log(assignmentState.letter);
+    if (
+      selectedModule === undefined ||
+      selectedSubmodule === undefined ||
+      assignmentState.letter.length === 0
+    ) {
+      console.log("in");
+      setvalidateError(true);
+      return;
+    }
+
+    setvalidateError(false);
+
     createAssignment(assignmentState, selectedModule, selectedSubmodule);
     batchCtx.setSubmittedHandler(true);
     router.replace("/admin/assignments");
@@ -906,6 +929,12 @@ const AssignmentCreator = () => {
     <div>
       <center>
         <Card sx={{ textAlign: "left" }}>
+          {validateError && (
+            <ValidationCard
+              message="please select module, submodule and add activitty"
+              title="Warning"
+            />
+          )}
           <CardContent className="p-5">
             <InputLabel>
               Select the activity to be added into the assignment:

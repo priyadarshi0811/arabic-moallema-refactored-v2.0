@@ -65,7 +65,7 @@ const TeacherHome = () => {
   const handleSelectedItem = async (batchData) => {
     let batchId;
     const idData = await fetchBatcheIdBasedOnBatchName(batchData);
-    if (idData[0]) {
+    if (idData && idData[0]) {
       batchId = idData[0].batch_id;
     }
 
@@ -160,13 +160,14 @@ const TeacherHome = () => {
           )}
           <div className="m-0 p-10 w-full h-fit">
             <div className="grid grid-cols-2 lg:grid-cols-3 w-full mx-auto my-10 gap-10">
-              {dataToDisplay.map((teacher) => (
-                <CardList
-                  title={teacher.name}
-                  subTitle={teacher.email}
-                  link={`/admin/teachers/teacherprofile/${teacher.email}`}
-                />
-              ))}
+              {dataToDisplay &&
+                dataToDisplay.map((teacher) => (
+                  <CardList
+                    title={teacher.name}
+                    subTitle={teacher.email}
+                    link={`/admin/teachers/teacherprofile/${teacher.email}`}
+                  />
+                ))}
             </div>
           </div>
         </div>

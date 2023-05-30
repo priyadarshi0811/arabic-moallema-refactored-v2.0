@@ -35,8 +35,10 @@ const TracingBuilder = (props) => {
   const [renderIter, setRenderIter] = useState([1]);
 
   function addNewOption() {
-    let concated_new_iterator = renderIter.concat([renderIter.length + 1]);
-    setRenderIter(concated_new_iterator);
+    if (renderIter.length < 6) {
+      let concated_new_iterator = renderIter.concat([renderIter.length + 1]);
+      setRenderIter(concated_new_iterator);
+    }
   }
 
   function deleteSelectedOption(key) {
