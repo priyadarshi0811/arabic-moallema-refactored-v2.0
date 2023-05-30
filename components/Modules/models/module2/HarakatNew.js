@@ -682,7 +682,7 @@ const Card = ({
                 </Button>
               </Link>
               <Link
-                href={`/${user}/module/harakat/${harakatType}/word-making-1`}
+                href={`/${user}/module/harakat/${harakatType}/how-to-read-1`}
                 className="mx-2 "
               >
                 <Button

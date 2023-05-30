@@ -712,7 +712,7 @@ const Card = ({
               </IconButton>
             </Link>
 
-            <Link href={`/${user}/module/hatrakat`} className="mx-3 ">
+            <Link href={`/${user}/module/harakat`} className="mx-3 ">
               <Button
                 variant="contained"
                 className="bg-cyan-200 text-dark-purple h-10"

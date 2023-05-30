@@ -64,7 +64,7 @@ const positioning = () => {
           </span> */}
           </h1>
           <div>
-            <Link href="" className="mx-5">
+            <Link href="/student/module/harakat" className="mx-5">
               <Button
                 variant="contained"
                 className="bg-cyan-200 text-dark-purple"

@@ -28,8 +28,17 @@ import {
   DialogContentText,
   DialogActions,
 } from "@mui/material";
+import CompleateModal from "@/components/Layout/popup/CompleateModal";
 
-const SentenceMaking = ({ user, screenNo, nextUrl, type, module, nextM, preM }) => {
+const SentenceMaking = ({
+  user,
+  screenNo,
+  nextUrl,
+  type,
+  module,
+  nextM,
+  preM,
+}) => {
   const [cardIndex, setCardIndex] = useState(0);
 
   const [assignment, setAssignment] = useState([]);
@@ -41,11 +50,32 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module, nextM, preM }) 
   const [showSubmissionWarning, setShowSubmissionWarning] = useState(false);
   const [studentId, setStudentId] = useState();
 
+  
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   const { myArray, setMyArray } = useContext(BatchContext);
   console.log(myArray);
 
   const authCtx = useContext(AuthContext);
   const userEmail = authCtx.userEmail;
+
+  const style = {
+    position: "absolute",
+    top: "48%",
+    left: "58%",
+    transform: "translate(-50%, -50%)",
+    width: "80%",
+    height: "80%",
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    borderRadius: 10,
+    boxShadow: 24,
+  };
+
+
 
   useEffect(() => {
     const getId = async () => {
@@ -531,10 +561,7 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module, nextM, preM }) 
               </Button>
             </Link>
 
-            <Link
-              href={`/${user}/module/harakat/${preM}`}
-              className="mx-2 "
-            >
+            <Link href={`/${user}/module/harakat/${preM}`} className="mx-2 ">
               <Button
                 variant="contained"
                 className="bg-cyan-200 text-dark-purple h-10"
@@ -576,11 +603,14 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module, nextM, preM }) 
                               </div>
                               <div className="col-span-2">
                                 <div className=" h-fit p-10 ">
-                                  <h2 className="text-5xl  text-dark-purple  py-8" style={{
-                            fontFamily:
-                              '"Geeza Pro", "Nadeem", "Al Bayan", "DecoType Naskh", "DejaVu Serif", "STFangsong", "STHeiti", "STKaiti", "STSong", "AB AlBayan", "AB Geeza", "AB Kufi", "DecoType Naskh", "Aldhabi", "Andalus", "Sakkal Majalla", "Simplified Arabic", "Traditional Arabic", "Arabic Typesetting", "Urdu Typesetting", "Droid Naskh", "Droid Kufi", "Roboto", "Tahoma", "Times New Roman", "Arial", serif',
-                            fontWeight: 500,
-                          }}>
+                                  <h2
+                                    className="text-5xl  text-dark-purple  py-8"
+                                    style={{
+                                      fontFamily:
+                                        '"Geeza Pro", "Nadeem", "Al Bayan", "DecoType Naskh", "DejaVu Serif", "STFangsong", "STHeiti", "STKaiti", "STSong", "AB AlBayan", "AB Geeza", "AB Kufi", "DecoType Naskh", "Aldhabi", "Andalus", "Sakkal Majalla", "Simplified Arabic", "Traditional Arabic", "Arabic Typesetting", "Urdu Typesetting", "Droid Naskh", "Droid Kufi", "Roboto", "Tahoma", "Times New Roman", "Arial", serif',
+                                      fontWeight: 500,
+                                    }}
+                                  >
                                     {ex.word}
                                   </h2>
                                   <h2 className="text-3xl font-sans text-dark-purple  pb-8">
@@ -625,16 +655,16 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module, nextM, preM }) 
                                   >
                                     Activity
                                   </Button>
-                                  <Link
-                                    href={`/${user}/module/harakat/${nextM}`}
-                                  >
-                                    <Button
+                                  
+                                   <Button
                                       variant="contained"
                                       className="text-dark-purple bg-white"
+                                      onClick={handleOpen}
                                     >
                                       Next Module
-                                    </Button>
-                                  </Link>
+                                    </Button> 
+
+                                    {/* /${user}/module/harakat/${nextM} */}
                                 </>
                               )}
                             </div>
@@ -646,94 +676,7 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module, nextM, preM }) 
                   ? KasraSentenceExamples.map((ex) => (
                       <>
                         {cardIndex == ex.index ? (
-                      <div className=" " style={{ width: "100%" }}>
-                      <div
-                        className="grid grid-cols-3   py-10 lg:px-20  shadow-lg rounded-lg mb-5"
-                        style={divStyles}
-                      >
-                        <div className="col-span-1 border-r-2 border-white ">
-                          <div className=" font-bold text-center lg:mx-10 py-5 lg:py-0  h-62 border-8 border-gray-100 rounded-3xl bg-gray-100 ">
-                            <img
-                              src={
-                                ex.image ||
-                                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEaXaItHR4BIfzC3jGoYxHBEje9KVIyHmzYA&usqp=CAU  "
-                              }
-                              alt=""
-                              className="w-full  rounded-3xl"
-                            />
-                          </div>
-                        </div>
-                        <div className="col-span-2">
-                          <div className=" h-fit p-10 ">
-                            <h2 className="text-5xl  text-dark-purple  py-8" style={{
-                      fontFamily:
-                        '"Geeza Pro", "Nadeem", "Al Bayan", "DecoType Naskh", "DejaVu Serif", "STFangsong", "STHeiti", "STKaiti", "STSong", "AB AlBayan", "AB Geeza", "AB Kufi", "DecoType Naskh", "Aldhabi", "Andalus", "Sakkal Majalla", "Simplified Arabic", "Traditional Arabic", "Arabic Typesetting", "Urdu Typesetting", "Droid Naskh", "Droid Kufi", "Roboto", "Tahoma", "Times New Roman", "Arial", serif',
-                      fontWeight: 500,
-                    }}>
-                              {ex.word}
-                            </h2>
-                            <h2 className="text-3xl font-sans text-dark-purple  pb-8">
-                              {ex.meaning}
-                            </h2>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="w-full my-3 flex justify-center">
-                        {cardIndex > 0 ? (
-                          <Button
-                            variant="contained"
-                            className="bg-white text-dark-purple mr-3"
-                            startIcon={<ArrowBackIcon />}
-                            onClick={() => {
-                              setCardIndex(cardIndex - 1);
-                              GenerateColor();
-                            }}
-                          >
-                            Pre
-                          </Button>
-                        ) : null}
-                        {cardIndex < maxIndexfatha ? (
-                          <Button
-                            variant="contained"
-                            className="bg-white text-dark-purple"
-                            endIcon={<ArrowForwardIcon />}
-                            onClick={() => {
-                              setCardIndex(cardIndex + 1);
-                              GenerateColor();
-                            }}
-                          >
-                            Next
-                          </Button>
-                        ) : (
-                          <>
-                            <Button
-                              onClick={setActivitySubmodule}
-                              variant="contained"
-                              className="text-dark-purple bg-white mr-3"
-                            >
-                              Activity
-                            </Button>
-                            <Link
-                              href={`/${user}/module/harakat/${nextM}`}
-                            >
-                              <Button
-                                variant="contained"
-                                className="text-dark-purple bg-white"
-                              >
-                                Next Module
-                              </Button>
-                            </Link>
-                          </>
-                        )}
-                      </div>
-                    </div>
-                        ) : null}
-                      </>
-                    ))
-                  : dammaSentenceExamples.map((ex) => (
-                      <>
-                      <div className=" " style={{ width: "100%" }}>
+                          <div className=" " style={{ width: "100%" }}>
                             <div
                               className="grid grid-cols-3   py-10 lg:px-20  shadow-lg rounded-lg mb-5"
                               style={divStyles}
@@ -752,11 +695,14 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module, nextM, preM }) 
                               </div>
                               <div className="col-span-2">
                                 <div className=" h-fit p-10 ">
-                                  <h2 className="text-5xl  text-dark-purple  py-8" style={{
-                            fontFamily:
-                              '"Geeza Pro", "Nadeem", "Al Bayan", "DecoType Naskh", "DejaVu Serif", "STFangsong", "STHeiti", "STKaiti", "STSong", "AB AlBayan", "AB Geeza", "AB Kufi", "DecoType Naskh", "Aldhabi", "Andalus", "Sakkal Majalla", "Simplified Arabic", "Traditional Arabic", "Arabic Typesetting", "Urdu Typesetting", "Droid Naskh", "Droid Kufi", "Roboto", "Tahoma", "Times New Roman", "Arial", serif',
-                            fontWeight: 500,
-                          }}>
+                                  <h2
+                                    className="text-5xl  text-dark-purple  py-8"
+                                    style={{
+                                      fontFamily:
+                                        '"Geeza Pro", "Nadeem", "Al Bayan", "DecoType Naskh", "DejaVu Serif", "STFangsong", "STHeiti", "STKaiti", "STSong", "AB AlBayan", "AB Geeza", "AB Kufi", "DecoType Naskh", "Aldhabi", "Andalus", "Sakkal Majalla", "Simplified Arabic", "Traditional Arabic", "Arabic Typesetting", "Urdu Typesetting", "Droid Naskh", "Droid Kufi", "Roboto", "Tahoma", "Times New Roman", "Arial", serif',
+                                      fontWeight: 500,
+                                    }}
+                                  >
                                     {ex.word}
                                   </h2>
                                   <h2 className="text-3xl font-sans text-dark-purple  pb-8">
@@ -780,7 +726,7 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module, nextM, preM }) 
                                   Pre
                                 </Button>
                               ) : null}
-                              {cardIndex < maxIndexfatha ? (
+                              {cardIndex < maxIndexKasra ? (
                                 <Button
                                   variant="contained"
                                   className="bg-white text-dark-purple"
@@ -801,20 +747,108 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module, nextM, preM }) 
                                   >
                                     Activity
                                   </Button>
-                                  <Link
-                                    href={`/${user}/module/harakat/${nextM}`}
-                                  >
-                                    <Button
+                                  <Button
                                       variant="contained"
                                       className="text-dark-purple bg-white"
+                                      onClick={handleOpen}
                                     >
                                       Next Module
                                     </Button>
-                                  </Link>
                                 </>
                               )}
                             </div>
                           </div>
+                        ) : null}
+                      </>
+                    ))
+                  : dammaSentenceExamples.map((ex) => (
+                      <>
+                        {cardIndex == ex.index ? (
+                          <div className=" " style={{ width: "100%" }}>
+                            <div
+                              className="grid grid-cols-3   py-10 lg:px-20  shadow-lg rounded-lg mb-5"
+                              style={divStyles}
+                            >
+                              <div className="col-span-1 border-r-2 border-white ">
+                                <div className=" font-bold text-center lg:mx-10 py-5 lg:py-0  h-62 border-8 border-gray-100 rounded-3xl bg-gray-100 ">
+                                  <img
+                                    src={
+                                      ex.image ||
+                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEaXaItHR4BIfzC3jGoYxHBEje9KVIyHmzYA&usqp=CAU  "
+                                    }
+                                    alt=""
+                                    className="w-full  rounded-3xl"
+                                  />
+                                </div>
+                              </div>
+                              <div className="col-span-2">
+                                <div className=" h-fit p-10 ">
+                                  <h2
+                                    className="text-5xl  text-dark-purple  py-8"
+                                    style={{
+                                      fontFamily:
+                                        '"Geeza Pro", "Nadeem", "Al Bayan", "DecoType Naskh", "DejaVu Serif", "STFangsong", "STHeiti", "STKaiti", "STSong", "AB AlBayan", "AB Geeza", "AB Kufi", "DecoType Naskh", "Aldhabi", "Andalus", "Sakkal Majalla", "Simplified Arabic", "Traditional Arabic", "Arabic Typesetting", "Urdu Typesetting", "Droid Naskh", "Droid Kufi", "Roboto", "Tahoma", "Times New Roman", "Arial", serif',
+                                      fontWeight: 500,
+                                    }}
+                                  >
+                                    {ex.word}
+                                  </h2>
+                                  <h2 className="text-3xl font-sans text-dark-purple  pb-8">
+                                    {ex.meaning}
+                                  </h2>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="w-full my-3 flex justify-center">
+                              {cardIndex > 0 ? (
+                                <Button
+                                  variant="contained"
+                                  className="bg-white text-dark-purple mr-3"
+                                  startIcon={<ArrowBackIcon />}
+                                  onClick={() => {
+                                    setCardIndex(cardIndex - 1);
+                                    GenerateColor();
+                                  }}
+                                >
+                                  Pre
+                                </Button>
+                              ) : null}
+                              {cardIndex < maxIndexDamma ? (
+                                <Button
+                                  variant="contained"
+                                  className="bg-white text-dark-purple"
+                                  endIcon={<ArrowForwardIcon />}
+                                  onClick={() => {
+                                    setCardIndex(cardIndex + 1);
+                                    GenerateColor();
+                                  }}
+                                >
+                                  Next
+                                </Button>
+                              ) : (
+                                <>
+                                  <Button
+                                    onClick={setActivitySubmodule}
+                                    variant="contained"
+                                    className="text-dark-purple bg-white mr-3"
+                                  >
+                                    Activity
+                                  </Button>
+                                  {/* <Link href={`/${user}/module/harakat/${nextM}`} > */}
+                                    <Button
+                                      variant="contained"
+                                      className="text-dark-purple bg-white"
+                                      onClick={handleOpen}
+                                    >
+                                      Next Module
+                                    </Button>
+                                  {/* </Link> */}
+                                </>
+                              )}
+                            </div>
+                          </div>
+                        ) : null}
                       </>
                     ))}
               </div>
@@ -853,6 +887,8 @@ const SentenceMaking = ({ user, screenNo, nextUrl, type, module, nextM, preM }) 
 
         {/* </Link> */}
       </div>
+      <CompleateModal moduleName={type} nextModule={`/${user}/module/harakat/${type}/discription`} open={open} setOpen={setOpen} />
+
     </div>
   );
 };

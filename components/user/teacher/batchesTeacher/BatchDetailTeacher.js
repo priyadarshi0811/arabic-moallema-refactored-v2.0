@@ -28,17 +28,17 @@ const BatchDetailTeacher = ({ batchName }) => {
         <div className="flex-1  px-5">
           <div className="m-0 p-5  w-full h-fit">
             {/* <MUIBreadcrumbs /> */}
-            <div className="grid grid-cols-1 w-full mx-auto my-10 gap-10">
-              <div className="col-span-1">
-                <h1 className=" my-auto text-2xl mt-3 ">
-                  <BackButton /> Batch Details
-                </h1>
+              <div className="grid grid-cols-1 w-full mx-auto my-10 gap-10">
+                <div className="col-span-1">
+                  <h1 className=" my-auto text-2xl mt-3 ">
+                    <BackButton /> Batch Details
+                  </h1>
+                </div>
+                <Divider variant="middle" />
+                <div className="col-span-1">
+                  <BatchDetaisCards batchName={batchName} />
+                </div>
               </div>
-              <Divider variant="middle" />
-              <div className="col-span-1">
-                <BatchDetaisCards batchName={batchName} />
-              </div>
-            </div>
           </div>
         </div>
       </div>
