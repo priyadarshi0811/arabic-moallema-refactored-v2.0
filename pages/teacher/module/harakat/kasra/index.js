@@ -7,7 +7,7 @@ const index = () => {
     <HarakatDetails
       user="teacher"
       harakatType="kasra"
-      nextUrl="kasra/how-to-read-2"
+      nextUrl="kasra/word-making-1"
     />
   );
 };

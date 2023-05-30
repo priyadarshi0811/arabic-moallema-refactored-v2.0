@@ -45,24 +45,29 @@ const HarkatHome = ({ user }) => {
           Flip Book pg:3
         </Button>
       </Link> */}
-        <Link href={`/${user}/module/alphabets`}>
-          <Button
-            className="bg-white text-dark-purple mx-2"
-            variant="contained"
-            startIcon={<ArrowBackIcon />}
-          >
-            Previous Module
-          </Button>
-        </Link>
-        <Link href={`/${user}/module/harakat`}>
-          <Button
-            className="bg-white text-dark-purple mx-2"
-            variant="contained"
-            endIcon={<ArrowForwardIcon />}
-          >
-            Next Module
-          </Button>
-        </Link>
+      {user == "student" ? (
+        <>
+        <Link href={`/student/module/alphabets`}>
+        <Button
+          className="bg-white text-dark-purple mx-2"
+          variant="contained"
+          startIcon={<ArrowBackIcon />}
+        >
+          Previous Module
+        </Button>
+      </Link>
+      <Link href={`/student/module/harakat`}>
+        <Button
+          className="bg-white text-dark-purple mx-2"
+          variant="contained"
+          endIcon={<ArrowForwardIcon />}
+        >
+          Next Module
+        </Button>
+      </Link>
+        </>
+      ) : null}
+        
         <Link href={`/teacher/whiteboard`} className="mx-5 ">
           <IconButton
             aria-label=""

@@ -19,6 +19,7 @@ import CardM from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import { CardActionArea } from "@mui/material";
+import CompleateModal from "@/components/Layout/popup/CompleateModal";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -212,48 +213,7 @@ const Card = ({
       <div>
         {/* <Button onClick={handleOpen}>Open modal</Button> */}
 
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={{}} id="my-canvas">
-            <CardM sx={style}>
-              <CardActionArea className="h-full flex-1 ">
-                <Confetti />
-                <div className="h-10 w-full">
-                  <img src={RewordGIf.src} className="w-80 mx-auto" />
-                </div>
-                <CardContent className="mt-56 text-center">
-                  <Typography gutterBottom variant="h1" component="div">
-                  Congratulations 
-                  </Typography>
-                  <Typography gutterBottom variant="h5" component="div">
-                    You have Completed the Arabic Alphabets Modules
-                  </Typography>
-                  {/* <Typography variant="body" color="text.secondary">
-                    Lizards are a widespread group of squamate reptiles, with
-                    over 6,000 species, ranging across all continents except
-                    Antarctica
-                  </Typography> */}
-                </CardContent>
-                <center>
-
-                <Link href={`/${user}/module/harakat/fatha`}>
-                  
-                  <Button
-                    variant="contained"
-                    className="text-dark-purple bg-yellow-400"
-                  >
-                    Next Module
-                  </Button>
-                </Link>
-                </center>
-              </CardActionArea>
-            </CardM>
-          </Box>
-        </Modal>
+        <CompleateModal moduleName="Arabic Alphabets" nextModule="/teacher/module/harakat/fatha/discription" open={open} setOpen={setOpen} />
       </div>
     </div>
   );
@@ -650,3 +610,43 @@ export default function VerticalTabs(props) {
     </Box>
   );
 }
+
+
+// <Modal
+//           open={open}
+//           onClose={handleClose}
+//           aria-labelledby="modal-modal-title"
+//           aria-describedby="modal-modal-description"
+//         >
+//           <Box sx={{}} id="my-canvas">
+//             <CardM sx={style}>
+//               <CardActionArea className="h-full flex-1 ">
+//                 <Confetti />
+//                 <div className="h-10 w-full">
+//                   <img src={RewordGIf.src} className="w-80 mx-auto" />
+//                 </div>
+//                 <CardContent className="mt-56 text-center">
+//                   <Typography gutterBottom variant="h1" component="div">
+//                   Congratulations 
+//                   </Typography>
+//                   <Typography gutterBottom variant="h5" component="div">
+//                     You have Completed the Arabic Alphabets Modules
+//                   </Typography>
+                  
+//                 </CardContent>
+//                 <center>
+
+//                 <Link href={`/${user}/module/harakat/fatha`}>
+                  
+//                   <Button
+//                     variant="contained"
+//                     className="text-dark-purple bg-yellow-400"
+//                   >
+//                     Next Module
+//                   </Button>
+//                 </Link>
+//                 </center>
+//               </CardActionArea>
+//             </CardM>
+//           </Box>
+//         </Modal>
