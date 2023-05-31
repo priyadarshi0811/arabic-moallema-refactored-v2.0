@@ -12,6 +12,13 @@ const index = () => {
   const router = useRouter();
   const authCtx = useContext(AuthContext);
 
+  // getting module, submodule and index
+  //id ==> submodule
+
+  // student/activity/match/[0]/[1]/[2]/
+
+  // match_id should be same as defined in the file name
+  
   let id;
   let module;
   let activityIndex;

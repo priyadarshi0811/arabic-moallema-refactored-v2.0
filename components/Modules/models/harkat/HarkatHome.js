@@ -56,7 +56,7 @@ const HarkatHome = ({ user }) => {
                 Previous Module
               </Button>
             </Link>
-            <Link href={`/student/module/harakat`}>
+            <Link href={`/student/module/almadood`}>
               <Button
                 className="bg-white text-dark-purple mx-2"
                 variant="contained"
