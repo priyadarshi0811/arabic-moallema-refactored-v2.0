@@ -73,6 +73,7 @@ const SentenceMaking = ({
     boxShadow: 24,
   };
 
+  //fetching the student id based on email
   useEffect(() => {
     const getId = async () => {
       if (userEmail) {
@@ -85,6 +86,7 @@ const SentenceMaking = ({
     getId();
   }, [userEmail]);
 
+  //checking the assignment submission status
   useEffect(() => {
     const getSubmittedAssignment = async () => {
       if (batchId && "almadood" && type && studentId) {
@@ -109,10 +111,10 @@ const SentenceMaking = ({
 
   console.log(isSubmitted);
 
+  // based on the batch name getting the batch id
   useEffect(() => {
     const getId = async () => {
       const batch = localStorage.getItem("batchName");
-
       const data = await fetchBatcheIdBasedOnBatchName(batch);
       if (data[0]) {
         setBatchId(data[0].batch_id);
@@ -124,6 +126,9 @@ const SentenceMaking = ({
   console.log("batch id: ", batchId);
   console.log("module : ", module);
   console.log("type:  ", type);
+
+  // check whether the activity is started by teacher or not
+  // type === submodule
 
   useEffect(() => {
     console.log("is there");
@@ -148,15 +153,18 @@ const SentenceMaking = ({
 
   console.log("is started: ", isStarted);
 
-  //get the assignment for the selected activity
+  //get the assignment for the selected module and submodule
   useEffect(() => {
     const fetchAssignment = async () => {
       if (type) {
         console.log("inside");
         console.log(type);
-        const data = await fetchAssignmentForLetter(type, "almadood");
+        const data = await fetchAssignmentForLetter(type, "almadood"); //fetch based on module and sub module
         if (data[0]) {
+          //setting the assignment data (all the activities)
           setAssignment(data[0].assignment_json.letter);
+
+          //identiffy which is the first activity and storing the activity type in state (setActivityPath)
           setActivityPath(`${data[0].assignment_json.letter[0].activity_type}`);
         }
       }
@@ -170,6 +178,7 @@ const SentenceMaking = ({
   console.log("module: ", module);
 
   const setActivitySubmodule = async () => {
+    //starting the activity for the batch
     if (user !== "student" && isStarted === undefined) {
       console.log(isStarted);
       let data;
@@ -185,11 +194,16 @@ const SentenceMaking = ({
       setShowSubmissionWarning(true);
     }
 
+    //if activity is not started navigate to the page that activity is not started ==> (For student)
     if (user === "student" && isStarted === undefined) {
       console.log("in");
       window.location.href = `/${user}/activity/tracing/alphabets/${type}/${0}`;
       return;
     }
+
+    //navigate to the first activity for the respective module and submodule
+    // type -> submodule
+    // activityPath -> which is the first activity
 
     if (activityPath && type && !isSubmitted) {
       setShowSubmissionWarning(false);

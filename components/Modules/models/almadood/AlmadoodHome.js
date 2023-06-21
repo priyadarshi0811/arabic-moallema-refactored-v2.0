@@ -47,7 +47,7 @@ const AlmadoodHome = ({ user }) => {
       </Link> */}
         {user == "student" ? (
           <>
-            <Link href={`/student/module/alphabets`}>
+            <Link href={`/student/module/harakat`}>
               <Button
                 className="bg-white text-dark-purple mx-2"
                 variant="contained"

@@ -172,6 +172,7 @@ const MatchDndHome = ({ subModule, module, activityIndex }) => {
     }
   }, [activityIndex, currentIndex, assignment]);
 
+  // for student
   const nextActivityHandler = () => {
     setCurrentIndex(+currentIndex + 1);
 
@@ -185,7 +186,7 @@ const MatchDndHome = ({ subModule, module, activityIndex }) => {
     setMyArray([...myArray, newObj]);
   };
 
-  // when click on the next activity
+  // when click on the next activity for teacher
   const handleNextButtonClick = () => {
     setCurrentIndex(+currentIndex + 1);
   };
